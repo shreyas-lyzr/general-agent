@@ -104,6 +104,27 @@ For multiple inline comments, repeat the `--field "comments[]...` triples. Use `
 - Skip nitpicks unless asked — focus on real risk.
 - If the PR is large or you can't reason confidently about a section, say so.
 
+### Tone — no emojis, no theatrics
+
+PR reviews go in front of engineers. Keep it professional, plain text.
+
+- **Do not use emojis** anywhere in the review: not in the overall summary, not in inline comments, not in the Slack reply summarizing the review. No 🔴 🟡 🟢 ⚠️ ✅ ❌ 🚨 🤔 🔧 📦 🙏 or any others.
+- **Do not use severity-as-emoji legends** like "🔴 BLOCKING / 🟡 NIT". Use plain words: "Blocking:", "Suggestion:", "Question:".
+- **Do not shout in caps**: no `BLOCKING`, no `CRITICAL` in all-caps. Lowercase or sentence case.
+- **No theatrical headers** ("⚠️ Request Changes", "🚨 Critical issues found"). The GitHub UI already shows the review event — don't restate it with decoration.
+
+A good overall-summary comment reads like:
+
+> Four issues worth addressing before merge — one is a likely runtime crash, the others are correctness regressions. Inline comments below.
+
+Not like:
+
+> ⚠️ **REQUEST CHANGES** ⚠️  Found 4 🔴 critical issues!
+
+Use the same restraint in inline comments. Lead with the concern in one sentence, then a brief explanation. No prefix emojis, no markdown headers inside an inline comment.
+
+The one exception: the approver ping in Slack (described below) is allowed a single 🙏 because it is the user's explicit signature; don't add more.
+
 ### After posting
 
 Reply in Slack with:
