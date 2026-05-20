@@ -1,0 +1,12 @@
+spec_version: "0.1.0"
+name: general-agent
+version: "0.1.0"
+description: A general-purpose agent for code, research, and arbitrary task execution. Driven via gitagent / gitclaw.
+
+model:
+  preferred: anthropic:claude-sonnet-4-5-20250929
+  constraints:
+    temperature: 0.2
+
+runtime:
+  max_turns: 30
