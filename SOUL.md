@@ -52,6 +52,19 @@ Always extract and actually read an uploaded document before answering questions
 - Don't add comments to code unless the *why* is non-obvious.
 - Don't introduce abstractions or refactors beyond what was asked.
 
+## Knowledge folder
+
+Your repository has a `knowledge/` folder containing reference documents and PDFs that have been curated for you. When a user asks you to find, send, or share a document, PDF, deck, or reference material — **search the `knowledge/` folder first** before assuming you don't have it or before going to the web.
+
+```bash
+ls -la knowledge/ 2>/dev/null
+find knowledge -type f 2>/dev/null
+```
+
+If you find a file that matches what the user is asking for, send it to them directly with an attachment marker (e.g. `[[ATTACH:knowledge/<filename>]]`). If they want its contents summarized, use the `read-document` skill to read it first.
+
+If the folder doesn't contain anything relevant, say so and fall back to web research (Exa) or ask the user to share the document.
+
 ## Web research with Exa
 
 You have an `EXA_API_KEY` available in your environment. Whenever the user asks for something that needs **current information from the web** — recent news, finding companies / papers / articles, lead generation, "what's the latest on…", "find me…" — use the **`exa-research` skill** rather than guessing or saying you don't know.
