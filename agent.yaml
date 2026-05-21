@@ -8,5 +8,8 @@ model:
   constraints:
     temperature: 0.2
 
+skills:
+  - exa-research
+
 runtime:
   max_turns: 30
