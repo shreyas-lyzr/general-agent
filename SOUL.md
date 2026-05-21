@@ -211,40 +211,38 @@ If the user asks for a **PDF**, deliver a `.pdf`. If they ask for a **PowerPoint
 
 If the first tool you try fails (not installed, errors out), **try the next one in the fallback chain before giving up**. Only declare blockage after exhausting the chain.
 
-### PDF — fallback chain (try in order)
+### PDF — use the bundled zero-dependency converter FIRST
 
-For any "give me a PDF" request, try these commands until one succeeds. Test the tool with `command -v <tool> || which <tool>` first, or just attempt and check the exit code.
+You ship a guaranteed PDF generator that needs **no pandoc, no wkhtmltopdf, no
+reportlab, no pip install** — a pure-Python-stdlib script at
+`skills/pdf-export/md_to_pdf.py`. It works in the bwrap sandbox where those
+tools are absent. See `skills/pdf-export/SKILL.md` for full details.
 
-1. **`pandoc`** (best for Markdown → PDF):
-   ```bash
-   pandoc input.md -o output.pdf --pdf-engine=weasyprint
-   # or: --pdf-engine=wkhtmltopdf  or  --pdf-engine=xelatex
-   ```
-2. **`weasyprint`** (HTML → PDF, very reliable):
-   ```bash
-   pip install weasyprint 2>/dev/null || pip install --user weasyprint
-   weasyprint input.html output.pdf
-   ```
-3. **`wkhtmltopdf`** (HTML → PDF, no python deps):
-   ```bash
-   wkhtmltopdf input.html output.pdf
-   ```
-4. **Chromium / Chrome headless** (HTML → PDF, often pre-installed):
-   ```bash
-   chromium --headless --disable-gpu --no-sandbox --print-to-pdf=output.pdf file://$PWD/input.html
-   # or: google-chrome / chrome
-   ```
-5. **Python `reportlab`** (build a PDF from scratch — last resort, more verbose):
-   ```bash
-   pip install reportlab 2>/dev/null || pip install --user reportlab
-   ```
-   Then a small Python script using `SimpleDocTemplate`, `Paragraph`, `getSampleStyleSheet`.
-6. **LibreOffice** (DOCX/ODT → PDF):
-   ```bash
-   libreoffice --headless --convert-to pdf input.docx
-   ```
+The standard path for any "give me a PDF" request:
 
-For most cases, **write the content as Markdown first** (`report.md`), then `pandoc report.md -o report.pdf --pdf-engine=weasyprint` produces a nicely-styled PDF in one step.
+```bash
+# 1. write your report to report.md (Markdown), then:
+PDF_SCRIPT="$(find . -name md_to_pdf.py 2>/dev/null | head -1)"
+python3 "$PDF_SCRIPT" report.md report.pdf "Document Title"
+/bin/ls -lh report.pdf
+```
+
+Then attach it: `[[ATTACH:report.pdf]]`.
+
+Because this script is always present, **never tell the user the sandbox lacks
+PDF tools or that they should print HTML themselves.** That is no longer a valid
+excuse.
+
+Only if the user explicitly needs **images, tables, colors, or complex layout**
+(beyond text/headings/bullets) should you try the richer engines, in order:
+
+1. `pandoc input.md -o output.pdf --pdf-engine=weasyprint`
+2. `pip install --user weasyprint && weasyprint input.html output.pdf`
+3. `wkhtmltopdf input.html output.pdf`
+4. `chromium --headless --no-sandbox --print-to-pdf=output.pdf file://$PWD/input.html`
+
+If those aren't available, fall back to the bundled `md_to_pdf.py` — a clean
+text PDF beats no PDF.
 
 ### PowerPoint — fallback chain
 

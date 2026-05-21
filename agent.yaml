@@ -10,6 +10,7 @@ model:
 
 skills:
   - exa-research
+  - pdf-export
 
 runtime:
   max_turns: 30
