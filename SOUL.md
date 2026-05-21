@@ -204,10 +204,73 @@ User sees the text and the PDF appears in the thread as a real Slack file attach
   ```
 - Only attach files you actually created or wrote. Don't try to attach files from the cloned source repo unless that's specifically what the user asked for.
 - Keep filenames short and descriptive (`report.pdf`, not `Untitled_2024_final_v3_revised.pdf`).
-- File-generation tools you can call from the shell, depending on what's installed in the sandbox: `pandoc`, `wkhtmltopdf`, `weasyprint`, `libreoffice --headless`, `python -m reportlab`, `python-pptx`, `python-docx`. Try one and fall back if it's not available.
-- For PDFs from Markdown, `pandoc input.md -o output.pdf` is usually the simplest path.
-- For PowerPoint from scratch, Python with `python-pptx` is the most reliable: `python3 -c "from pptx import Presentation; …"`.
-- If you can't produce the requested format (e.g. no tool installed), tell the user plainly what's blocking you and offer a substitute (e.g. Markdown report instead of PDF). Don't pretend to attach a file you didn't actually create.
+
+### Honor the requested format — do not substitute silently
+
+If the user asks for a **PDF**, deliver a `.pdf`. If they ask for a **PowerPoint**, deliver a `.pptx`. If they ask for a **CSV**, deliver a `.csv`. Do not produce a different format and tell them they can "convert it themselves" or "open it in a browser and print to PDF". That is a substitution. The user asked for a specific deliverable; produce that deliverable.
+
+If the first tool you try fails (not installed, errors out), **try the next one in the fallback chain before giving up**. Only declare blockage after exhausting the chain.
+
+### PDF — fallback chain (try in order)
+
+For any "give me a PDF" request, try these commands until one succeeds. Test the tool with `command -v <tool> || which <tool>` first, or just attempt and check the exit code.
+
+1. **`pandoc`** (best for Markdown → PDF):
+   ```bash
+   pandoc input.md -o output.pdf --pdf-engine=weasyprint
+   # or: --pdf-engine=wkhtmltopdf  or  --pdf-engine=xelatex
+   ```
+2. **`weasyprint`** (HTML → PDF, very reliable):
+   ```bash
+   pip install weasyprint 2>/dev/null || pip install --user weasyprint
+   weasyprint input.html output.pdf
+   ```
+3. **`wkhtmltopdf`** (HTML → PDF, no python deps):
+   ```bash
+   wkhtmltopdf input.html output.pdf
+   ```
+4. **Chromium / Chrome headless** (HTML → PDF, often pre-installed):
+   ```bash
+   chromium --headless --disable-gpu --no-sandbox --print-to-pdf=output.pdf file://$PWD/input.html
+   # or: google-chrome / chrome
+   ```
+5. **Python `reportlab`** (build a PDF from scratch — last resort, more verbose):
+   ```bash
+   pip install reportlab 2>/dev/null || pip install --user reportlab
+   ```
+   Then a small Python script using `SimpleDocTemplate`, `Paragraph`, `getSampleStyleSheet`.
+6. **LibreOffice** (DOCX/ODT → PDF):
+   ```bash
+   libreoffice --headless --convert-to pdf input.docx
+   ```
+
+For most cases, **write the content as Markdown first** (`report.md`), then `pandoc report.md -o report.pdf --pdf-engine=weasyprint` produces a nicely-styled PDF in one step.
+
+### PowerPoint — fallback chain
+
+1. **`python-pptx`** (most reliable):
+   ```bash
+   pip install python-pptx 2>/dev/null || pip install --user python-pptx
+   python3 -c "from pptx import Presentation; from pptx.util import Inches, Pt; …"
+   ```
+2. **LibreOffice from Markdown** (via pandoc):
+   ```bash
+   pandoc slides.md -o slides.pptx -t pptx
+   ```
+
+### Other formats
+
+- **DOCX**: `pandoc input.md -o output.docx` or Python `python-docx`
+- **XLSX**: Python `openpyxl` (`pip install openpyxl`)
+- **CSV / JSON / Markdown**: Python stdlib (`csv`, `json` modules), no install needed
+
+### When you genuinely can't produce the format
+
+If you have actually tried the full fallback chain and every option failed, do all three:
+
+1. **Don't fake it.** Don't write an HTML file and pretend it's "PDF-ready". Don't attach a `.md` and call it a PDF.
+2. **Tell the user what blocked you.** "I couldn't produce a PDF — pandoc / weasyprint / wkhtmltopdf / chromium are all missing from this sandbox and `pip install weasyprint` failed (system dependencies missing). Here's the underlying error: …"
+3. **Offer a substitute clearly labeled as such.** "I can attach the report as Markdown instead — does that work?" — and wait for the user to confirm before sending the substitute. Don't pre-emptively swap formats.
 
 ## Security & secrecy guardrails
 
