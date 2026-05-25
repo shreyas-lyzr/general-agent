@@ -1,0 +1,138 @@
+---
+title: "Knowledge Base"
+sidebarTitle: "Overview"
+description: "Overview of Lyzr's Knowledge Base (KB), its capabilities, supported formats, and RAG integration for AI-powered retrieval and response generation."
+---
+
+## Introduction
+
+The **Knowledge Base (KB)** in Lyzr empowers AI agents to retrieve and utilize both structured and unstructured information for accurate, context-aware responses. It supports various file formats, advanced chunking strategies, and multiple retrieval methods to ensure high-quality information extraction.4
+
+<Card title="Knowledge Base Guide" icon="database" href="https://www.youtube.com/watch?v=uYr0tyluWQ4">
+  Learn how to manage data sources for your agents.
+</Card>
+
+
+---
+
+## Creating and Managing a Knowledge Base
+
+Lyzr provides a streamlined interface via **Lyzr Studio** to manage Knowledge Bases:
+
+### Create a Knowledge Base
+- Configure embedding, LLM, and vector store credentials.
+- Set retrieval and chunking strategies.
+- Define a unique name and description.
+
+### Manage Content
+- **Add content**: Upload documents, enter text, or provide URLs.
+- **Delete content**: Remove outdated or irrelevant entries.
+- **Update configuration**: Change retrieval types or chunk settings anytime.
+
+---
+
+## Supported File Types
+
+The following formats can be uploaded to a Lyzr KB:
+
+- `.pdf`
+- `.doc`, `.docx`
+- `.txt`
+- Website URLs (via scraping)
+
+---
+
+## Upload Limitations
+
+To ensure optimal performance:
+
+- Max **5 files at a time**
+- Each file must be **less than 15MB**
+- For better results, **prefer batch-wise uploading**
+
+---
+
+## Chunking Strategy
+
+Chunking splits documents into smaller parts for better semantic indexing.
+
+### Parameters:
+- **Number of chunks**: Number of sections generated.
+- **Chunk size**: Controls the length of each chunk.
+- **Overlap**: Adds context continuity across chunks.
+
+This improves both retrieval quality and answer coherence.
+
+---
+
+## Available Retrieval Types
+
+Lyzr offers multiple retrieval mechanisms to suit different information needs:
+
+### a) **Basic Retrieval**
+- Default vector similarity-based retrieval.
+- Great for general knowledge lookups.
+
+### b) **MMR (Maximal Marginal Relevance)**
+- Balances diversity and relevance.
+- Reduces duplicate content in retrieved results.
+
+### c) **HyDE (Hypothetical Document Embeddings)**
+- Generates synthetic documents to simulate context.
+- Boosts open-ended query results.
+
+---
+
+## Retrieval-Augmented Generation (RAG)
+
+Lyzr seamlessly integrates **RAG** to generate more accurate and grounded answers using knowledge base content.
+
+### RAG Workflow
+
+1. **Query Reception**  
+   Agent receives a user question or instruction.
+2. **Document Retrieval**  
+   Top-N relevant documents are fetched using vector similarity.
+3. **Reranking & Filtering**  
+   Results are optionally refined for relevance.
+4. **Prompt Assembly**  
+   Retrieved context is combined with the original question.
+5. **Generation**  
+   LLM generates a grounded response using the assembled prompt.
+6. **Citation & Delivery**  
+   Output includes references to source documents for transparency.
+
+### Core Components
+
+- **Vector Store**: Stores semantic vectors (e.g., Pinecone, FAISS, Qdrant)
+- **Embedding Model**: Transforms content into vectors (e.g., OpenAI, Cohere)
+- **Reranker**: Improves result ordering (optional)
+- **Prompt Template**: Defines how context + question are structured
+- **Citation Module**: Appends references to the output
+
+---
+
+## Simulator Testing
+
+Once a Knowledge Base is created and populated:
+
+1. Navigate to the **Agent Simulator** in Lyzr Studio.
+2. Select the agent connected to your KB.
+3. Enter test prompts to evaluate:
+   - Retrieval accuracy
+   - Answer relevance
+   - Citation correctness
+4. Adjust retrieval type, chunking, or KB content as needed.
+
+Testing helps validate that the agent understands and uses the KB effectively before production deployment.
+
+---
+## Conclusion
+
+Lyzr’s Knowledge Base system is a robust tool for enabling intelligent, grounded, and flexible AI responses. With support for diverse file types, retrieval strategies, and RAG integration, it provides a powerful foundation for domain-specific agents.
+
+Optimize your AI workflows by:
+- Configuring proper chunking
+- Choosing the right retrieval type
+- Uploading high-quality content in batches
+- Testing thoroughly with the simulator

@@ -1,0 +1,32 @@
+---
+title: "Share Agent"
+openapi: post /agents/{agentId}/share
+---
+
+Grant other users access to a specific Voice Agent. 
+
+This endpoint is ideal for collaborative environments where multiple team members need to view, test, or manage the same agent configuration. Instead of requiring internal user IDs, you can simply invite users using their email addresses.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request. Ensure the API key belongs to a user with permission to share this agent.
+</Info>
+
+### Required Parameters & Payload
+
+1. **`agentId` (Path Parameter):** Provide the unique 24-character ID of the agent you are sharing directly in the URL.
+2. **Request Body:** You must pass a JSON payload specifying who receives access.
+   * **`email_ids`**: An array of strings containing the email addresses of the users you want to invite.
+   * **`admin_user_id`**: The ID of the administrator or owner who is authorizing this share action.
+
+### Example Usage
+
+If you want to share an agent with two developers on your team, your request body would look like this:
+
+```json
+{
+  "email_ids": [
+    "developer1@yourcompany.com",
+    "developer2@yourcompany.com"
+  ],
+  "admin_user_id": "admin_98765"
+}

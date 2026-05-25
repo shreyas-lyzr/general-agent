@@ -1,0 +1,417 @@
+---
+title: "Managing Agents"
+sidebarTitle: "Managing Agents"
+description: "Update, delete, clone, and list agents"
+---
+
+Manage agents throughout their lifecycle with operations like update, delete, clone, and list.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Get an existing agent
+agent = studio.get_agent("agent_id")
+
+# Update the agent
+agent = agent.update(temperature=0.5)
+
+# Clone the agent
+cloned = agent.clone("My Cloned Agent")
+
+# Delete the agent
+agent.delete()
+```
+
+---
+
+## Get Agent
+
+Retrieve an agent by its ID.
+
+```python
+agent = studio.get_agent(agent_id: str) -> Agent
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agent_id` | str | Yes | The agent's unique identifier |
+
+### Example
+
+```python
+agent = studio.get_agent("agent_abc123")
+
+print(f"Name: {agent.name}")
+print(f"Model: {agent.provider}/{agent.model}")
+print(f"Temperature: {agent.temperature}")
+```
+
+---
+
+## List Agents
+
+List all agents in your account.
+
+```python
+agents = studio.list_agents() -> AgentList
+```
+
+### Example
+
+```python
+agents = studio.list_agents()
+
+print(f"Total agents: {len(agents)}")
+
+for agent in agents:
+    print(f"- {agent.id}: {agent.name} ({agent.model})")
+```
+
+### Filtering Agents
+
+```python
+agents = studio.list_agents()
+
+# Find agents by name
+support_agents = [a for a in agents if "support" in a.name.lower()]
+
+# Find agents by provider
+openai_agents = [a for a in agents if a.provider_id == "openai"]
+
+# Find agents with memory
+memory_agents = [a for a in agents if a.has_memory()]
+```
+
+---
+
+## Update Agent
+
+Update an agent's configuration.
+
+```python
+agent.update(**kwargs) -> Agent
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | str | New agent name |
+| `description` | str | New description |
+| `temperature` | float | Creativity (0.0-2.0) |
+| `top_p` | float | Nucleus sampling (0.0-1.0) |
+| `role` | str | Agent role |
+| `goal` | str | Agent goal |
+| `instructions` | str | Agent instructions |
+| `response_model` | BaseModel | Pydantic model for structured outputs |
+| `file_output` | bool | Enable file generation |
+| `image_output_config` | dict | Image generation config |
+| `memory` | int | Memory message count |
+| `contexts` | List[Context] | Background contexts |
+| `reflection` | bool | Enable self-reflection |
+| `bias_check` | bool | Enable bias detection |
+| `llm_judge` | bool | Enable LLM judge |
+| `groundedness_facts` | List[str] | Facts for validation |
+| `rai_policy` | RAIPolicy | RAI guardrails policy |
+| `image_model` | ImageModelConfig | Image generation model |
+
+### Examples
+
+#### Update Basic Properties
+
+```python
+agent = agent.update(
+    name="Updated Support Bot",
+    description="Improved customer support agent",
+    temperature=0.5
+)
+```
+
+#### Update Instructions
+
+```python
+agent = agent.update(
+    role="Senior support specialist",
+    goal="Resolve complex customer issues",
+    instructions="""
+    You are a senior support specialist. Follow these guidelines:
+    1. Always greet the customer
+    2. Ask clarifying questions
+    3. Provide step-by-step solutions
+    4. Confirm resolution before closing
+    """
+)
+```
+
+#### Enable Features
+
+```python
+agent = agent.update(
+    memory=50,           # Keep 50 messages
+    reflection=True,     # Enable self-reflection
+    file_output=True     # Enable file generation
+)
+```
+
+#### Update with Structured Output
+
+```python
+from pydantic import BaseModel
+
+class Response(BaseModel):
+    answer: str
+    confidence: float
+
+agent = agent.update(response_model=Response)
+```
+
+---
+
+## Delete Agent
+
+Delete an agent permanently.
+
+```python
+agent.delete() -> bool
+```
+
+### Example
+
+```python
+agent = studio.get_agent("agent_abc123")
+success = agent.delete()
+
+if success:
+    print("Agent deleted successfully")
+```
+
+### Delete by ID
+
+```python
+studio.delete_agent("agent_abc123")
+```
+
+---
+
+## Bulk Delete
+
+Delete multiple agents at once.
+
+```python
+studio.bulk_delete_agents(agent_ids: List[str]) -> bool
+```
+
+### Example
+
+```python
+# Delete multiple agents
+agent_ids = ["agent_1", "agent_2", "agent_3"]
+studio.bulk_delete_agents(agent_ids)
+```
+
+### Delete All Agents (Careful!)
+
+```python
+# Get all agents and delete them
+agents = studio.list_agents()
+agent_ids = [agent.id for agent in agents]
+
+if agent_ids:
+    studio.bulk_delete_agents(agent_ids)
+    print(f"Deleted {len(agent_ids)} agents")
+```
+
+---
+
+## Clone Agent
+
+Create a copy of an agent with a new name.
+
+```python
+agent.clone(new_name: str = None) -> Agent
+```
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `new_name` | str | No | "{name} (Clone)" | Name for the cloned agent |
+
+### Examples
+
+#### Basic Clone
+
+```python
+original = studio.get_agent("agent_abc123")
+cloned = original.clone("My Cloned Agent")
+
+print(f"Original ID: {original.id}")
+print(f"Cloned ID: {cloned.id}")  # Different ID
+print(f"Cloned Name: {cloned.name}")  # "My Cloned Agent"
+```
+
+#### Clone with Default Name
+
+```python
+cloned = original.clone()
+print(cloned.name)  # "Original Name (Clone)"
+```
+
+#### Clone and Modify
+
+```python
+# Clone and immediately update
+cloned = original.clone("Production Agent")
+cloned = cloned.update(
+    temperature=0.3,  # More deterministic for production
+    reflection=True   # Add reflection
+)
+```
+
+---
+
+## Agent Properties
+
+Access agent properties directly:
+
+```python
+agent = studio.get_agent("agent_id")
+
+# Basic info
+print(agent.id)
+print(agent.name)
+print(agent.description)
+
+# Model config
+print(agent.provider_id)      # "openai"
+print(agent.model)            # "gpt-4o"
+print(agent.provider)         # "openai/gpt-4o"
+print(agent.temperature)
+print(agent.top_p)
+
+# Role/Goal/Instructions (with aliases)
+print(agent.role)             # Alias for agent_role
+print(agent.goal)             # Alias for agent_goal
+print(agent.instructions)     # Alias for agent_instructions
+
+# Feature checks
+print(agent.has_memory())
+print(agent.has_rai_policy())
+print(agent.has_file_output())
+print(agent.has_image_output())
+print(agent.has_reflection())
+print(agent.has_bias_check())
+print(agent.has_llm_judge())
+print(agent.has_groundedness())
+
+# Timestamps
+print(agent.created_at)
+print(agent.updated_at)
+```
+
+---
+
+## Convert to Dictionary
+
+```python
+agent = studio.get_agent("agent_id")
+
+# Get as dictionary
+data = agent.to_dict()
+
+# Access fields
+print(data["name"])
+print(data["temperature"])
+```
+
+---
+
+## Error Handling
+
+```python
+from lyzr.exceptions import NotFoundError, ValidationError, APIError
+
+try:
+    agent = studio.get_agent("nonexistent_id")
+except NotFoundError:
+    print("Agent not found")
+
+try:
+    agent = agent.update(temperature=5.0)  # Invalid value
+except ValidationError as e:
+    print(f"Validation error: {e}")
+
+try:
+    agent.delete()
+except APIError as e:
+    print(f"API error: {e}")
+```
+
+---
+
+## Examples
+
+### Agent Versioning Pattern
+
+```python
+# Create versioned agents
+v1 = studio.create_agent(
+    name="Support Bot v1",
+    provider="gpt-4o",
+    role="Support agent",
+    goal="Help customers",
+    instructions="Version 1 instructions"
+)
+
+# Clone for v2
+v2 = v1.clone("Support Bot v2")
+v2 = v2.update(
+    instructions="Version 2 instructions with improvements"
+)
+
+# Keep both versions for A/B testing
+```
+
+### Agent Migration
+
+```python
+# Get all agents
+agents = studio.list_agents()
+
+# Update all agents to new settings
+for agent in agents:
+    agent.update(
+        reflection=True,
+        temperature=0.5
+    )
+    print(f"Updated: {agent.name}")
+```
+
+### Cleanup Old Agents
+
+```python
+from datetime import datetime, timedelta
+
+agents = studio.list_agents()
+
+# Find agents older than 30 days
+old_agents = []
+cutoff = datetime.now() - timedelta(days=30)
+
+for agent in agents:
+    if agent.created_at:
+        created = datetime.fromisoformat(agent.created_at.replace("Z", "+00:00"))
+        if created < cutoff:
+            old_agents.append(agent.id)
+
+# Delete old agents
+if old_agents:
+    studio.bulk_delete_agents(old_agents)
+    print(f"Deleted {len(old_agents)} old agents")
+```

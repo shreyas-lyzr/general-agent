@@ -1,0 +1,92 @@
+---
+title: "Context Assembly"
+sidebarTitle: "Context"
+description: "Server-side context assembly combining short-term messages and long-term memories"
+---
+
+The `context()` method assembles LLM-ready context by combining recent conversation messages (short-term) with semantically relevant memories (long-term) — all server-side. Use it instead of manually calling `search()` and formatting results.
+
+## Basic Usage
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis()
+
+    context = cog.context(
+        current_messages=[
+            CognisMessage(role="user", content="What should I do this weekend?"),
+        ],
+        owner_id="user_alice",
+        session_id="sess_001",
+    )
+    # Use in your LLM prompt
+    print(context)
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    ctx = m.get_context(
+        messages=[{"role": "user", "content": "What should I do this weekend?"}],
+    )
+    # ctx["context_string"] — formatted for LLM injection
+    # ctx["short_term"] — recent session messages
+    # ctx["long_term"] — relevant extracted memories
+    print(ctx["context_string"])
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+## Parameters (Hosted)
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `current_messages` | `List[Dict \| CognisMessage]` | Required | Current turn messages |
+| `owner_id` | `str` | None | User/tenant scope |
+| `session_id` | `str` | None | Session scope |
+| `agent_id` | `str` | None | Agent scope |
+| `max_short_term_messages` | `int` | `30` | Max recent messages to include |
+| `enable_long_term_memory` | `bool` | `True` | Include semantic search results |
+| `cross_session` | `bool` | `False` | Search memories across all sessions |
+
+## With an LLM
+
+```python
+import openai
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis()
+
+user_msg = "What should I cook tonight?"
+context = cog.context(
+    current_messages=[CognisMessage(role="user", content=user_msg)],
+    owner_id="user_alice",
+    session_id="dinner_chat",
+    enable_long_term_memory=True,
+)
+
+response = openai.chat.completions.create(
+    model="gpt-4o",
+    messages=[
+        {"role": "system", "content": f"You are a helpful assistant.\n\n{context}"},
+        {"role": "user", "content": user_msg},
+    ],
+)
+```
+
+## Async
+
+```python
+context = await cog.acontext(
+    current_messages=[CognisMessage(role="user", content="Hello")],
+    owner_id="user_alice",
+)
+```

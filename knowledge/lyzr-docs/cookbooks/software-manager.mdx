@@ -1,0 +1,239 @@
+---
+title: Lyzr - Software Manager
+description: Learn how to build a software manager agent using multi agent orchestration
+---
+
+
+Objective: Create a manager style orchestration to create a detailed plan of any feature or application. It has to take in the company’s guidelines for creating a PRD, break it down into tasks and then assign it to different resources.
+
+## Pre-requisites
+
+1. Signup / login to https://studio.lyzr.ai/
+2. That’s it!
+
+## Orchestration
+
+![product_manager_orchestration.png](../assets/images/cookbooks/manager_orchestration.png)
+
+## Step 1: Let’s get those guidelines
+
+We will be creating an agent to just give us those PRD guidelines
+
+1. Navigate to Agents in the sidebar
+2. Click on the button “Create New”
+3. Create the agent
+    1. Give it a suitable name and description (PRD Guidelines Generator)
+    2. Select an LLM Provider - OpenAI
+    3. Select a model - gpt-4o-mini
+    4. Provide the following Agent Role: You are an expert product manager that give clear and concise guidelines on how to create a PRD document
+    5. Hit “Improve” button to instantly get a high quality prompt!
+    6. You can select short term memory to enable full conversation style
+    7. Create!
+    ![prd_guidelines_agent.png](../assets/images/cookbooks/prd_guidelines_agent.png)
+4. Ask the agent: Create guidelines for creating a PRD document
+5. Copy the generated guidelines
+
+## Step 2: Create a knowledge base to store the PRD guidelines of the company
+
+1. Navigate to Knowledge Base in the sidebar
+2. Click on the button “Create New”
+    1. Provide a name and description
+    2. Select Qdrant as the vector store
+    3. Select text-embedding-adda-002 as the embedding model
+3. Click “Upload” and in the Raw Text area paste the guidelines you had copied earlier
+![prd_guidelines_kb.png](../assets/images/cookbooks/prd_guidelines_kb.png)
+4. Upload
+5. You can test out retrieval right here in the knowledge base playground
+
+## Step 3: Create the PRD Generator Agent
+
+1. Navigate to Agents in the sidebar
+2. Click on the button “Create New”
+3. Create the agent
+    1. Give it a suitable name and description (PRD Generator)
+    2. Select an LLM Provider - OpenAI
+    3. Select a model - gpt-4o-mini
+    4. Provide the following Agent Role: You are an expert product manager that can create PRD documents based on the guidelines fetched from RAG
+    5. Hit “Improve” button
+    6. Select the feature “Knowledge Base” and select the knowledge base you have created
+    7. Create the agent
+    ![prd_generator_agent.png](../assets/images/cookbooks/prd_generator_agent.png)
+4. Test out the agent: Create a PRD document for a weather app
+
+## Step 4: Create the Task Breakdown Agent
+
+1. Navigate to Agents in the sidebar
+2. Click on the button “Create New”
+3. Create the agent
+    1. Give it a suitable name and description (Task breakdown agent)
+    2. Select an LLM Provider - OpenAI
+    3. Select a model - gpt-4o-mini
+    4. Provide the following Agent Role: You are an expert project analysis specialist that can transform a project description or PRD into a set of tasks in structured JSON
+    5. Hit “Improve” button
+    6. Enable “Examples” and select “JSON (For Structured Outputs)
+    7. Select “JSON”. Provide the following JSON
+    ```json
+    {
+      "tasks": [
+        {
+          "name": "",
+          "description": "",
+          "dependencies": "",
+          "priority": ""
+        }
+      ]
+    }
+    ```
+    8. Create the agent
+    ![task_breakdown_agent.png](../assets/images/cookbooks/task_breakdown_agent.png)
+4. Test out the agent: Breakdown the tasks for creating a weather app
+
+## Step 5: Create the Resource Assignment Agent
+
+1. Navigate to Agents in the sidebar
+2. Click on the button “Create New”
+3. Create the agent
+    1. Give it a suitable name and description (Resource Manager agent)
+    2. Select an LLM Provider - OpenAI
+    3. Select a model - gpt-4o-mini
+    4. Provide the following Agent Role: You are an Expert TEAM MANAGEMENT SPECIALIST. Your task is to EFFICIENTLY ASSIGN tasks to a team of diverse professionals, including product managers, designers, and engineers.
+    5. Provide the following in agent instructions (feel free to change the assignments):
+    
+    ```
+    Your task is to OPTIMIZE the task assignment process. You MUST follow these steps:
+    1. IDENTIFY the specific TASKS that need to be completed.
+    2. MATCH each TASK with the MOST SUITABLE team member based on their ROLE and EXPERTISE. This will be the assignee
+    3. Ensure that each team member, namely Jithin (Backend engineer), Manoj (Product manager), Khush (Full stack engineer), Shreyas (Full stack engineer), Naveen (QA engineer) and Umashankar (Designer), is assigned tasks that ALIGN with their SKILLS.
+    4. REVIEW and CONFIRM the task assignments to ensure BALANCE in workload and MAXIMUM EFFICIENCY.
+    5. COMMUNICATE the assignments CLEARLY to each team member, offering SUPPORT and CLARITY on their TASKS.
+    
+    By following these steps, you will ensure the team operates effectively and PROJECTS are executed SUCCESSFULLY.
+    
+    ```
+    
+    f. Enable “Examples” and select “JSON (For Structured Outputs)
+    
+    g. Select “JSON”. Provide the following JSON
+    ```json
+    {
+      "tasks": [
+        {
+          "name": "",
+          "description": "",
+          "dependencies": "",
+          "priority": "",
+          "assignee": ""
+        }
+      ]
+    }
+    ```
+    
+    h. Create the agent
+    ![resource_manager_agent.png](../assets/images/cookbooks/resource_manager_agent.png)
+    
+4. Test out the agent: Breakdown the tasks for creating a weather app
+<AccordionGroup>
+    <Accordion title="Task breakdown input">
+    ```
+    Assign the tasks for the following tasks:
+    {
+    "tasks": [
+    {
+    "name": "Define app requirements",
+    "description": "Gather and document the functional and non-functional requirements of the weather app.",
+    "dependencies": "",
+    "priority": "high"
+    },
+    {
+    "name": "Design user interface",
+    "description": "Create wireframes and design the UI/UX for the app, ensuring it is user-friendly and visually appealing.",
+    "dependencies": "Define app requirements",
+    "priority": "high"
+    },
+    {
+    "name": "Select weather API",
+    "description": "Research and choose a reliable weather API to fetch weather data.",
+    "dependencies": "Define app requirements",
+    "priority": "high"
+    },
+    {
+    "name": "Set up development environment",
+    "description": "Prepare the necessary tools and frameworks for development, including the programming language and libraries.",
+    "dependencies": "",
+    "priority": "medium"
+    },
+    {
+    "name": "Develop frontend",
+    "description": "Implement the user interface of the app based on the designs created earlier.",
+    "dependencies": "Design user interface",
+    "priority": "high"
+    },
+    {
+    "name": "Develop backend",
+    "description": "Build the server-side logic to interact with the chosen weather API and manage data.",
+    "dependencies": "Select weather API, Set up development environment",
+    "priority": "high"
+    },
+    {
+    "name": "Integrate frontend and backend",
+    "description": "Connect the frontend components with the backend services to ensure data flows correctly.",
+    "dependencies": "Develop frontend, Develop backend",
+    "priority": "high"
+    },
+    {
+    "name": "Testing",
+    "description": "Conduct functionality, usability, and performance testing to identify and fix any issues.",
+    "dependencies": "Integrate frontend and backend",
+    "priority": "high"
+    },
+    {
+    "name": "Deployment",
+    "description": "Deploy the weather app to a cloud service or an app store, ensuring it is accessible to users.",
+    "dependencies": "Testing",
+    "priority": "medium"
+    },
+    {
+    "name": "Create user documentation",
+    "description": "Prepare documentation and user guides for end-users detailing how to use the app effectively.",
+    "dependencies": "Deployment",
+    "priority": "low"
+    }
+    ]
+    }
+    ```
+    </Accordion>
+</AccordionGroup>
+
+## Step 6: Create a manager / supervisor agent
+
+1. Navigate to Agents in the sidebar
+2. Click on the button “Create New”
+3. Create the agent
+    1. Give it a suitable name and description (Software Manager)
+    2. Select an LLM Provider - OpenAI
+    3. Select a model - gpt-4o-mini
+    4. Provide the following Agent Role: You are a manager of AI agents and call upon the correct agent to get the tasks done
+    5. Provide the following Agent Instructions: 
+    
+    ```
+    You are a software manager that take in any requirement and then uses the PRD generator agent, the task breakdown agent and resource manager to develop a complete plan for the project. 
+    
+    Output the complete plan:
+    1. The complete PRD
+    2. The task breakdown along with the assignments
+    3. Anything to watch out for
+    ```
+    
+    f. Enable “Manager Agent” toggle
+    
+    g. Add the agents:
+    
+    1. PRD Generator Agent - used to develop a PRD when given a feature description
+    2. Task breakdown Agent - able to use a PRD and break it into a list of tasks in json format
+    3. Resource Manager - takes a list of tasks and is able to assign it to the correct person
+    
+    h. Create the agent
+    ![software_manager_agent.png](../assets/images/cookbooks/software_manager_agent.png)
+    i. Test it out. “Create a detailed plan for a weather app” and go to the activity tab to see the orchestration!
+    ![software_manager_activity.png](../assets/images/cookbooks/software_manager_activity.png)
+    

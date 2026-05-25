@@ -1,0 +1,396 @@
+---
+title: "Image Generation"
+sidebarTitle: "Image Generation"
+description: "Generate images with agents using Gemini or DALL-E"
+---
+
+Enable agents to generate images using Google Gemini or OpenAI DALL-E models. Images are returned as downloadable artifacts.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+from lyzr.image_models import Gemini, DallE
+
+studio = Studio(api_key="your-api-key")
+
+# Create agent with image generation
+agent = studio.create_agent(
+    name="Image Creator",
+    provider="gpt-4o",
+    role="Visual designer",
+    goal="Create images from descriptions",
+    image_model=Gemini.PRO  # Enable image generation
+)
+
+# Generate an image
+response = agent.run("Create an image of a futuristic city at sunset")
+
+# Access generated images
+if response.has_files():
+    for img in response.files:
+        print(f"Image URL: {img.url}")
+        img.download("./images/city.png")
+```
+
+---
+
+## Image Models
+
+### Google Gemini
+
+```python
+from lyzr.image_models import Gemini
+
+# Available Gemini models
+Gemini.PRO     # gemini/gemini-3-pro-image-preview - High quality
+Gemini.FLASH   # gemini/gemini-2.5-flash-image - Fast generation
+```
+
+### OpenAI DALL-E
+
+```python
+from lyzr.image_models import DallE
+
+# Available DALL-E models
+DallE.DALL_E_3      # dall-e-3 - Highest quality
+DallE.DALL_E_2      # dall-e-2 - Standard quality
+DallE.GPT_IMAGE_1   # gpt-image-1 - GPT-based
+DallE.GPT_IMAGE_1_5 # gpt-image-1.5 - Enhanced GPT-based
+```
+
+---
+
+## Enabling Image Generation
+
+### At Agent Creation
+
+```python
+from lyzr.image_models import Gemini
+
+agent = studio.create_agent(
+    name="Image Agent",
+    provider="gpt-4o",
+    role="Image creator",
+    image_model=Gemini.PRO  # Use Gemini PRO
+)
+```
+
+### Change Image Model
+
+```python
+from lyzr.image_models import DallE
+
+# Create with one model
+agent = studio.create_agent(
+    name="Image Agent",
+    provider="gpt-4o",
+    image_model=Gemini.PRO
+)
+
+# Switch to different model
+agent = agent.set_image_model(DallE.DALL_E_3)
+```
+
+---
+
+## ImageModelConfig
+
+Each image model has a configuration with:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `model` | str | Model identifier |
+| `credential_id` | str | Credential ID (preset) |
+| `provider` | ImageProvider | GOOGLE or OPENAI |
+
+```python
+from lyzr.image_models import Gemini
+
+config = Gemini.PRO
+print(config.model)          # gemini/gemini-3-pro-image-preview
+print(config.credential_id)  # lyzr_google
+print(config.provider)       # ImageProvider.GOOGLE
+```
+
+---
+
+## Working with Generated Images
+
+### Check for Images
+
+```python
+response = agent.run("Create an illustration")
+
+if response.has_files():
+    images = [f for f in response.files if f.format_type == "image"]
+    print(f"Generated {len(images)} images")
+```
+
+### Access Image Properties
+
+```python
+for img in response.files:
+    print(f"Name: {img.name}")
+    print(f"Format: {img.format_type}")
+    print(f"URL: {img.url}")
+    print(f"ID: {img.artifact_id}")
+```
+
+### Download Images
+
+```python
+# Download single image
+response.files[0].download("./output/image.png")
+
+# Download all images
+for img in response.files:
+    img.download(f"./images/{img.name}")
+```
+
+---
+
+## Examples
+
+### Product Imagery
+
+```python
+from lyzr.image_models import DallE
+
+agent = studio.create_agent(
+    name="Product Visualizer",
+    provider="gpt-4o",
+    role="Product photographer",
+    goal="Create professional product images",
+    instructions="Generate clean, professional product images on white backgrounds",
+    image_model=DallE.DALL_E_3
+)
+
+response = agent.run("""
+Create a product image:
+- Subject: Modern wireless earbuds
+- Style: Clean, minimal, white background
+- Lighting: Soft studio lighting
+- Angle: Three-quarter view showing both earbuds
+""")
+
+if response.has_files():
+    response.files[0].download("./products/earbuds.png")
+```
+
+### Marketing Graphics
+
+```python
+from lyzr.image_models import Gemini
+
+agent = studio.create_agent(
+    name="Marketing Designer",
+    provider="gpt-4o",
+    role="Marketing graphics designer",
+    goal="Create eye-catching marketing visuals",
+    image_model=Gemini.PRO
+)
+
+response = agent.run("""
+Create a social media banner for a summer sale:
+- Theme: Tropical, vibrant colors
+- Text to include: "SUMMER SALE - UP TO 50% OFF"
+- Size: Wide banner format
+- Style: Modern, energetic
+""")
+
+if response.has_files():
+    response.files[0].download("./marketing/summer_sale_banner.png")
+```
+
+### Illustration Art
+
+```python
+from lyzr.image_models import DallE
+
+agent = studio.create_agent(
+    name="Illustrator",
+    provider="gpt-4o",
+    role="Digital illustrator",
+    goal="Create beautiful illustrations",
+    instructions="Generate high-quality digital illustrations",
+    image_model=DallE.DALL_E_3
+)
+
+response = agent.run("""
+Create a children's book illustration:
+- Scene: A friendly dragon reading a book in a cozy library
+- Style: Warm, whimsical, colorful
+- Mood: Peaceful, inviting
+- Details: Soft lighting, books stacked around, comfortable reading nook
+""")
+
+if response.has_files():
+    response.files[0].download("./illustrations/dragon_reading.png")
+```
+
+### Technical Diagrams
+
+```python
+from lyzr.image_models import Gemini
+
+agent = studio.create_agent(
+    name="Diagram Creator",
+    provider="gpt-4o",
+    role="Technical illustrator",
+    goal="Create clear technical diagrams",
+    image_model=Gemini.FLASH
+)
+
+response = agent.run("""
+Create a system architecture diagram showing:
+- Frontend (React)
+- API Gateway
+- Microservices (3 services)
+- Database layer
+- Cache layer
+Use clean, professional style with labeled components
+""")
+
+if response.has_files():
+    response.files[0].download("./diagrams/architecture.png")
+```
+
+### Social Media Content
+
+```python
+from lyzr.image_models import DallE
+
+agent = studio.create_agent(
+    name="Social Media Creator",
+    provider="gpt-4o",
+    role="Social media content creator",
+    goal="Create engaging social media visuals",
+    image_model=DallE.DALL_E_3
+)
+
+prompts = [
+    "Create an Instagram post for a coffee shop featuring a latte art",
+    "Create a LinkedIn banner for a tech company",
+    "Create a Twitter header for a podcast about AI"
+]
+
+for prompt in prompts:
+    response = agent.run(prompt)
+    if response.has_files():
+        name = prompt.split()[3]  # Simplified naming
+        response.files[0].download(f"./social/{name}_post.png")
+```
+
+---
+
+## Model Comparison
+
+| Model | Quality | Speed | Best For |
+|-------|---------|-------|----------|
+| `Gemini.PRO` | High | Moderate | Professional imagery |
+| `Gemini.FLASH` | Good | Fast | Quick iterations |
+| `DallE.DALL_E_3` | Highest | Moderate | Premium images |
+| `DallE.DALL_E_2` | Good | Fast | Standard images |
+| `DallE.GPT_IMAGE_1` | Good | Fast | General purpose |
+| `DallE.GPT_IMAGE_1_5` | Better | Moderate | Enhanced quality |
+
+---
+
+## Best Practices
+
+### Detailed Prompts
+
+```python
+# Good: Detailed description
+response = agent.run("""
+Create an image of a modern office space:
+- Large windows with city view
+- Minimalist furniture in neutral colors
+- Green plants for accents
+- Natural lighting
+- A few people working at desks
+- Style: Photorealistic
+""")
+
+# Less effective: Vague description
+response = agent.run("Create an office image")
+```
+
+### Specify Style
+
+```python
+# Specify artistic style
+response = agent.run("""
+Create a portrait in the style of:
+- Impressionist painting
+- Soft brushstrokes
+- Pastel color palette
+- Natural lighting
+""")
+```
+
+### Batch Generation
+
+```python
+styles = ["photorealistic", "watercolor", "oil painting", "digital art"]
+subject = "mountain landscape at sunrise"
+
+for style in styles:
+    response = agent.run(f"Create a {style} image of a {subject}")
+    if response.has_files():
+        response.files[0].download(f"./variations/{style}_landscape.png")
+```
+
+### Error Handling
+
+```python
+try:
+    response = agent.run("Generate an image")
+
+    if response.has_files():
+        for img in response.files:
+            try:
+                img.download(f"./images/{img.name}")
+                print(f"Saved: {img.name}")
+            except Exception as e:
+                print(f"Download failed: {e}")
+                print(f"URL: {img.url}")  # Manual download fallback
+    else:
+        print("No images generated")
+        print(f"Response: {response.response}")
+
+except Exception as e:
+    print(f"Generation error: {e}")
+```
+
+---
+
+## Combined File & Image Output
+
+Enable both capabilities:
+
+```python
+from lyzr.image_models import Gemini
+
+agent = studio.create_agent(
+    name="Content Creator",
+    provider="gpt-4o",
+    role="Marketing content creator",
+    file_output=True,           # Enable file generation
+    image_model=Gemini.PRO      # Enable image generation
+)
+
+response = agent.run("""
+Create a complete marketing package:
+1. A PDF brochure with product information
+2. A hero image for the website
+3. Social media graphics
+""")
+
+for artifact in response.files:
+    if artifact.format_type == "pdf":
+        artifact.download("./marketing/brochure.pdf")
+    elif artifact.format_type == "image":
+        artifact.download(f"./marketing/images/{artifact.name}")
+```

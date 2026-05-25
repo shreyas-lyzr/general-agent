@@ -1,0 +1,40 @@
+---
+title : Create Knowledge base
+sidebarTitle : Create
+openapi: post /knowledge-base
+---
+
+---
+title: "Create Knowledge Base"
+openapi: post /v1/kb
+---
+
+**POST** `/v1/kb`  
+Create a new knowledge base collection for storing and retrieving semantic documents.
+
+## Description
+This endpoint allows you to create a knowledge base (KB) collection which can be used for vector-based semantic search. Each KB is tied to credentials for the LLM, embedding model, and vector database provider.
+
+## Request
+
+**Headers**
+- `x-api-key`: API key for authentication (required)
+- `Content-Type`: `application/json`
+
+**Request Body**
+```json
+{
+  "user_id": "string",
+  "llm_credential_id": "string",
+  "embedding_credential_id": "string",
+  "vector_db_credential_id": "string",
+  "description": "string",
+  "collection_name": "string",
+  "llm_model": "string",
+  "embedding_model": "string",
+  "vector_store_provider": "string",
+  "semantic_data_model": false,
+  "meta_data": {}
+}
+```
+

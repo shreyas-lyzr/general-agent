@@ -1,0 +1,65 @@
+---
+title: "Semantic Model In Lyzr"
+sidebarTitle: "Semantic Model"
+---
+## Conceptual Overview
+
+The Semantic Model in Lyzr is a system designed to enable intelligent understanding, documentation, and utilization of structured tabular data (such as database tables) in AI workflows. It acts as a bridge between raw relational data and human-readable, AI-consumable knowledge by semantically enriching tables with detailed context.
+
+### What is a Semantic Model?
+
+A Semantic Model adds meaning and context to structured data by attaching:
+- Table-level descriptions: High-level summaries that describe what a table represents.
+- Column-level metadata: Detailed natural language explanations for each column’s purpose and data type.
+- Data previews: Sample rows that provide real-world context to help AI systems and humans better understand usage.
+
+By embedding this enriched information into a vector store, the Semantic Model enables more powerful:
+- Retrieval-Augmented Generation (RAG) flows,
+- Search and documentation agents, and
+- Natural language interfaces over data.
+
+### Why Use Semantic Modeling?
+
+Traditional databases lack human-centric explanations, making it hard for:
+- Developers to understand schemas quickly,
+- AI models to answer data-related questions accurately,
+- Non-technical users to interact with structured data.
+
+The Semantic Model solves this by:
+1. Generating semantic documentation automatically using LLMs.
+2. Structuring the output for both human consumption and AI workflows.
+3. Saving the enhanced information in a vectorized format for fast and relevant retrieval.
+
+## Core Workflow
+
+1. Input Source: A database table with rows and schema is provided as input.
+2. LLM-Powered Inference: A language model reviews table structure and sample data to generate descriptions.
+3. Semantic Description Output:
+   - What the table is about
+   - What each column represents
+   - How the table connects to business or analytical use cases
+4. Storage & Retrieval:
+   - These semantic blocks are embedded and stored in a vector database.
+   - Future retrievals (like question answering or agent planning) can now pull contextually rich, accurate descriptions.
+
+## Components of the Semantic Model
+
+| Component           | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| Table Name          | The identifier of the dataset                                               |
+| Table Description   | A high-level explanation of the table’s content and intent                  |
+| Columns             | A list of column names, each paired with a natural language description and data type |
+| Preview Records     | Optional rows from the table used for contextual grounding                  |
+| RAG Config          | Configuration used to generate or retrieve this semantic documentation      |
+| Task Handling       | For large datasets, semantic documentation can be generated asynchronously  |
+
+## Benefits
+
+- Improved Discoverability: Semantic metadata makes it easier to search and explore datasets.
+- Agent Integration: Documentation agents and RAG models can use this metadata to answer user queries with high precision.
+- Auto-Documentation: Automatically generated explanations save time for data engineers and analysts.
+- Natural Language Access: Even non-technical users can query data through AI using the semantic layer as a knowledge base.
+
+## AI Readiness with Structure
+
+The Semantic Model ensures that your structured data is not just readable, but meaningful and navigable by both humans and machines. It turns flat schemas into rich knowledge representations that power the future of AI-driven data interfaces.

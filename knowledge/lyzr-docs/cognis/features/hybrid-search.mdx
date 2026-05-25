@@ -1,0 +1,92 @@
+---
+title: "Hybrid Search"
+sidebarTitle: "Hybrid Search"
+description: "Two-stage Matryoshka vector search + BM25 keyword matching fused with Reciprocal Rank Fusion"
+---
+
+Cognis uses a hybrid search pipeline that combines vector similarity and keyword matching for accurate retrieval. This is the same pipeline architecture used in the hosted Cognis service.
+
+## Pipeline Overview
+
+1. **Query embedding** — Generate 768D (full) and 256D (shortlist) embeddings via Gemini 2
+2. **Matryoshka vector search** — 256D shortlist pass narrows to 200 candidates, then 768D reranks for precision
+3. **BM25 keyword search** — SQLite FTS5 with Porter stemming for exact-match queries
+4. **Immediate recall** — 256D search over raw session messages for very recent context
+5. **RRF fusion** — Reciprocal Rank Fusion combines signals: 70% vector + 30% BM25
+6. **Recency boost** — Exponential decay (`0.25 * exp(-age / 120s)`) weights recent memories higher
+7. **Temporal boosting** — For time-based queries ("last week"), blends RRF (60%) with temporal relevance (40%)
+8. **Deduplication** — Content-level dedup and query echo filtering
+
+## Why Hybrid?
+
+Vector search excels at semantic similarity ("Where does she work?" matches "Alice is employed at Google") but misses exact terms. BM25 catches keyword matches that vectors may rank lower. RRF fusion gets the best of both without needing manual score calibration.
+
+## Matryoshka Embeddings
+
+Cognis uses Gemini 2's Matryoshka embeddings, which produce useful representations at multiple dimensions from a single embedding call:
+
+- **256D** — Fast candidate shortlisting. Used for the first-pass filter and immediate recall
+- **768D** — Full precision reranking. Used to re-score the shortlisted candidates
+
+This two-stage approach is faster than a single 768D search over the full collection while maintaining accuracy.
+
+## RRF Fusion
+
+Reciprocal Rank Fusion combines ranked lists without needing comparable scores:
+
+```
+RRF_score = vector_weight * (1 / (k + vector_rank)) * (k + 1)
+           + bm25_weight * (1 / (k + bm25_rank)) * (k + 1)
+```
+
+Default weights:
+- `vector_weight = 0.70`
+- `bm25_weight = 0.30`
+- `k = 10`
+
+These defaults were tuned from ablation studies on the LoCoMo benchmark. You can adjust them in `CognisConfig`:
+
+```python
+from cognis import CognisConfig
+
+config = CognisConfig(
+    vector_weight=0.60,    # Less vector emphasis
+    bm25_weight=0.40,      # More keyword emphasis
+    rrf_k=15,              # Smoother rank distribution
+)
+```
+
+## Recency Boost
+
+Recent memories get a score boost using exponential decay:
+
+```
+recency_boost = 0.25 * exp(-age_seconds / 120.0)
+```
+
+A memory created 2 minutes ago gets a ~0.09 boost; one created 10 minutes ago gets ~0.002. Configurable via `recency_boost_weight` and `recency_half_life_seconds`.
+
+## Temporal Query Detection
+
+When the query contains time references ("last week", "yesterday", "in March"), Cognis detects this and adjusts scoring:
+
+```
+final_score = 0.6 * rrf_score + 0.4 * temporal_relevance + recency_boost
+```
+
+This ensures "what did I say yesterday?" surfaces memories from the right time window, not just the most semantically similar ones.
+
+## Search Scoping
+
+- **Extracted memories** are searched globally across all sessions for the owner/agent
+- **Immediate recall** (raw messages) is scoped to the current session only
+- Both are merged, deduplicated, and scored together
+
+## Tuning Tips
+
+| Goal | Config Change |
+|------|--------------|
+| More keyword-sensitive | Increase `bm25_weight`, decrease `vector_weight` |
+| Stricter results | Increase `similarity_threshold` (default: 0.3) |
+| More candidates | Increase `shortlist_size` (default: 200) |
+| Less recency bias | Decrease `recency_boost_weight` or increase `recency_half_life_seconds` |

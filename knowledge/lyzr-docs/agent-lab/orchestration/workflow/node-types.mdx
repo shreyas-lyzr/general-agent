@@ -1,0 +1,121 @@
+---
+title: "Common Node Types"
+sidebarTitle: Node Types
+---
+
+## Common Node Types
+
+**What These Are:** The building blocks of your workflows. Each node type does a specific job in your automation pipeline.
+
+**Important:** You configure these visually in Agent Studio - the JSON examples below are just to show you what gets generated.
+
+### 1. Input Node - Define Parameters
+
+**What It Does:** Defines what data your workflow needs to run (like function parameters).
+
+**When You Use It:** Every workflow needs this to define what data comes in.
+
+**Example Use Cases:** Customer message, file upload, user preferences, priority level
+
+```json
+{
+  "name": "user_input",
+  "function": "inputs",
+  "params": {
+    "keys": {
+      "customer_message": "string",    // What the customer wrote
+      "priority": "string",            // urgent, normal, low  
+      "customer_email": "string"       // For follow-up
+    }
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag an "Input" node, then define each input field you need.
+
+---
+
+### 2. AI Agent Node - Process with AI
+
+**What It Does:** Sends data to your AI agent for processing (analysis, generation, decision-making).
+
+**When You Use It:** When you need AI to understand, analyze, or generate content from your data.
+
+**Example Use Cases:** Sentiment analysis, content generation, data extraction, classification
+
+```json
+{
+  "name": "ai_processor",
+  "function": "agent",
+  "params": {
+    "config": {
+      "agent_id": "your_agent_id",        // Which AI agent to use
+      "api_key": "your_agent_key"         // Authentication
+    },
+    "query": {"depends": "user_input"}     // Gets data from input node
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "Agent" node, select your AI agent, it automatically connects to previous nodes.
+
+**What You Get Back:** AI agent's response/analysis that you can use in subsequent nodes.
+
+---
+
+### 3. API Call Node - External Integration
+
+**What It Does:** Calls your existing systems (CRM, databases, notification services, etc.).
+
+**When You Use It:** When you need to update external systems or get data from them.
+
+**Example Use Cases:** Update Salesforce, send Slack notifications, query databases, call webhooks
+
+```json
+{
+  "name": "update_crm", 
+  "function": "api",
+  "params": {
+    "config": {
+      "url": "https://your-crm.com/api/tickets",
+      "method": "POST",                     // GET, POST, PUT, DELETE
+      "headers": {"Authorization": "Bearer token"}
+    },
+    "BODY_data": {"depends": "ai_processor"} // Sends AI agent's output
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "API" node, enter URL and method, map data from previous nodes.
+
+**Enterprise Power:** This is how you integrate workflows with ALL your existing systems.
+
+---
+
+### 4. Conditional Node - Smart Routing
+
+**What It Does:** Uses AI to make decisions about where the workflow should go next.
+
+**When You Use It:** When you need intelligent branching based on content, not just simple if/then rules.
+
+**Example Use Cases:** Route based on sentiment, escalate high-priority issues, approve/reject based on AI analysis
+
+```json
+{
+  "name": "quality_check",
+  "function": "gpt_conditional", 
+  "params": {
+    "openai_api_key": "sk-...",
+    "condition": "confidence > 0.8",         // AI evaluates this condition
+    "context": {"depends": "ai_processor"},   // Data for AI to analyze
+    "true": "auto_approve",                   // Node to go to if true
+    "false": "human_review"                   // Node to go to if false  
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "Conditional" node, set your condition, connect true/false paths to different nodes.
+
+**Why This Is Powerful:** AI makes nuanced decisions that simple if/then rules can't handle.
+
+---

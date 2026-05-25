@@ -1,0 +1,386 @@
+---
+title: "Querying Knowledge Bases"
+sidebarTitle: "Querying"
+description: "Search and retrieve content from knowledge bases"
+---
+
+Query knowledge bases to retrieve relevant content using semantic search. Use results directly or pass knowledge bases to agents for RAG-powered responses.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Get a knowledge base
+kb = studio.get_knowledge_base("kb_id")
+
+# Query directly
+results = kb.query("What is the return policy?", top_k=5)
+for result in results:
+    print(f"{result.score:.2f}: {result.text[:100]}...")
+
+# Use with an agent
+agent = studio.create_agent(name="Support", provider="gpt-4o")
+response = agent.run(
+    "What is the return policy?",
+    knowledge_bases=[kb]
+)
+```
+
+---
+
+## kb.query()
+
+Search the knowledge base for relevant content.
+
+```python
+kb.query(
+    query: str,
+    top_k: int = 5,
+    retrieval_type: str = "basic",
+    score_threshold: float = 0.0,
+    lambda_param: float = None,
+    time_decay_factor: float = None
+) -> List[QueryResult]
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `query` | str | Required | Search query string |
+| `top_k` | int | 5 | Number of results to return |
+| `retrieval_type` | str | `"basic"` | Retrieval method |
+| `score_threshold` | float | 0.0 | Minimum relevance score (0.0-1.0) |
+| `lambda_param` | float | None | Hybrid search parameter (0=keyword, 1=semantic) |
+| `time_decay_factor` | float | None | Time decay for time_aware retrieval |
+
+### Example
+
+```python
+results = kb.query(
+    "How do I reset my password?",
+    top_k=5,
+    score_threshold=0.5
+)
+
+for result in results:
+    print(f"Score: {result.score:.2f}")
+    print(f"Source: {result.source}")
+    print(f"Text: {result.text[:200]}...")
+    print("---")
+```
+
+---
+
+## Retrieval Types
+
+### basic
+
+Standard vector similarity search. Default and fastest option.
+
+```python
+results = kb.query("search term", retrieval_type="basic")
+```
+
+### mmr (Maximal Marginal Relevance)
+
+Returns diverse results by reducing redundancy. Useful when you want varied perspectives.
+
+```python
+results = kb.query(
+    "product features",
+    retrieval_type="mmr",
+    top_k=10
+)
+```
+
+### hyde (Hypothetical Document Embeddings)
+
+Generates a hypothetical answer first, then searches for similar content. Better for question-style queries.
+
+```python
+results = kb.query(
+    "What are the shipping options?",
+    retrieval_type="hyde"
+)
+```
+
+### time_aware
+
+Weights results by recency. Useful for content where freshness matters.
+
+```python
+results = kb.query(
+    "latest updates",
+    retrieval_type="time_aware",
+    time_decay_factor=0.5
+)
+```
+
+---
+
+## QueryResult Object
+
+Each result is a `QueryResult` with these properties:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `text` | str | Retrieved text chunk |
+| `score` | float | Relevance score (0.0-1.0) |
+| `source` | str | Source document name |
+| `metadata` | dict | Additional metadata |
+| `id` | str | Document/chunk ID |
+| `page` | int | Page number (for PDFs) |
+| `chunk_index` | int | Chunk index in document |
+
+### Working with Results
+
+```python
+results = kb.query("pricing", top_k=10)
+
+# Filter by score
+high_quality = [r for r in results if r.score > 0.7]
+
+# Group by source
+from collections import defaultdict
+by_source = defaultdict(list)
+for result in results:
+    by_source[result.source].append(result)
+
+# Get text only
+texts = [r.text for r in results]
+
+# Convert to dict
+data = [r.to_dict() for r in results]
+```
+
+---
+
+## Using with Agents
+
+Pass knowledge bases to `agent.run()` for RAG-powered responses.
+
+### Basic Usage
+
+```python
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    goal="Answer questions using documentation",
+    instructions="Use the knowledge base to answer accurately"
+)
+
+response = agent.run(
+    "What is the return policy?",
+    knowledge_bases=[kb]
+)
+print(response.response)
+```
+
+### Multiple Knowledge Bases
+
+```python
+product_kb = studio.get_knowledge_base("product_kb_id")
+policy_kb = studio.get_knowledge_base("policy_kb_id")
+
+response = agent.run(
+    "What is the warranty for product X?",
+    knowledge_bases=[product_kb, policy_kb]
+)
+```
+
+### Custom Runtime Configuration
+
+Use `with_config()` to customize retrieval settings per-call:
+
+```python
+response = agent.run(
+    "Find detailed specifications",
+    knowledge_bases=[
+        kb.with_config(
+            top_k=10,
+            score_threshold=0.7,
+            retrieval_type="mmr"
+        )
+    ]
+)
+```
+
+---
+
+## kb.with_config()
+
+Create a runtime configuration for custom retrieval settings.
+
+```python
+kb.with_config(
+    top_k: int = 10,
+    retrieval_type: str = "basic",
+    score_threshold: float = 0.0,
+    time_decay_factor: float = 0.4,
+    **kwargs
+) -> KnowledgeBaseRuntimeConfig
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `top_k` | int | 10 | Number of results to retrieve |
+| `retrieval_type` | str | `"basic"` | Retrieval method |
+| `score_threshold` | float | 0.0 | Minimum relevance score |
+| `time_decay_factor` | float | 0.4 | Time decay factor |
+
+### Examples
+
+```python
+# High precision queries
+precise_kb = kb.with_config(
+    top_k=3,
+    score_threshold=0.8,
+    retrieval_type="basic"
+)
+
+# Diverse results
+diverse_kb = kb.with_config(
+    top_k=10,
+    retrieval_type="mmr"
+)
+
+# Recent content priority
+recent_kb = kb.with_config(
+    retrieval_type="time_aware",
+    time_decay_factor=0.7
+)
+
+# Use in agent.run()
+response = agent.run("Question?", knowledge_bases=[precise_kb])
+```
+
+---
+
+## Examples
+
+### Q&A Bot
+
+```python
+kb = studio.get_knowledge_base("faq_kb")
+
+agent = studio.create_agent(
+    name="FAQ Bot",
+    provider="gpt-4o",
+    role="FAQ assistant",
+    goal="Answer frequently asked questions",
+    instructions="Answer based on the FAQ content. If not found, say so."
+)
+
+questions = [
+    "What are your business hours?",
+    "How do I reset my password?",
+    "What payment methods do you accept?"
+]
+
+for question in questions:
+    response = agent.run(question, knowledge_bases=[kb])
+    print(f"Q: {question}")
+    print(f"A: {response.response}\n")
+```
+
+### Document Search
+
+```python
+kb = studio.get_knowledge_base("docs_kb")
+
+# Search for relevant content
+results = kb.query(
+    "authentication flow",
+    top_k=10,
+    score_threshold=0.5
+)
+
+print(f"Found {len(results)} relevant sections:\n")
+
+for i, result in enumerate(results, 1):
+    print(f"{i}. [{result.score:.2f}] {result.source}")
+    print(f"   {result.text[:150]}...\n")
+```
+
+### Comparison Search
+
+```python
+kb = studio.get_knowledge_base("product_kb")
+
+# Use MMR for diverse results
+results = kb.query(
+    "compare product features",
+    top_k=5,
+    retrieval_type="mmr"
+)
+
+# Results will cover different aspects rather than similar content
+for result in results:
+    print(f"- {result.text[:100]}...")
+```
+
+### Time-Sensitive Search
+
+```python
+kb = studio.get_knowledge_base("news_kb")
+
+# Prioritize recent content
+results = kb.query(
+    "market trends",
+    retrieval_type="time_aware",
+    time_decay_factor=0.8,
+    top_k=5
+)
+```
+
+---
+
+## Best Practices
+
+### Query Formatting
+
+```python
+# Good: Specific questions
+results = kb.query("What is the maximum file upload size?")
+
+# Good: Topic-based search
+results = kb.query("user authentication process")
+
+# Avoid: Very short queries
+results = kb.query("size")  # Too vague
+```
+
+### Score Thresholds
+
+```python
+# For factual Q&A (high precision)
+results = kb.query(query, score_threshold=0.7)
+
+# For exploratory search (higher recall)
+results = kb.query(query, score_threshold=0.3)
+
+# Filter low-quality results after
+quality_results = [r for r in results if r.score > 0.5]
+```
+
+### Choosing top_k
+
+```python
+# Quick answers: fewer results
+results = kb.query(query, top_k=3)
+
+# Research: more results
+results = kb.query(query, top_k=20)
+
+# Agent usage: balanced
+response = agent.run(query, knowledge_bases=[
+    kb.with_config(top_k=5)
+])
+```

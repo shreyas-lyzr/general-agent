@@ -1,0 +1,486 @@
+---
+title: "Creating RAI Policies"
+sidebarTitle: "Creating Policies"
+description: "Create and manage RAI guardrail policies"
+---
+
+Create RAI policies to define safety guardrails for your agents. Policies can be created, updated, and applied to multiple agents.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+from lyzr.rai import PIIType, PIIAction, SecretsAction
+
+studio = Studio(api_key="your-api-key")
+
+# Create a policy
+policy = studio.create_rai_policy(
+    name="StandardSafety",
+    description="Standard safety guardrails for production",
+    toxicity_threshold=0.4,
+    prompt_injection=True,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT
+    }
+)
+
+print(f"Policy created: {policy.id}")
+```
+
+---
+
+## studio.create_rai_policy()
+
+```python
+studio.create_rai_policy(
+    name: str,
+    description: str,
+    toxicity_threshold: float = 0.4,
+    prompt_injection: bool = False,
+    secrets_detection: SecretsAction = SecretsAction.DISABLED,
+    pii_detection: Dict[PIIType, PIIAction] = None,
+    banned_topics: List[str] = None,
+    nsfw_check: bool = False,
+    nsfw_threshold: float = 0.8,
+    allowed_topics: Dict[str, Any] = None,
+    keywords: Dict[str, Any] = None,
+    fairness_and_bias: Dict[str, Any] = None
+) -> RAIPolicy
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `name` | str | Required | Policy name |
+| `description` | str | Required | Policy description |
+| `toxicity_threshold` | float | 0.4 | Toxicity detection threshold (0.0-1.0) |
+| `prompt_injection` | bool | False | Enable prompt injection detection |
+| `secrets_detection` | SecretsAction | DISABLED | How to handle secrets |
+| `pii_detection` | dict | None | PII type → action mapping |
+| `banned_topics` | list | None | Topics to ban |
+| `nsfw_check` | bool | False | Enable NSFW detection |
+| `nsfw_threshold` | float | 0.8 | NSFW detection threshold |
+| `allowed_topics` | dict | None | Allowed topics config |
+| `keywords` | dict | None | Keyword filtering config |
+| `fairness_and_bias` | dict | None | Fairness detection config |
+
+---
+
+## Enums
+
+### PIIType
+
+```python
+from lyzr.rai import PIIType
+
+PIIType.CREDIT_CARD    # Credit card numbers
+PIIType.EMAIL          # Email addresses
+PIIType.PHONE          # Phone numbers
+PIIType.SSN            # US Social Security Numbers
+PIIType.PERSON         # Person names
+PIIType.LOCATION       # Physical locations
+PIIType.IP_ADDRESS     # IP addresses
+PIIType.URL            # Web URLs
+PIIType.DATE_TIME      # Dates and times
+```
+
+### PIIAction
+
+```python
+from lyzr.rai import PIIAction
+
+PIIAction.BLOCK      # Block the entire message
+PIIAction.REDACT     # Replace with [REDACTED]
+PIIAction.DISABLED   # No action
+```
+
+### SecretsAction
+
+```python
+from lyzr.rai import SecretsAction
+
+SecretsAction.MASK      # Replace with asterisks
+SecretsAction.BLOCK     # Block the message
+SecretsAction.DISABLED  # No action
+```
+
+---
+
+## Creating Policies
+
+### Basic Policy
+
+```python
+policy = studio.create_rai_policy(
+    name="Basic",
+    description="Basic safety policy",
+    toxicity_threshold=0.5
+)
+```
+
+### Full-Featured Policy
+
+```python
+from lyzr.rai import PIIType, PIIAction, SecretsAction
+
+policy = studio.create_rai_policy(
+    name="Comprehensive",
+    description="Full safety coverage",
+
+    # Toxicity detection
+    toxicity_threshold=0.3,
+
+    # Prompt injection protection
+    prompt_injection=True,
+
+    # Secrets handling
+    secrets_detection=SecretsAction.MASK,
+
+    # PII handling
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT,
+        PIIType.PERSON: PIIAction.DISABLED  # Allow names
+    },
+
+    # Topic control
+    banned_topics=["politics", "religion", "competitors"],
+
+    # NSFW detection
+    nsfw_check=True,
+    nsfw_threshold=0.8
+)
+```
+
+### With Advanced Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="Advanced",
+    description="Advanced configuration",
+
+    # Allowed topics (whitelist mode)
+    allowed_topics={
+        "enabled": True,
+        "topics": ["customer_support", "products", "billing"]
+    },
+
+    # Keyword filtering
+    keywords={
+        "enabled": True,
+        "keywords": ["banned_word1", "banned_word2"]
+    },
+
+    # Fairness and bias detection
+    fairness_and_bias={
+        "enabled": True,
+        "categories": ["gender", "race", "age"]
+    }
+)
+```
+
+---
+
+## Getting Policies
+
+### Get by ID
+
+```python
+policy = studio.get_rai_policy("policy_id")
+
+print(f"Name: {policy.name}")
+print(f"Description: {policy.description}")
+print(f"Toxicity: {policy.toxicity_check}")
+print(f"PII: {policy.pii_detection}")
+```
+
+### List All Policies
+
+```python
+policies = studio.list_rai_policies()
+
+for policy in policies:
+    print(f"{policy.id}: {policy.name}")
+    print(f"  Description: {policy.description}")
+    print(f"  Created: {policy.created_at}")
+```
+
+---
+
+## Updating Policies
+
+### policy.update()
+
+```python
+policy = studio.get_rai_policy("policy_id")
+
+# Update specific settings
+policy = policy.update(
+    description="Updated description",
+    toxicity_check={
+        "enabled": True,
+        "threshold": 0.3
+    }
+)
+```
+
+### Update via Module
+
+```python
+updated_policy = studio.rai.update_policy(
+    policy_id="policy_id",
+    name="New Name",
+    toxicity_check={"enabled": True, "threshold": 0.25},
+    prompt_injection={"enabled": True, "threshold": 0.3}
+)
+```
+
+### Update Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | str | New policy name |
+| `description` | str | New description |
+| `toxicity_check` | dict | Toxicity config |
+| `prompt_injection` | dict | Injection detection config |
+| `secrets_detection` | dict | Secrets handling config |
+| `pii_detection` | dict | PII handling config |
+| `nsfw_check` | dict | NSFW detection config |
+| `allowed_topics` | dict | Allowed topics config |
+| `banned_topics` | dict | Banned topics config |
+| `keywords` | dict | Keyword filter config |
+| `fairness_and_bias` | dict | Fairness detection config |
+
+---
+
+## Deleting Policies
+
+### policy.delete()
+
+```python
+policy = studio.get_rai_policy("policy_id")
+success = policy.delete()
+
+if success:
+    print("Policy deleted")
+```
+
+### Delete via Module
+
+```python
+studio.rai.delete_policy("policy_id")
+```
+
+---
+
+## Applying to Agents
+
+### At Creation
+
+```python
+policy = studio.create_rai_policy(
+    name="SafePolicy",
+    description="Safety guardrails"
+)
+
+agent = studio.create_agent(
+    name="Safe Bot",
+    provider="gpt-4o",
+    role="Assistant",
+    rai_policy=policy  # Apply policy
+)
+```
+
+### After Creation
+
+```python
+agent = studio.create_agent(name="Bot", provider="gpt-4o")
+policy = studio.get_rai_policy("policy_id")
+
+# Add RAI policy
+agent.add_rai_policy(policy)
+```
+
+---
+
+## RAIPolicy Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | str | Policy ID |
+| `name` | str | Policy name |
+| `description` | str | Policy description |
+| `toxicity_check` | dict | Toxicity detection config |
+| `prompt_injection` | dict | Injection detection config |
+| `secrets_detection` | dict | Secrets handling config |
+| `pii_detection` | dict | PII handling config |
+| `nsfw_check` | dict | NSFW detection config |
+| `allowed_topics` | dict | Allowed topics config |
+| `banned_topics` | dict | Banned topics config |
+| `keywords` | dict | Keyword filter config |
+| `fairness_and_bias` | dict | Fairness detection config |
+| `user_id` | str | Owner user ID |
+| `created_at` | str | Creation timestamp |
+| `updated_at` | str | Last update timestamp |
+
+---
+
+## Examples
+
+### Customer Service Policy
+
+```python
+cs_policy = studio.create_rai_policy(
+    name="CustomerService",
+    description="Safe customer service interactions",
+    toxicity_threshold=0.4,
+    prompt_injection=True,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT
+    },
+    secrets_detection=SecretsAction.MASK,
+    banned_topics=["competitors", "internal_pricing"]
+)
+
+# Apply to support agents
+support_agent = studio.create_agent(
+    name="Support",
+    provider="gpt-4o",
+    role="Customer support",
+    rai_policy=cs_policy
+)
+```
+
+### Healthcare Compliance
+
+```python
+hipaa_policy = studio.create_rai_policy(
+    name="HIPAA_Compliant",
+    description="HIPAA-compliant healthcare policy",
+    toxicity_threshold=0.3,
+    prompt_injection=True,
+    pii_detection={
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.PERSON: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.DATE_TIME: PIIAction.REDACT,
+        PIIType.LOCATION: PIIAction.REDACT
+    },
+    secrets_detection=SecretsAction.BLOCK,
+    allowed_topics={
+        "enabled": True,
+        "topics": ["health_info", "appointments", "medications", "insurance"]
+    }
+)
+```
+
+### Child-Safe Content
+
+```python
+kids_policy = studio.create_rai_policy(
+    name="ChildSafe",
+    description="Appropriate for all ages",
+    toxicity_threshold=0.2,  # Very strict
+    prompt_injection=True,
+    nsfw_check=True,
+    nsfw_threshold=0.9,
+    banned_topics=[
+        "violence",
+        "adult_content",
+        "gambling",
+        "drugs",
+        "alcohol"
+    ],
+    keywords={
+        "enabled": True,
+        "keywords": ["inappropriate_word1", "inappropriate_word2"]
+    }
+)
+```
+
+### Financial Services
+
+```python
+finance_policy = studio.create_rai_policy(
+    name="FinanceCompliant",
+    description="Financial services compliance",
+    toxicity_threshold=0.4,
+    prompt_injection=True,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.PERSON: PIIAction.REDACT
+    },
+    secrets_detection=SecretsAction.BLOCK,
+    banned_topics=[
+        "specific_investment_advice",
+        "guaranteed_returns",
+        "insider_information"
+    ]
+)
+```
+
+---
+
+## Best Practices
+
+### Start Strict, Then Relax
+
+```python
+# Start with strict settings
+policy = studio.create_rai_policy(
+    name="Initial",
+    description="Starting strict",
+    toxicity_threshold=0.2,  # Very strict
+    prompt_injection=True
+)
+
+# Relax based on monitoring
+policy.update(
+    toxicity_check={"enabled": True, "threshold": 0.4}
+)
+```
+
+### Separate Policies by Use Case
+
+```python
+# Different policies for different agents
+public_policy = studio.create_rai_policy(
+    name="Public",
+    description="For public-facing agents",
+    toxicity_threshold=0.3
+)
+
+internal_policy = studio.create_rai_policy(
+    name="Internal",
+    description="For internal tools",
+    toxicity_threshold=0.6  # More relaxed
+)
+```
+
+### Document Your Policies
+
+```python
+policy = studio.create_rai_policy(
+    name="Production_v2",
+    description="""
+    Production safety policy v2 (2024-03)
+
+    Changes from v1:
+    - Lowered toxicity threshold to 0.3
+    - Added prompt injection detection
+    - Added credit card blocking
+
+    Compliance: SOC2, GDPR
+    Owner: Security Team
+    """
+)
+```

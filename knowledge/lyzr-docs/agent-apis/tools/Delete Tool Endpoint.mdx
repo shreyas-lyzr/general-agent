@@ -1,0 +1,28 @@
+---
+title: "Delete Tool Endpoint"
+openapi: delete /tools/{tool_id}
+---
+
+### Description
+This endpoint deletes a tool permanently.
+
+### Endpoint
+**DELETE** `/v3/tools/{tool_id}`
+
+### Authentication
+API Key (x-api-key) must be included in the header.
+
+### Path Parameters
+- `tool_id` (string) - The ID of the tool to delete.
+
+### Response
+A message confirming that the tool was deleted.
+
+### Example Request
+```sh
+curl -X DELETE "https://agent-prod.studio.lyzr.ai/v3/tools/tool_id" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-EXAMPLEKEY123"
+```
+
+---

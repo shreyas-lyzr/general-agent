@@ -1,0 +1,87 @@
+---
+title: "Triggers & schedules"
+sidebarTitle: "Triggers & schedules"
+---
+
+Every SuperFlow has exactly one **Trigger** node, and the trigger decides *how* runs are started. There are three ways to kick off a SuperFlow:
+
+- **Manual** — click Run from the editor. Good for testing.
+- **Webhook** — call a URL from any external system. Good for integrations.
+- **Schedule** — run on a cron expression. Good for recurring jobs.
+
+You configure all three from the same place: select the Trigger node on the canvas and pick the trigger mode in the right-side configuration drawer.
+
+## Manual run
+
+The default. Click the **Run** button in the editor toolbar (tooltip *Run SuperFlow*). The execution panel slides in from the right.
+
+In the execution panel:
+
+- Type your input in the **Simple mode** text area, or toggle to **JSON mode** for a raw JSON payload.
+- Click **Run**.
+
+Whatever you send is available to downstream nodes through expressions like `{{ $('Trigger').json.<field> }}`. LLM-style nodes will auto-pick a message from common field names (`message`, `query`, `input`, etc.) when their Query field is left empty.
+
+Manual runs are the right pattern for testing while you build a SuperFlow, or for one-off ad-hoc executions.
+
+## Webhook trigger
+
+Set the trigger mode to **Webhook** and a **webhook secret** appears on the Trigger node. The Trigger also shows the URL external systems should POST to.
+
+To run the SuperFlow from outside:
+
+```bash
+curl -X POST "https://<your-webhook-url>" \
+  -H "Content-Type: application/json" \
+  -H "X-Webhook-Secret: <your-secret>" \
+  -d '{
+    "customer_message": "I want a refund",
+    "priority": "high"
+  }'
+```
+
+The request body becomes the trigger input. If the Trigger has an input schema, the payload must match it.
+
+The webhook secret is the only thing protecting the URL from being called by anyone who knows it. Keep it private, rotate it when needed, and never commit it to source.
+
+## Schedule trigger
+
+Set the trigger mode to **Schedule** to run the SuperFlow automatically on a recurring schedule.
+
+Schedules are **crash-safe by design**. Each schedule lives in durable storage and uses durable delayed timers — not an in-memory scheduler that has to stay up. A schedule will **never miss a tick** because the service was down at the scheduled moment — queued ticks survive restarts and fire as soon as they're due once the runtime is back.
+
+This is the property you want for any recurring workload that has a real-world consequence — daily billing runs, hourly data syncs, weekly reports — where missing a single execution because of a deployment window isn't acceptable. See [Reliability](./reliability) for the full guarantees.
+
+To turn a schedule off, flip the **scheduled trigger** toggle off on the Trigger node. The schedule definition stays — flip the toggle back on to resume firing on the same schedule. There's no separate schedule entity to manage.
+
+### The visual cron builder
+
+You don't have to write a cron expression by hand — the UI provides a frequency-based picker.
+
+- **Hourly** — every N hours, at a chosen minute of the hour.
+- **Daily** — every day at a chosen time.
+- **Weekly** — pick days of the week (multi-select buttons: S M T W T F S) and a time.
+- **Monthly** — pick a day of the month (1–31) and a time.
+- **Custom** — drop down to a raw five-field cron expression (e.g. `0 9 * * 1-5` for "9am on weekdays").
+
+A minute-frequency option also exists for very frequent runs.
+
+A readable description appears below the builder (for example, *"Every weekday at 09:00"*) so you can sanity-check the schedule without parsing cron syntax.
+
+### Timezone
+
+Pick the **timezone** the schedule is evaluated in. Timezones are grouped by region (Americas, Europe & Africa, Asia & Pacific, plus UTC) in the dropdown.
+
+A `0 9 * * *` schedule in `America/New_York` and the same expression in `Asia/Kolkata` fire at different absolute times — the timezone is part of the schedule, not a display preference.
+
+### Inspecting scheduled runs
+
+Every scheduled run shows up in the **History** drawer alongside manual and webhook runs, with the same per-node outputs and replay support. See [Running, monitoring & approvals](./running-and-approvals#execution-history).
+
+## Which trigger should I use?
+
+- Building or testing → **Manual**.
+- Triggered by another system or a frontend → **Webhook**.
+- Runs on its own clock (daily report, hourly sync, weekly cleanup) → **Schedule**.
+
+You can switch trigger modes at any time — the rest of the SuperFlow (nodes, edges, configuration) stays the same.

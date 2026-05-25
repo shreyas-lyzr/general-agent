@@ -1,0 +1,46 @@
+---
+title: Data Connectors
+sidebarTitle: Data Connectors
+---
+# Data Connectors
+
+Data Connectors enable Ly zrto establish and manage secure, reliable connections to a wide variety of external data sources and services. Whether you need vector stores, relational databases, or simple file uploads, Data Connectors provide a unified interface for querying, indexing, and retrieving information.
+
+## Quick Guide: Building a Data Query Agent
+
+1. **Choose your connector** – select the data source that best fits your workload (e.g., vector store or relational DB).
+2. **Configure credentials** – supply the connection details (host, port, API key, etc.) in the Lyzr dashboard.
+3. **Test the connection** – verify connectivity and authentication before proceeding.
+4. **Index your data** – create or import indexes/vectors to enable efficient similarity search.
+5. **Write your query agent** – use Lyzr’s SDK or UI to define query prompts, filters, and retrieval parameters.
+6. **Deploy and monitor** – launch your agent and track usage metrics to ensure performance and reliability.
+
+---
+
+## Available Connectors
+
+Below is the list of supported connectors. Click **Add** to begin configuration or **View Documentation** for detailed setup instructions.
+
+| Connector       | Type                | Description                                                           |
+| --------------- | ------------------- | --------------------------------------------------------------------- |
+| **Qdrant**      | Vector Store        | Open-source vector database for high-performance similarity search.   |
+| **Weaviate**    | Vector Store        | Scalable, GraphQL-enabled vector database with multimodal support.    |
+| **PG-Vector**   | Vector Store        | PostgreSQL extension for storing and querying vector embeddings.      |
+| **Singlestore** | Vector DB           | Managed distributed SQL database with vector search capabilities.     |
+| **Redshift**    | Data Warehouse      | Fully managed, petabyte-scale cloud data warehouse by AWS.            |
+| **Postgres**    | Relational Database | Open-source, object-relational database system extending SQL.         |
+| **MySQL**       | Relational Database | Widely used open-source RDBMS developed by Oracle.                    |
+| **BigQuery**    | Data Warehouse      | Serverless, scalable multi-cloud data warehouse by Google Cloud.      |
+| **File Upload** | File Storage        | Upload CSV, Excel, or JSON files as ad-hoc data sources.              |
+| **MongoDB**     | NoSQL Database      | Document-oriented NoSQL DB for flexible, schema-less data storage.    |
+| **Azure SQL**   | Relational Database | Fully managed relational DB service by Microsoft Azure. (Coming soon) |
+
+
+## Getting Started
+
+1. Navigate to **Data Connectors** in the Lyzr sidebar.
+2. Click **Add** next to your desired connector.
+3. Fill in the connection details and test connectivity.
+4. Once connected, you can begin indexing data or write queries directly in the Lyzr Query Editor.
+
+For more examples and advanced configurations, refer to the [Lyzr Developer Documentation](#).

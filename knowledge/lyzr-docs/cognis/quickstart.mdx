@@ -1,0 +1,143 @@
+---
+title: "Quickstart"
+sidebarTitle: "Quickstart"
+description: "Install Cognis and run your first memory operations in 3 minutes"
+---
+
+## 1. Install
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```bash
+    pip install lyzr-adk
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```bash
+    pip install lyzr-cognis
+    ```
+  </Tab>
+</Tabs>
+
+## 2. Set API Keys
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```bash
+    export LYZR_API_KEY="your-lyzr-api-key"
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```bash
+    export GEMINI_API_KEY="your-gemini-key"    # For embeddings
+    export OPENAI_API_KEY="your-openai-key"    # For fact extraction
+    ```
+  </Tab>
+</Tabs>
+
+## 3. Add Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis()
+
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content="My name is Alice. I love hiking and I'm vegetarian."),
+            CognisMessage(role="assistant", content="Nice to meet you, Alice!"),
+        ],
+        owner_id="user_alice",
+    )
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    result = m.add([
+        {"role": "user", "content": "My name is Alice. I love hiking and I'm vegetarian."},
+        {"role": "assistant", "content": "Nice to meet you, Alice!"},
+    ])
+    print(result["message"])
+    # "Extracted 3 memories from 2 messages"
+    ```
+  </Tab>
+</Tabs>
+
+Cognis automatically extracts discrete facts from the conversation and stores them as searchable memory records.
+
+## 4. Search Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    results = cog.search(query="What does Alice eat?", owner_id="user_alice", limit=5)
+    for r in results:
+        print(f"  {r.content}  (score: {r.score})")
+    # → Alice is vegetarian  (score: 0.89)
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    resp = m.search("What does Alice eat?", limit=5)
+    for r in resp["results"]:
+        print(f"  {r['content']}  (score: {r['score']})")
+    # → Alice is vegetarian  (score: 0.8712)
+    ```
+  </Tab>
+</Tabs>
+
+## 5. Get Context for Your LLM
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    context = cog.context(
+        current_messages=[CognisMessage(role="user", content="Recommend a restaurant")],
+        owner_id="user_alice",
+    )
+    # Use context in your LLM system prompt
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    ctx = m.get_context(
+        messages=[{"role": "user", "content": "Recommend a restaurant"}]
+    )
+    print(ctx["context_string"])
+    # "Relevant memories:\n- Alice is vegetarian\n- ..."
+
+    m.close()  # Required for OSS
+    ```
+  </Tab>
+</Tabs>
+
+## What Just Happened
+
+1. Cognis stored your raw messages
+2. The LLM extracted discrete facts and auto-categorized them (identity, preferences, interests, etc.)
+3. Facts were embedded and indexed for hybrid search (vector + keyword)
+4. Search used Reciprocal Rank Fusion: 70% vector similarity + 30% BM25 keyword matching
+5. `context` / `get_context` assembled both short-term messages and long-term memories for LLM use
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/cognis/configuration">
+    API keys, init params, search weight tuning
+  </Card>
+  <Card title="Add Memories" icon="plus" href="/cognis/add-memories">
+    Full method reference for storing conversations
+  </Card>
+  <Card title="Features" icon="sparkles" href="/cognis/features/hybrid-search">
+    Hybrid search, categories, session management, and more
+  </Card>
+  <Card title="Cookbooks" icon="utensils" href="/cognis/cookbooks/overview">
+    CrewAI, LangChain, LangGraph, and Agno integrations
+  </Card>
+</CardGroup>

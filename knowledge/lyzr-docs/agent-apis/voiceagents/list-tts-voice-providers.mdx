@@ -1,0 +1,20 @@
+---
+title: "List TTS Voice Providers"
+openapi: get /config/tts-voice-providers
+---
+
+Retrieve a list of all Text-to-Speech (TTS) voice providers available for your Voice Agents, along with their supported querying capabilities.
+
+When building a custom dashboard where users can select a voice for their agent, this endpoint tells you exactly which providers are active and what kind of search interface you should render for them.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Understanding the Provider Metadata
+
+A successful `200 OK` response returns a `providers` array. Each object in this array contains critical configuration flags:
+
+* **`configured`**: A boolean indicating if the provider is fully set up (e.g., the necessary API keys are present in your environment). If this is `false`, you may want to disable or hide this provider in your UI.
+* **`supportsSearch`**: If `true`, the provider's API allows you to pass custom text strings to search for specific voice names or characteristics.
+* **`supportsFacets`**: If `true`, the provider supports advanced filtering categories (facets) such as filtering by "Accent: British", "Gender: Female", or "Tone: Conversational".

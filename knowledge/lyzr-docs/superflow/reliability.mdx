@@ -1,0 +1,138 @@
+---
+title: "Reliability & durable execution"
+sidebarTitle: "Reliability"
+---
+
+SuperFlow is built for mission-critical workloads. Every step in a running SuperFlow is **journaled to durable storage**, every successful step **runs exactly once**, and every in-flight run **survives crashes, restarts, and deployments** without losing work or replaying side effects.
+
+This page explains the guarantees SuperFlow makes, what they mean in practice, and how to configure them.
+
+## The guarantee in one line
+
+> **Once a step in your SuperFlow completes successfully, it will never run again — even if the service restarts mid-flow.**
+
+That's the property that makes SuperFlow safe for billing pipelines, customer-facing automations, multi-day approval flows, and anything else where you can't afford to lose work or double-charge.
+
+## Why durability matters
+
+Without a durable engine, a workflow that crashes halfway through has to either restart from scratch (re-running every step, double-charging customers, re-sending emails) or be manually nursed back to a consistent state (slow, error-prone, doesn't scale).
+
+SuperFlow eliminates the choice. The engine writes a **journal entry** for every meaningful step — every LLM call, every tool call, every HTTP request, every code execution, every loop iteration. If the service is restarted while a SuperFlow is running:
+
+1. The run resumes from where it left off.
+2. Already-completed steps **do not re-execute** — their journaled outputs are used directly.
+3. Only the in-flight step (and any that come after it) actually run.
+
+This is true for service crashes, planned deployments, infrastructure rotations — anything that takes the runtime down.
+
+## What's durable
+
+The full step-by-step lifecycle is captured:
+
+- **LLM calls** — every model invocation is journaled. On replay, the recorded response is reused; the model is not called again.
+- **Tool calls** — every tool invocation. Idempotent or not, a tool that already ran successfully won't be re-fired.
+- **HTTP requests** — request and response are captured. No double-POST on retries.
+- **Code nodes** — JavaScript execution results are journaled.
+- **Pre- and post-processing** — guardrails, memory writes, knowledge-base queries — each step recorded.
+- **Loop iterations** — every iteration of a Loop body is recorded individually. A 1000-item loop that crashes on item 743 resumes at 743, not at 1.
+- **Sub-workflow calls** — Execute Workflow runs are durably tracked.
+- **Approval waits** — HITL approvals can wait days or weeks without consuming resources or losing state.
+- **Scheduled triggers** — cron schedules run on crash-safe timers (more below).
+
+## Exactly-once side effects
+
+The combination of "step result is journaled before being returned" and "completed steps are never re-executed" gives you **exactly-once execution** of each step from the engine's point of view.
+
+In plain terms:
+
+- A customer never gets charged twice because the workflow restarted.
+- An email never gets sent twice because the LLM call after it failed.
+- A downstream API never sees the same POST body twice in a single run.
+
+External systems still control their own idempotency, of course — if you POST to a service that doesn't deduplicate, two separate *runs* of your SuperFlow will both call it. But within a single run, every step is guaranteed to fire at most once.
+
+## Per-node retry on failure
+
+For transient failures — a flaky external API, a model timeout, a momentary network blip — every retryable node can be configured with automatic retries.
+
+In a node's configuration drawer, expand the **Retry** section and toggle **Retry on failure** on. Then set:
+
+- **Max attempts** — how many times the engine will retry before giving up.
+- **Wait between attempts** — backoff delay in milliseconds.
+
+Retries are themselves durable. The engine remembers how many times it has tried a step, so retries continue counting correctly even if the service restarts mid-backoff. When the max-attempt count is exceeded, the node fails permanently and the entire run errors out. The failed run is preserved in History so you can diagnose and re-run.
+
+## Long waits cost nothing
+
+Because state lives in durable storage and not in a hot-running process, a SuperFlow that's waiting:
+
+- For a [human to approve](./running-and-approvals#human-in-the-loop-approvals) something
+- For a [scheduled trigger](./triggers-and-schedules#schedule-trigger) to fire
+- For a [Wait node](./node-reference#quick-reference-table) to elapse
+
+...consumes essentially no resources. A run can wait hours, days, or weeks for an approval without holding a thread or a memory footprint. When the approval comes in (or the scheduled time arrives), the run resumes from exactly where it paused.
+
+This makes SuperFlow viable for slow-by-nature processes — onboarding flows that wait on customer action, escalation paths that wait on managers, periodic syncs that run once a month.
+
+## Lifecycle controls are durable too
+
+The **Pause**, **Resume**, and **Terminate** buttons on a running SuperFlow operate against durable state:
+
+- **Pause** records the request in durable storage. The run stops at the next inter-node boundary and stays paused even if the service restarts.
+- **Resume** picks the run up where it stopped — completed nodes stay completed, the next pending node starts fresh.
+- **Terminate** cancels the run definitively and marks it cancelled in history. Any in-flight step is cancelled; nothing else runs.
+
+A run can be paused for as long as you want before being resumed, and pause/resume cycles are unlimited.
+
+## Crash-safe scheduled triggers
+
+Cron-based schedules don't rely on a "scheduler process" that has to stay up. Each schedule lives in durable storage and uses **delayed self-sends** — the schedule queues its next tick at creation, and that queued tick survives every kind of outage.
+
+What this means for you:
+
+- A schedule will not "miss a tick" because the service was down at the scheduled moment. When the runtime comes back, queued ticks fire as soon as they're due.
+
+For more on managing schedules, see [Triggers & schedules](./triggers-and-schedules).
+
+## Replay every past run
+
+Every run that has ever executed — successful, failed, paused, cancelled — is preserved with its full per-node output. Open the **History** drawer in the editor to:
+
+- Inspect what every node received and emitted on any past run.
+- Re-run the exact same input through the latest version of the SuperFlow.
+- Re-run from a specific node to retry only the tail of a failed run (without re-paying for the steps that already succeeded).
+
+This is the production-grade observability layer underneath the engine — you don't need to bolt on logging, span collection, or output capture. It's already there for every run.
+
+## Observability
+
+In addition to per-node JSON outputs in History, SuperFlow emits **OpenTelemetry traces** for every run end-to-end:
+
+- The HTTP request that triggered the run is the root span.
+- Each node, each LLM call, each tool call, each pre/post-processing module gets its own span.
+- Token counts, model names, providers, durations, and costs are attached as span attributes.
+
+Traces flow into the standard Lyzr trace pipeline alongside agent traces, so a SuperFlow that calls an agent that calls a tool shows up as one continuous trace from trigger to completion.
+
+## Mission-critical checklist
+
+If you're putting a SuperFlow on a production path, here's a short checklist:
+
+- **Configure retries** on every node that calls an external system (HTTP Request, AI Agent, Tool nodes). 3 attempts with exponential backoff is a reasonable default.
+- **Use Wait for Approval** for any step with irreversible real-world side effects (payments, customer-facing emails, deletions). Pair it with a clear approval message that contains the relevant upstream context.
+- **Set retry attempts generously** on nodes that talk to flaky systems — you can't branch around a permanent failure, so retries are your last line of defense before the run errors out.
+- **Lock down webhook secrets.** If your trigger is a webhook, rotate the secret on team changes and never commit it to source.
+- **Watch executions in History** while rolling out a new SuperFlow. Live monitoring + replay together catch issues fast.
+- **Schedule with a buffer.** For cron-based workloads, leave room for retries and downstream slowness so a slow run doesn't overlap with the next tick.
+
+## What this enables
+
+The combined result is that you can build SuperFlows that:
+
+- Pay invoices.
+- Send customer-facing communication.
+- Run for days or weeks waiting on humans.
+- Survive restarts, deployments, and infrastructure events without operator intervention.
+- Are observable end-to-end without setting up tracing yourself.
+
+These are not just convenience features — they're the difference between a workflow tool that's safe in production and one that isn't.

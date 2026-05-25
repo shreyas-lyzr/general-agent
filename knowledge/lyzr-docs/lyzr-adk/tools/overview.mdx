@@ -1,0 +1,303 @@
+---
+title: "Tools Overview"
+sidebarTitle: "Overview"
+description: "Enable agents to execute local functions"
+---
+
+Local tools allow agents to call Python functions during conversations. Define functions, add them to agents, and the agent will execute them when needed.
+
+## Quick Start
+
+The simplest way to add tools is to pass a function directly:
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Define a function with type hints and docstring
+def get_weather(city: str) -> str:
+    """Get current weather for a city"""
+    # Your implementation
+    return f"Weather in {city}: Sunny, 72°F"
+
+def search_products(query: str, limit: int = 10) -> list:
+    """Search products by query"""
+    # Your implementation
+    return [{"name": "Product A", "price": 29.99}]
+
+# Create agent
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Help users with various tasks"
+)
+
+# Add functions as tools - SDK auto-infers parameters from type hints
+agent.add_tool(get_weather)
+agent.add_tool(search_products)
+
+# Run - agent will call the functions when needed
+response = agent.run("What's the weather in Tokyo?")
+print(response.response)  # Uses get_weather("Tokyo") internally
+```
+
+<Note>
+When passing a function directly, the ADK automatically infers the tool name, description (from docstring), and parameters (from type hints).
+</Note>
+
+---
+
+## Two Ways to Add Tools
+
+### 1. Simple Function (Recommended)
+
+Just pass a typed function with a docstring:
+
+```python
+def calculate_tip(bill: float, percentage: int = 18) -> float:
+    """Calculate tip amount for a bill"""
+    return bill * percentage / 100
+
+agent.add_tool(calculate_tip)
+```
+
+### 2. Tool Class (Advanced)
+
+For more control over the tool schema:
+
+```python
+from lyzr.tools import Tool
+
+def get_weather(city: str) -> str:
+    """Get weather for a city"""
+    return f"Weather in {city}: Sunny, 72°F"
+
+weather_tool = Tool(
+    name="get_weather",
+    description="Get current weather for a city. Returns temperature and conditions.",
+    parameters={
+        "type": "object",
+        "properties": {
+            "city": {"type": "string", "description": "City name (e.g., Tokyo, New York)"}
+        },
+        "required": ["city"]
+    },
+    function=get_weather
+)
+
+agent.add_tool(weather_tool)
+```
+
+Use the Tool class when you need:
+- Custom parameter descriptions
+- Specific JSON schema constraints
+- Enum values for parameters
+- More detailed tool descriptions
+
+---
+
+## How Local Tools Work
+
+1. **Define**: Create a Python function with type hints and docstring
+2. **Add**: Attach the function to an agent with `add_tool()`
+3. **Execute**: Agent automatically calls the function when appropriate
+
+```
+User Query → Agent → Decides to use tool → Executes function → Returns result → Agent continues
+```
+
+---
+
+## Key Components
+
+### Tool
+
+The `Tool` class wraps a function for agent use:
+
+```python
+from lyzr.tools import Tool
+
+tool = Tool(
+    name="unique_name",           # Unique identifier
+    description="What it does",   # For LLM understanding
+    parameters={...},             # JSON schema for inputs
+    function=my_function          # Python function to call
+)
+```
+
+### ToolRegistry
+
+Manages multiple tools for an agent:
+
+```python
+from lyzr.tools import ToolRegistry
+
+registry = ToolRegistry()
+registry.add(tool1)
+registry.add(tool2)
+
+# List all tools
+for tool in registry.list():
+    print(tool.name)
+```
+
+### LocalToolExecutor
+
+Handles tool execution with error handling:
+
+```python
+from lyzr.tools import LocalToolExecutor
+
+executor = LocalToolExecutor(registry)
+result = await executor.execute("tool_name", {"arg": "value"})
+```
+
+---
+
+## Tool Parameters
+
+Tools use JSON Schema to define their parameters:
+
+```python
+parameters = {
+    "type": "object",
+    "properties": {
+        "city": {
+            "type": "string",
+            "description": "City name"
+        },
+        "units": {
+            "type": "string",
+            "description": "Temperature units",
+            "enum": ["celsius", "fahrenheit"]
+        }
+    },
+    "required": ["city"]
+}
+```
+
+### Supported Types
+
+| JSON Type | Python Type | Example |
+|-----------|-------------|---------|
+| `string` | `str` | `"hello"` |
+| `integer` | `int` | `42` |
+| `number` | `float` | `3.14` |
+| `boolean` | `bool` | `true` |
+| `array` | `list` | `[1, 2, 3]` |
+| `object` | `dict` | `{"key": "value"}` |
+
+---
+
+## Auto-Inference
+
+Parameters can be automatically inferred from function signatures:
+
+```python
+from lyzr.tools.local import infer_parameters_from_function
+
+def search_products(query: str, max_results: int = 10) -> list:
+    """Search products by query"""
+    pass
+
+params = infer_parameters_from_function(search_products)
+# {
+#     "type": "object",
+#     "properties": {
+#         "query": {"type": "string", "description": "Parameter query"},
+#         "max_results": {"type": "integer", "description": "Parameter max_results"}
+#     },
+#     "required": ["query"]
+# }
+```
+
+---
+
+## Use Cases
+
+### Database Queries
+
+```python
+def query_database(sql: str) -> dict:
+    """Execute SQL query"""
+    # Your database logic
+    return {"results": [...]}
+
+db_tool = Tool(
+    name="query_database",
+    description="Query the product database",
+    parameters={
+        "type": "object",
+        "properties": {
+            "sql": {"type": "string", "description": "SQL query to execute"}
+        },
+        "required": ["sql"]
+    },
+    function=query_database
+)
+```
+
+### API Integration
+
+```python
+def send_email(to: str, subject: str, body: str) -> str:
+    """Send an email"""
+    # Your email logic
+    return "Email sent successfully"
+
+email_tool = Tool(
+    name="send_email",
+    description="Send an email to a recipient",
+    parameters={
+        "type": "object",
+        "properties": {
+            "to": {"type": "string", "description": "Recipient email"},
+            "subject": {"type": "string", "description": "Email subject"},
+            "body": {"type": "string", "description": "Email body"}
+        },
+        "required": ["to", "subject", "body"]
+    },
+    function=send_email
+)
+```
+
+### Calculations
+
+```python
+def calculate_mortgage(principal: float, rate: float, years: int) -> dict:
+    """Calculate mortgage payment"""
+    monthly_rate = rate / 100 / 12
+    payments = years * 12
+    payment = principal * (monthly_rate * (1 + monthly_rate)**payments) / ((1 + monthly_rate)**payments - 1)
+    return {"monthly_payment": round(payment, 2)}
+
+mortgage_tool = Tool(
+    name="calculate_mortgage",
+    description="Calculate monthly mortgage payment",
+    parameters={
+        "type": "object",
+        "properties": {
+            "principal": {"type": "number", "description": "Loan amount"},
+            "rate": {"type": "number", "description": "Annual interest rate (%)"},
+            "years": {"type": "integer", "description": "Loan term in years"}
+        },
+        "required": ["principal", "rate", "years"]
+    },
+    function=calculate_mortgage
+)
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Creating Tools" icon="wrench" href="/lyzr-adk/tools/creating-tools">
+    Learn how to create and configure tools
+  </Card>
+  <Card title="Tool Execution" icon="play" href="/lyzr-adk/tools/tool-execution">
+    Understand tool execution and error handling
+  </Card>
+</CardGroup>

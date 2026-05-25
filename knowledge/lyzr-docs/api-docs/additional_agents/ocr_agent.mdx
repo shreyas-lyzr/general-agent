@@ -1,0 +1,65 @@
+---
+title: "OCR Agent"
+---
+
+## 📄 POST `/extract`
+
+Endpoint: https://lyzr-ocr.lyzr.app/extract
+
+### Summary
+This API provides endpoints for a scalable and production-ready document processing service. It supports a PDF extraction endpoint that takes a PDF file, processes its content, and returns extracted data. Designed with multi-tenant architecture in mind via `organization_id`.
+
+### Description
+Upload a PDF file and extract relevant data. Requires `organization_id` as a query parameter and a file upload via `multipart/form-data`.
+
+### Query Parameters
+
+| Name            | Type   | Required | Description        |
+|-----------------|--------|----------|--------------------|
+| organization_id | string | ✅       | ID of the organization |
+
+### Request Body
+
+Content type: `multipart/form-data`
+
+| Name  | Type   | Format | Required | Description |
+|-------|--------|--------|----------|-------------|
+| file  | string | binary | ✅       | PDF file to extract data from |
+
+### Responses
+
+| Status Code | Description         |
+|-------------|---------------------|
+| 200         | Successful Response |
+| 422         | Validation Error    |
+
+### **Response:**
+```json
+{
+  "status": "success",
+  "data": {
+    "1": {
+      "page": 1,
+      "content": ""
+    },
+    "2"{
+      "page": 1,
+      "content": ""
+    },...
+  },
+  "total_actions": 2
+}
+```
+
+#### Validation Error Schema
+
+```json
+{
+  "detail": [
+    {
+      "loc": ["string", 0],
+      "msg": "string",
+      "type": "string"
+    }
+  ]
+}

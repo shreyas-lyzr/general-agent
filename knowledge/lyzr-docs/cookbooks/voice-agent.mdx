@@ -1,0 +1,536 @@
+---
+title: "Build a Voice Support Agent with Lyzr"
+sidebarTitle: "Lyzr - Voice Agent"
+---
+
+This cookbook walks you through building **Nexus**, a Level 1 IT support voice agent, end to end: pick the models, save the agent, run a live session in a browser, and fetch transcripts.
+
+## What you'll build
+
+Nexus greets the caller, asks whether they're on Mac or Windows, and walks them through Level 1 troubleshooting steps. By the end of this guide you'll have:
+
+- a saved agent on the Lyzr Voice API (reusable across sessions),
+- a Python script that starts and ends sessions,
+- a React component that connects a browser microphone to a live session,
+- a script that pulls the transcript and latency metrics for any past call.
+
+## Prerequisites
+
+- A Lyzr API key. Set it as `LYZR_API_KEY` for the Python scripts.
+- Python with `requests` (`pip install requests`).
+- For the browser section: a React app that can install npm/pnpm packages.
+
+```bash
+export LYZR_API_KEY="your-lyzr-api-key"
+export VOICE_API_BASE_URL="https://voice-livekit.studio.lyzr.ai/v1"
+```
+
+
+## 1. Pick your models and a voice
+
+Pipeline mode runs three separate models — STT, LLM, TTS — plus a TTS voice. Before creating the agent, ask the API which options are available so you can pick concrete values for each.
+
+```python
+import os
+from urllib.parse import urlencode
+
+import requests
+
+API_KEY = os.environ["LYZR_API_KEY"]
+BASE_URL = os.getenv("VOICE_API_BASE_URL", "https://voice-livekit.studio.lyzr.ai/v1")
+
+HEADERS = {"x-api-key": API_KEY, "accept": "application/json"}
+
+
+def get_json(path: str, params=None) -> dict:
+    query = f"?{urlencode(params)}" if params else ""
+    response = requests.get(f"{BASE_URL}{path}{query}", headers=HEADERS, timeout=30)
+    response.raise_for_status()
+    return response.json()
+
+
+def main() -> None:
+    # Pick the first TTS provider that's configured for your account.
+    providers = get_json("/config/tts-voice-providers")["providers"]
+    active_provider = next(p["providerId"] for p in providers if p.get("configured"))
+
+    # Pick a model for each pipeline stage.
+    options = get_json("/config/pipeline-options")
+    stt = options["stt"][0]["models"][0]["id"]
+    llm = options["llm"][0]["models"][0]["id"]
+    tts_provider = next(p for p in options["tts"] if p["providerId"] == active_provider)
+    tts_model = tts_provider["models"][0]["id"]
+
+    # Pick a voice for the chosen provider.
+    voices = get_json(
+        "/config/tts-voices",
+        {"providerId": active_provider, "limit": 5},
+    )["voices"]
+    voice = voices[0]
+
+    print(f"STT:   {stt}")
+    print(f"LLM:   {llm}")
+    print(f"TTS:   {tts_model} ({active_provider})")
+    print(f"Voice: {voice['name']} ({voice['id']})")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+You should see something like:
+
+```text
+STT:   assemblyai/universal-streaming:en
+LLM:   openai/gpt-4o-mini
+TTS:   cartesia/sonic-3 (cartesia)
+Voice: Friendly Reading Man (9626c31c-bec5-4cca-baa8-f8ba9e84c8bc)
+```
+
+Hold onto the voice ID — you'll pass it as `engine.voice_id` in the next step.
+
+<Info>
+  This script takes the happy path: the first configured provider, the first model in each list, the first voice. In production code, handle empty results explicitly and let users pick a voice rather than auto-selecting one.
+</Info>
+
+## 2. Create the Nexus agent
+
+`POST /agents` saves an agent definition so you don't have to send the whole config on every session. The response includes `agent.id` — store it; the rest of this cookbook references it.
+
+```python
+import json
+import os
+
+import requests
+
+API_KEY = os.environ["LYZR_API_KEY"]
+BASE_URL = os.getenv("VOICE_API_BASE_URL", "https://voice-livekit.studio.lyzr.ai/v1")
+
+HEADERS = {
+    "x-api-key": API_KEY,
+    "accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+
+def create_nexus_agent() -> str:
+    payload = {
+        "config": {
+            # Identity and persona.
+            "agent_name": "Nexus - IT Support",
+            "agent_description": "Level 1 technical support voice agent",
+            "prompt": (
+                "You are Nexus, a Level 1 IT support assistant. Keep answers concise "
+                "and easy to understand over an audio call. Always ask whether the "
+                "user is on Windows or Mac before giving troubleshooting steps."
+            ),
+            "conversation_start": {
+                "who": "ai",
+                "greeting": (
+                    "Say, \"Hi, I'm Nexus, your IT support assistant. "
+                    "Are you calling about a Mac or Windows computer today?\""
+                ),
+            },
+            # Models — fill in the IDs you picked in step 1.
+            "engine": {
+                "kind": "pipeline",
+                "stt": "assemblyai/universal-streaming:en",
+                "tts": "cartesia/sonic-3",
+                "llm": "openai/gpt-4o-mini",
+                "voice_id": "9626c31c-bec5-4cca-baa8-f8ba9e84c8bc",
+                "language": "en",
+            },
+            # Optional polish — turn detection, VAD, recording, ambience.
+            "turn_detection": "english",
+            "vad_enabled": True,
+            "noise_cancellation": {"enabled": True, "type": "auto"},
+            "audio_recording_enabled": True,
+            "background_audio": {
+                "enabled": True,
+                "ambient": {
+                    "enabled": True,
+                    "source": "OFFICE_AMBIENCE",
+                    "volume": 0.4,
+                },
+                "tool_call": {
+                    "enabled": True,
+                    "sources": [
+                        {"source": "KEYBOARD_TYPING_TRUNC", "volume": 0.6, "probability": 1}
+                    ],
+                },
+            },
+        }
+    }
+
+    response = requests.post(
+        f"{BASE_URL}/agents", headers=HEADERS, json=payload, timeout=30
+    )
+
+    if response.status_code != 201:
+        print(json.dumps(response.json(), indent=2))
+        response.raise_for_status()
+
+    agent_id = response.json()["agent"]["id"]
+    print(f"Created agent: {agent_id}")
+    return agent_id
+
+
+if __name__ == "__main__":
+    create_nexus_agent()
+```
+
+Export the printed ID so the next scripts can pick it up:
+
+```bash
+export LYZR_VOICE_AGENT_ID="agent_..."
+```
+
+<Info>
+  Only `agent_name`, `prompt`, and `engine` are strictly required. Everything below the second comment in the payload is polish — drop it for a stripped-down agent and add it back as you need it.
+</Info>
+
+## 3. Start and end a session
+
+Starting a session dispatches the Python worker, creates a LiveKit room, and returns the credentials your client needs to join.
+
+**Request to `POST /sessions/start`:**
+
+```json
+{
+  "userIdentity": "user_123",
+  "agentId": "your-agent-id"
+}
+```
+
+**Response:**
+
+```json
+{
+  "userToken": "livekit-client-token",
+  "roomName": "room-...",
+  "sessionId": "uuid",
+  "livekitUrl": "wss://...",
+  "agentDispatched": true,
+  "agentConfig": {
+    "engine": {
+      "kind": "pipeline",
+      "stt": "assemblyai/universal-streaming:en",
+      "tts": "cartesia/sonic-3",
+      "llm": "openai/gpt-4o-mini",
+      "voice_id": "9626c31c-bec5-4cca-baa8-f8ba9e84c8bc"
+    },
+    "tools": []
+  }
+}
+```
+
+You'll feed `livekitUrl` and `userToken` into the LiveKit client in the next step. When the call is done, call `POST /sessions/end` with either `roomName` or `sessionId`.
+
+The Python script below handles only the lifecycle — it doesn't publish a microphone or play audio. On its own it just opens an empty room and waits. You'll connect a real microphone in step 4.
+
+```python
+import os
+import time
+
+import requests
+
+API_KEY = os.environ["LYZR_API_KEY"]
+AGENT_ID = os.environ["LYZR_VOICE_AGENT_ID"]
+BASE_URL = os.getenv("VOICE_API_BASE_URL", "https://voice-livekit.studio.lyzr.ai/v1")
+
+HEADERS = {
+    "x-api-key": API_KEY,
+    "accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+
+def start_session() -> dict:
+    payload = {
+        "userIdentity": f"user_{int(time.time())}",
+        "agentId": AGENT_ID,
+    }
+
+    response = requests.post(
+        f"{BASE_URL}/sessions/start", headers=HEADERS, json=payload, timeout=30
+    )
+    response.raise_for_status()
+    data = response.json()
+
+    print(f"Session ID:  {data['sessionId']}")
+    print(f"Room name:   {data['roomName']}")
+    print(f"LiveKit URL: {data['livekitUrl']}")
+    return data
+
+
+def end_session(room_name: str) -> None:
+    response = requests.post(
+        f"{BASE_URL}/sessions/end",
+        headers=HEADERS,
+        json={"roomName": room_name},
+        timeout=30,
+    )
+    response.raise_for_status()
+    print("Session ended.")
+
+
+if __name__ == "__main__":
+    session = start_session()
+    print("Connect a LiveKit client now. Press Enter when you're done.")
+    input()
+    end_session(session["roomName"])
+```
+
+<Info>
+  `POST /sessions/end` returns immediately and marks the session as ended on the API side. The transcript becomes available once the worker flushes its buffers and observability data arrives — typically a few seconds after the LiveKit room closes.
+</Info>
+
+## 4. Connect from the browser
+
+The REST API has done its job; from here, all the audio plumbing belongs to the LiveKit SDK. We'll build two files:
+
+- `voice-api.ts` — a thin wrapper around `/v1/sessions/start` and `/v1/sessions/end`.
+- `NexusVoiceWidget.tsx` — a React component that joins the room and renders the agent's audio.
+
+Install the client packages:
+
+```bash
+pnpm add livekit-client @livekit/components-react @livekit/components-styles
+```
+
+### `voice-api.ts`
+
+```ts
+const API_BASE_URL =
+  import.meta.env.VITE_LIVEKIT_BACKEND_URL ?? "https://voice-livekit.studio.lyzr.ai";
+
+export interface SessionResponse {
+  userToken: string;
+  roomName: string;
+  sessionId: string;
+  livekitUrl: string;
+  agentDispatched: boolean;
+}
+
+export async function startVoiceSession(input: {
+  apiKey: string;
+  userIdentity: string;
+  agentId?: string;
+  agentConfig?: Record<string, unknown>;
+}): Promise<SessionResponse> {
+  const response = await fetch(`${API_BASE_URL}/v1/sessions/start`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": input.apiKey,
+    },
+    body: JSON.stringify({
+      userIdentity: input.userIdentity,
+      agentId: input.agentId,
+      agentConfig: input.agentConfig,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to start voice session: ${response.status}`);
+  }
+
+  return response.json();
+}
+
+export async function endVoiceSession(input: {
+  apiKey: string;
+  roomName: string;
+}): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/v1/sessions/end`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": input.apiKey,
+    },
+    body: JSON.stringify({ roomName: input.roomName }),
+  });
+
+  if (!response.ok && response.status !== 404) {
+    throw new Error(`Failed to end voice session: ${response.status}`);
+  }
+}
+```
+
+### `NexusVoiceWidget.tsx`
+
+The widget renders two audio sinks inside `<LiveKitRoom>`:
+
+- `RoomAudioRenderer` — plays the agent's voice. This is the one you actually hear Nexus through.
+- `BackgroundAudioRenderer` — a small custom renderer that attaches the optional `background_audio` track (office ambience, keyboard sounds during tool calls). It's separate because the default renderer doesn't surface non-voice tracks.
+
+```tsx
+import { useEffect, useRef, useState } from "react";
+import {
+  LiveKitRoom,
+  RoomAudioRenderer,
+  useTracks,
+  useVoiceAssistant,
+} from "@livekit/components-react";
+import { Track } from "livekit-client";
+import "@livekit/components-styles";
+
+import { endVoiceSession, startVoiceSession, type SessionResponse } from "./voice-api";
+
+function BackgroundAudioRenderer() {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const tracks = useTracks([Track.Source.Unknown], { onlySubscribed: true });
+  const backgroundTrack = tracks.find(
+    (track) => track.publication?.trackName === "background_audio",
+  );
+
+  useEffect(() => {
+    const mediaTrack = backgroundTrack?.publication?.track;
+    if (!mediaTrack) return;
+
+    const audioElement = audioRef.current ?? document.createElement("audio");
+    audioElement.autoplay = true;
+    audioElement.setAttribute("playsinline", "true");
+    audioRef.current = audioElement;
+
+    mediaTrack.attach(audioElement);
+
+    return () => {
+      mediaTrack.detach(audioElement);
+    };
+  }, [backgroundTrack?.publication?.track]);
+
+  return null;
+}
+
+function AgentStatus() {
+  const { state } = useVoiceAssistant();
+  return <p>Agent state: {state}</p>;
+}
+
+export function NexusVoiceWidget(props: { apiKey: string; agentId: string }) {
+  const [session, setSession] = useState<SessionResponse | null>(null);
+
+  async function startCall() {
+    const data = await startVoiceSession({
+      apiKey: props.apiKey,
+      userIdentity: `user_${Date.now()}`,
+      agentId: props.agentId,
+    });
+    setSession(data);
+  }
+
+  async function endCall() {
+    if (session) {
+      await endVoiceSession({ apiKey: props.apiKey, roomName: session.roomName });
+    }
+    setSession(null);
+  }
+
+  if (!session) {
+    return <button onClick={startCall}>Start call</button>;
+  }
+
+  return (
+    <LiveKitRoom
+      serverUrl={session.livekitUrl}
+      token={session.userToken}
+      connect
+      audio
+      video={false}
+      onDisconnected={() => void endCall()}
+    >
+      <AgentStatus />
+      <button onClick={endCall}>End call</button>
+      <RoomAudioRenderer />
+      <BackgroundAudioRenderer />
+    </LiveKitRoom>
+  );
+}
+```
+
+Render `<NexusVoiceWidget apiKey={...} agentId={...} />` somewhere in your app, click **Start call**, grant microphone permission, and you should hear Nexus's greeting within a second or two.
+
+<Info>
+  In a real app, never pass `apiKey` straight to the browser. Proxy `/v1/sessions/start` through your own backend so the key stays on the server.
+</Info>
+
+## 5. Read transcripts and metrics
+
+Once a call has ended and the worker has flushed, you can pull aggregate stats for the agent and a per-session transcript with latency metrics on each turn.
+
+```python
+import os
+
+import requests
+
+API_KEY = os.environ["LYZR_API_KEY"]
+AGENT_ID = os.environ["LYZR_VOICE_AGENT_ID"]
+BASE_URL = os.getenv("VOICE_API_BASE_URL", "https://voice-livekit.studio.lyzr.ai/v1")
+
+HEADERS = {"x-api-key": API_KEY, "accept": "application/json"}
+
+
+def get_json(path: str) -> dict:
+    response = requests.get(f"{BASE_URL}{path}", headers=HEADERS, timeout=30)
+    response.raise_for_status()
+    return response.json()
+
+
+def text_from_content(content: object) -> str:
+    # Messages can be a plain string or a list of parts (multimodal turns);
+    # flatten both into a single line for printing.
+    if isinstance(content, list):
+        return " ".join(str(part) for part in content)
+    return str(content or "")
+
+
+def fetch_analytics() -> None:
+    stats = get_json(f"/transcripts/agent/{AGENT_ID}/stats")
+    print("Aggregate stats")
+    print(f"Total calls:      {stats.get('totalCalls')}")
+    print(f"Average messages: {stats.get('avgMessages')}")
+
+    recent = get_json(f"/transcripts/agent/{AGENT_ID}?sort=desc&limit=5")
+    items = recent.get("items", [])
+    if not items:
+        print("No transcripts found. Complete a voice session first.")
+        return
+
+    session_id = items[0]["sessionId"]
+    transcript = get_json(f"/transcripts/{session_id}")["transcript"]
+
+    print("\nSession overview")
+    print(f"Session ID:    {transcript.get('sessionId')}")
+    print(f"Room:          {transcript.get('roomName')}")
+    print(f"Duration (s):  {(transcript.get('durationMs') or 0) / 1000:.2f}")
+    print(f"Message count: {transcript.get('messageCount')}")
+
+    print("\nConversation")
+    for item in transcript.get("chatHistory", []):
+        if item.get("type") != "message":
+            continue
+        role = item.get("role", "system").upper()
+        print(f"[{role}] {text_from_content(item.get('content'))}")
+
+    print("\nLatest assistant latency")
+    for item in reversed(transcript.get("chatHistory", [])):
+        if item.get("role") != "assistant" or "metrics" not in item:
+            continue
+        metrics = item["metrics"]
+        print(f"LLM TTFT: {metrics.get('llm_node_ttft')}")
+        print(f"TTS TTFB: {metrics.get('tts_node_ttfb')}")
+        break
+
+
+if __name__ == "__main__":
+    fetch_analytics()
+```
+
+`llm_node_ttft` is the time from the user finishing their turn to the first LLM token; `tts_node_ttfb` is the time from that first token to the first byte of synthesized audio. Together they're the dominant contributors to perceived latency.
+
+## Where to go next
+
+- Swap `engine.kind` from `"pipeline"` to `"realtime"` to use a single multimodal model instead of three.
+- Add tools to the agent payload so Nexus can look up tickets, reset passwords, or hand off to a human.
+- Stream transcripts in realtime by subscribing to LiveKit data tracks instead of polling `/transcripts/{sessionId}` afterward.

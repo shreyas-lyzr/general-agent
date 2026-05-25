@@ -1,0 +1,43 @@
+---
+title: Webhook Triggers
+sidebarTitle: Webhooks
+---
+
+### **Introducing Webhook Triggers**
+
+Lyzr Studio now supports **Webhook Triggers**, allowing you to execute your AI agents autonomously via external events. Similar to Schedulers, this feature enables your agents to work programmatically and respond in real-time to data or events from third-party applications.
+
+---
+
+### **Webhook Configuration**
+
+You can configure a unique endpoint to trigger your agent via standard **HTTP POST requests**.
+
+* **Status Management**: Easily monitor the status of your webhook, which is displayed as **Active** once configured.
+* **Endpoint URL**: A dedicated URL is provided specifically for your agent's execution trigger.
+* **Secure Access**: 
+    * **Secret Key**: For security, a unique Secret Key is generated. This key is **not shown every time** to protect your endpoint.
+    * **Regenerate Secret**: If you lose your key or need to update it for security reasons, you can click on **Regenerate Secret** and then copy the new value immediately.
+* **Single Endpoint**: You can maintain **only one webhook** per agent configuration to ensure streamlined execution logic.
+
+![Webhook Configuration Interface](../../../assets/images/studio/web.png)
+
+---
+
+### **Execution Monitoring**
+
+The Webhook system is fully integrated with Lyzr's execution tracking infrastructure.
+
+* **Executions Dashboard**: You can jump directly to the execution history by clicking the **Executions** link in the configuration header to see a log of every webhook-triggered run.
+* **Lifecycle Controls**: Use the available controls to **Pause** or **Delete** the webhook configuration as needed to manage your agent's autonomous behavior.
+
+---
+
+### **Summary of Webhook Features**
+
+| Feature | Description |
+| :--- | :--- |
+| **Trigger Method** | HTTP POST Request |
+| **Security** | Masked Secret Key with Regeneration capability |
+| **Persistence** | One active webhook per agent |
+| **Tracking** | Integrated Execution logs for autonomous runs |

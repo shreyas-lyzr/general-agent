@@ -1,0 +1,396 @@
+---
+title: "Adding Documents"
+sidebarTitle: "Adding Documents"
+description: "Add PDFs, websites, and other content to knowledge bases"
+---
+
+Add documents to knowledge bases using methods like `add_pdf()`, `add_website()`, and `add_text()`. Documents are automatically chunked and vectorized for retrieval.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+kb = studio.create_knowledge_base(name="my_docs")
+
+# Add various document types
+kb.add_pdf("manual.pdf")
+kb.add_docx("report.docx")
+kb.add_txt("notes.txt")
+kb.add_website("https://docs.example.com", max_pages=50)
+kb.add_text("Custom FAQ content", source="faq")
+```
+
+---
+
+## add_pdf()
+
+Add a PDF document to the knowledge base.
+
+```python
+kb.add_pdf(
+    file_path: str,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
+    data_parser: str = None,
+    extra_info: str = None
+) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `file_path` | str | Required | Path to PDF file |
+| `chunk_size` | int | 1024 | Size of text chunks in characters |
+| `chunk_overlap` | int | 128 | Overlap between chunks |
+| `data_parser` | str | `"llmsherpa"` | PDF parser to use |
+| `extra_info` | str | None | Extra metadata as JSON string |
+
+### Examples
+
+```python
+# Basic usage
+kb.add_pdf("document.pdf")
+
+# With custom chunking
+kb.add_pdf(
+    "document.pdf",
+    chunk_size=2048,
+    chunk_overlap=256
+)
+
+# With metadata
+kb.add_pdf(
+    "manual.pdf",
+    extra_info='{"version": "2.0", "department": "support"}'
+)
+```
+
+---
+
+## add_docx()
+
+Add a Word document to the knowledge base.
+
+```python
+kb.add_docx(
+    file_path: str,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
+    data_parser: str = None,
+    extra_info: str = None
+) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `file_path` | str | Required | Path to DOCX file |
+| `chunk_size` | int | 1024 | Size of text chunks |
+| `chunk_overlap` | int | 128 | Overlap between chunks |
+| `data_parser` | str | `"docx2txt"` | Document parser |
+| `extra_info` | str | None | Extra metadata |
+
+### Example
+
+```python
+kb.add_docx("report.docx", chunk_size=1500)
+```
+
+---
+
+## add_txt()
+
+Add a plain text file to the knowledge base.
+
+```python
+kb.add_txt(
+    file_path: str,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
+    data_parser: str = None,
+    extra_info: str = None
+) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `file_path` | str | Required | Path to TXT file |
+| `chunk_size` | int | 1024 | Size of text chunks |
+| `chunk_overlap` | int | 128 | Overlap between chunks |
+| `data_parser` | str | `"simple"` | Text parser |
+| `extra_info` | str | None | Extra metadata |
+
+### Example
+
+```python
+kb.add_txt("notes.txt")
+```
+
+---
+
+## add_website()
+
+Add website content to the knowledge base with optional crawling.
+
+```python
+kb.add_website(
+    url: str | List[str],
+    source: str = "website",
+    max_pages: int = 1,
+    max_depth: int = 0,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128,
+    dynamic_content_wait_secs: int = None,
+    crawler_type: str = None
+) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `url` | str \| List[str] | Required | URL or list of URLs |
+| `source` | str | `"website"` | Source identifier |
+| `max_pages` | int | 1 | Maximum pages to crawl |
+| `max_depth` | int | 0 | Maximum crawl depth (0 = single page) |
+| `chunk_size` | int | 1024 | Size of text chunks |
+| `chunk_overlap` | int | 128 | Overlap between chunks |
+| `dynamic_content_wait_secs` | int | 5 | Wait time for dynamic content |
+| `crawler_type` | str | `"cheerio"` | Crawler type |
+
+### Examples
+
+```python
+# Single page
+kb.add_website("https://docs.example.com")
+
+# Crawl multiple pages
+kb.add_website(
+    "https://docs.example.com",
+    max_pages=50,
+    max_depth=3
+)
+
+# Multiple URLs
+kb.add_website([
+    "https://example.com/page1",
+    "https://example.com/page2",
+    "https://example.com/page3"
+])
+
+# Documentation site
+kb.add_website(
+    "https://docs.example.com/getting-started",
+    max_pages=100,
+    max_depth=5,
+    source="documentation"
+)
+
+# Wait for dynamic content (SPAs)
+kb.add_website(
+    "https://app.example.com/docs",
+    dynamic_content_wait_secs=10
+)
+```
+
+---
+
+## add_text()
+
+Add raw text content directly to the knowledge base.
+
+```python
+kb.add_text(
+    text: str,
+    source: str,
+    chunk_size: int = 1024,
+    chunk_overlap: int = 128
+) -> bool
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `text` | str | Required | Text content to add |
+| `source` | str | Required | Source identifier |
+| `chunk_size` | int | 1024 | Size of text chunks |
+| `chunk_overlap` | int | 128 | Overlap between chunks |
+
+### Examples
+
+```python
+# Add FAQ content
+kb.add_text(
+    "Q: What are your business hours?\nA: We're open 9am-5pm PST, Monday-Friday.",
+    source="faq"
+)
+
+# Add multiple text entries
+faqs = [
+    ("What is your return policy?", "30-day money-back guarantee"),
+    ("How do I contact support?", "Email support@example.com"),
+    ("What payment methods do you accept?", "Visa, Mastercard, PayPal")
+]
+
+for question, answer in faqs:
+    kb.add_text(
+        f"Q: {question}\nA: {answer}",
+        source="faq"
+    )
+```
+
+---
+
+## Chunking Configuration
+
+Documents are split into chunks for efficient retrieval. Configure chunking to optimize for your use case:
+
+### Small Chunks (Precise Retrieval)
+
+```python
+kb.add_pdf(
+    "document.pdf",
+    chunk_size=512,
+    chunk_overlap=64
+)
+```
+
+Best for:
+- FAQ-style content
+- Technical documentation
+- When precision is important
+
+### Large Chunks (More Context)
+
+```python
+kb.add_pdf(
+    "document.pdf",
+    chunk_size=2048,
+    chunk_overlap=256
+)
+```
+
+Best for:
+- Narrative content
+- Legal documents
+- When context is important
+
+---
+
+## Bulk Document Loading
+
+```python
+import os
+
+# Add all PDFs from a directory
+pdf_dir = "./documents"
+for filename in os.listdir(pdf_dir):
+    if filename.endswith(".pdf"):
+        kb.add_pdf(os.path.join(pdf_dir, filename))
+        print(f"Added: {filename}")
+```
+
+---
+
+## Examples
+
+### Documentation Website
+
+```python
+kb = studio.create_knowledge_base(name="product_docs")
+
+# Add main documentation
+kb.add_website(
+    "https://docs.example.com",
+    max_pages=200,
+    max_depth=5
+)
+
+# Add API reference
+kb.add_website(
+    "https://api.example.com/docs",
+    max_pages=50,
+    max_depth=2
+)
+
+# Add changelog
+kb.add_pdf("changelog.pdf")
+```
+
+### Support Knowledge Base
+
+```python
+kb = studio.create_knowledge_base(name="support_kb")
+
+# Add support articles
+kb.add_website("https://support.example.com", max_pages=100)
+
+# Add PDF manuals
+kb.add_pdf("user_manual.pdf")
+kb.add_pdf("troubleshooting_guide.pdf")
+
+# Add FAQ text
+kb.add_text(
+    """
+    Q: How do I reset my password?
+    A: Click 'Forgot Password' on the login page and follow the instructions.
+
+    Q: How do I contact support?
+    A: Email support@example.com or call 1-800-EXAMPLE.
+    """,
+    source="faq"
+)
+```
+
+### Mixed Content
+
+```python
+kb = studio.create_knowledge_base(name="company_kb")
+
+# Internal documents
+kb.add_pdf("employee_handbook.pdf")
+kb.add_docx("policies.docx")
+
+# External content
+kb.add_website("https://blog.company.com", max_pages=50)
+
+# Dynamic content
+kb.add_text(
+    f"Current quarter: Q1 2024\nRevenue target: $10M",
+    source="metrics"
+)
+```
+
+---
+
+## Error Handling
+
+```python
+from lyzr.exceptions import APIError, ValidationError
+
+try:
+    kb.add_pdf("document.pdf")
+except FileNotFoundError:
+    print("File not found")
+except APIError as e:
+    print(f"Upload failed: {e.message}")
+```
+
+---
+
+## Processing Time
+
+Document processing can take time, especially for:
+- Large PDFs (many pages)
+- Website crawling (many pages)
+- Complex documents
+
+The ADK uses a 5-minute timeout for document operations. For very large documents, consider splitting them into smaller files.

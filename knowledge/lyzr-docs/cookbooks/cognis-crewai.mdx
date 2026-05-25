@@ -1,0 +1,254 @@
+---
+title: "Lyzr Cognis + CrewAI"
+sidebarTitle: "Cognis + CrewAI"
+description: "Add persistent memory to CrewAI agents using Lyzr Cognis"
+---
+
+## Overview
+
+[CrewAI](https://docs.crewai.com/) enables you to build multi-agent teams (crews) that collaborate on complex tasks. By integrating [Lyzr Cognis](https://docs.lyzr.ai), you can give your crews persistent memory that spans across crew executions — agents remember user preferences, past results, and context from previous runs.
+
+**What you'll build:** A travel-planning crew with a researcher and planner agent, where Cognis injects user preferences into agent backstories and stores results for future reference.
+
+**Why Cognis + CrewAI?** CrewAI agents run as a team but lack built-in persistent memory across executions. Cognis provides a simple API to retrieve user context before a crew runs and store results after — enabling crews that learn and improve over time.
+
+**Integration pattern:** Manual memory injection — Cognis runs _outside_ the crew to enrich agents before execution and store results after. This works with any version of CrewAI without depending on internal memory provider APIs.
+
+## Prerequisites
+
+```bash
+pip install lyzr-adk crewai crewai-tools
+```
+
+Set your environment variables:
+
+```bash
+export LYZR_API_KEY="your-lyzr-api-key"
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+## Quick Start
+
+```python
+from lyzr import Cognis, CognisMessage
+from crewai import Agent, Task, Crew
+
+cog = Cognis()
+
+# 1. Retrieve user preferences from Cognis
+memories = cog.search(query="travel preferences", owner_id="user_123", limit=5)
+memory_context = "\n".join(f"- {m.content}" for m in memories)
+
+# 2. Inject memories into agent backstory
+agent = Agent(
+    role="Travel Researcher",
+    goal="Find the best travel options",
+    backstory=f"You know this about the user:\n{memory_context}",
+)
+
+# 3. Run the crew
+task = Task(description="Research beach destinations", expected_output="Top 3 destinations", agent=agent)
+crew = Crew(agents=[agent], tasks=[task])
+result = crew.kickoff()
+
+# 4. Store the result in Cognis
+cog.add(
+    messages=[
+        CognisMessage(role="user", content="Plan a beach vacation"),
+        CognisMessage(role="assistant", content=str(result)),
+    ],
+    owner_id="user_123",
+    agent_id="travel_crew",
+)
+```
+
+## Complete Example: Travel Planning Crew
+
+### Step 1: Initialize and Create Helpers
+
+```python
+import os
+from crewai import Agent, Task, Crew, Process
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis(api_key=os.getenv("LYZR_API_KEY"))
+OWNER_ID = "traveler_007"
+AGENT_ID = "travel_crew"
+
+
+def get_memory_context(query: str, owner_id: str) -> str:
+    """Retrieve relevant memories and format for agent backstory."""
+    results = cog.search(query=query, owner_id=owner_id, limit=5)
+    if not results:
+        return "No prior preferences known."
+    return "\n".join(f"- {r.content}" for r in results)
+
+
+def store_crew_result(user_request: str, crew_output: str, owner_id: str):
+    """Persist the planning request and result in Cognis."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=user_request),
+            CognisMessage(role="assistant", content=crew_output),
+        ],
+        owner_id=owner_id,
+        agent_id=AGENT_ID,
+    )
+```
+
+### Step 2: Build the Crew with Memory-Enriched Agents
+
+```python
+def plan_trip(destination: str, owner_id: str = OWNER_ID) -> str:
+    # 1. Retrieve user preferences
+    memory_context = get_memory_context(
+        query=f"travel preferences for {destination}",
+        owner_id=owner_id,
+    )
+
+    # 2. Create agents with memory-enriched backstories
+    researcher = Agent(
+        role="Travel Researcher",
+        goal=f"Find the best travel options for {destination}",
+        backstory=(
+            "You are an expert travel researcher. Consider the traveler's "
+            f"known preferences:\n{memory_context}"
+        ),
+        verbose=True,
+    )
+
+    planner = Agent(
+        role="Trip Planner",
+        goal=f"Create a detailed itinerary for {destination}",
+        backstory=(
+            "You create personalized itineraries. You know this about "
+            f"the traveler:\n{memory_context}"
+        ),
+        verbose=True,
+    )
+
+    # 3. Define tasks
+    research_task = Task(
+        description=f"Research top attractions, restaurants, and activities in {destination}.",
+        expected_output="Recommended attractions, restaurants, and activities with descriptions.",
+        agent=researcher,
+    )
+
+    planning_task = Task(
+        description=f"Create a 3-day itinerary for {destination} with morning, afternoon, and evening activities.",
+        expected_output="A detailed 3-day itinerary with times, locations, and tips.",
+        agent=planner,
+    )
+
+    # 4. Run the crew
+    crew = Crew(
+        agents=[researcher, planner],
+        tasks=[research_task, planning_task],
+        process=Process.sequential,
+        verbose=True,
+    )
+    result = crew.kickoff()
+    crew_output = str(result)
+
+    # 5. Store results in Cognis
+    store_crew_result(f"Plan a trip to {destination}", crew_output, owner_id)
+
+    return crew_output
+```
+
+### Step 3: Demonstrate Memory Across Runs
+
+```python
+# Seed user preferences
+cog.add(
+    messages=[
+        CognisMessage(
+            role="user",
+            content="I love beach destinations and seafood. I prefer boutique hotels.",
+        ),
+        CognisMessage(
+            role="assistant",
+            content="Noted! You prefer beaches, seafood, and boutique hotels.",
+        ),
+    ],
+    owner_id=OWNER_ID,
+    agent_id=AGENT_ID,
+)
+
+# First trip — agents receive preferences via backstory
+result1 = plan_trip("Bali, Indonesia")
+
+# Second trip — agents also see the Bali trip in their memory
+result2 = plan_trip("Lisbon, Portugal")
+```
+
+## Cognis Methods Reference
+
+| Method | Description | When to Use |
+|--------|-------------|-------------|
+| `cog.add(messages, owner_id, session_id, agent_id)` | Store conversation messages | After crew execution |
+| `cog.search(query, owner_id, limit)` | Semantic search over memories | Before building agents |
+| `cog.get(owner_id, limit)` | List all memories for a user | Displaying user profile |
+| `cog.context(current_messages, owner_id, session_id)` | Server-assembled context | Alternative to manual search |
+| `cog.delete(memory_id, owner_id)` | Remove a specific memory | User requests data deletion |
+| `cog.update(memory_id, content)` | Update a memory's content | Correcting stored information |
+
+## Advanced Patterns
+
+### Dynamic Tool with Cognis
+
+Create a CrewAI tool that agents can call mid-execution to search memories:
+
+```python
+from crewai.tools import tool
+
+@tool("Search User Memory")
+def search_user_memory(query: str) -> str:
+    """Search the user's memory for relevant information."""
+    results = cog.search(query=query, owner_id=OWNER_ID, limit=5)
+    if not results:
+        return "No relevant memories found."
+    return "\n".join(f"- {r.content}" for r in results)
+
+researcher = Agent(
+    role="Travel Researcher",
+    tools=[search_user_memory],
+    # ...
+)
+```
+
+### Cross-Session Memory for Repeat Customers
+
+Search across all sessions to build a comprehensive traveler profile:
+
+```python
+results = cog.search(
+    query="travel history and preferences",
+    owner_id=OWNER_ID,
+    cross_session=True,
+    limit=10,
+)
+```
+
+### Storing Structured Outputs
+
+Store crew results with metadata for better retrieval:
+
+```python
+cog.add(
+    messages=[
+        CognisMessage(role="user", content="Plan a trip to Bali"),
+        CognisMessage(role="assistant", content=str(result)),
+    ],
+    owner_id=OWNER_ID,
+    agent_id="travel_crew",
+    session_id="trip_bali_2024",
+)
+```
+
+## Next Steps
+
+- [Cognis + LangChain](/cookbooks/cognis-langchain) — LCEL chain integration with memory
+- [Cognis + LangGraph](/cookbooks/cognis-langgraph) — Memory as graph nodes
+- [Cognis + Agno](/cookbooks/cognis-agno) — Tool-based memory for autonomous agents
+- [Lyzr ADK Memory Documentation](/lyzr-adk/memory/overview) — Full Cognis API reference

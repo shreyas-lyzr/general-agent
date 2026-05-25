@@ -1,0 +1,24 @@
+---
+title: "Update Single Task Agent Endpoint"
+openapi: put /agents/template/single-task/{agent_id}
+---
+
+### Description
+
+Updates an existing single-task agent with new configuration details.
+
+### Endpoint
+
+**PUT** `/v3/agents/template/single-task/{agent_id}`
+
+### Authentication
+
+- Requires an API key (`x-api-key`) in the request headers.
+
+### Path Parameters
+
+| Parameter  | Type   | Description                                           |
+| ---------- | ------ | ----------------------------------------------------- |
+| `agent_id` | string | Unique identifier of the single-task agent to update. |
+
+### Request Body (JSON)

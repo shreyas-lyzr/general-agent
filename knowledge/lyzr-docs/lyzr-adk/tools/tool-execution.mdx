@@ -1,0 +1,384 @@
+---
+title: "Tool Execution"
+sidebarTitle: "Tool Execution"
+description: "How tools are executed and error handling"
+---
+
+Learn how the Lyzr ADK executes local tools during agent runs, including the execution flow, error handling, and best practices.
+
+## Execution Flow
+
+When an agent runs with local tools:
+
+```
+1. User sends message → agent.run("Find weather in Tokyo")
+2. Agent decides to use tool → "I'll use get_weather"
+3. ADK intercepts tool call → LocalToolExecutor handles it
+4. Function executes locally → get_weather("Tokyo")
+5. Result sent back to agent → "Sunny, 72°F"
+6. Agent continues with result → Forms final response
+```
+
+---
+
+## LocalToolExecutor
+
+The `LocalToolExecutor` manages tool execution with built-in error handling:
+
+```python
+from lyzr.tools import ToolRegistry, LocalToolExecutor
+
+# Create registry with tools
+registry = ToolRegistry()
+registry.add(my_tool)
+
+# Create executor
+executor = LocalToolExecutor(registry)
+
+# Execute a tool
+result = await executor.execute("tool_name", {"arg1": "value1"})
+```
+
+### execute()
+
+```python
+async def execute(
+    tool_name: str,
+    arguments: Dict[str, Any]
+) -> str
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tool_name` | str | Name of tool to execute |
+| `arguments` | dict | Arguments to pass to the function |
+
+**Returns**: String result (JSON for dict/list, str for strings, str() for other types)
+
+---
+
+## Error Handling
+
+The executor **never raises exceptions**. All errors are returned as strings so the agent can handle them intelligently.
+
+### Tool Not Found
+
+```python
+result = await executor.execute("nonexistent_tool", {})
+# "Error: Tool 'nonexistent_tool' not found in local registry. Available tools: ['get_weather', 'search']"
+```
+
+### Execution Error
+
+```python
+def buggy_function(x: int) -> int:
+    return x / 0  # Division by zero
+
+result = await executor.execute("buggy_function", {"x": 5})
+# "Error executing tool 'buggy_function': ZeroDivisionError: division by zero"
+```
+
+### Missing Required Arguments
+
+```python
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+
+result = await executor.execute("greet", {})  # Missing 'name'
+# "Error executing tool 'greet': TypeError: greet() missing 1 required positional argument: 'name'"
+```
+
+---
+
+## Result Serialization
+
+The executor automatically serializes results:
+
+### Dict/List Results
+
+```python
+def get_users() -> list:
+    return [{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bob"}]
+
+result = await executor.execute("get_users", {})
+# '[{"id": 1, "name": "Alice"}, {"id": 2, "name": "Bob"}]'  (JSON string)
+```
+
+### String Results
+
+```python
+def get_greeting(name: str) -> str:
+    return f"Hello, {name}!"
+
+result = await executor.execute("get_greeting", {"name": "Alice"})
+# 'Hello, Alice!'  (returned as-is)
+```
+
+### Other Types
+
+```python
+def add(a: int, b: int) -> int:
+    return a + b
+
+result = await executor.execute("add", {"a": 5, "b": 3})
+# '8'  (converted with str())
+```
+
+---
+
+## Async Support
+
+Tools can be synchronous or asynchronous:
+
+### Sync Function
+
+```python
+def sync_tool(x: str) -> str:
+    return x.upper()
+
+# Executor handles sync functions
+result = await executor.execute("sync_tool", {"x": "hello"})
+# 'HELLO'
+```
+
+### Async Function
+
+```python
+async def async_tool(url: str) -> dict:
+    import aiohttp
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            return await resp.json()
+
+# Executor awaits async functions
+result = await executor.execute("async_tool", {"url": "https://api.example.com"})
+# '{"data": "..."}'
+```
+
+---
+
+## Tool.execute()
+
+Individual tools can also be executed directly:
+
+```python
+from lyzr.tools import Tool
+
+tool = Tool(
+    name="calculator",
+    description="Add two numbers",
+    parameters={
+        "type": "object",
+        "properties": {
+            "a": {"type": "number"},
+            "b": {"type": "number"}
+        },
+        "required": ["a", "b"]
+    },
+    function=lambda a, b: a + b
+)
+
+# Direct execution
+result = await tool.execute(a=5, b=3)
+# 8 (raw result, not serialized)
+```
+
+### No Function Error
+
+```python
+tool = Tool(
+    name="placeholder",
+    description="Placeholder tool",
+    parameters={"type": "object", "properties": {}}
+    # No function attached
+)
+
+result = await tool.execute()
+# Raises: RuntimeError: Tool 'placeholder' has no function attached
+```
+
+---
+
+## Agent Integration
+
+When tools are added to an agent, execution is automatic:
+
+```python
+from lyzr import Studio
+from lyzr.tools import Tool
+
+studio = Studio(api_key="your-api-key")
+
+def get_stock_price(symbol: str) -> dict:
+    # Simulated stock lookup
+    prices = {"AAPL": 175.50, "GOOGL": 140.25, "MSFT": 380.00}
+    return {"symbol": symbol, "price": prices.get(symbol, 0)}
+
+stock_tool = Tool(
+    name="get_stock_price",
+    description="Get current stock price for a symbol",
+    parameters={
+        "type": "object",
+        "properties": {
+            "symbol": {"type": "string", "description": "Stock ticker symbol"}
+        },
+        "required": ["symbol"]
+    },
+    function=get_stock_price
+)
+
+agent = studio.create_agent(
+    name="Stock Bot",
+    provider="gpt-4o",
+    role="Stock price assistant",
+    goal="Provide stock prices"
+)
+agent.add_tool(stock_tool)
+
+# Agent automatically executes tool when needed
+response = agent.run("What's the price of AAPL?")
+# Agent calls get_stock_price("AAPL") internally
+# Response includes: "Apple (AAPL) is currently trading at $175.50"
+```
+
+---
+
+## Execution Context
+
+### Accessing External Resources
+
+Tools can access databases, APIs, and other resources:
+
+```python
+import os
+import requests
+
+# Environment variables
+API_KEY = os.environ.get("EXTERNAL_API_KEY")
+
+def call_external_api(query: str) -> dict:
+    """Call external API with authentication"""
+    response = requests.get(
+        "https://api.external.com/search",
+        params={"q": query},
+        headers={"Authorization": f"Bearer {API_KEY}"}
+    )
+    return response.json()
+```
+
+### Maintaining State
+
+Use closures or classes for stateful tools:
+
+```python
+class ShoppingCart:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, item: str, quantity: int = 1) -> dict:
+        self.items.append({"item": item, "quantity": quantity})
+        return {"message": f"Added {quantity}x {item}", "cart_size": len(self.items)}
+
+    def get_cart(self) -> list:
+        return self.items
+
+cart = ShoppingCart()
+
+add_tool = Tool(
+    name="add_to_cart",
+    description="Add item to shopping cart",
+    parameters={
+        "type": "object",
+        "properties": {
+            "item": {"type": "string"},
+            "quantity": {"type": "integer"}
+        },
+        "required": ["item"]
+    },
+    function=cart.add_item
+)
+
+view_tool = Tool(
+    name="view_cart",
+    description="View current shopping cart",
+    parameters={"type": "object", "properties": {}},
+    function=cart.get_cart
+)
+```
+
+---
+
+## Best Practices
+
+### Graceful Error Handling
+
+```python
+def safe_api_call(endpoint: str) -> dict:
+    """Make API call with error handling"""
+    try:
+        response = requests.get(endpoint, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.Timeout:
+        return {"error": "Request timed out", "success": False}
+    except requests.HTTPError as e:
+        return {"error": f"HTTP error: {e.response.status_code}", "success": False}
+    except Exception as e:
+        return {"error": str(e), "success": False}
+```
+
+### Input Validation
+
+```python
+def create_user(email: str, age: int) -> dict:
+    """Create user with validation"""
+    import re
+
+    # Validate email
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return {"error": "Invalid email format"}
+
+    # Validate age
+    if not 0 < age < 150:
+        return {"error": "Invalid age"}
+
+    # Create user
+    return {"success": True, "email": email, "age": age}
+```
+
+### Timeout Protection
+
+```python
+import asyncio
+
+async def long_running_task(query: str) -> dict:
+    """Task with timeout protection"""
+    try:
+        result = await asyncio.wait_for(
+            actual_task(query),
+            timeout=30.0
+        )
+        return result
+    except asyncio.TimeoutError:
+        return {"error": "Operation timed out"}
+```
+
+### Logging
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+def tracked_operation(action: str) -> dict:
+    """Operation with logging"""
+    logger.info(f"Starting operation: {action}")
+
+    try:
+        result = perform_action(action)
+        logger.info(f"Operation completed: {action}")
+        return result
+    except Exception as e:
+        logger.error(f"Operation failed: {action} - {e}")
+        return {"error": str(e)}
+```

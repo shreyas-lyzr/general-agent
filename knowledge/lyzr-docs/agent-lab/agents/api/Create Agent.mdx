@@ -1,0 +1,80 @@
+---
+title: "Create Agent"
+openapi: post /agents/
+---
+
+### **Endpoint:**
+**POST** `/v3/agents/`
+
+### **Description:**
+Creates a new agent with a specific configuration.
+
+### **Request Headers:**
+| Header        | Type   | Required | Description             |
+|--------------|--------|----------|-------------------------|
+| x-api-key    | String | Yes      | API key for authentication |
+| accept       | String | Yes      | Expected response format (application/json) |
+| content-type | String | Yes      | Format of request body (application/json) |
+
+### **Request Body:**
+```json
+{
+  "name": "string",
+  "system_prompt": "string",
+  "description": "string",
+  "features": [
+    {
+      "type": "string",
+      "config": {},
+      "priority": 0
+    }
+  ],
+  "tools": ["string"],
+  "llm_credential_id": "string",
+  "provider_id": "string",
+  "model": "string",
+  "top_p": 0,
+  "temperature": 0,
+  "response_format": {}
+}
+```
+
+### **Request Example (cURL):**
+```sh
+curl -X POST "https://agent-prod.studio.lyzr.ai/v3/agents/" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-XXXXXXX" ^
+-d "{\"name\":\"string\",\"system_prompt\":\"string\",\"description\":\"string\",\"features\":[{\"type\":\"string\",\"config\":{},\"priority\":0}],\"tools\":[\"string\"],\"llm_credential_id\":\"string\",\"provider_id\":\"string\",\"model\":\"string\",\"top_p\":0,\"temperature\":0,\"response_format\":{}}"
+```
+
+### **Example Agent Configuration:**
+```json
+{
+  "api_key": "sk-default-XXXXXXX",
+  "template_type": "single_task",
+  "name": "Nutrition Expert",
+  "description": "Personalized Nutrition Assistant",
+  "agent_role": "You are a NUTRITION EXPERT...",
+  "agent_instructions": "Your task is to assist users in optimizing their diet...",
+  "examples": null,
+  "features": [
+    {
+      "type": "SINGLE_TOOL_CALL",
+      "config": {
+        "module_mode": "Post"
+      },
+      "priority": 0
+    }
+  ],
+  "tool": "notion",
+  "tool_usage_description": "Provide dietary plans and nutrition advice in a structured format.",
+  "response_format": null,
+  "provider_id": "OpenAI",
+  "model": "gpt-4o-mini",
+  "top_p": 0.9,
+  "temperature": 0.7,
+  "version": "3",
+  "llm_credential_id": "lyzr_openai"
+}
+```

@@ -1,0 +1,27 @@
+---
+title: "List Agents"
+openapi: get /agents
+---
+
+Retrieve a paginated list of all voice agents associated with your authenticated organization or user account. 
+
+This endpoint returns detailed configurations for each agent, including their underlying engine settings, configured tools, avatar integrations, and prompt instructions.
+
+<Warning>
+  **Authentication Required** You must include your API key in the `x-api-key` header. Failing to do so will result in a `401 Unauthorized` error.
+</Warning>
+
+### Pagination Details
+
+When fetching a large number of agents, use the query parameters to control your results:
+* **`limit`**: Defines how many agents to return in a single request. 
+* **`offset`**: Defines how many agents to skip. For example, if you set `limit=10` and `offset=10`, you will retrieve the second "page" of your agents (items 11 through 20).
+
+### The Agent `config` Object
+
+The response payload contains an `agents` array. Each agent includes a heavily detailed `config` object which maps exactly to how the agent behaves in LiveKit. Key sections of this config include:
+
+* **Engine Specs:** Outlines the specific LLM, STT (Speech-to-Text), and TTS (Text-to-Speech) pipelines powering the agent.
+* **Knowledge Base:** Details any connected Lyzr RAG or Agentic RAG sources the agent uses for context.
+* **Avatar & Audio:** Contains settings for visual avatars (e.g., HeyGen, Tavus, Simli) and background/ambient audio configurations.
+* **Behavioral Prompts:** Defines the agent's specific role, goals, and dynamic variables injected at runtime.

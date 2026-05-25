@@ -1,0 +1,62 @@
+---
+title: "Features"
+sidebarTitle: "Features"
+description: "Hooks, MCP tools, skills, and commands — everything Claude-Cognis provides"
+---
+
+## Hooks
+
+Cognis uses Claude Code's hook system to work automatically in the background. No manual action needed.
+
+| Hook | Trigger | What happens |
+|------|---------|-------------|
+| **SessionStart** | Every new session | Loads relevant personal and team memories into context. Claude starts with knowledge of your past work |
+| **UserPromptSubmit** | Each user message | Searches for relevant memories based on your prompt (first 150 chars). Injects matching memories if relevance > 0.5. Skips trivial inputs ("yes", "ok") |
+| **Stop** | Session ends | Parses the conversation transcript, compresses tool outputs intelligently, and saves the session summary to Cognis |
+
+### Tool-Aware Compression
+
+The Stop hook doesn't store raw transcripts. Instead, it compresses tool outputs:
+
+| Tool | Compression |
+|------|------------|
+| Edit/MultiEdit | `Edited file.js: 'old' → 'new'` |
+| Write | `Wrote file.js (50 lines)` |
+| Read | `Read file.js (100 lines)` |
+| Bash | Command + output preview (max 200 chars) |
+| Glob | `Found 23 files matching '**/*.ts'` |
+| Grep | `Searched for 'pattern': 42 matches` |
+
+## Skills
+
+Natural language triggers — just talk to Claude and the right skill activates.
+
+| Skill | Trigger phrases | What it does |
+|-------|----------------|-------------|
+| **cognis-search** | "what did I work on?", "find that decision about...", "search my memory for..." | Searches personal and/or team memories using semantic search |
+| **cognis-save** | "remember this", "save this as project knowledge", "store this decision" | Saves information to persistent memory (personal or team scope) |
+
+## MCP Tools
+
+8 tools exposed via the Model Context Protocol for direct memory operations.
+
+| Tool | Description |
+|------|-------------|
+| `add_memory` | Store information in long-term memory. Supports personal or team scope |
+| `search_memories` | Semantic search across personal and/or team memories |
+| `get_memories` | List stored memories without a search query |
+| `update_memory` | Update an existing memory's content or metadata |
+| `delete_memory` | Delete a specific memory by ID |
+| `delete_all_memories` | Clear all memories for a session (requires confirmation) |
+| `get_context` | Intelligent context assembly — combines short-term and long-term memory |
+| `search_summaries` | Search past session summaries and key decisions |
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `/claude-cognis:index` | Analyze and index the current codebase. Stores architecture and structure as team knowledge |
+| `/claude-cognis:recall` | Recall last session context to pick up where you left off |
+| `/claude-cognis:memory-stats` | Show memory statistics — total count, session history, storage breakdown |
+| `/claude-cognis:project-config` | Configure per-project settings interactively |
+| `/claude-cognis:logout` | Remove stored API credentials |

@@ -1,0 +1,67 @@
+---
+title: Update RAG Configuration
+openapi: put /rag/{config_id}/
+---
+
+### Endpoint
+**PUT** `/v3/rag/{config_id}/`
+
+### Authentication
+API Key (`x-api-key`) must be included in the header.
+
+### Path Parameters
+| Name        | Type   | Description                                     |
+|-------------|--------|-------------------------------------------------|
+| config_id   | string | The ID of the RAG configuration to update.     |
+
+### Request Body
+A JSON object containing the updated RAG configuration values.
+
+#### JSON Schema
+```json
+{
+  "user_id": "string",
+  "llm_credential_id": "string",
+  "embedding_credential_id": "string",
+  "vector_db_credential_id": "string",
+  "description": "",
+  "collection_name": "string",
+  "llm_model": "string",
+  "embedding_model": "string",
+  "vector_store_provider": "string",
+  "semantic_data_model": false,
+  "meta_data": {}
+}
+
+```
+### Response
+```json
+{
+  "success": true
+}
+```
+
+### Example cURL Request
+
+```bash
+
+curl -X PUT "https://rag-dev.test.studio.lyzr.ai/v3/rag/{config_id}/" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-EXAMPLEKEY123" ^
+-d "{
+  \"user_id\": \"user_123\",
+  \"llm_credential_id\": \"llm_cred_abc\",
+  \"embedding_credential_id\": \"embed_cred_xyz\",
+  \"vector_db_credential_id\": \"vectordb_cred_789\",
+  \"description\": \"Updated configuration for search\",
+  \"collection_name\": \"my_collection\",
+  \"llm_model\": \"gpt-4\",
+  \"embedding_model\": \"text-embedding-ada-002\",
+  \"vector_store_provider\": \"pinecone\",
+  \"semantic_data_model\": true,
+  \"meta_data\": {\"source\": \"internal\"}
+}"
+
+
+```

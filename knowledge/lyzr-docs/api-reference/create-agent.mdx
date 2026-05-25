@@ -1,0 +1,38 @@
+---
+title: "Create Agent"
+openapi: post /agents
+---
+
+Use this endpoint to create a new, saved Voice Agent. Building an agent requires passing a detailed `config` object in your request payload. This configuration dictates everything from the agent's core personality to its visual avatar and integrated tools.
+
+<Warning>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate your request.
+</Warning>
+
+### Understanding the `config` Payload
+
+Because Voice Agents are highly customizable, the `config` object contains many parameters. Below is a breakdown of the most critical sections you will need to configure when creating a new agent.
+
+#### Core Identity
+These parameters define who your agent is and how it behaves.
+* **`agent_name` & `agent_description`:** Internal identifiers for your team.
+* **`agent_role`, `agent_goal`, & `agent_instructions`:** The fundamental prompt blocks that guide the LLM's logic and behavior.
+
+#### The Engine
+The `engine` object determines the specific models powering the agent's brain, ears, and mouth. 
+* **`stt` (Speech-to-Text):** The model used to transcribe user audio (e.g., Deepgram, Whisper).
+* **`llm` (Large Language Model):** The reasoning engine (e.g., GPT-4o, Claude 3).
+* **`tts` (Text-to-Speech) & `voice_id`:** The model and specific voice clone used to generate the agent's audio response (e.g., ElevenLabs).
+
+#### Capabilities & Integrations
+You can empower your agent with external knowledge and actions.
+* **`knowledge_base`:** Connect a Lyzr RAG or Agentic RAG system so your agent can answer questions based on your proprietary documents.
+* **`tools` & `lyzr_tools`:** Equip your agent with APIs (like checking order status, booking appointments, or sending emails) that it can trigger mid-conversation.
+
+#### Avatars & Environment
+If your agent is being deployed in a visual interface, you can configure its appearance and surroundings.
+* **`avatar`:** Select a provider (like HeyGen, Simli, or Tavus) and pass the corresponding `avatar_id` to render a digital human.
+* **`background_audio`:** Enable ambient noise or sound effects (like typing or a cafe background) to make the call feel more natural.
+
+### Next Steps
+Once your agent is created, the API will return a `201 Created` status along with the unique `id` of your new agent. You will use this `id` when initiating LiveKit sessions.

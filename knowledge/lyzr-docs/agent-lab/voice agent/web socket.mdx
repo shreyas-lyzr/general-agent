@@ -1,0 +1,199 @@
+---
+title: "Voice Service WebSocket Integration"
+sidebarTitle: "WebSocket"
+---
+
+This guide provides everything you need to connect to the Lyzr Voice Service **from scratch**. This integration allows you to stream **24kHz mono PCM16** audio to a Lyzr Agent and receive real-time audio responses and transcripts.
+
+## Integration Flow
+
+1. **Create a Voice Session (HTTP)**: Obtain a unique `wsUrl` and `sessionId`.
+2. **Stream Audio (WebSocket)**: Send base64-encoded PCM16 audio frames and handle inbound agent messages.
+
+---
+
+## Prerequisites
+
+* **Agent ID**: Your unique Lyzr identifier.
+* **Audio Format**: Ability to produce **24kHz mono PCM16**.
+* **Environment**: Client must run on **HTTPS** for browser microphone access.
+* **Network Access**: Ability to reach `POST https://voice-sip.voice.lyzr.app/session/start`.
+
+> **Important Rules**
+> * **URL Integrity**: Always use the `wsUrl` exactly as returned. Do not construct it yourself.
+> * **Encoding**: Send audio as **base64 of raw PCM16 bytes** (not WAV, MP3, or float32).
+> * **Sample Rate**: Ensure your audio is actually 24kHz; resample if necessary.
+> 
+> 
+
+---
+
+## 1. Create a Session (HTTP)
+
+Initialize the session by calling the Lyzr Voice SIP endpoint.
+
+* **Method**: `POST`
+* **URL**: `https://voice-sip.voice.lyzr.app/session/start`
+* **Headers**: `Content-Type: application/json`
+
+### Example Request
+
+```bash
+curl -sS -X POST "https://voice-sip.voice.lyzr.app/session/start" \
+  -H "Content-Type: application/json" \
+  -d '{"agentId":"<YOUR_AGENT_ID>"}'
+
+```
+
+### Response Shape
+
+```json
+{
+  "sessionId": "…",
+  "wsUrl": "wss://…",
+  "audioConfig": {
+    "sampleRate": 24000,
+    "channels": 1,
+    "format": "…",
+    "encoding": "…"
+  }
+}
+
+```
+
+* **`wsUrl`**: Treat as an opaque URL; connect exactly as returned.
+* **`audioConfig`**: Informational; assumes **24kHz mono PCM16**.
+
+---
+
+## 2. WebSocket Implementation
+
+### Connection Lifecycle
+
+* **Graceful Shutdown**: Stop microphone capture before closing the WebSocket.
+* **Reconnection**: If the socket closes, call `session/start` again for a **new** URL. Do not reuse old URLs.
+* **Keepalive**: Send periodic "silence" frames (PCM16 zeros) to prevent idle disconnects if your platform doesn't handle ping/pong.
+
+### Audio Pacing & Backpressure
+
+* **Chunk Duration**: Aim for **20–100ms** per message.
+* **Backpressure**: Monitor `ws.bufferedAmount` in browsers; if it climbs, throttle your sending speed.
+* **Ready State**: Only send data when `ws.readyState === WebSocket.OPEN`.
+
+---
+
+## Message Formats
+
+### Client → Service (Audio Frame)
+
+```json
+{
+  "type": "audio",
+  "audio": "<base64 of PCM16 bytes>",
+  "sampleRate": 24000
+}
+
+```
+
+### Service → Client (Audio & Transcripts)
+
+1. **Audio**: `{ "type": "audio", "audio": "<base64>" }`.
+2. **Transcript**: JSON messages containing text, content, or roles (e.g., `type: "transcript"`). Treat transcript payloads defensively as shapes may vary.
+
+---
+
+## Code Examples
+
+### Browser (TypeScript/WebAudio)
+
+This captures microphone audio and converts it to the required format.
+
+```typescript
+async function connectVoiceService(agentId: string) {
+  const res = await fetch("https://voice-sip.voice.lyzr.app/session/start", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ agentId }),
+  });
+  const { wsUrl, sessionId } = await res.json();
+
+  const ws = new WebSocket(wsUrl);
+  ws.onmessage = (e) => console.log("Inbound:", JSON.parse(e.data));
+
+  await new Promise((res) => (ws.onopen = res));
+
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const ctx = new AudioContext({ sampleRate: 24000 });
+  const src = ctx.createMediaStreamSource(stream);
+  const proc = ctx.createScriptProcessor(4096, 1, 1);
+
+  proc.onaudioprocess = (ev) => {
+    if (ws.readyState !== WebSocket.OPEN) return;
+    const f32 = ev.inputBuffer.getChannelData(0);
+    const i16 = new Int16Array(f32.length);
+    for (let i = 0; i < f32.length; i++) {
+      const s = Math.max(-1, Math.min(1, f32[i]));
+      i16[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+    }
+    const audio = btoa(String.fromCharCode(...new Uint8Array(i16.buffer)));
+    ws.send(JSON.stringify({ type: "audio", audio, sampleRate: 24000 }));
+  };
+
+  src.connect(proc);
+  proc.connect(ctx.destination);
+
+  return { sessionId, ws, disconnect: () => {
+    ws.close();
+    stream.getTracks().forEach(t => t.stop());
+    ctx.close();
+  }};
+}
+
+```
+
+### Node.js (Backend Worker)
+
+Use this if you are streaming pre-recorded audio or working from a server environment.
+
+```javascript
+import WebSocket from "ws";
+
+async function connect(agentId: string) {
+  const res = await fetch("https://voice-sip.voice.lyzr.app/session/start", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ agentId }),
+  });
+  const { wsUrl } = await res.json();
+  const ws = new WebSocket(wsUrl);
+
+  ws.on("open", () => {
+    // Example: 100ms of silence (2400 samples * 2 bytes = 4800 bytes)
+    const silence = Buffer.alloc(4800);
+    ws.send(JSON.stringify({ 
+        type: "audio", 
+        audio: silence.toString("base64"), 
+        sampleRate: 24000 
+    }));
+  });
+}
+
+```
+
+---
+
+## Playback Notes
+
+To play agent audio in the browser:
+
+1. **Decode**: Base64-decode the `audio` string into a `Uint8Array`.
+2. **Convert**: Map `Int16` bytes to `Float32` (divide by 32768).
+3. **Play**: Feed the resulting `Float32Array` into an `AudioBuffer` set at **24,000 Hz**.
+
+---
+
+## Troubleshooting
+
+* **Distorted Audio**: Ensure you are clamping samples to `[-1, 1]` before PCM16 conversion.
+* **Immediate Disconnect**: Verify the `wsUrl` is used exactly as provided and your agent ID is valid.
+* **No Transcripts**: Check all inbound message fields; transcript keys can vary by agent configuration.

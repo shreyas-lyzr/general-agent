@@ -1,0 +1,290 @@
+---
+title: "Providers & Models"
+sidebarTitle: "Providers"
+description: "Supported LLM providers and models in the Lyzr ADK"
+---
+
+The Lyzr ADK supports multiple LLM providers with a variety of models. This reference lists all available providers, their models, and configuration details.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Short format - auto-resolves provider
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o"  # Auto-resolves to OpenAI
+)
+
+# Full format - explicit provider
+agent = studio.create_agent(
+    name="Assistant",
+    provider="openai/gpt-4o"
+)
+```
+
+## Provider Formats
+
+You can specify providers in two formats:
+
+| Format | Example | Description |
+|--------|---------|-------------|
+| Short | `"gpt-4o"` | ADK auto-detects the provider |
+| Full | `"openai/gpt-4o"` | Explicit provider/model |
+
+```python
+# These are equivalent
+agent = studio.create_agent(provider="gpt-4o")
+agent = studio.create_agent(provider="openai/gpt-4o")
+```
+
+---
+
+## OpenAI
+
+**Credential ID:** `lyzr_openai`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `gpt-4o` | 4/5 | 4/5 | 128K | - |
+| `gpt-4o-mini` | 2/5 | 5/5 | 128K | - |
+| `gpt-4.1` | 5/5 | 3/5 | 1M | - |
+| `gpt-5` | 4/5 | 2/5 | 400K | Reasoning |
+| `gpt-5-mini` | 2/5 | 4/5 | 400K | Reasoning |
+| `gpt-5-nano` | 1/5 | 5/5 | 400K | Reasoning |
+| `gpt-5.1` | 4/5 | 2/5 | 400K | Reasoning |
+| `gpt-5.2` | 5/5 | 2/5 | 400K | Reasoning |
+| `o3` | 3/5 | 4/5 | 128K | Reasoning |
+| `o4-mini` | 2/5 | 5/5 | 128K | Reasoning |
+
+### Examples
+
+```python
+# GPT-4o - balanced performance
+agent = studio.create_agent(provider="gpt-4o")
+
+# GPT-4o Mini - fast and cost-effective
+agent = studio.create_agent(provider="gpt-4o-mini")
+
+# GPT-5 - advanced reasoning
+agent = studio.create_agent(provider="gpt-5")
+
+# O3 - reasoning model
+agent = studio.create_agent(provider="o3")
+```
+
+---
+
+## Anthropic
+
+**Credential ID:** `lyzr_anthropic`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `claude-sonnet-4-5` | 4/5 | 4/5 | 200K | - |
+| `claude-opus-4-5` | 4/5 | 3/5 | 200K | Reasoning |
+| `claude-sonnet-4-0` | 4/5 | 4/5 | 200K | - |
+| `claude-opus-4-0` | 5/5 | 3/5 | 200K | Reasoning |
+| `claude-opus-4-1` | 5/5 | 3/5 | 200K | Reasoning |
+| `claude-3-7-sonnet-latest` | 4/5 | 4/5 | 200K | - |
+| `claude-3-5-haiku-latest` | 3/5 | 5/5 | 200K | - |
+
+### Examples
+
+```python
+# Claude Sonnet 4.5 - balanced
+agent = studio.create_agent(provider="claude-sonnet-4-5")
+
+# Claude Opus 4.5 - advanced reasoning
+agent = studio.create_agent(provider="claude-opus-4-5")
+
+# Claude Haiku - fast
+agent = studio.create_agent(provider="claude-3-5-haiku-latest")
+```
+
+---
+
+## Google
+
+**Credential ID:** `lyzr_google`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `gemini-2.0-flash` | 3/5 | 5/5 | 1M | - |
+| `gemini-2.0-flash-lite` | 2/5 | 5/5 | 1M | - |
+| `gemini-2.5-pro` | 4/5 | 4/5 | 1M | Reasoning |
+| `gemini-2.5-flash` | 4/5 | 4/5 | 1M | Reasoning |
+| `gemini-2.5-flash-lite` | 2/5 | 4/5 | 1M | Reasoning |
+| `gemini-3-pro-preview` | 5/5 | 4/5 | 1M | Reasoning |
+
+### Examples
+
+```python
+# Gemini 2.5 Pro - advanced
+agent = studio.create_agent(provider="gemini-2.5-pro")
+
+# Gemini Flash - fast with 1M context
+agent = studio.create_agent(provider="gemini-2.0-flash")
+
+# Gemini 3 Pro Preview - latest
+agent = studio.create_agent(provider="gemini-3-pro-preview")
+```
+
+---
+
+## Groq
+
+**Credential ID:** `lyzr_groq`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `llama-3.3-70b-versatile` | 2/5 | 5/5 | 128K | - |
+| `llama-3.1-8b-instant` | 1/5 | 5/5 | 128K | - |
+| `llama-4-scout-17b-16e-instruct` | 3/5 | 5/5 | 131K | - |
+| `llama-4-maverick-17b-128e-instruct` | 3/5 | 5/5 | 1M | - |
+| `gpt-oss-120b` | 3/5 | 5/5 | 131K | Reasoning |
+| `gpt-oss-20b` | 2/5 | 5/5 | 131K | Reasoning |
+| `kimi-k2-instruct` | 2/5 | 4/5 | 256K | - |
+
+### Examples
+
+```python
+# Llama 3.3 70B - versatile
+agent = studio.create_agent(provider="llama-3.3-70b-versatile")
+
+# Llama 4 Maverick - 1M context
+agent = studio.create_agent(provider="llama-4-maverick-17b-128e-instruct")
+
+# Kimi K2
+agent = studio.create_agent(provider="kimi-k2-instruct")
+```
+
+---
+
+## Perplexity
+
+**Credential ID:** `lyzr_perplexity`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `sonar` | 2/5 | 4/5 | 128K | - |
+| `sonar-pro` | 3/5 | 3/5 | 128K | - |
+| `sonar-reasoning` | 3/5 | 4/5 | 128K | Reasoning |
+| `sonar-reasoning-pro` | 4/5 | 3/5 | 128K | Reasoning |
+| `sonar-deep-research` | 4/5 | 4/5 | 128K | Reasoning |
+| `r1-1776` | 2/5 | 4/5 | 128K | - |
+
+### Examples
+
+```python
+# Sonar - basic search
+agent = studio.create_agent(provider="sonar")
+
+# Sonar Pro - enhanced search
+agent = studio.create_agent(provider="sonar-pro")
+
+# Sonar Deep Research - research tasks
+agent = studio.create_agent(provider="sonar-deep-research")
+```
+
+---
+
+## AWS Bedrock
+
+**Credential ID:** `lyzr_aws-bedrock`
+
+| Model | Capability | Speed | Context | Type |
+|-------|------------|-------|---------|------|
+| `amazon.nova-micro-v1:0` | 1/5 | 5/5 | 128K | - |
+| `amazon.nova-lite-v1:0` | 2/5 | 4/5 | 300K | - |
+| `amazon.nova-pro-v1:0` | 3/5 | 4/5 | 300K | - |
+| `anthropic.claude-3-5-sonnet-20241022-v2:0` | 4/5 | 4/5 | 200K | - |
+| `anthropic.claude-3-7-sonnet-20250219-v1:0` | 4/5 | 4/5 | 200K | Reasoning |
+| `meta.llama3-3-70b-instruct-v1:0` | 4/5 | 3/5 | 128K | - |
+| `mistral.mistral-large-2402-v1:0` | 4/5 | 3/5 | 64K | - |
+
+### Examples
+
+```python
+# Amazon Nova Pro
+agent = studio.create_agent(provider="aws-bedrock/amazon.nova-pro-v1:0")
+
+# Claude on Bedrock
+agent = studio.create_agent(provider="bedrock/anthropic.claude-3-7-sonnet-20250219-v1:0")
+
+# Llama on Bedrock
+agent = studio.create_agent(provider="aws/meta.llama3-3-70b-instruct-v1:0")
+```
+
+---
+
+## Provider Aliases
+
+You can use these aliases when specifying providers:
+
+| Alias | Resolves To |
+|-------|-------------|
+| `openai` | OpenAI |
+| `anthropic` | Anthropic |
+| `google`, `gemini` | Google |
+| `groq` | Groq |
+| `perplexity` | Perplexity |
+| `aws-bedrock`, `bedrock`, `aws` | AWS Bedrock |
+
+---
+
+## Custom Credentials
+
+If you've added custom credentials through the Studio UI, use `llm_credential_id`:
+
+```python
+agent = studio.create_agent(
+    name="Custom Agent",
+    provider="gpt-4o",
+    llm_credential_id="my_custom_openai_credential"
+)
+```
+
+---
+
+## Choosing a Model
+
+### By Use Case
+
+| Use Case | Recommended Models |
+|----------|-------------------|
+| **General assistant** | `gpt-4o`, `claude-sonnet-4-5`, `gemini-2.5-pro` |
+| **Fast responses** | `gpt-4o-mini`, `gemini-2.0-flash`, `llama-3.3-70b-versatile` |
+| **Complex reasoning** | `gpt-5`, `claude-opus-4-5`, `o3` |
+| **Large context** | `gemini-2.5-pro` (1M), `gpt-4.1` (1M), `llama-4-maverick` (1M) |
+| **Research tasks** | `sonar-deep-research`, `sonar-reasoning-pro` |
+| **Cost-effective** | `gpt-4o-mini`, `gemini-2.0-flash-lite`, `llama-3.1-8b-instant` |
+
+### Capability vs Speed
+
+```
+High Capability, Slower:
+  - gpt-5, gpt-5.2, claude-opus-4-5, gemini-3-pro-preview
+
+Balanced:
+  - gpt-4o, claude-sonnet-4-5, gemini-2.5-pro
+
+Fast, Lower Capability:
+  - gpt-4o-mini, gemini-2.0-flash, llama-3.1-8b-instant
+```
+
+---
+
+## Model Information
+
+Each model has these attributes:
+
+| Attribute | Description |
+|-----------|-------------|
+| `capability_score` | Model capability (1-5 scale) |
+| `speed_score` | Response speed (1-5 scale) |
+| `context_window` | Maximum context size in tokens |
+| `model_type` | Special type (e.g., "Reasoning") |

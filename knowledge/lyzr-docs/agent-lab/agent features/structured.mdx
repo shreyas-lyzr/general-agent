@@ -1,0 +1,175 @@
+---
+title: Structured Outputs
+sidebarTitle: Structured Outputs
+---
+
+In Lyzr, **Structured Outputs** allow an agent’s response to be returned in a **machine-readable format** such as JSON, YAML, or even tabular data. These are crucial when your agent needs to interact with other systems, APIs, databases, or dashboards.
+
+Instead of returning free-form text — which is flexible but difficult to extract meaning from — structured outputs make the agent’s responses actionable, testable, and easier to plug into production-grade workflows.
+
+---
+
+## ✨ Why Structured Outputs Matter
+
+### ✅ Machine Interoperability
+
+Structured outputs can be directly consumed by APIs, connected to automation tools like Zapier, integrated into frontend dashboards, or stored in structured databases like PostgreSQL or MongoDB.
+
+**Example:**
+Imagine a marketing agent returning campaign stats:
+
+```json
+{
+  "campaign_name": "July Blast",
+  "clicks": 4231,
+  "conversions": 372,
+  "budget_remaining": 129.5
+}
+```
+
+This response can be fed into an analytics dashboard or automation rule.
+
+### ✅ Predictable Parsing
+
+Instead of using regular expressions or NLP techniques to extract meaning from agent output, you always know what structure to expect. This drastically reduces the complexity of downstream logic.
+
+### ✅ Enhanced UI Rendering
+
+You can automatically render JSON objects as tables, charts, forms, or timelines in the UI — useful for dashboards, forms, reports, and more.
+
+### ✅ Validation & Error Detection
+
+You can define strict schemas for agent responses — including required fields, data types, and constraints. This enables robust validation and early detection of hallucinations or formatting mistakes.
+
+---
+
+## 🧠 Use Cases with Real Examples
+
+### 🎯 Lead Scoring Agent
+
+```json
+{
+  "lead_name": "Jane Doe",
+  "lead_source": "LinkedIn",
+  "score": 91,
+  "confidence": "High"
+}
+```
+
+### 🛠️ Tech Support Ticket Generator
+
+```json
+{
+  "issue": "Password reset not working",
+  "urgency": "High",
+  "customer_id": "CUST-29387",
+  "assigned_to": "tech-support@xyz.com"
+}
+```
+
+### 📬 Email Generator for Sales Outreach
+
+```json
+{
+  "subject": "Re: Interest in Data Platform",
+  "body": "Hi Mark,\nJust following up on our previous conversation...",
+  "call_to_action": "Schedule a demo"
+}
+```
+
+### 📊 Data Summary Agent
+
+```json
+{
+  "summary": "Revenue increased by 15% QoQ",
+  "top_regions": ["India", "US", "UK"],
+  "growth_drivers": ["Product X", "Campaign Y"]
+}
+```
+
+---
+
+## 🏗️ How to Use Structured Outputs in Lyzr Studio
+
+### 1. Agent Configuration
+
+When creating or editing an agent in Lyzr Studio:
+
+* Scroll to the **Expected Output Format** section.
+* Toggle **Structured Output** to `ON`.
+
+### 2. Define Output Structure
+
+Specify a sample output format or a JSON schema.
+
+**Example Output Format:**
+
+```json
+{
+  "name": "string",
+  "email": "string",
+  "score": "integer",
+  "comments": "string"
+}
+```
+
+### 3. Prompt Engineering
+
+Embed structure instructions directly in your prompt:
+
+```
+Return the result in the following JSON format. Do not include any explanation or markdown:
+{
+  "issue": "<string>",
+  "priority": "<Low|Medium|High>",
+  "assignee": "<email>"
+}
+```
+
+### 4. Enable Validation (Optional)
+
+You can enable schema validation within Lyzr to:
+
+* Reject malformed responses
+* Retry generation
+* Trigger fallback behavior or alerts
+
+---
+
+## ✅ Best Practices
+
+| Tip                | Description                                                           |
+| ------------------ | --------------------------------------------------------------------- |
+| 💬 Be explicit     | Tell the agent exactly what structure to follow, with a JSON snippet. |
+| 🔄 Add retries     | On schema mismatch, set up retries with more specific prompts.        |
+| ✂️ Avoid overkill  | Only include necessary fields — don’t make structures too verbose.    |
+| 🧪 Test edge cases | Try inputs like nulls, large numbers, or ambiguous prompts.           |
+| ⚙️ Define schemas  | Use JSON Schema for validation when needed.                           |
+
+---
+
+## 🚫 When *Not* to Use Structured Outputs
+
+* When you're building **conversational**, **storytelling**, or **creative** agents.
+* When the output is unpredictable, such as philosophical insights or user interviews.
+* When human readers are the only consumers of the agent’s response.
+
+Use free-form text in those cases.
+
+---
+
+## 📌 Summary
+
+| Attribute       | Value                                                     |
+| --------------- | --------------------------------------------------------- |
+| Format          | JSON, YAML, key-value pairs, tables                       |
+| Ideal for       | Automation, dashboards, pipelines, data pipelines         |
+| Setup           | Agent creation > Enable Structured Output                 |
+| Prompting Style | Strict instruction + Output structure                     |
+| Integration Use | High — works with webhooks, APIs, databases, frontend UIs |
+
+---
+
+## 🔚 Final Note
+
+By using Structured Outputs in your Lyzr agents, you're enabling automation, reducing complexity, and building reliable integrations. Treat your agents not just as conversational entities — but as programmable, structured interfaces into your systems.

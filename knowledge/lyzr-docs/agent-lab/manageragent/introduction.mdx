@@ -1,0 +1,98 @@
+---
+title: "Manager Agent"
+sidebarTitle: "What is Manager Agent"
+description: "Deep dive into Lyzr’s Manager Agent for dynamic multi-agent orchestration."
+---
+
+## 🧠 What is a Manager Agent?
+
+A **Manager Agent** in Lyzr serves as the central orchestrator for dynamic, goal-driven workflows. Unlike rigid pipelines, Manager Agents interpret high-level objectives in real time, break them down into smaller actionable units (subtasks), and delegate those tasks to other specialized agents or tools.
+
+This allows for **adaptive**, **fault-tolerant**, and **scalable** workflows — where the execution path evolves depending on input complexity, runtime conditions, or changing priorities.
+
+---
+
+### 🔑 Key Concepts
+
+- **🧩 Task Decomposition**: Breaks complex goals into smaller, discrete, manageable subtasks.
+- **🔁 Dynamic Dispatch**: Routes subtasks to the most suitable worker agents or tools with support for branching logic and conditions.
+- **🧠 Context Management**: Maintains a shared working memory, passing context between subtasks and aggregating their outputs.
+- **📊 Monitoring & Control**: Tracks task execution in real time, supports retries, fallback paths, and gives visibility into progress or failures.
+
+---
+
+## 🚀 Why Use a Manager Agent?
+
+Manager Agents are ideal when:
+
+- Tasks require multiple specialized operations (e.g., generating + emailing reports).
+- Execution logic depends on dynamic conditions.
+- You want fault-tolerant workflows with fallback mechanisms.
+- You need visibility and control over orchestration.
+
+By adopting this pattern, organizations unlock powerful automation capabilities while maintaining **clarity**, **modularity**, and **control**.
+
+---
+
+## ✅ Best Practices for Manager Agent Workflows
+
+To build reliable and high-performing Manager Agent setups, follow these guidelines:
+
+---
+
+### 1. Define Clear Subtasks
+
+- **🎯 Precision in Prompts**: Ensure subtasks are well-defined with clear objectives and expected outputs.
+- **📦 Use Templates**: Standardize prompt formats and agent expectations across workflows.
+
+---
+
+### 2. Control Granularity
+
+- **⚖️ Balanced Decomposition**: Avoid subtasks that are too broad (unreliable) or too granular (overhead-heavy).
+- **🧵 Logical Grouping**: Group operations that naturally belong together to reduce latency.
+
+---
+
+### 3. Implement Robust Fallbacks
+
+- **🔁 Retry Logic**: Define how many times a subtask should retry before moving to an alternate flow.
+- **🛠️ Alternative Paths**: Provide predefined backups or default responses for unrecoverable failures.
+
+---
+
+### 4. Monitor KPIs and Logs
+
+- **📈 Success Rates**: Track subtask completion vs. failure to gauge agent performance.
+- **⏱️ Latency**: Analyze orchestration time and find bottlenecks.
+- **💵 Resource Usage**: Monitor agent/tool consumption for cost insights.
+
+---
+
+### 5. Maintain Context Integrity
+
+- **📦 Context Size**: Keep payloads lean — pass only what is necessary to avoid token overflows.
+- **🧬 Structured Format**: Use consistent, machine-parsable formats (e.g., JSON) to pass context.
+
+---
+
+### 6. Secure and Govern Workflows
+
+- **🔐 Access Control**: Limit who can modify Manager Agent setups (via Studio or API).
+- **📝 Audit Trails**: Enable logging to track dispatch activity for debugging or compliance.
+
+---
+
+## 📌 Summary
+
+| Principle                | Description                                                                 |
+|--------------------------|-----------------------------------------------------------------------------|
+| Task Decomposition       | Convert high-level goals into smaller logical subtasks                      |
+| Dynamic Delegation       | Route tasks to the most relevant agent using context + logic                |
+| Context Propagation      | Maintain seamless handoff of knowledge across steps                         |
+| Error Handling           | Use retry + fallback mechanisms for resiliency                              |
+| Observability & Control  | Track performance, latency, success rates, and issues                       |
+
+---
+
+By following these principles and patterns, Lyzr’s **Manager Agent** system lets you build **adaptive**, **scalable**, and **production-ready** multi-agent workflows — all while remaining human-readable and explainable.

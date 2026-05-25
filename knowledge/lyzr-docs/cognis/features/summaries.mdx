@@ -1,0 +1,80 @@
+---
+title: "Summaries"
+sidebarTitle: "Summaries"
+description: "Store, retrieve, and search conversation summaries across sessions"
+---
+
+Summaries let you store condensed versions of conversations and search across them. Use them to build session history, generate user profiles, or give agents quick access to past interaction highlights.
+
+## Store a Summary
+
+```python
+from lyzr import Cognis
+
+cog = Cognis()
+
+result = cog.store_summary(
+    owner_id="user_alice",
+    session_id="sess_001",
+    content="Alice asked about Python decorators. We covered basic syntax, common patterns (@property, @staticmethod), and she practiced writing a caching decorator.",
+    messages_covered_count=12,
+    agent_id="tutor_bot",  # optional
+)
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner_id` | `str` | Yes | User/tenant identifier |
+| `session_id` | `str` | Yes | Session being summarized |
+| `content` | `str` | Yes | The summary text |
+| `messages_covered_count` | `int` | Yes | Number of messages this summary covers |
+| `agent_id` | `str` | No | Agent identifier |
+
+## Get Current Summary
+
+Retrieve the latest summary for a session:
+
+```python
+summary = cog.get_current_summary(
+    owner_id="user_alice",
+    session_id="sess_001",
+)
+print(summary.get("content"))
+```
+
+## Search Summaries
+
+Search across all archived summaries for a user:
+
+```python
+results = cog.search_summaries(
+    owner_id="user_alice",
+    query="Python decorators",
+    limit=5,
+)
+for r in results.get("summaries", []):
+    print(f"[{r['session_id']}] {r['content'][:100]}...")
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner_id` | `str` | Yes | User/tenant identifier |
+| `query` | `str` | Yes | Semantic search query |
+| `session_id` | `str` | No | Filter to a specific session |
+| `limit` | `int` | No | Max results (default: 5) |
+
+## Async Variants
+
+```python
+await cog.astore_summary(owner_id="user_alice", session_id="sess_001", content="...", messages_covered_count=12)
+summary = await cog.aget_current_summary(owner_id="user_alice", session_id="sess_001")
+results = await cog.asearch_summaries(owner_id="user_alice", query="decorators")
+```
+
+<Note>
+Summaries are a hosted-only feature. The open-source `lyzr-cognis` package does not support summaries.
+</Note>

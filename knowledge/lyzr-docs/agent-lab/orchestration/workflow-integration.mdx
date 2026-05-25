@@ -1,0 +1,997 @@
+---
+title: "Workflow API - Quick Integration Guide"
+---
+
+Workflows allow you to orchestrate multiple agents, and these workflows can be called externally via APIs at any time. In this guide, we will walk you through the steps.
+
+## Quick steps to execute Workflows externally
+
+### Step 1: Design Your Workflow in Agent Studio UI
+
+**What You're Doing:** Creating your workflow visually instead of writing complex JSON manually.
+
+**Why This Matters:** The Agent Studio visual builder automatically generates the correct JSON structure for you - no need to understand complex workflow syntax or risk JSON errors.
+
+**How to Do It:**
+
+1. Open Agent Studio visual workflow builder
+2. Drag and drop nodes (agents, APIs, conditionals) onto the canvas
+3. Connect nodes with lines to define the flow
+4. Configure each node's parameters in the UI
+5. **CRITICAL:** Click on Workflow API
+6. Copy the entire `workflow_data` JSON structure
+
+---
+
+### Step 2: Execute Your Workflow via run-dag API
+
+**What You're Doing:** Taking the JSON from Step 1 and executing it with real data.
+
+**Why This Matters:** This is where your visual workflow becomes a running process that does actual work (processes data, calls APIs, makes decisions).
+
+**How to Do It:**
+
+```bash
+curl -X POST "https://lao.studio.lyzr.ai/run-dag/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "workflow_data": {
+      // PASTE THE COMPLETE JSON FROM STEP 1 HERE
+      // Everything from "Export JSON" goes here
+      "tasks": [
+        {
+          "name": "process_data",
+          "function": "agent", 
+          "params": {
+            "config": {
+              "agent_id": "your_agent_id",
+              "api_key": "your_agent_key"
+            },
+            "query": "Process this customer inquiry"
+          }
+        }
+      ],
+      "flow_name": "Quick_Test",
+      "run_name": "test_001"
+    },
+    "inputs": {
+      // These are the runtime values - what your workflow processes
+      "user_input": "Hello world",
+      "customer_email": "user@company.com"
+    }
+  }'
+```
+
+**What Happens:** The workflow engine executes each node in the correct order, passing data between them, and returns the final results.
+
+**Key Points:**
+
+- `workflow_data`: The complete JSON from your visual builder (Step 1)
+- `inputs`: The actual data you want to process (overrides default values)
+- Response contains the results from each node in your workflow
+
+---
+
+### Step 3: Monitor Execution with WebSocket Events
+
+**What You're Doing:** Getting real-time updates as your workflow runs.
+
+**Why This Matters:** For enterprise use, you need to know immediately when workflows complete, fail, or need attention. Don't wait for polling - get instant notifications.
+
+**How to Do It:**
+
+```javascript
+// Connect to the specific workflow execution
+const ws = new WebSocket('wss://lao-socket.studio.lyzr.ai/ws/Quick_Test/test_001');
+
+ws.onopen = () => {
+  console.log('✅ Connected - monitoring workflow execution');
+};
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log(`${data.event_type}: ${data.task_name}`);
+  
+  // Handle different event types
+  switch(data.event_type) {
+    case 'task_completed':
+      console.log('Node finished:', data.output);
+      break;
+    case 'flow_completed':
+      console.log('🎉 Workflow done! Results:', data.output);
+      // Process final results, update UI, notify users
+      break;
+    case 'task_failed':
+      console.error('❌ Node failed:', data.error);
+      // Handle errors, retry, alert ops team
+      break;
+  }
+};
+
+ws.onerror = (error) => {
+  console.error('WebSocket error:', error);
+};
+```
+
+**What You Get:**
+
+- Real-time progress updates as each node executes
+- Immediate error notifications if something fails
+- Final results as soon as the workflow completes
+- Ability to update users and trigger other systems instantly
+
+---
+
+## Executing workflow via run-dag Endpoint
+
+**What This Is:** The core API endpoint that takes your visual workflow and executes it with real data.
+
+**URL:** `https://lao.studio.lyzr.ai/run-dag/`\
+**Method:** POST\
+**Purpose:** Execute any workflow with real-time monitoring
+
+**Why You Use This:** This is where your designed workflow becomes a running automation that processes data, calls APIs, makes decisions, and produces results.
+
+### Request Structure Explained
+
+```json
+{
+  "workflow_data": {
+    // This entire block comes from Agent Studio's "Export JSON"
+    "tasks": [...],           // Your workflow nodes (agents, APIs, etc.)
+    "flow_name": "string",    // Workflow name from Studio
+    "run_name": "string",     // Unique execution ID (you choose this)
+    "default_inputs": {...},  // Default values from input nodes
+    "edges": [...]            // How nodes connect (auto-generated)
+  },
+  "inputs": {
+    // The actual data you want to process RIGHT NOW
+    "customer_message": "Help with billing",
+    "priority": "high"
+  }
+}
+```
+
+**Key Concept:**
+
+- `workflow_data` = Your workflow template (same every time)
+- `inputs` = The specific data for THIS execution (changes each time)
+
+### How to Get workflow_data JSON
+
+**🎯 Method 1: Agent Studio Visual Builder** ⭐ _Always Use This_
+
+**What You're Doing:** Getting the perfect JSON without any manual work.
+
+**Step-by-Step:**
+
+1. Open Agent Studio workflow builder
+2. Design your workflow visually (drag, drop, connect nodes)
+3. Click "Export JSON" or "Get API Code" button in the UI
+4. Copy the ENTIRE `workflow_data` JSON structure
+5. Paste it into your API calls
+
+**Why This Works:** The visual builder generates syntactically perfect, validated JSON that includes all the complex node configurations, dependencies, and connections.
+
+---
+
+**🔧 Method 2: Workflow Management API** (For Existing Workflows)
+
+**What You're Doing:** Retrieving a workflow you already created and saved.
+
+```bash
+# Get existing workflow JSON
+curl -X GET "{BASE_URL}/v3/workflows/{flow_id}" \
+  -H "x-api-key: YOUR_API_KEY"
+
+# The response contains a 'flow_data' field
+# Use that flow_data as your workflow_data in run-dag calls
+```
+
+**When You Use This:** When you have workflows already saved in the system and want to execute them programmatically.
+
+---
+
+**❌ Method 3: Manual Construction** (NEVER Do This)
+
+**What This Means:** Writing the complex JSON structure by hand.
+
+**Why You Don't Do This:**
+
+- Extremely complex JSON structure with nested dependencies
+- Easy to make syntax errors that break execution
+- Hard to maintain and debug
+- The visual builder does this perfectly for you
+
+**Exception:** Only for very simple, single-node workflows for testing.
+
+### Response Structure
+
+**Initial Response (Immediate):**
+
+```json
+{
+  "status": "processing",
+  "task_id": "0d3c400a-d35b-43db-9e9f-655d857d8594"
+}
+```
+
+**What This Means:**
+
+- Your workflow has been accepted and is now running
+- Use the `task_id` to track the execution
+- Connect to WebSocket using your `flow_name` and `run_name` to monitor progress
+- The workflow continues executing asynchronously
+
+**Final Results (via WebSocket):**
+
+```json
+{
+  "event_type": "flow_completed",
+  "status": "completed",
+  "results": {
+    "node_name": { "output": "..." }
+  },
+  "execution_time": 12.34,
+  "task_id": "0d3c400a-d35b-43db-9e9f-655d857d8594"
+}
+```
+
+---
+
+## Getting Final Results via Task Status API
+
+**What This Is:** An alternative way to get workflow results after execution completes, using the task_id from the initial response.
+
+**When to Use This:**
+
+- When you can't use WebSocket connections (firewall restrictions, etc.)
+- When you need to retrieve results later (hours/days after execution)
+- As a backup method to ensure you capture results
+
+### Task Status Endpoint
+
+**URL:** `https://lao.studio.lyzr.ai/task-status/{task_id}`\
+**Method:** GET\
+**Purpose:** Retrieve the final results of a completed workflow
+
+### Example Request
+
+```bash
+curl -X 'GET' \
+  'https://lao.studio.lyzr.ai/task-status/0d3c400a-d35b-43db-9e9f-655d857d8594' \
+  -H 'accept: application/json'
+```
+
+### Response While Processing
+
+**Important:** This endpoint returns `processing` status while the workflow is still running. You'll need to poll periodically or use WebSocket for real-time updates.
+
+```json
+{
+  "status": "processing",
+  "task_id": "0d3c400a-d35b-43db-9e9f-655d857d8594"
+}
+```
+
+### Response After Completion
+
+**Once the workflow finishes**, you get the complete results from all nodes:
+
+```json
+{
+  "status": "completed",
+  "results": {
+    "agent_yellowidea": "Theme Prompt: Imagine a clandestine society of cats who, by moonlight and under carpets, have taught themselves the art of software development. Their paws dance across glowing keyboards, creating code laced with feline curiosity and the occasional mischievous bug. Explore their secret workshops, the tangled wires, the hush of concentration, and the whimsical programs they dream up to make human lives—and their own—a little more magical and mysterious.",
+    "agent_yellowpoem": "**Moonlit Debuggers**\n\nBeneath the velvet hush of midnight floor,\nBetween the gold-eyed glances and the hush\nOf sleeping houses, tail-tips prick and paws\nUnspool carpet corners—whiskered hush—\nThe secret signal, \"Code. The moon is up.\"\n\n[... full poem content ...]",
+    "agent_yellowpoet": "**Moonlit Debuggers**\n\nBeneath the velvet hush of midnight floors,\nBetween gold-eyed glances and the pause\nOf sleeping houses, tail-tips prick and paws\n[... full poem content ...]"
+  }
+}
+```
+
+**What You Get:**
+
+- `status`: Either "processing" or "completed"
+- `results`: Object containing output from each node (keyed by node name)
+- Each node's complete output data
+
+### Polling Pattern Example
+
+```javascript
+async function getWorkflowResults(taskId, maxAttempts = 30) {
+  const url = `https://lao.studio.lyzr.ai/task-status/${taskId}`;
+  
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      const response = await fetch(url, {
+        headers: { 'accept': 'application/json' }
+      });
+      
+      const data = await response.json();
+      
+      if (data.status === 'completed') {
+        console.log('✅ Workflow completed!');
+        return data.results;
+      } else if (data.status === 'failed') {
+        console.error('❌ Workflow failed:', data.error);
+        throw new Error(data.error);
+      }
+      
+      // Still processing, wait before retry
+      console.log(`⏳ Still processing... (attempt ${i + 1}/${maxAttempts})`);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+      
+    } catch (error) {
+      console.error('Error fetching task status:', error);
+      throw error;
+    }
+  }
+  
+  throw new Error('Workflow did not complete within timeout period');
+}
+
+// Usage
+const taskId = '0d3c400a-d35b-43db-9e9f-655d857d8594';
+getWorkflowResults(taskId)
+  .then(results => {
+    console.log('Final results:', results);
+    // Process each node's output
+    Object.entries(results).forEach(([nodeName, output]) => {
+      console.log(`${nodeName}:`, output);
+    });
+  })
+  .catch(error => console.error('Failed to get results:', error));
+```
+
+### When to Use Which Method
+
+| Method              | Best For             | Pros                               | Cons                                  |
+| ------------------- | -------------------- | ---------------------------------- | ------------------------------------- |
+| **WebSocket**       | Real-time monitoring | Instant updates, progress tracking | Requires persistent connection        |
+| **Task Status API** | Batch processing     | Simple HTTP, works everywhere      | Requires polling, no progress updates |
+
+**Pro Tip:** Use WebSocket for user-facing workflows where you need to show progress. Use Task Status API for background jobs or when retrieving results later.
+
+---
+
+## WebSocket Events - Real-time Updates
+
+**What This Is:** A live connection that streams updates as your workflow executes.
+
+**URL Pattern:** `wss://lao-socket.studio.lyzr.ai/ws/{flow_name}/{run_name}`
+
+**Why You Need This:** Instead of waiting for the entire workflow to finish, you get instant notifications as each step completes, fails, or progresses. Critical for enterprise applications where users need immediate feedback.
+
+**How It Works:**
+
+1. Start your workflow with run-dag API
+2. Immediately connect to WebSocket with the same flow_name/run_name
+3. Receive real-time events as each node executes
+4. Handle events in your application (update UI, trigger alerts, etc.)
+
+### Key Events You Care About
+
+| Event Type       | When It Fires         | What You Should Do             | Why It Matters                            |
+| ---------------- | --------------------- | ------------------------------ | ----------------------------------------- |
+| `flow_started`   | Workflow begins       | Update UI: "Processing..."     | User knows their request is being handled |
+| `task_started`   | Node begins execution | Show progress: "Step 1 of 3"   | Real-time progress indication             |
+| `task_completed` | Node finishes         | Update progress: "Step 2 of 3" | User sees continuous progress             |
+| `flow_completed` | Workflow done         | Process results, notify user   | Handle final results immediately          |
+| `task_failed`    | Node fails            | Handle error, maybe retry      | Immediate error response, no waiting      |
+| `flow_error`     | Workflow fails        | Show error, log for debugging  | Critical failure handling                 |
+
+**Enterprise Benefits:**
+
+- **Immediate Response:** Users see progress instantly, not after 30\+ seconds
+- **Error Handling:** Failed steps are caught immediately, not at the end
+- **Better UX:** Real-time progress bars instead of loading spinners
+- **Monitoring:** Operations teams get instant alerts on failures
+
+## Real WebSocket Event Examples
+
+### Enterprise Customer Support Pipeline
+
+**Flow Started:**
+
+```json
+{
+  "event_type": "flow_started",
+  "task_id": "cust-support-001",
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453",
+  "timestamp": 1756806125.043,
+  "message": "Starting customer support workflow"
+}
+```
+
+**Task Started - Sentiment Analysis:**
+
+```json
+{
+  "event_type": "task_started",
+  "task_id": "b29aa07f-9341-4ac5-9160-4f7e1f594654",
+  "task_name": "sentiment_analyzer",
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453",
+  "timestamp": 1756806127.234,
+  "input": {
+    "config": {
+      "agent_id": "sentiment-v2",
+      "api_key": "sk-prod-sentiment-key"
+    },
+    "customer_message": "Your new update broke our entire dashboard! Our team can't access reports and we have a board meeting in 2 hours. This is completely unacceptable!",
+    "customer_email": "cto@enterprise-client.com",
+    "priority": "urgent"
+  }
+}
+```
+
+**Task Completed - Sentiment Analysis:**
+
+```json
+{
+  "event_type": "task_completed",
+  "task_id": "b29aa07f-9341-4ac5-9160-4f7e1f594654", 
+  "task_name": "sentiment_analyzer",
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453",
+  "timestamp": 1756806132.567,
+  "execution_time": 5.33,
+  "output": {
+    "sentiment": "highly_negative",
+    "confidence": 0.94,
+    "urgency_score": 9.2,
+    "key_issues": ["dashboard_broken", "report_access", "time_sensitive"],
+    "escalation_recommended": true,
+    "customer_tier": "enterprise"
+  }
+}
+```
+
+**Task Started - CRM Update:**
+
+```json
+{
+  "event_type": "task_started",
+  "task_id": "crm-update-567",
+  "task_name": "update_salesforce", 
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453",
+  "timestamp": 1756806133.012,
+  "input": {
+    "config": {
+      "url": "https://enterprise.salesforce.com/services/data/v54.0/sobjects/Case",
+      "method": "POST",
+      "headers": {
+        "Authorization": "Bearer sf_prod_token_xyz"
+      }
+    },
+    "case_data": {
+      "subject": "URGENT: Dashboard access failure - Enterprise Client",
+      "priority": "High",
+      "origin": "API",
+      "status": "New",
+      "account_id": "001234567890ABC",
+      "sentiment_score": 9.2,
+      "auto_escalated": true
+    }
+  }
+}
+```
+
+**Task Completed - CRM Update:**
+
+```json
+{
+  "event_type": "task_completed",
+  "task_id": "crm-update-567",
+  "task_name": "update_salesforce",
+  "flow_name": "Customer_Support_Pipeline", 
+  "run_name": "ticket_78453",
+  "timestamp": 1756806134.789,
+  "execution_time": 1.777,
+  "output": {
+    "case_id": "5003000001abCDEF",
+    "case_number": "00012345",
+    "assigned_to": "senior-support-team",
+    "sla_breach_warning": false,
+    "estimated_resolution": "2024-02-15T14:30:00Z"
+  }
+}
+```
+
+**Task Started - Notification Service:**
+
+```json
+{
+  "event_type": "task_started",
+  "task_id": "notify-001",
+  "task_name": "send_notifications",
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453", 
+  "timestamp": 1756806135.123,
+  "input": {
+    "config": {
+      "url": "https://api.enterprise-notif.com/v1/alerts",
+      "method": "POST"
+    },
+    "notifications": [
+      {
+        "type": "slack",
+        "channel": "#critical-support",
+        "message": "🚨 URGENT: Enterprise client dashboard failure - Case #00012345"
+      },
+      {
+        "type": "email", 
+        "recipients": ["support-lead@company.com", "engineering-oncall@company.com"],
+        "subject": "URGENT: Enterprise Client Issue - Immediate Action Required"
+      },
+      {
+        "type": "pagerduty",
+        "service_key": "prod-support-incidents",
+        "severity": "critical"
+      }
+    ]
+  }
+}
+```
+
+**Flow Completed - Full Pipeline:**
+
+```json
+{
+  "event_type": "flow_completed",
+  "task_id": "pipeline-complete",
+  "task_name": "flow", 
+  "flow_name": "Customer_Support_Pipeline",
+  "run_name": "ticket_78453",
+  "timestamp": 1756806138.456,
+  "total_execution_time": 13.41,
+  "output": {
+    "sentiment_analyzer": {
+      "sentiment": "highly_negative",
+      "urgency_score": 9.2,
+      "escalation_recommended": true
+    },
+    "update_salesforce": {
+      "case_id": "5003000001abCDEF",
+      "case_number": "00012345", 
+      "assigned_to": "senior-support-team"
+    },
+    "send_notifications": {
+      "slack_sent": true,
+      "emails_sent": 2,
+      "pagerduty_incident": "PD-12345",
+      "all_notifications_successful": true
+    },
+    "summary": {
+      "customer_notified": true,
+      "internal_team_alerted": true,
+      "case_created": true,
+      "escalation_complete": true,
+      "estimated_resolution_time": "2 hours"
+    }
+  }
+}
+```
+
+### Data Processing Pipeline Events
+
+**Flow Started - Data Validation:**
+
+```json
+{
+  "event_type": "flow_started",
+  "flow_name": "Financial_Data_Pipeline",
+  "run_name": "daily_batch_20240215",
+  "timestamp": 1756806200.123,
+  "message": "Processing 45,000 financial records"
+}
+```
+
+**Task Started - Data Validation:**
+
+```json
+{
+  "event_type": "task_started",
+  "task_name": "validate_financial_data",
+  "flow_name": "Financial_Data_Pipeline", 
+  "run_name": "daily_batch_20240215",
+  "timestamp": 1756806201.456,
+  "input": {
+    "source_file": "s3://financial-data/2024/02/15/transactions.csv",
+    "record_count": 45000,
+    "validation_rules": [
+      "amount_positive",
+      "valid_account_format", 
+      "date_within_range",
+      "currency_code_valid"
+    ]
+  }
+}
+```
+
+**Task Failed - Data Quality Issue:**
+
+```json
+{
+  "event_type": "task_failed",
+  "task_name": "validate_financial_data",
+  "flow_name": "Financial_Data_Pipeline",
+  "run_name": "daily_batch_20240215", 
+  "timestamp": 1756806245.789,
+  "execution_time": 44.33,
+  "error": {
+    "type": "DataValidationError",
+    "message": "1,247 records failed validation checks",
+    "code": "VALIDATION_FAILED",
+    "details": {
+      "total_records": 45000,
+      "failed_records": 1247,
+      "failure_rate": 0.0277,
+      "common_errors": [
+        {"type": "invalid_amount", "count": 834},
+        {"type": "missing_currency", "count": 413}
+      ]
+    }
+  },
+  "partial_results": {
+    "valid_records": 43753,
+    "invalid_records_quarantined": true,
+    "quarantine_location": "s3://quarantine/2024/02/15/"
+  }
+}
+```
+
+**Flow Error - Pipeline Stopped:**
+
+```json
+{
+  "event_type": "flow_error",
+  "flow_name": "Financial_Data_Pipeline",
+  "run_name": "daily_batch_20240215",
+  "timestamp": 1756806246.123,
+  "error": {
+    "type": "PipelineHaltedError",
+    "message": "Data quality threshold not met, stopping pipeline",
+    "code": "QUALITY_THRESHOLD_FAILED",
+    "threshold": 0.02,
+    "actual_failure_rate": 0.0277,
+    "action_taken": "quarantine_and_alert"
+  },
+  "partial_results": {
+    "processed_records": 43753,
+    "quarantined_records": 1247,
+    "notifications_sent": ["data-quality-team@company.com"]
+  }
+}
+```
+
+### Production WebSocket Code
+
+```javascript
+class WorkflowMonitor {
+  constructor(flowName, runName) {
+    this.url = `wss://lao-socket.studio.lyzr.ai/ws/${flowName}/${runName}`;
+    this.ws = null;
+    this.reconnectAttempts = 0;
+  }
+
+  connect() {
+    this.ws = new WebSocket(this.url);
+    
+    this.ws.onopen = () => {
+      console.log('✅ Connected to workflow');
+      this.reconnectAttempts = 0;
+      
+      // Keep connection alive
+      this.pingInterval = setInterval(() => {
+        this.ws.send(JSON.stringify({type: 'ping'}));
+      }, 30000);
+    };
+
+    this.ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      
+      switch(data.event_type) {
+        case 'flow_started':
+          this.onWorkflowStart(data);
+          break;
+        case 'task_completed':
+          this.onTaskComplete(data);
+          break;
+        case 'flow_completed':
+          this.onWorkflowComplete(data);
+          this.ws.close();
+          break;
+        case 'task_failed':
+        case 'flow_error':
+          this.onError(data);
+          break;
+      }
+    };
+
+    this.ws.onclose = () => {
+      clearInterval(this.pingInterval);
+      this.handleReconnect();
+    };
+  }
+
+  handleReconnect() {
+    if (this.reconnectAttempts < 3) {
+      this.reconnectAttempts++;
+      setTimeout(() => this.connect(), 2000 * this.reconnectAttempts);
+    }
+  }
+
+  // Implement these based on your needs
+  onWorkflowStart(data) { /* Update UI */ }
+  onTaskComplete(data) { /* Update progress */ }
+  onWorkflowComplete(data) { /* Process results */ }
+  onError(data) { /* Handle errors */ }
+}
+
+// Usage
+const monitor = new WorkflowMonitor('MyWorkflow', 'run_001');
+monitor.connect();
+```
+
+---
+
+## Common Node Types
+
+**What These Are:** The building blocks of your workflows. Each node type does a specific job in your automation pipeline.
+
+**Important:** You configure these visually in Agent Studio - the JSON examples below are just to show you what gets generated.
+
+### 1. Input Node - Define Parameters
+
+**What It Does:** Defines what data your workflow needs to run (like function parameters).
+
+**When You Use It:** Every workflow needs this to define what data comes in.
+
+**Example Use Cases:** Customer message, file upload, user preferences, priority level
+
+```json
+{
+  "name": "user_input",
+  "function": "inputs",
+  "params": {
+    "keys": {
+      "customer_message": "string",    // What the customer wrote
+      "priority": "string",            // urgent, normal, low  
+      "customer_email": "string"       // For follow-up
+    }
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag an "Input" node, then define each input field you need.
+
+---
+
+### 2. AI Agent Node - Process with AI
+
+**What It Does:** Sends data to your AI agent for processing (analysis, generation, decision-making).
+
+**When You Use It:** When you need AI to understand, analyze, or generate content from your data.
+
+**Example Use Cases:** Sentiment analysis, content generation, data extraction, classification
+
+```json
+{
+  "name": "ai_processor",
+  "function": "agent",
+  "params": {
+    "config": {
+      "agent_id": "your_agent_id",        // Which AI agent to use
+      "api_key": "your_agent_key"         // Authentication
+    },
+    "query": {"depends": "user_input"}     // Gets data from input node
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "Agent" node, select your AI agent, it automatically connects to previous nodes.
+
+**What You Get Back:** AI agent's response/analysis that you can use in subsequent nodes.
+
+---
+
+### 3. API Call Node - External Integration
+
+**What It Does:** Calls your existing systems (CRM, databases, notification services, etc.).
+
+**When You Use It:** When you need to update external systems or get data from them.
+
+**Example Use Cases:** Update Salesforce, send Slack notifications, query databases, call webhooks
+
+```json
+{
+  "name": "update_crm", 
+  "function": "api",
+  "params": {
+    "config": {
+      "url": "https://your-crm.com/api/tickets",
+      "method": "POST",                     // GET, POST, PUT, DELETE
+      "headers": {"Authorization": "Bearer token"}
+    },
+    "BODY_data": {"depends": "ai_processor"} // Sends AI agent's output
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "API" node, enter URL and method, map data from previous nodes.
+
+**Enterprise Power:** This is how you integrate workflows with ALL your existing systems.
+
+---
+
+### 4. Conditional Node - Smart Routing
+
+**What It Does:** Uses AI to make decisions about where the workflow should go next.
+
+**When You Use It:** When you need intelligent branching based on content, not just simple if/then rules.
+
+**Example Use Cases:** Route based on sentiment, escalate high-priority issues, approve/reject based on AI analysis
+
+```json
+{
+  "name": "quality_check",
+  "function": "gpt_conditional", 
+  "params": {
+    "openai_api_key": "sk-...",
+    "condition": "confidence > 0.8",         // AI evaluates this condition
+    "context": {"depends": "ai_processor"},   // Data for AI to analyze
+    "true": "auto_approve",                   // Node to go to if true
+    "false": "human_review"                   // Node to go to if false  
+  }
+}
+```
+
+**How to Configure:** In Agent Studio, drag "Conditional" node, set your condition, connect true/false paths to different nodes.
+
+**Why This Is Powerful:** AI makes nuanced decisions that simple if/then rules can't handle.
+
+---
+
+## Enterprise Integration Patterns
+
+**What These Are:** Common workflow patterns that solve real business problems. Use these as templates for your own integrations.
+
+### Pattern 1: Customer Support Automation
+
+**Business Problem:** Manual customer support is slow, inconsistent, and doesn't scale.
+
+**How This Workflow Solves It:** Automatically analyzes customer messages, routes to appropriate systems, and provides instant responses.
+
+```
+Customer Query → AI Classification → Route to Agent → Update CRM → Send Response
+       ↓              ↓                  ↓             ↓           ↓
+   WebSocket      WebSocket          WebSocket     WebSocket   WebSocket
+```
+
+**What Each Step Does:**
+
+1. **Customer Query** (Input Node): Receives customer message, email, priority
+2. **AI Classification** (Agent Node): AI analyzes sentiment, urgency, category
+3. **Route to Agent** (Conditional Node): Routes based on complexity/urgency
+4. **Update CRM** (API Node): Creates ticket in Salesforce/ServiceNow
+5. **Send Response** (API Node): Sends email/Slack notification to customer
+
+**Business Value:**
+
+- Instant response to customers (not hours later)
+- Consistent categorization and routing
+- Automatic CRM updates
+- Escalation of urgent issues
+
+**Enterprise Result:** 80% faster response time, improved customer satisfaction, reduced support team workload.
+
+---
+
+### Pattern 2: Data Processing Pipeline
+
+**Business Problem:** Manual data validation and processing is error-prone and time-consuming.
+
+**How This Workflow Solves It:** Automated validation, AI-powered analysis, and quality control with human oversight.
+
+```
+Data Input → Validation → AI Analysis → Quality Check → Export Results
+     ↓          ↓            ↓             ↓              ↓
+  Monitor    Monitor      Monitor       Monitor        Monitor
+```
+
+**What Each Step Does:**
+
+1. **Data Input** (Input Node): Receives CSV/JSON data files
+2. **Validation** (Agent Node): AI checks data quality, format, completeness
+3. **AI Analysis** (Agent Node): AI extracts insights, patterns, anomalies
+4. **Quality Check** (Conditional Node): Routes based on confidence score
+5. **Export Results** (API Node): Saves to database/sends to downstream systems
+
+**Business Value:**
+
+- Automated data quality control
+- Consistent analysis methodology
+- Human review only when needed
+- Real-time processing status
+
+**Enterprise Result:** 90% reduction in manual data review, consistent quality standards, faster time-to-insights.
+
+---
+
+### Pattern 3: Approval Workflow
+
+**Business Problem:** Manual approval processes are bottlenecks that slow down business operations.
+
+**How This Workflow Solves It:** Automated content generation with human oversight only where required.
+
+```
+Content Generation → Manager Review → Legal Review → Publish
+       ↓                 ↓              ↓             ↓
+    Auto              Human          Human         Auto
+```
+
+**What Each Step Does:**
+
+1. **Content Generation** (Agent Node): AI creates content based on templates/data
+2. **Manager Review** (Approval Node): Manager approves/rejects via email/Slack
+3. **Legal Review** (Approval Node): Legal team reviews for compliance
+4. **Publish** (API Node): Automatically publishes to website/sends to customers
+
+**Business Value:**
+
+- Faster content creation
+- Consistent quality and tone
+- Proper approvals maintained
+- Audit trail for compliance
+
+**Enterprise Result:** 70% faster content publishing, maintained quality control, full compliance tracking.
+
+---
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "status": "failed",
+  "error": {
+    "type": "NodeExecutionError",
+    "message": "Agent API timeout",
+    "node": "ai_processor", 
+    "code": "TIMEOUT"
+  },
+  "partial_results": {
+    "user_input": {"data": "..."}
+  }
+}
+```
+
+### Common Errors & Solutions
+
+| Error            | Cause               | Solution                       |
+| ---------------- | ------------------- | ------------------------------ |
+| `TIMEOUT`        | Node took too long  | Retry or increase timeout      |
+| `INVALID_CONFIG` | Wrong parameters    | Check node configuration       |
+| `API_RATE_LIMIT` | Too many requests   | Implement backoff              |
+| `AUTH_ERROR`     | Invalid credentials | Check API keys                 |
+| `NETWORK_ERROR`  | Connection issues   | Retry with exponential backoff |
+
+---
+
+## 💡 Pro Tips
+
+1. **Use Agent Studio UI**: Always design workflows visually first, then export JSON for API use
+2. **Start Simple**: Begin with 2-3 node workflows, add complexity gradually
+3. **Test Everything**: Use staging environment that mirrors production
+4. **Monitor Early**: Set up WebSocket monitoring from day one
+5. **Copy-Paste JSON**: Don't manually write workflow_data - get it from the Studio
+6. **Document Workflows**: Keep track of what each workflow does
+7. **Version Control**: Treat workflow definitions as code
+8. **Error Recovery**: Always plan for failure scenarios
+9. **Performance**: Monitor execution times and optimize bottlenecks
+
+---

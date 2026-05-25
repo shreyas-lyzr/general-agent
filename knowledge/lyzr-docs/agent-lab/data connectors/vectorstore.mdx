@@ -1,0 +1,40 @@
+---
+title: Vector Store Connectors
+sidebarTitle: Vector Stores
+---
+
+A **Vector Store** is a specialized, high-performance database that is absolutely foundational to modern AI agent knowledge retrieval and reasoning. Its core function is the secure storage and efficient retrieval of high-dimensional numerical representations of text, documents, code, or any other data—these representations are known as **embeddings**.
+
+### Powering Context-Aware Responses (RAG)
+
+The Vector Store operates as the **long-term, factual memory** system behind your agent's knowledge base.
+
+* **Enabling RAG:** It is the engine that powers **Retrieval-Augmented Generation (RAG)**. When a user asks a question, the agent searches the Vector Store for the pieces of text (chunks) whose embeddings are **semantically similar** to the user's question embedding.
+* **Search, Match, and Reason:** This capability enables your AI agents to search, match, and reason over vast, diverse knowledge bases (connected documents, websites, proprietary data) efficiently and with high accuracy.
+* **Factual Accuracy:** By retrieving the most relevant source information before generating a response, the Vector Store ensures your agent's output is grounded in factual, up-to-date data, drastically reducing hallucinations.
+
+In simple terms, a Vector Store is the crucial component that allows your agent to **find and reference** the precise, necessary knowledge required to answer any specific query accurately.
+
+### 🔗 Supported Vector Store Connectors
+
+Lyzr Agent Studio is built to support multiple leading vector database solutions, providing you with the necessary flexibility and scalability to choose the backend that aligns best with your existing infrastructure, performance requirements, and data governance needs.
+
+| Vector Store Connector | Type / Technology | Description |
+| :--- | :--- | :--- |
+| **Weaviate** | Dedicated Vector Database | An open-source, cloud-native vector database designed to store data objects and vector embeddings. |
+| **Qdrant** | Dedicated Vector Database | A vector similarity search engine that provides a production-ready service with a convenient API. |
+| **Milvus** | Dedicated Vector Database | A highly scalable, open-source vector database designed for billion-scale similarity search. |
+| **PG Vector** | PostgreSQL Extension | An extension that turns the highly reliable **PostgreSQL** relational database into a powerful vector database. |
+| **SingleStore** | Unified Database | A modern, unified database platform supporting both transactional SQL and vector data workloads. |
+| **Neo4J** | Graph Database with Vector Support | A native graph database that supports vector embeddings for enhanced node and relationship similarity search. |
+| **Amazon Neptune** | Graph Database with Vector Support | AWS's fully managed graph database service, now supporting vector search capabilities. |
+
+### 🧩 Configuration and Deployment Details
+
+The integration process for Vector Stores is designed to balance ease-of-use with enterprise-level security and control:
+
+* **Default Credentials for Instant Use:** For **Weaviate** and **Qdrant**, Lyzr provides default, managed credentials. This means you can begin using these vector stores instantly within your environment for testing, development, and rapid prototyping without any external setup or account configuration.
+* **Bring Your Own Credentials (BYOC):** For all other supported vector stores (including Milvus, PG Vector, etc.), you are required to provide your own secure access credentials, connection strings, and security keys. This allows you to connect to your existing, production-grade infrastructure and maintain full ownership and governance over your proprietary data.
+* **Integration Point:** The specific Vector Store backend is selected and configured when you create a **Knowledge Base** within the Lyzr Agent Studio. This approach ensures that you can choose the vector backend that is optimally suited for the specific size, complexity, and access patterns of the data being stored in that particular knowledge base.
+
+---

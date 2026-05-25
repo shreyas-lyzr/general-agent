@@ -1,0 +1,28 @@
+---
+title: "Real-time Session Monitoring via WebSocket"
+sideBartitle: "WebSocket"
+---
+
+Lyzr Studio provides a WebSocket endpoint (`wss://metrics.studio.lyzr.ai`) to listen to real-time messages of a specific session ID. This is essential for monitoring live agent inference and activity logs.
+
+## WebSocket Connection Details
+
+The connection requires two pieces of identifying information: the specific **Session ID** you wish to monitor and your **X-API-Key** for authentication, which must be passed in the Query parameter.
+
+| Component | Description | Example Value |
+| :--- | :--- | :--- |
+| **Base URL** | The standard entry point for the metrics WebSocket server. | `wss://metrics.studio.lyzr.ai` |
+| **Session ID** | The unique identifier for the specific conversation or session you want to track. | `67ff78e698f0d2b584189f69-b1lbm5s577a` |
+| **X-API-Key** | Your authentication key, passed as a query parameter. | `sk-default-xxxxxxxxxxxxxyyyyyyyyyyyyzzzzzzz` |
+
+## Constructing the WebSocket URL
+
+To establish a connection, you must pass the **Session ID** as a path parameter and the **X-API-Key** as a query parameter.
+
+### 1. General Format
+
+Use this template to construct your secure WebSocket URL:
+
+```url
+wss://metrics.studio.lyzr.ai/ws/{SESSION_ID}?x-api-key={X-API-KEY}
+```

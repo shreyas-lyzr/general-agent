@@ -1,0 +1,170 @@
+---
+title: "Cognis Memory"
+sidebarTitle: "Cognis Memory"
+description: "Standalone memory client for storing, searching, and managing memories with full CRUD operations"
+---
+
+Cognis is Lyzr's standalone memory client that gives you direct CRUD access to the memory service. Unlike agent-level memory (setting `memory=30` on agents), Cognis lets you programmatically add, search, retrieve, update, and delete memories — ideal for building custom memory workflows, multi-agent systems, and user-scoped memory stores.
+
+<Note>
+This page documents the **hosted** Cognis API (via `lyzr-adk`). Cognis is also available as an open-source package — see [Cognis Open Source](/open-source/cognis/overview) or the [comparison](/open-source/cognis/hosted-vs-oss).
+</Note>
+
+## Installation
+
+```bash
+pip install lyzr-adk
+```
+
+## Quick Start
+
+```python
+from lyzr import Cognis
+
+# Initialize the client
+cog = Cognis(api_key="sk-your-api-key")
+
+# Store a conversation
+cog.add(
+    messages=[
+        {"role": "user", "content": "My name is Alice and I love Python."},
+        {"role": "assistant", "content": "Nice to meet you, Alice!"},
+    ],
+    owner_id="user_alice",
+)
+
+# Search memories
+results = cog.search(query="What is the user's name?", owner_id="user_alice")
+for result in results:
+    print(result.content, result.score)
+
+# Retrieve all memories
+memories = cog.get(owner_id="user_alice")
+for memory in memories:
+    print(memory.id, memory.content)
+```
+
+## How It Works
+
+1. **Add messages** — You send conversation messages (user/assistant pairs) to Cognis via `cog.add()`.
+2. **Memory extraction** — The service automatically extracts key facts and preferences from the conversation into discrete memory records.
+3. **Semantic search** — When you call `cog.search()`, the query is matched against stored memories using semantic similarity, returning the most relevant results with relevance scores.
+4. **Full CRUD** — You can retrieve, update, and delete individual memory records by ID.
+
+## Initialization
+
+```python
+from lyzr import Cognis
+
+# Default: connects to production
+cog = Cognis(api_key="sk-your-api-key")
+
+# With custom timeout
+cog = Cognis(api_key="sk-your-api-key", timeout=60)
+
+# With environment selection
+cog = Cognis(api_key="sk-your-api-key", env="dev")
+```
+
+### Constructor Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `api_key` | `str` | No | Lyzr API key. Falls back to `LYZR_API_KEY` env var. |
+| `env` | `str \| ServiceURLs` | No | Environment: `"prod"` (default), `"dev"`, `"local"`, or a custom `ServiceURLs` instance. |
+| `timeout` | `int` | No | Request timeout in seconds. Default: `30`. |
+
+## Multi-Tenant Scoping
+
+Every Cognis operation requires at least one scoping identifier. These identifiers control which memories are stored and retrieved:
+
+| Identifier | Purpose | Example |
+|------------|---------|---------|
+| `owner_id` | Scope memories to a specific user/tenant | `"user_alice"` |
+| `agent_id` | Scope memories to a specific agent | `"support_agent"` |
+| `session_id` | Scope memories to a conversation session | `"sess_abc123"` |
+
+You can combine identifiers for fine-grained scoping:
+
+```python
+# User-scoped memories (across all sessions)
+cog.add(messages=msgs, owner_id="user_alice")
+
+# Session-scoped memories
+cog.add(messages=msgs, owner_id="user_alice", session_id="sess_1")
+
+# Agent-specific memories
+cog.add(messages=msgs, agent_id="support_bot", owner_id="user_alice")
+```
+
+<Note>
+At least one of `owner_id`, `agent_id`, or `session_id` must be provided for every operation. A `ValueError` is raised if none are specified.
+</Note>
+
+## Sync and Async
+
+Cognis supports both synchronous and asynchronous usage. Every sync method has an async counterpart prefixed with `a`:
+
+| Sync | Async |
+|------|-------|
+| `cog.add()` | `cog.aadd()` |
+| `cog.search()` | `cog.asearch()` |
+| `cog.get()` | `cog.aget()` |
+| `cog.get_memory()` | `cog.aget_memory()` |
+| `cog.update()` | `cog.aupdate()` |
+| `cog.delete()` | `cog.adelete()` |
+
+### Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        await cog.aadd(
+            messages=[{"role": "user", "content": "Hello!"}],
+            owner_id="user_1",
+        )
+        results = await cog.asearch(query="greeting", owner_id="user_1")
+        print(results)
+
+asyncio.run(main())
+```
+
+## Context Manager
+
+Cognis supports both sync and async context managers for proper resource cleanup:
+
+```python
+# Sync
+with Cognis(api_key="sk-your-api-key") as cog:
+    cog.add(messages=msgs, owner_id="user_1")
+
+# Async
+async with Cognis(api_key="sk-your-api-key") as cog:
+    await cog.aadd(messages=msgs, owner_id="user_1")
+```
+
+## Operations
+
+<CardGroup cols={2}>
+  <Card title="Add Memories" icon="plus" href="/lyzr-adk/memory/add-memories">
+    Store conversation messages into memory
+  </Card>
+  <Card title="Search Memories" icon="magnifying-glass" href="/lyzr-adk/memory/search-memories">
+    Semantic search across stored memories
+  </Card>
+  <Card title="Get Memories" icon="list" href="/lyzr-adk/memory/get-memories">
+    Retrieve and list all stored memories
+  </Card>
+  <Card title="Update Memories" icon="pen" href="/lyzr-adk/memory/update-memories">
+    Modify existing memory content or metadata
+  </Card>
+  <Card title="Delete Memories" icon="trash" href="/lyzr-adk/memory/delete-memories">
+    Remove individual memories or clear sessions
+  </Card>
+  <Card title="Hosted vs Open Source" icon="code-compare" href="/open-source/cognis/hosted-vs-oss">
+    Compare hosted and self-hosted options
+  </Card>
+</CardGroup>

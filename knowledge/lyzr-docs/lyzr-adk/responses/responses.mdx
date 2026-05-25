@@ -1,0 +1,424 @@
+---
+title: "Response Types"
+sidebarTitle: "Responses"
+description: "Response objects returned by agent execution"
+---
+
+The Lyzr ADK provides several response types for different execution modes. This reference covers all response objects and their properties.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o"
+)
+
+# AgentResponse
+response = agent.run("Hello!")
+print(response.response)
+print(response.session_id)
+
+# AgentStream (streaming)
+for chunk in agent.run("Tell a story", stream=True):
+    print(chunk.content, end="")
+```
+
+---
+
+## AgentResponse
+
+The main response object returned by `agent.run()`.
+
+```python
+class AgentResponse:
+    response: str                           # The agent's text response
+    session_id: str                         # Session identifier
+    message_id: str | None                  # Unique message ID
+    metadata: dict | None                   # Additional metadata
+    tool_calls: List[dict] | None           # Tool calls made
+    raw_response: dict | None               # Raw API response
+    artifact_files: List[Artifact] | None   # Generated files
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `response` | str | The agent's text response |
+| `session_id` | str | Session identifier for conversation continuity |
+| `message_id` | str \| None | Unique identifier for this message |
+| `metadata` | dict \| None | Additional metadata (tokens, timing, etc.) |
+| `tool_calls` | List[dict] \| None | Tools called during execution |
+| `raw_response` | dict \| None | Raw API response for debugging |
+| `artifact_files` | List[Artifact] \| None | Generated files |
+
+### Methods
+
+#### has_files()
+
+Check if the response contains generated files.
+
+```python
+has_files() -> bool
+```
+
+```python
+if response.has_files():
+    print(f"Generated {len(response.files)} file(s)")
+```
+
+#### files (property)
+
+Get the list of generated files.
+
+```python
+files -> List[Artifact]
+```
+
+```python
+for artifact in response.files:
+    print(f"{artifact.name}: {artifact.format_type}")
+```
+
+#### to_dict()
+
+Convert response to dictionary.
+
+```python
+to_dict() -> dict
+```
+
+```python
+data = response.to_dict()
+print(data["response"])
+```
+
+### Example
+
+```python
+response = agent.run("Create a summary")
+
+# Access response text
+print(response.response)
+
+# Check session
+print(f"Session: {response.session_id}")
+
+# Access metadata
+if response.metadata:
+    print(f"Tokens: {response.metadata.get('tokens')}")
+
+# Check for files
+if response.has_files():
+    for artifact in response.files:
+        artifact.download(f"./downloads/{artifact.name}")
+```
+
+---
+
+## AgentStream
+
+A single chunk from a streaming response. Yielded when using `stream=True`.
+
+```python
+class AgentStream:
+    content: str                            # Accumulated content
+    delta: str | None                       # New content in this chunk
+    done: bool                              # Is this the final chunk?
+    session_id: str | None                  # Session identifier
+    metadata: dict | None                   # Chunk metadata
+    chunk_index: int | None                 # Chunk number
+    structured_data: BaseModel | None       # Parsed response (final chunk)
+    artifact_files: List[Artifact] | None   # Generated files (final chunk)
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `content` | str | Accumulated content so far |
+| `delta` | str \| None | New text added in this chunk |
+| `done` | bool | True if this is the final chunk |
+| `session_id` | str \| None | Session identifier |
+| `metadata` | dict \| None | Chunk-specific metadata |
+| `chunk_index` | int \| None | Index of this chunk (0-based) |
+| `structured_data` | BaseModel \| None | Validated Pydantic model (final chunk only) |
+| `artifact_files` | List[Artifact] \| None | Generated files (final chunk only) |
+
+### Methods
+
+#### has_files()
+
+Check if the chunk contains generated files.
+
+```python
+has_files() -> bool
+```
+
+#### files (property)
+
+Get generated files from the chunk.
+
+```python
+files -> List[Artifact]
+```
+
+#### to_dict()
+
+Convert chunk to dictionary.
+
+```python
+to_dict() -> dict
+```
+
+### Example
+
+```python
+# Basic streaming
+for chunk in agent.run("Tell me a story", stream=True):
+    # Print new content
+    if chunk.delta:
+        print(chunk.delta, end="", flush=True)
+
+    # Handle final chunk
+    if chunk.done:
+        print(f"\n\nSession: {chunk.session_id}")
+
+        # Check for structured data
+        if chunk.structured_data:
+            result = chunk.structured_data
+            print(f"Parsed: {result}")
+
+        # Check for files
+        if chunk.has_files():
+            for artifact in chunk.files:
+                print(f"Generated: {artifact.name}")
+```
+
+### Streaming with Progress
+
+```python
+import sys
+
+total_chars = 0
+
+for chunk in agent.run("Generate a report", stream=True):
+    if chunk.delta:
+        sys.stdout.write(chunk.delta)
+        sys.stdout.flush()
+        total_chars += len(chunk.delta)
+
+    if chunk.done:
+        print(f"\n\nTotal characters: {total_chars}")
+```
+
+---
+
+## Artifact
+
+Represents a generated file when `file_output=True`.
+
+```python
+class Artifact:
+    name: str               # File name
+    url: str                # Download URL
+    format_type: str        # File format (pdf, docx, png, etc.)
+    artifact_id: str | None # Unique artifact ID
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | str | File name (e.g., "report.pdf") |
+| `url` | str | URL to download the file |
+| `format_type` | str | File format (pdf, docx, png, csv, etc.) |
+| `artifact_id` | str \| None | Unique identifier for the artifact |
+
+### Methods
+
+#### download()
+
+Download the artifact to a local file.
+
+```python
+download(save_path: str) -> None
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `save_path` | str | Local path to save the file |
+
+```python
+artifact.download("./reports/sales_report.pdf")
+```
+
+### Example
+
+```python
+# Enable file output
+agent = studio.create_agent(
+    name="Report Generator",
+    provider="gpt-4o",
+    file_output=True
+)
+
+response = agent.run("Create a PDF report about Q1 sales")
+
+# Download generated files
+if response.has_files():
+    for artifact in response.files:
+        print(f"File: {artifact.name}")
+        print(f"Format: {artifact.format_type}")
+        print(f"URL: {artifact.url}")
+
+        # Download to local file
+        artifact.download(f"./downloads/{artifact.name}")
+        print(f"Downloaded to ./downloads/{artifact.name}")
+```
+
+---
+
+## TaskResponse
+
+Response from creating a long-running task.
+
+```python
+class TaskResponse:
+    task_id: str            # Unique task identifier
+    status: str             # Task status (pending, running, completed, failed)
+    session_id: str | None  # Associated session ID
+    created_at: str | None  # Creation timestamp
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `task_id` | str | Unique identifier for polling status |
+| `status` | str | Current status |
+| `session_id` | str \| None | Session ID |
+| `created_at` | str \| None | Timestamp |
+
+---
+
+## TaskStatus
+
+Status of a long-running task.
+
+```python
+class TaskStatus:
+    task_id: str                    # Task identifier
+    status: str                     # Status (pending, running, completed, failed)
+    result: AgentResponse | None    # Result if completed
+    error: str | None               # Error message if failed
+    progress: float | None          # Progress percentage (0-100)
+    metadata: dict | None           # Task metadata
+```
+
+### Methods
+
+#### is_complete()
+
+Check if task has finished (completed or failed).
+
+```python
+is_complete() -> bool
+```
+
+#### is_successful()
+
+Check if task completed successfully.
+
+```python
+is_successful() -> bool
+```
+
+---
+
+## Structured Responses
+
+When using `response_model`, responses are parsed into Pydantic models:
+
+```python
+from pydantic import BaseModel
+
+class Analysis(BaseModel):
+    sentiment: str
+    confidence: float
+    keywords: list[str]
+
+agent = studio.create_agent(
+    name="Analyzer",
+    provider="gpt-4o",
+    response_model=Analysis
+)
+
+# Returns Analysis, not AgentResponse
+result: Analysis = agent.run("Analyze this text")
+print(result.sentiment)
+print(result.confidence)
+```
+
+### With Streaming
+
+```python
+for chunk in agent.run("Analyze this", stream=True):
+    print(chunk.content, end="")
+
+    if chunk.done and chunk.structured_data:
+        result: Analysis = chunk.structured_data
+        print(f"\nSentiment: {result.sentiment}")
+```
+
+---
+
+## Common Patterns
+
+### Save All Files
+
+```python
+import os
+
+response = agent.run("Generate reports")
+
+if response.has_files():
+    os.makedirs("./output", exist_ok=True)
+
+    for artifact in response.files:
+        path = f"./output/{artifact.name}"
+        artifact.download(path)
+        print(f"Saved: {path}")
+```
+
+### Stream to File
+
+```python
+with open("output.txt", "w") as f:
+    for chunk in agent.run("Write an article", stream=True):
+        if chunk.delta:
+            f.write(chunk.delta)
+```
+
+### Handle All Response Types
+
+```python
+def process_response(response):
+    """Handle any response type"""
+
+    if isinstance(response, AgentResponse):
+        print(f"Text: {response.response}")
+
+    elif isinstance(response, BaseModel):
+        # Structured response
+        print(f"Structured: {response}")
+
+    # Check for files in either case
+    if hasattr(response, 'has_files') and response.has_files():
+        for artifact in response.files:
+            artifact.download(f"./downloads/{artifact.name}")
+```

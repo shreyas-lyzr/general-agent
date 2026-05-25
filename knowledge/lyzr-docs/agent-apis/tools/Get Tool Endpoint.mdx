@@ -1,0 +1,30 @@
+---
+title: "Get Tool Endpoint"
+openapi: get /tools/{tool_id}
+---
+
+Get Tool Endpoint
+
+### Endpoint
+**GET** `/v3/tools/{tool_id}`
+
+### Description
+Retrieves details of a specific tool by its ID.
+
+### Authentication
+API Key (`x-api-key`) in the header.
+
+### Request Parameters
+| Parameter | Type   | Description |
+|-----------|--------|-------------|
+| `tool_id` | String | The ID of the tool to fetch. |
+
+### Curl Request
+```bash
+curl -X GET "https://agent-prod.studio.lyzr.ai/v3/tools/{tool_id}" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-REDACTED"
+```
+
+### Response
+Returns the tool details, including configurations and settings.

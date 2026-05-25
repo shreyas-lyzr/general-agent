@@ -1,0 +1,80 @@
+---
+title: "Knowledge Graph in Lyzr"
+sidebarTitle: "Knowledge Graph"
+---
+
+## Conceptual Overview
+
+The Knowledge Graph in Lyzr enables highly accurate, deeply contextual question answering by mapping and maintaining relationships between entities across your documents. It uses a graph database (Neo4J) to semantically link information, turning isolated data chunks into a connected web of knowledge.
+
+This allows the system to understand not just **what** is said, but **how** different concepts and entities relate—unlocking powerful reasoning capabilities for your agents.
+
+### What is a Knowledge Graph?
+
+A Knowledge Graph is a structured representation of data where entities (like people, places, concepts, etc.) are nodes, and the relationships between them are edges. In Lyzr, this graph is automatically constructed from your documents using:
+
+- Named Entity Recognition (NER)
+- Relationship Extraction
+- Custom Domain Ontologies (optional)
+
+Once ingested and connected in Neo4J, the Knowledge Graph can answer multi-hop and context-heavy queries far beyond the capability of traditional RAG pipelines.
+
+### Why Use a Knowledge Graph?
+
+While vector-based RAG systems are excellent at surface-level retrieval, they struggle with:
+
+- Cross-document reasoning
+- Entity disambiguation
+- Relationship-based navigation
+- Long-context memory
+
+The Knowledge Graph complements traditional RAG with structural reasoning and is ideal when your questions require deep understanding, such as:
+
+- "How does the approval process work across departments?"
+- "Which tools are linked to a specific use case?"
+- "What dependencies exist between tasks or agents?"
+
+## Core Workflow
+
+1. **Ingestion**: Upload unstructured data (e.g., PDFs, DOCX, TXT, web URLs) to Lyzr.
+2. **Extraction**:
+   - Identify entities and their relationships using NLP.
+   - Construct a graph schema dynamically.
+3. **Graph Construction**:
+   - Store nodes and edges in Neo4J.
+   - Maintain bidirectional and typed relationships.
+4. **Query Interface**:
+   - Users or agents ask questions.
+   - System translates queries into Cypher or traverses graph paths to extract relevant subgraphs.
+5. **Answer Generation**:
+   - Graph insights are used alongside language models to produce rich, precise responses.
+
+## Key Components
+
+| Component             | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| Entity Nodes          | Real-world concepts, objects, or people identified in your data             |
+| Relationships         | Descriptive links between nodes (e.g., “uses”, “belongs to”, “managed by”)  |
+| Neo4J Integration     | High-performance, native graph database to store and traverse the knowledge |
+| Contextual Retrieval  | Questions resolve into graph walks rather than isolated embeddings          |
+| Hybrid RAG Strategy   | Combines graph-based insights with LLM generation for best-in-class results |
+
+## Benefits
+
+- **High Accuracy**: The structured graph minimizes hallucinations in long or complex queries.
+- **Deep Reasoning**: Agents can understand multi-hop relationships across data silos.
+- **Dynamic Updates**: Graphs evolve as new data is added or relationships change.
+- **Visual Exploration**: Neo4J allows visual navigation for data analysts and builders.
+- **LLM Synergy**: Graph context acts as a factual backbone for AI-driven conversations.
+
+## Ideal Use Cases
+
+- Knowledge-heavy enterprises (e.g., legal, healthcare, policy)
+- Cross-functional documentation
+- Process and workflow mapping
+- Research papers with references and citations
+- Any domain with strong semantic structure or entity-based navigation
+
+## AI-Powered Navigation
+
+The Knowledge Graph transforms static documents into an intelligent, connected web of meaning. It elevates Lyzr's AI from just **retrieving** information to truly **understanding** it—paving the way for advanced enterprise reasoning and explainability.

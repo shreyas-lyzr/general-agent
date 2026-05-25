@@ -1,0 +1,86 @@
+---
+title: "Introduction to orchestration"
+sidebarTitle: "Overview"
+---
+
+AI Agent orchestration is the process of coordinating multiple specialized AI agents to work together on complex tasks. It enables you to move beyond single-purpose bots and build sophisticated, multi-step workflows. Lyzr Studio offers two distinct orchestration models for different needs: Workflows and the Manager Agent.
+
+## Workflow
+
+A Workflow is a static, developer-defined blueprint. It's perfect for predictable, repeatable processes where you define every step in advance.
+
+## Manager Agent
+
+The Manager Agent is a dynamic, AI-led orchestrator. It intelligently breaks down a broad goal into a series of sub-tasks and delegates them at runtime.
+
+The choice between them comes down to a simple trade-off: use a DAG for maximum control and efficiency in structured pipelines, or use a Manager Agent for maximum flexibility and intelligence in dynamic, goal-driven tasks.
+
+## Workflow vs Manager Agent
+
+Understanding the distinction between **DAG-based Orchestration** and the **Manager Agent architecture** is essential for building effective and scalable workflows in Lyzr.
+
+While both approaches help structure task execution and coordination, they serve different use cases and follow different design philosophies.
+
+---
+
+## 🧭 Core Philosophy
+
+| Feature              | Workflow                          | Manager Agent                              |
+| -------------------- | --------------------------------- | ------------------------------------------ |
+| **Architecture**     | Static and declarative            | Dynamic and interpretive                   |
+| **Definition Style** | Predefined flow using JSON        | AI-led decision making at runtime          |
+| **Task Handling**    | Tasks execute in a fixed sequence | Tasks are decomposed and routed on-the-fly |
+
+---
+
+## 🔧 Use Case Suitability
+
+| When to Use…             | Workflow                                       | Manager Agent                                    |
+| ------------------------ | ---------------------------------------------- | ------------------------------------------------ |
+| **Structured Pipelines** | Yes – Perfect for ETL, sequential agent chains | Less Ideal – Overhead for static pipelines       |
+| **Dynamic Decisions**    | Limited – Requires manual branching logic      | Yes – AI handles logic and dispatch dynamically  |
+| **Error Handling**       | Requires prewritten fallback paths             | Can retry, fallback, or reassign dynamically     |
+| **Tool + API Chaining**  | Excellent support                              | Supported via subtasks, but requires good design |
+| **Adaptive Workflows**   | Rigid but reliable                             | Highly flexible and goal-driven                  |
+
+---
+
+## 🏗️ Technical Comparison
+
+| Feature                  | Workflow                                    | Manager Agent Architecture                      |
+| ------------------------ | ------------------------------------------- | ----------------------------------------------- |
+| **Input Format**         | JSON config (`tasks`, `default_inputs`)     | JSON + natural language goals                   |
+| **Execution Engine**     | LAO (Lyzr Agent Orchestration)              | Orchestrated through a root agent               |
+| **Parallel Execution**   | Supported via branches                      | Not parallel by default – sequential delegation |
+| **Multi-Agent Handling** | Chained via JSON                            | Native — manager calls multiple worker agents   |
+| **Reusability**          | High (via default_inputs and modular tasks) | Medium — logic tightly embedded in agent flow   |
+| **Token Usage**          | More efficient (fewer LLM calls)            | May consume more credits due to LLM reasoning   |
+| **Debuggability**        | Easier – predictable task paths             | Harder – runtime dispatch may vary              |
+
+---
+
+## 🎯 Decision Guidance
+
+| If you want to…                                         | Use This          |
+| ------------------------------------------------------- | ----------------- |
+| Build predictable, repeatable multi-step automations    | **Workflow**      |
+| Let the agent break down complex tasks into subtasks    | **Manager Agent** |
+| Integrate multiple external APIs and agents in sequence | **Workflow**      |
+| Build a generalist agent that adapts and delegates      | **Manager Agent** |
+| Monitor execution step-by-step with visual logs         | **Workflow**      |
+| Delegate tasks to agents based on smart goals           | **Manager Agent** |
+
+---
+
+## 🧠 Summary
+
+| Feature Area    | DAG                   | Manager Agent              |
+| --------------- | --------------------- | -------------------------- |
+| **Control**     | Developer-defined     | AI-controlled              |
+| **Flexibility** | Low–Medium            | High                       |
+| **Best For**    | Automation, pipelines | Dynamic task decomposition |
+| **Example**     | Lead scoring flow     | Executive assistant agent  |
+
+---
+
+By choosing the right model — **Workflow for structure**, or **Manager Agent for intelligence** — you’ll make your Lyzr workflows both powerful and purpose-built.

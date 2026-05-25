@@ -1,0 +1,348 @@
+---
+title: "File Generation"
+sidebarTitle: "File Generation"
+description: "Generate documents and files with agents"
+---
+
+Enable agents to generate PDFs, Word documents, spreadsheets, and other file formats during conversations.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Create agent with file output enabled
+agent = studio.create_agent(
+    name="Document Generator",
+    provider="gpt-4o",
+    role="Professional document creator",
+    goal="Generate well-formatted documents",
+    instructions="Create professional documents in the requested format",
+    file_output=True  # Enable file generation
+)
+
+# Generate a PDF report
+response = agent.run("Create a project status report in PDF format")
+
+# Access generated files
+if response.has_files():
+    for file in response.files:
+        print(f"Generated: {file.name} ({file.format_type})")
+        print(f"Download URL: {file.url}")
+        file.download(f"./output/{file.name}")
+```
+
+---
+
+## Enabling File Output
+
+### At Agent Creation
+
+```python
+agent = studio.create_agent(
+    name="Doc Generator",
+    provider="gpt-4o",
+    role="Document creator",
+    goal="Generate documents",
+    file_output=True  # Enable file generation
+)
+```
+
+### Update Existing Agent
+
+```python
+# Get existing agent
+agent = studio.get_agent("agent_id")
+
+# Enable file output
+agent = agent.update(file_output=True)
+```
+
+---
+
+## Supported File Formats
+
+| Format | Extension | Description |
+|--------|-----------|-------------|
+| PDF | .pdf | Portable Document Format |
+| DOCX | .docx | Microsoft Word Document |
+| CSV | .csv | Comma-Separated Values |
+| XLSX | .xlsx | Microsoft Excel Spreadsheet |
+| PPTX | .pptx | Microsoft PowerPoint |
+| TXT | .txt | Plain Text |
+| HTML | .html | HTML Document |
+| JSON | .json | JSON Data File |
+
+---
+
+## Working with Generated Files
+
+### Check for Files
+
+```python
+response = agent.run("Create a report")
+
+# Method: has_files()
+if response.has_files():
+    print("Files were generated")
+
+# Property: files
+file_count = len(response.files)
+print(f"Number of files: {file_count}")
+```
+
+### Access File Properties
+
+```python
+for file in response.files:
+    print(f"Name: {file.name}")
+    print(f"Format: {file.format_type}")
+    print(f"URL: {file.url}")
+    print(f"ID: {file.artifact_id}")
+```
+
+### Download Files
+
+```python
+# Download single file
+response.files[0].download("./output/report.pdf")
+
+# Download all files
+for file in response.files:
+    file.download(f"./output/{file.name}")
+```
+
+---
+
+## Examples
+
+### PDF Reports
+
+```python
+agent = studio.create_agent(
+    name="Report Generator",
+    provider="gpt-4o",
+    role="Business analyst",
+    goal="Create comprehensive reports",
+    instructions="""
+    Generate professional PDF reports including:
+    - Executive summary
+    - Data analysis
+    - Charts and visualizations
+    - Recommendations
+    """,
+    file_output=True
+)
+
+response = agent.run("""
+Create a quarterly business report for Q4 2024:
+- Revenue: $2.5M (up 15%)
+- New customers: 150
+- Churn rate: 5%
+- Key wins: Enterprise contracts with 3 Fortune 500 companies
+""")
+
+if response.has_files():
+    pdf = response.files[0]
+    pdf.download("./reports/q4_2024_report.pdf")
+```
+
+### Word Documents
+
+```python
+agent = studio.create_agent(
+    name="Proposal Writer",
+    provider="gpt-4o",
+    role="Business writer",
+    goal="Create professional proposals",
+    instructions="Generate detailed business proposals in DOCX format",
+    file_output=True
+)
+
+response = agent.run("""
+Create a project proposal for website redesign:
+- Client: TechCorp
+- Budget: $50,000
+- Timeline: 3 months
+- Scope: Full redesign, mobile responsive, SEO optimization
+""")
+
+if response.has_files():
+    docx = [f for f in response.files if f.format_type == "docx"][0]
+    docx.download("./proposals/techcorp_proposal.docx")
+```
+
+### Spreadsheets
+
+```python
+agent = studio.create_agent(
+    name="Data Exporter",
+    provider="gpt-4o",
+    role="Data analyst",
+    goal="Export data in spreadsheet format",
+    instructions="Create well-formatted CSV and Excel files",
+    file_output=True
+)
+
+response = agent.run("""
+Create a CSV file with the following sales data:
+- Product A: Jan $10K, Feb $12K, Mar $15K
+- Product B: Jan $8K, Feb $9K, Mar $11K
+- Product C: Jan $5K, Feb $6K, Mar $7K
+Include totals row
+""")
+
+if response.has_files():
+    for file in response.files:
+        if file.format_type in ["csv", "xlsx"]:
+            file.download(f"./data/{file.name}")
+```
+
+### Invoices
+
+```python
+agent = studio.create_agent(
+    name="Invoice Generator",
+    provider="gpt-4o",
+    role="Accounting assistant",
+    goal="Generate professional invoices",
+    instructions="""
+    Create invoices with:
+    - Company header and logo placeholder
+    - Client information
+    - Itemized services with rates
+    - Subtotal, tax, and total
+    - Payment terms and instructions
+    """,
+    file_output=True
+)
+
+response = agent.run("""
+Generate invoice #INV-2024-001:
+
+From: My Company LLC
+To: Acme Corporation
+    123 Business St, NYC
+
+Services:
+1. Consulting - 20 hours @ $150/hr = $3,000
+2. Development - 40 hours @ $125/hr = $5,000
+3. Design - 10 hours @ $100/hr = $1,000
+
+Tax Rate: 8%
+Payment Terms: Net 30
+""")
+
+if response.has_files():
+    response.files[0].download("./invoices/INV-2024-001.pdf")
+```
+
+### Presentations
+
+```python
+agent = studio.create_agent(
+    name="Presentation Creator",
+    provider="gpt-4o",
+    role="Presentation designer",
+    goal="Create professional presentations",
+    instructions="Generate PowerPoint presentations with clear structure",
+    file_output=True
+)
+
+response = agent.run("""
+Create a 5-slide presentation on AI in Healthcare:
+
+Slide 1: Title - "AI Transforming Healthcare"
+Slide 2: Current Challenges in Healthcare
+Slide 3: AI Solutions and Applications
+Slide 4: Case Studies and Results
+Slide 5: Future Outlook and Recommendations
+""")
+
+if response.has_files():
+    pptx = response.files[0]
+    pptx.download("./presentations/ai_healthcare.pptx")
+```
+
+---
+
+## Best Practices
+
+### Specify Format Clearly
+
+```python
+# Good: Clear format specification
+response = agent.run("Create a detailed report in PDF format")
+
+# Also good: Format in context
+response = agent.run("""
+Export this data as a CSV file:
+Name, Email, Status
+John, john@example.com, Active
+Jane, jane@example.com, Inactive
+""")
+```
+
+### Provide Detailed Instructions
+
+```python
+agent = studio.create_agent(
+    name="Document Generator",
+    provider="gpt-4o",
+    role="Professional writer",
+    instructions="""
+    When generating documents:
+    - Use professional formatting
+    - Include headers and sections
+    - Add page numbers for multi-page documents
+    - Use consistent fonts and spacing
+    - Include date and version information
+    """,
+    file_output=True
+)
+```
+
+### Handle Multiple Files
+
+```python
+response = agent.run("Create a report with an appendix as separate files")
+
+# Organize by type
+pdfs = []
+spreadsheets = []
+
+for file in response.files:
+    if file.format_type == "pdf":
+        pdfs.append(file)
+    elif file.format_type in ["csv", "xlsx"]:
+        spreadsheets.append(file)
+
+# Download organized
+for pdf in pdfs:
+    pdf.download(f"./reports/{pdf.name}")
+for ss in spreadsheets:
+    ss.download(f"./data/{ss.name}")
+```
+
+### Error Handling
+
+```python
+try:
+    response = agent.run("Generate a report")
+
+    if response.has_files():
+        for file in response.files:
+            try:
+                file.download(f"./output/{file.name}")
+                print(f"Downloaded: {file.name}")
+            except Exception as e:
+                print(f"Failed to download {file.name}: {e}")
+    else:
+        print("No files generated")
+        print(f"Response: {response.response}")
+
+except Exception as e:
+    print(f"Agent error: {e}")
+```

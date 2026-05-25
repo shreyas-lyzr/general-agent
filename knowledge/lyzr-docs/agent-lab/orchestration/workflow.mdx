@@ -1,0 +1,208 @@
+---
+title: "Lyzr Agent Orchestration (LAO) Workflow"
+sidebarTitle: Workflow
+---
+
+## What is LAO?
+Lyzr Agent Orchestration (LAO) is a framework to define and execute workflows using Lyzr Agents. Workflows are defined in JSON format and executed through the LAO engine.
+
+## JSON Format Structure
+
+```json
+{
+  "tasks": [],
+  "default_inputs": {},
+  "flow_name": "",
+  "run_name": ""
+}
+```
+
+### Field Descriptions:
+- **tasks**: An array of task objects.
+- **default_inputs**: Input values reused across the workflow.
+- **flow_name**: Name assigned to the workflow.
+- **run_name**: Identifier for the particular execution of the workflow.
+
+---
+
+## Defining a Task
+Each task is an object with the following structure:
+
+```json
+{
+  "name": "",
+  "tag": "",
+  "function": "",
+  "params": {}
+}
+```
+
+### Task Fields:
+- **name**: A unique identifier for the task.
+- **tag**: (Optional) A readable label for better clarity.
+- **function**: The action to execute. (e.g., `call_lyzr_agent`, `api_call`)
+- **params**: The parameters required for the function to execute.
+
+---
+
+## Defining Inputs in `params`
+You can define parameter values in three different ways:
+
+### 1. Direct Input
+```json
+"param_name": "value"
+```
+
+### 2. Input from `default_inputs`
+```json
+"param_name": {
+  "input": "input_key"
+}
+```
+
+### 3. Dependency on Another Task
+```json
+"param_name": {
+  "depends": "task_name"
+}
+```
+
+---
+
+## Example: Calling a Lyzr Agent
+Use the `call_lyzr_agent` function to call a Lyzr Agent.
+
+### Step 1: Define Agent Config in `default_inputs`
+```json
+"mail_generator_agent_config": {
+  "user_id": "",
+  "session_id": "",
+  "agent_id": "",
+  "api_key": "",
+  "api_url": "https://agent.api.lyzr.app/v2/chat/",
+  "agent_name": "mail_generator_agent"
+}
+```
+
+> 💡 To get `agent_id`, `session_id`, and `user_id`, please refer to the API documentation or check under the **Inference** tab located in the **Agent API** section of the Agent Dashboard on Lyzr Studio.
+
+### Step 2: Task Definition
+```json
+{
+  "name": "task_1",
+  "tag": "Mail Generator Agent",
+  "function": "call_lyzr_agent",
+  "params": {
+    "config": {
+      "input": "mail_generator_agent_config"
+    },
+    "user_message": "Create an email on the topic AI.",
+    "email_tone": "Formal"
+  }
+}
+```
+
+### Step 3: Full Workflow JSON
+```json
+{
+  "tasks": [
+    {
+      "name": "task_1",
+      "tag": "Mail Generator Agent",
+      "function": "call_lyzr_agent",
+      "params": {
+        "config": {
+          "input": "mail_generator_agent_config"
+        },
+        "user_message": "Create an email on the topic AI.",
+        "email_tone": "Formal"
+      }
+    }
+  ],
+  "default_inputs": {
+    "mail_generator_agent_config": {
+      "user_id": "",
+      "session_id": "",
+      "agent_id": "",
+      "api_key": "",
+      "api_url": "https://agent.api.lyzr.app/v2/chat/",
+      "agent_name": "mail_generator_agent"
+    }
+  },
+  "flow_name": "email_generator_flow",
+  "run_name": "run_1"
+}
+```
+
+---
+
+## Example: Calling an External API
+Use the `api_call` function to make API calls.
+
+### Step 1: Define API Config in `default_inputs`
+```json
+"weather_api_config": {
+  "url": "https://api.openweathermap.org/data/2.5/weather",
+  "method": "GET",
+  "headers": {
+    "accept": "application/json"
+  }
+}
+```
+
+### Step 2: Task Definition
+```json
+{
+  "name": "task_1",
+  "tag": "Get Current Weather",
+  "function": "api_call",
+  "params": {
+    "config": {
+      "input": "weather_api_config"
+    },
+    "QUERY_q": {
+      "input": "city"
+    },
+    "QUERY_units": "metric"
+  }
+}
+```
+
+### Step 3: Full Workflow JSON
+```json
+{
+  "tasks": [
+    {
+      "name": "task_1",
+      "tag": "Get Current Weather",
+      "function": "api_call",
+      "params": {
+        "config": {
+          "input": "weather_api_config"
+        },
+        "QUERY_q": {
+          "input": "city"
+        },
+        "QUERY_units": "metric"
+      }
+    }
+  ],
+  "default_inputs": {
+    "weather_api_config": {
+      "url": "https://api.openweathermap.org/data/2.5/weather",
+      "method": "GET",
+      "headers": {
+        "accept": "application/json"
+      }
+    }
+  },
+  "flow_name": "weather_flow",
+  "run_name": "run_1"
+}
+```
+
+---
+
+## Summary
+With Lyzr Agent Orchestration, you can build powerful and intelligent workflows using Lyzr Agents and API integrations. Chain tasks together, reuse inputs efficiently, and automate complex logic in a clean and modular way.
+

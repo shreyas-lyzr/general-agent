@@ -1,0 +1,116 @@
+---
+title: "Session Management"
+sidebarTitle: "Session Management"
+description: "Scope memories with owner_id, agent_id, and session_id"
+---
+
+Cognis uses a three-level scoping model that matches the hosted Cognis API: `owner_id`, `agent_id`, and `session_id`. This lets you manage memories across users, agents, and conversations.
+
+## Scoping Model
+
+| Identifier | Scope | Persistence |
+|------------|-------|-------------|
+| `owner_id` | User or tenant | Permanent (until deleted) |
+| `agent_id` | Agent or bot | Permanent (until deleted) |
+| `session_id` | Conversation session | Session-local for messages, permanent for extracted facts |
+
+<Note>
+At least one of `owner_id`, `agent_id`, or `session_id` must be provided at initialization.
+</Note>
+
+## What Gets Scoped Where
+
+- **Extracted memories** (facts) are global to `(owner_id, agent_id)` — they persist across sessions
+- **Raw messages** are scoped to `(owner_id, agent_id, session_id)` — they belong to a specific session
+- **Search** returns both global memories and current session messages
+- **get_context** reads short-term from the session, long-term from the global scope
+
+This means facts learned in one session are available in all future sessions for the same user/agent pair.
+
+## Setting Scope at Init
+
+```python
+from cognis import Cognis
+
+# User-scoped (auto-generates session_id)
+m = Cognis(owner_id="user_alice")
+
+# User + agent scoped
+m = Cognis(owner_id="user_alice", agent_id="support_bot")
+
+# Explicit session
+m = Cognis(owner_id="user_alice", session_id="conv_morning")
+```
+
+## Per-Call Overrides
+
+Override the instance-level scope on any method call:
+
+```python
+m = Cognis(owner_id="user_alice")
+
+# Add memories for a different owner
+m.add(messages, owner_id="user_bob", agent_id="bot_1")
+
+# Search a specific owner
+m.search("query", owner_id="user_bob")
+
+# Get context for a specific session
+m.get_context(messages, session_id="ses_morning")
+```
+
+## Switching Sessions
+
+```python
+m = Cognis(owner_id="user_alice")
+
+# Morning conversation
+m.add([{"role": "user", "content": "Good morning! I need help with Python."}])
+
+# Switch to a new session (auto-generates ID)
+new_id = m.new_session()
+print(f"New session: {new_id}")
+
+# Or switch to a specific session
+m.set_session("afternoon_chat")
+m.add([{"role": "user", "content": "Now let's talk about JavaScript."}])
+```
+
+## Switching Owner/Agent
+
+```python
+m = Cognis(session_id="shared_session")
+
+# Multi-tenant: serve different users with the same instance
+m.set_owner("alice")
+m.add(messages_from_alice)
+
+m.set_owner("bob")
+m.add(messages_from_bob)
+
+# Memories stay isolated between owners
+```
+
+## Properties
+
+```python
+m.session_id    # Current session ID (str)
+m.owner_id      # Current owner ID (str | None)
+m.agent_id      # Current agent ID (str | None)
+```
+
+## Multi-Agent Example
+
+```python
+# Agent 1: Travel researcher
+m = Cognis(owner_id="user_1", agent_id="travel_researcher")
+m.add([{"role": "user", "content": "I love beach destinations."}])
+
+# Agent 2: Restaurant recommender (separate memory space)
+m.set_agent("restaurant_bot")
+m.add([{"role": "user", "content": "I prefer Italian food."}])
+
+# Each agent has its own memory scope
+m.set_agent("travel_researcher")
+resp = m.search("preferences")  # Returns beach destinations, not food
+```

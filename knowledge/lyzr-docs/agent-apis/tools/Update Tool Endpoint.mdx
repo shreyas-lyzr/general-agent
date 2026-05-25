@@ -1,0 +1,33 @@
+---
+title: Update Tool Endpoint
+openapi: put /tools/{tool_id}
+---
+
+Update Tool Endpoint
+
+### Description
+This endpoint allows updating an existing tool's configuration.
+
+### Endpoint
+**PUT** `/v3/tools/{tool_id}`
+
+### Authentication
+API Key (x-api-key) must be included in the header.
+
+### Path Parameters
+- `tool_id` (string) - The ID of the tool to update.
+
+### Request Body
+A JSON object containing the fields to be updated.
+
+### Response
+A message confirming that the tool was updated.
+
+### Example Request
+```sh
+curl -X PUT "https://agent-prod.studio.lyzr.ai/v3/tools/tool_id" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-EXAMPLEKEY123" ^
+-d "{}"
+```

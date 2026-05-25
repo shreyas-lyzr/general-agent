@@ -1,0 +1,149 @@
+---
+title: "Lyzr Voice Agent: External Integration Guide"
+sidebarTitle: External Integration
+---
+
+This guide provides the technical specifications and reference implementation required to integrate Lyzr's low-latency voice AI into external applications.
+
+---
+
+## 1. Authentication & Endpoint
+All requests to the Lyzr Voice API require an `x-api-key` header containing your organization's API key.
+
+* **Production Base URL:** `https://voice-livekit.studio.lyzr.ai`
+* **Authentication Header:** `x-api-key: <YOUR_LYZR_API_KEY>`
+
+---
+
+## 2. Integration Flow
+The integration follows a four-step lifecycle: session initialization, WebRTC connection, active streaming, and cleanup.
+
+### Step 1: Start a Session
+Initialize a session via a REST call. This dispatches a voice agent to a unique room and generates access credentials for the client.
+
+* **Endpoint:** `POST /v1/session/start`
+* **Request Body:**
+    ```json
+    {
+      "userIdentity": "unique-user-identifier",
+      "agentId": "your-configured-agent-id",
+      "agentConfig": { 
+        "prompt": "Optional override instructions..." 
+      }
+    }
+    ```
+* **Response:** Returns a `userToken`, `roomName`, and `url` (LiveKit server URL).
+
+### Step 2: Connect to Agent Room
+Use the returned `url` and `userToken` to join the real-time session using a **LiveKit compatible SDK**.
+
+### Step 3: Stream Audio
+Once the connection is established, publish your local microphone track. The agent will automatically subscribe to your audio and respond with high-fidelity audio and transcription data events.
+
+### Step 4: End Session
+To ensure the agent is successfully released and resources are cleaned up, explicitly terminate the session.
+
+* **Endpoint:** `POST /v1/session/end`
+* **Body:** `{ "roomName": "the-room-name-from-step-1" }`
+
+---
+
+## 3. Reference Implementation (React/TypeScript)
+
+The following implementation snippets provide a robust foundation for integrating the voice agent into a web application.
+
+### A. API Client Configuration
+This wrapper ensures all calls are authenticated and pointed to the correct production environment.
+
+```typescript
+const BASE_URL = 'https://voice-livekit.studio.lyzr.ai';
+
+export async function lyzrApiFetch<T>(endpoint: string, apiKey: string, options: RequestInit = {}): Promise<T> {
+    const response = await fetch(`${BASE_URL}${endpoint}`, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': apiKey,
+            ...options.headers,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Lyzr API Error: ${response.statusText}`);
+    }
+
+    if (response.status === 204) return undefined as T;
+    return response.json();
+}
+```
+
+### B. Background Audio Renderer
+Lyzr agents publish a dedicated track named `background_audio` for ambient noise and "thinking" sound effects. Because standard room renderers often ignore unknown track names, you must manually attach this track to an audio element.
+
+```tsx
+import { useEffect, useRef } from 'react';
+import { Track } from 'livekit-client';
+import { useTracks } from '@livekit/components-react';
+
+export function LyzrBackgroundAudio() {
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+    // Observe unknown tracks to find the background_audio stream
+    const tracks = useTracks([Track.Source.Unknown], { onlySubscribed: true });
+    const bgTrack = tracks.find((t) => t.publication?.trackName === 'background_audio');
+
+    useEffect(() => {
+        const track = bgTrack?.publication?.track;
+        if (!track) return;
+
+        const el = audioRef.current || document.createElement('audio');
+        el.autoplay = true;
+        audioRef.current = el;
+
+        track.attach(el);
+        return () => { track.detach(el); };
+    }, [bgTrack]);
+
+    return null;
+}
+```
+
+### C. Unified Voice Widget Setup
+This component handles the lifecycle from "Ready to Connect" to an "Active Session."
+
+```tsx
+import { LiveKitRoom, RoomAudioRenderer, useVoiceAssistant } from '@livekit/components-react';
+
+export function LyzrVoiceInterface({ sessionData, onDisconnect }) {
+    return (
+        <LiveKitRoom
+            serverUrl={sessionData.url}
+            token={sessionData.userToken}
+            connect={true}
+            audio={true}
+            onDisconnected={onDisconnect}
+        >
+            <div className="voice-controls">
+                <AgentStateIndicator />
+                <RoomAudioRenderer />
+                {/* Critical: Render Lyzr-specific ambient audio */}
+                <LyzrBackgroundAudio /> 
+            </div>
+        </LiveKitRoom>
+    );
+}
+
+function AgentStateIndicator() {
+    const { state } = useVoiceAssistant();
+    return (
+        <div className={`status-${state}`}>
+            {state === 'speaking' ? 'Agent is speaking...' : 'Agent is listening...'}
+        </div>
+    );
+}
+```
+
+---
+
+## For more
+
+To see an end-to-end example, see the [Voice Agent cookbook](https://docs.lyzr.ai/cookbooks/voice-agent).

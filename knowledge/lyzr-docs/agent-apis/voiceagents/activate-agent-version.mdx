@@ -1,0 +1,30 @@
+---
+title: "Activate Agent Version"
+openapi: post /agents/{agentId}/versions/{versionId}/activate
+---
+
+Restore or activate a specific historical configuration of your Voice Agent.
+
+When you make changes to an agent, a new version is created. If an update causes unexpected behavior, or if you simply want to revert to a previously stable setup, you can use this endpoint to promote an older `versionId` to become the currently active configuration.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You need two pieces of information in the URL path to make this request:
+
+* **`agentId`:** The 24-character string ID of the parent agent.
+* **`versionId`:** The exact UUID of the version you wish to activate (you can retrieve this using the [List Agent Versions](/api-reference/agents/list-agent-versions) endpoint).
+
+### What Happens on Activation?
+
+When you successfully activate a version (returning a `200 OK` status), the following occurs:
+1. The agent's live configuration is immediately replaced with the payload from the specified `versionId`.
+2. Any **new** LiveKit sessions initiated for this `agentId` will use this newly activated configuration.
+3. The API returns the complete, updated `agent` object so you can verify the settings have been applied in your application.
+
+<Note>
+  **Note on active sessions:** Activating a new version will not disrupt or alter any ongoing voice calls. The changes will only apply to the next session created after this request succeeds.
+</Note>

@@ -1,0 +1,69 @@
+---
+title: "What is SuperFlow"
+sidebarTitle: "What is SuperFlow"
+---
+
+**SuperFlow** is Lyzr's visual workflow builder. It lets you chain AI agents, LLM calls, tools, HTTP requests, code, conditionals, loops, and human approvals into a single automation — all on a drag-and-drop canvas, with no glue code to maintain.
+
+Unlike a hobby-grade flow tool, SuperFlow is built for **mission-critical workloads**. Every step is **durably journaled**, every successful step runs **exactly once**, and every in-flight run **survives crashes, restarts, and deployments** without losing work. Long-running approvals can pause for days or weeks at zero cost. Failed steps retry automatically. Past runs are replayable end-to-end. The engine you'd build yourself for a payments pipeline — but as a visual builder.
+
+You can find SuperFlow in [Agent Studio](https://studio.lyzr.ai/superflow).
+
+## When to use SuperFlow
+
+A single Lyzr agent is great when the work fits one model with a set of tools.
+
+A SuperFlow is the right choice when:
+
+- You need **multiple steps** that aren't all "ask the LLM" — for example, fetch from an API → run an agent → branch on the result → call another agent.
+- The flow involves **branching or looping** based on data (if/else, case switching, iterate over a list).
+- A human needs to **approve** something mid-flow before it continues.
+- You want to **schedule** the whole thing to run on a cron (every Monday morning, every 5 minutes, etc.).
+- You're composing **several agents** together — a researcher feeds a writer feeds an editor.
+
+## Mental model
+
+A SuperFlow is a graph of **nodes** connected by **edges**:
+
+- Every node has inputs and outputs. Data flows along the edges as JSON.
+- Each node receives the output of the nodes upstream of it, does its job, and emits its own output downstream.
+- A SuperFlow always starts with one **Trigger** node, which defines what input the workflow accepts.
+- Downstream nodes can reference any upstream node's output using **expressions** like `{{ $('Trigger').json.email }}`.
+
+This is the same idea as a flowchart — except every box is an executable step, and the lines between them carry real data.
+
+## Built for mission-critical workloads
+
+These properties are what set SuperFlow apart from "good enough" workflow tools — they're the ones you actually need when a SuperFlow is running real revenue, real customer-facing actions, or real money movement:
+
+- **Durable execution.** Every meaningful step — LLM call, tool call, HTTP request, code execution, loop iteration — is journaled to durable storage before completion. A service restart in the middle of a 50-step workflow resumes from the exact point of failure, not from the beginning.
+- **Exactly-once side effects.** A step that has already run successfully will never run again. No double charges, no duplicate emails, no re-fired API calls on retry. Once the journal says "this step completed," the engine treats that as final.
+- **Pauses are free.** A SuperFlow waiting on a human approval, a schedule, or a delay consumes essentially no resources. Runs can wait hours, days, or weeks and resume exactly where they paused — useful for onboarding flows, escalation paths, and any process gated on human action.
+- **Crash-safe schedules.** Cron triggers use durable timers, not in-memory schedulers. A schedule won't "miss a tick" because the runtime was down — queued ticks fire as soon as they're due once the service is back.
+- **Per-node retries with exponential backoff.** Configure every node that talks to an external system to retry on transient failures. Retries are themselves durable — the retry count survives restarts.
+- **Live and historical observability.** Watch a run in real time on the canvas; replay every past run with full per-node outputs preserved. OpenTelemetry traces are emitted end-to-end without setup.
+
+See [Reliability & durable execution](./reliability) for the full guarantees and a mission-critical checklist.
+
+## Key capabilities
+
+- **Visual canvas** — drag nodes from a palette, connect outputs to inputs.
+- **30+ node types** — AI Agent, LLM, HTTP Request, Code (JavaScript), If, Switch, Loop, Wait for Approval, Execute Workflow, document parsing, and more.
+- **Expressions** — reference any upstream node's data with `{{ $json.field }}` and `{{ $('NodeName').json.field }}`.
+- **Triggers** — start a SuperFlow manually, via webhook, or on a durable cron schedule.
+- **Human-in-the-loop** — pause a run, route it to a person for approval, resume from there. Pauses are durable and free.
+- **Sub-workflows** — reuse one SuperFlow inside another with the **Execute Workflow** node.
+- **Per-node retries** — configurable max attempts and backoff for every node that calls out.
+- **Live execution monitoring** — watch nodes light up in real time as the run progresses; inspect per-node JSON output.
+- **History** — every past run is replayable with all its node outputs preserved.
+- **Lifecycle controls** — pause, resume, or terminate any in-flight run; controls are durably backed.
+- **Sharing** — share a SuperFlow with teammates so they can view, edit, or run it.
+
+## Where to go next
+
+- [Build your first SuperFlow](./quickstart) — a step-by-step walkthrough.
+- [Reliability & durable execution](./reliability) — the guarantees that make SuperFlow safe for production.
+- [Node reference](./node-reference) — what each node type does and how to configure it.
+- [Expressions & data flow](./expressions) — how nodes pass data to each other.
+- [Triggers & schedules](./triggers-and-schedules) — manual, webhook, and cron-based triggers.
+- [Running, monitoring & approvals](./running-and-approvals) — testing runs, history, and human approvals.

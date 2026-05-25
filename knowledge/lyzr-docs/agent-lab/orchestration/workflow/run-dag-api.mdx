@@ -1,0 +1,121 @@
+---
+title: Running DAG API
+sidebarTitle: Running DAG 
+---
+
+## Executing workflow via run-dag Endpoint
+
+**What This Is:** The core API endpoint that takes your visual workflow and executes it with real data.
+
+**URL:** `https://lao.studio.lyzr.ai/run-dag/`\
+**Method:** POST\
+**Purpose:** Execute any workflow with real-time monitoring
+
+**Why You Use This:** This is where your designed workflow becomes a running automation that processes data, calls APIs, makes decisions, and produces results.
+
+### Request Structure Explained
+
+```json
+{
+  "workflow_data": {
+    // This entire block comes from Agent Studio's "Export JSON"
+    "tasks": [...],           // Your workflow nodes (agents, APIs, etc.)
+    "flow_name": "string",    // Workflow name from Studio
+    "run_name": "string",     // Unique execution ID (you choose this)
+    "default_inputs": {...},  // Default values from input nodes
+    "edges": [...]            // How nodes connect (auto-generated)
+  },
+  "inputs": {
+    // The actual data you want to process RIGHT NOW
+    "customer_message": "Help with billing",
+    "priority": "high"
+  }
+}
+```
+
+**Key Concept:**
+
+- `workflow_data` = Your workflow template (same every time)
+- `inputs` = The specific data for THIS execution (changes each time)
+
+### How to Get workflow_data JSON
+
+**🎯 Method 1: Agent Studio Visual Builder** ⭐ _Always Use This_
+
+**What You're Doing:** Getting the perfect JSON without any manual work.
+
+**Step-by-Step:**
+
+1. Open Agent Studio workflow builder
+2. Design your workflow visually (drag, drop, connect nodes)
+3. Click "Export JSON" or "Get API Code" button in the UI
+4. Copy the ENTIRE `workflow_data` JSON structure
+5. Paste it into your API calls
+
+**Why This Works:** The visual builder generates syntactically perfect, validated JSON that includes all the complex node configurations, dependencies, and connections.
+
+---
+
+**🔧 Method 2: Workflow Management API** (For Existing Workflows)
+
+**What You're Doing:** Retrieving a workflow you already created and saved.
+
+```bash
+# Get existing workflow JSON
+curl -X GET "{BASE_URL}/v3/workflows/{flow_id}" \
+  -H "x-api-key: YOUR_API_KEY"
+
+# The response contains a 'flow_data' field
+# Use that flow_data as your workflow_data in run-dag calls
+```
+
+**When You Use This:** When you have workflows already saved in the system and want to execute them programmatically.
+
+---
+
+**❌ Method 3: Manual Construction** (NEVER Do This)
+
+**What This Means:** Writing the complex JSON structure by hand.
+
+**Why You Don't Do This:**
+
+- Extremely complex JSON structure with nested dependencies
+- Easy to make syntax errors that break execution
+- Hard to maintain and debug
+- The visual builder does this perfectly for you
+
+**Exception:** Only for very simple, single-node workflows for testing.
+
+### Response Structure
+
+**Initial Response (Immediate):**
+
+```json
+{
+  "status": "processing",
+  "task_id": "0d3c400a-d35b-43db-9e9f-655d857d8594"
+}
+```
+
+**What This Means:**
+
+- Your workflow has been accepted and is now running
+- Use the `task_id` to track the execution
+- Connect to WebSocket using your `flow_name` and `run_name` to monitor progress
+- The workflow continues executing asynchronously
+
+**Final Results (via WebSocket):**
+
+```json
+{
+  "event_type": "flow_completed",
+  "status": "completed",
+  "results": {
+    "node_name": { "output": "..." }
+  },
+  "execution_time": 12.34,
+  "task_id": "0d3c400a-d35b-43db-9e9f-655d857d8594"
+}
+```
+
+---

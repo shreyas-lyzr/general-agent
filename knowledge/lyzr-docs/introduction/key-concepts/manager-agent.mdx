@@ -1,0 +1,63 @@
+---
+title: "Manager Agent"
+sidebarTitle: "Manager Agent"
+description: "Deep dive into Lyzr’s Manager Agent for dynamic multi-agent orchestration."
+---
+
+## Overview
+
+A **Manager Agent** in Lyzr serves as the orchestrator for dynamic, goal-driven workflows. Unlike static DAG-based pipelines, the Manager Agent interprets high-level objectives, decomposes them into subtasks, and delegates these tasks to specialized worker agents in real time. This approach enables adaptive, resilient execution paths that respond to varying inputs or runtime errors.
+
+---
+
+## Key Responsibilities
+
+1. **Task Decomposition**
+
+   * Analyzes the incoming goal or request to identify discrete subtasks.
+   * Maps each subtask to the most appropriate worker agent or tool.
+
+2. **Dynamic Dispatch**
+
+   * Invokes child agents or connectors based on task requirements.
+   * Supports branching logic and conditional execution.
+
+3. **Monitoring & Control**
+
+   * Tracks execution status, results, and metrics for each subtask.
+   * Handles retries, error fallback, and alternative strategies when tasks fail.
+
+4. **Context Management**
+
+   * Maintains shared context and memory across all subtasks.
+   * Aggregates outputs into a cohesive final response.
+
+---
+
+## Benefits
+
+* **Adaptability**: Automatically adjusts workflow steps based on live data or unexpected outcomes.
+* **Resilience**: Retries or reroutes tasks upon failures, ensuring end-to-end completion.
+* **Scalability**: Distributes work across multiple agents, optimizing throughput and resource utilization.
+* **Transparency**: Provides real-time logs and audit trails at each orchestration level.
+
+---
+
+## Typical Use Cases
+
+* **AI SDR (Sales Development Representative)**: Manager Agent qualifies leads, schedules meetings, and routes data to CRM and calendar services.
+* **Autonomous Research Assistant**: Decomposes research goals into literature search, data extraction, summarization, and report generation.
+* **Multi-Channel Customer Support**: Dynamically selects channels (chatbot, email, SMS) and worker agents based on user preferences and message content.
+
+---
+
+## Best Practices
+
+* **Define Clear Subtasks**: Craft precise prompts for task decomposition to minimize ambiguity.
+* **Limit Task Granularity**: Avoid overly fine-grained subtasks that increase orchestration overhead.
+* **Implement Fallbacks**: Preconfigure alternative paths or default responses for unrecoverable errors.
+* **Monitor KPIs**: Track success rate, latency, and resource usage for continuous optimization.
+
+---
+
+Harness Lyzr’s Manager Agent to build intelligent, autonomous workflows that adapt to your business needs in real time.

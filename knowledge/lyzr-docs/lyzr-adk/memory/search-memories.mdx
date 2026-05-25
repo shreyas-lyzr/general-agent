@@ -1,0 +1,156 @@
+---
+title: "Search Memories"
+sidebarTitle: "Search Memories"
+description: "Semantic search across stored memories in Cognis"
+---
+
+The `search` method performs a semantic search across stored memories, returning the most relevant results ranked by similarity score. Use it to find specific facts, preferences, or context from past conversations.
+
+## Basic Usage
+
+```python
+from lyzr import Cognis
+
+cog = Cognis(api_key="sk-your-api-key")
+
+results = cog.search(query="What is the user's name?", owner_id="user_alice")
+
+for result in results:
+    print(f"{result.content} (score: {result.score})")
+```
+
+## Method Signature
+
+```python
+cog.search(
+    query: str,
+    owner_id: str | None = None,
+    agent_id: str | None = None,
+    session_id: str | None = None,
+    limit: int | None = None,
+    cross_session: bool | None = None,
+) -> List[CognisSearchResult]
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | `str` | Yes | Natural language search query. |
+| `owner_id` | `str` | No* | Filter by owner/user identifier. |
+| `agent_id` | `str` | No* | Filter by agent identifier. |
+| `session_id` | `str` | No* | Filter by session identifier. |
+| `limit` | `int` | No | Maximum number of results to return. |
+| `cross_session` | `bool` | No | Search across all sessions for the given owner. |
+
+<Note>
+*At least one of `owner_id`, `agent_id`, or `session_id` must be provided.
+</Note>
+
+## Response
+
+Returns a `List[CognisSearchResult]`. Each result has the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `str` | Memory record ID. |
+| `content` | `str` | The memory content. |
+| `score` | `float \| None` | Semantic similarity score (higher is more relevant). |
+| `owner_id` | `str \| None` | Owner identifier. |
+| `agent_id` | `str \| None` | Agent identifier. |
+| `session_id` | `str \| None` | Session identifier. |
+| `metadata` | `Dict \| None` | Additional metadata attached to the memory. |
+| `created_at` | `str \| None` | Creation timestamp. |
+
+```json
+[
+  {
+    "id": "mem_abc123",
+    "content": "User's name is Alice",
+    "score": 0.95,
+    "owner_id": "user_alice",
+    "session_id": "sess_001",
+    "metadata": {},
+    "created_at": "2025-01-15T10:30:00Z"
+  }
+]
+```
+
+## Filtered Search
+
+Narrow results by combining scoping identifiers:
+
+```python
+# Search within a specific session
+results = cog.search(
+    query="project details",
+    owner_id="user_alice",
+    session_id="project_session",
+)
+
+# Search across a specific agent's memories
+results = cog.search(
+    query="user preferences",
+    agent_id="support_bot",
+    owner_id="user_alice",
+)
+```
+
+## Cross-Session Search
+
+Search across all sessions for an owner:
+
+```python
+results = cog.search(
+    query="What programming languages does the user know?",
+    owner_id="user_alice",
+    cross_session=True,
+)
+```
+
+## Limiting Results
+
+```python
+# Return at most 5 results
+results = cog.search(
+    query="hobbies",
+    owner_id="user_alice",
+    limit=5,
+)
+```
+
+## Iterating Results
+
+```python
+results = cog.search(query="preferences", owner_id="user_alice")
+
+for result in results:
+    print(f"ID: {result.id}")
+    print(f"Content: {result.content}")
+    print(f"Score: {result.score}")
+    print(f"Created: {result.created_at}")
+    print("---")
+```
+
+## Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        results = await cog.asearch(
+            query="What is the user's name?",
+            owner_id="user_alice",
+            limit=10,
+        )
+        for result in results:
+            print(result.content)
+
+asyncio.run(main())
+```
+
+<Tip>
+Write search queries as natural language questions for best results. For example, `"What is the user's favorite color?"` works better than `"favorite color"`.
+</Tip>

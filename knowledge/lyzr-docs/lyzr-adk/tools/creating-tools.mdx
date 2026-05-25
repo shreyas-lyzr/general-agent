@@ -1,0 +1,584 @@
+---
+title: "Creating Tools"
+sidebarTitle: "Creating Tools"
+description: "Create local tools for agent execution"
+---
+
+Add Python functions as tools that agents can execute. There are two ways: pass functions directly (simple) or use the Tool class (advanced).
+
+## Quick Start - Simple Function
+
+The easiest way is to pass a function directly to `add_tool()`:
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Define functions with type hints and docstrings
+def get_weather(city: str) -> str:
+    """Get current weather for a city"""
+    return f"Weather in {city}: Sunny, 72°F"
+
+def search_products(query: str, max_results: int = 10) -> list:
+    """Search products in the catalog"""
+    # Your implementation
+    return [{"name": "Product A", "price": 29.99}]
+
+def send_email(to: str, subject: str, body: str) -> str:
+    """Send an email to a recipient"""
+    # Your implementation
+    return "Email sent successfully"
+
+# Create agent
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Help users with tasks"
+)
+
+# Add functions directly - ADK infers everything from type hints
+agent.add_tool(get_weather)
+agent.add_tool(search_products)
+agent.add_tool(send_email)
+
+# Run
+response = agent.run("What's the weather in Paris?")
+```
+
+The ADK automatically:
+- Uses the function name as the tool name
+- Uses the docstring as the description
+- Infers parameters from type hints
+- Determines required vs optional from default values
+
+---
+
+## Quick Start - Tool Class
+
+For more control, use the `Tool` class:
+
+```python
+from lyzr import Studio
+from lyzr.tools import Tool
+
+studio = Studio(api_key="your-api-key")
+
+def search_products(query: str, category: str = "all") -> list:
+    """Search products in catalog"""
+    return [{"name": "Product A", "price": 29.99}]
+
+# Create tool with explicit schema
+search_tool = Tool(
+    name="search_products",
+    description="Search for products in the catalog by query and optional category",
+    parameters={
+        "type": "object",
+        "properties": {
+            "query": {
+                "type": "string",
+                "description": "Search query"
+            },
+            "category": {
+                "type": "string",
+                "description": "Product category filter",
+                "enum": ["all", "electronics", "clothing", "home"]
+            }
+        },
+        "required": ["query"]
+    },
+    function=search_products
+)
+
+agent = studio.create_agent(
+    name="Shopping Assistant",
+    provider="gpt-4o",
+    role="E-commerce assistant",
+    goal="Help users find products"
+)
+agent.add_tool(search_tool)
+
+response = agent.run("Find me wireless headphones")
+```
+
+---
+
+## When to Use Each Approach
+
+| Approach | Best For |
+|----------|----------|
+| **Simple Function** | Most use cases, rapid development |
+| **Tool Class** | Custom descriptions, enum values, complex schemas |
+
+---
+
+## Simple Function Requirements
+
+For the ADK to auto-infer tool parameters:
+
+```python
+def my_function(
+    required_param: str,           # Required (no default)
+    optional_param: int = 10       # Optional (has default)
+) -> str:                          # Return type
+    """Short description of what the function does"""  # Becomes tool description
+    return "result"
+```
+
+### Supported Types
+
+| Python Type | Inferred JSON Type |
+|-------------|-------------------|
+| `str` | `"string"` |
+| `int` | `"integer"` |
+| `float` | `"number"` |
+| `bool` | `"boolean"` |
+| `list` | `"array"` |
+| `dict` | `"object"` |
+
+---
+
+## Tool Class
+
+```python
+from lyzr.tools import Tool
+
+tool = Tool(
+    name: str,                    # Required: Unique identifier
+    description: str,             # Required: What the tool does (for LLM)
+    parameters: Dict[str, Any],   # Required: JSON Schema for inputs
+    function: Callable = None     # Optional: Python function to execute
+)
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | str | Yes | Unique tool name (no spaces) |
+| `description` | str | Yes | Clear description for LLM |
+| `parameters` | dict | Yes | JSON Schema defining inputs |
+| `function` | Callable | No | Python function to execute |
+
+---
+
+## Defining Parameters
+
+Parameters use JSON Schema format:
+
+### Basic Schema
+
+```python
+parameters = {
+    "type": "object",
+    "properties": {
+        "param_name": {
+            "type": "string",        # Type of parameter
+            "description": "What this parameter does"
+        }
+    },
+    "required": ["param_name"]       # List of required parameters
+}
+```
+
+### Supported Types
+
+```python
+# String
+{"type": "string", "description": "User's name"}
+
+# Integer
+{"type": "integer", "description": "Number of items"}
+
+# Number (float)
+{"type": "number", "description": "Price in dollars"}
+
+# Boolean
+{"type": "boolean", "description": "Include shipping"}
+
+# Array
+{"type": "array", "items": {"type": "string"}, "description": "List of tags"}
+
+# Enum (restricted values)
+{"type": "string", "enum": ["low", "medium", "high"], "description": "Priority level"}
+```
+
+### Complete Example
+
+```python
+parameters = {
+    "type": "object",
+    "properties": {
+        "destination": {
+            "type": "string",
+            "description": "Destination city"
+        },
+        "departure_date": {
+            "type": "string",
+            "description": "Departure date (YYYY-MM-DD)"
+        },
+        "passengers": {
+            "type": "integer",
+            "description": "Number of passengers"
+        },
+        "class": {
+            "type": "string",
+            "enum": ["economy", "business", "first"],
+            "description": "Cabin class"
+        },
+        "direct_only": {
+            "type": "boolean",
+            "description": "Only show direct flights"
+        }
+    },
+    "required": ["destination", "departure_date"]
+}
+```
+
+---
+
+## Auto-Infer Parameters
+
+Generate parameters automatically from function signatures:
+
+```python
+from lyzr.tools.local import infer_parameters_from_function
+
+def book_appointment(
+    patient_name: str,
+    doctor_id: str,
+    date: str,
+    time: str,
+    notes: str = ""
+) -> dict:
+    """Book a medical appointment"""
+    pass
+
+# Auto-generate parameters
+params = infer_parameters_from_function(book_appointment)
+
+# Create tool with inferred parameters
+tool = Tool(
+    name="book_appointment",
+    description="Book a medical appointment for a patient",
+    parameters=params,
+    function=book_appointment
+)
+```
+
+### Type Mapping
+
+| Python Type | JSON Schema Type |
+|-------------|------------------|
+| `str` | `"string"` |
+| `int` | `"integer"` |
+| `float` | `"number"` |
+| `bool` | `"boolean"` |
+| `list` | `"array"` |
+| `dict` | `"object"` |
+| `Optional[T]` | Type of `T` |
+
+---
+
+## Sync and Async Functions
+
+Tools support both synchronous and asynchronous functions:
+
+### Synchronous
+
+```python
+def get_stock_price(symbol: str) -> float:
+    """Get current stock price"""
+    import requests
+    response = requests.get(f"https://api.stocks.com/{symbol}")
+    return response.json()["price"]
+
+stock_tool = Tool(
+    name="get_stock_price",
+    description="Get current price for a stock symbol",
+    parameters={
+        "type": "object",
+        "properties": {
+            "symbol": {"type": "string", "description": "Stock symbol (e.g., AAPL)"}
+        },
+        "required": ["symbol"]
+    },
+    function=get_stock_price
+)
+```
+
+### Asynchronous
+
+```python
+async def fetch_user_data(user_id: str) -> dict:
+    """Fetch user data from API"""
+    import aiohttp
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://api.example.com/users/{user_id}") as resp:
+            return await resp.json()
+
+user_tool = Tool(
+    name="fetch_user_data",
+    description="Fetch user profile data",
+    parameters={
+        "type": "object",
+        "properties": {
+            "user_id": {"type": "string", "description": "User ID"}
+        },
+        "required": ["user_id"]
+    },
+    function=fetch_user_data
+)
+```
+
+---
+
+## Adding Tools to Agents
+
+### Single Tool
+
+```python
+agent = studio.create_agent(name="Bot", provider="gpt-4o")
+agent.add_tool(my_tool)
+```
+
+### Multiple Tools
+
+```python
+from lyzr.tools import ToolRegistry
+
+# Create registry
+registry = ToolRegistry()
+registry.add(search_tool)
+registry.add(order_tool)
+registry.add(track_tool)
+
+# Add all to agent
+for tool in registry.list():
+    agent.add_tool(tool)
+```
+
+### At Creation Time
+
+```python
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helper",
+    tools=[search_tool, order_tool]  # Pass tools directly
+)
+```
+
+---
+
+## Tool Registry
+
+Manage collections of tools:
+
+```python
+from lyzr.tools import ToolRegistry
+
+registry = ToolRegistry()
+
+# Add tools
+registry.add(tool1)
+registry.register(tool2)  # Alias for add()
+
+# Get tool by name
+tool = registry.get("tool_name")
+
+# List all tools
+all_tools = registry.list()
+
+# Check if tool exists
+if "my_tool" in registry:
+    print("Tool found")
+
+# Remove tool
+registry.remove("old_tool")
+
+# Clear all tools
+registry.clear()
+
+# Get count
+print(len(registry))  # Number of tools
+```
+
+---
+
+## Tool API Format
+
+Convert tools for API registration:
+
+```python
+# Single tool
+api_format = tool.to_api_format()
+# {
+#     "name": "get_weather",
+#     "description": "Get current weather",
+#     "parameters": {...}
+# }
+
+# All tools in registry
+all_tools_api = registry.to_api_format()
+# List of tool API formats
+```
+
+---
+
+## Examples
+
+### Database Tool
+
+```python
+import sqlite3
+
+def query_customers(name: str = None, email: str = None) -> list:
+    """Query customer database"""
+    conn = sqlite3.connect("customers.db")
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM customers WHERE 1=1"
+    params = []
+
+    if name:
+        query += " AND name LIKE ?"
+        params.append(f"%{name}%")
+    if email:
+        query += " AND email LIKE ?"
+        params.append(f"%{email}%")
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+    conn.close()
+
+    return [{"id": r[0], "name": r[1], "email": r[2]} for r in results]
+
+customer_tool = Tool(
+    name="query_customers",
+    description="Search for customers by name or email",
+    parameters={
+        "type": "object",
+        "properties": {
+            "name": {"type": "string", "description": "Customer name (partial match)"},
+            "email": {"type": "string", "description": "Customer email (partial match)"}
+        },
+        "required": []
+    },
+    function=query_customers
+)
+```
+
+### HTTP API Tool
+
+```python
+import requests
+
+def create_ticket(title: str, description: str, priority: str = "medium") -> dict:
+    """Create a support ticket"""
+    response = requests.post(
+        "https://api.support.com/tickets",
+        json={
+            "title": title,
+            "description": description,
+            "priority": priority
+        },
+        headers={"Authorization": "Bearer token"}
+    )
+    return response.json()
+
+ticket_tool = Tool(
+    name="create_ticket",
+    description="Create a new support ticket",
+    parameters={
+        "type": "object",
+        "properties": {
+            "title": {"type": "string", "description": "Ticket title"},
+            "description": {"type": "string", "description": "Detailed description"},
+            "priority": {
+                "type": "string",
+                "enum": ["low", "medium", "high", "urgent"],
+                "description": "Priority level"
+            }
+        },
+        "required": ["title", "description"]
+    },
+    function=create_ticket
+)
+```
+
+### File System Tool
+
+```python
+import os
+
+def list_files(directory: str, extension: str = None) -> list:
+    """List files in a directory"""
+    files = os.listdir(directory)
+
+    if extension:
+        files = [f for f in files if f.endswith(extension)]
+
+    return [{"name": f, "path": os.path.join(directory, f)} for f in files]
+
+file_tool = Tool(
+    name="list_files",
+    description="List files in a directory with optional extension filter",
+    parameters={
+        "type": "object",
+        "properties": {
+            "directory": {"type": "string", "description": "Directory path"},
+            "extension": {"type": "string", "description": "File extension filter (e.g., '.pdf')"}
+        },
+        "required": ["directory"]
+    },
+    function=list_files
+)
+```
+
+---
+
+## Best Practices
+
+### Clear Descriptions
+
+```python
+# Good: Specific and actionable
+description="Search the product catalog by name, category, or price range"
+
+# Bad: Vague
+description="Search products"
+```
+
+### Detailed Parameter Descriptions
+
+```python
+# Good
+{
+    "date": {
+        "type": "string",
+        "description": "Date in YYYY-MM-DD format (e.g., 2024-03-15)"
+    }
+}
+
+# Bad
+{
+    "date": {
+        "type": "string",
+        "description": "Date"
+    }
+}
+```
+
+### Return Structured Data
+
+```python
+# Good: Return dict/list for structured results
+def get_user(user_id: str) -> dict:
+    return {"id": user_id, "name": "John", "email": "john@example.com"}
+
+# Avoid: Plain strings for structured data
+def get_user(user_id: str) -> str:
+    return "User John with email john@example.com"
+```

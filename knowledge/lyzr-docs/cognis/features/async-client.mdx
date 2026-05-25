@@ -1,0 +1,91 @@
+---
+title: "Async Client"
+sidebarTitle: "Async"
+description: "Full async/await support for all Cognis operations"
+---
+
+Every sync method in the hosted Cognis client has an async counterpart prefixed with `a`. Use these for non-blocking memory operations in async applications.
+
+## Sync vs Async Methods
+
+| Sync | Async |
+|------|-------|
+| `cog.add()` | `cog.aadd()` |
+| `cog.search()` | `cog.asearch()` |
+| `cog.get()` | `cog.aget()` |
+| `cog.get_memory()` | `cog.aget_memory()` |
+| `cog.update()` | `cog.aupdate()` |
+| `cog.delete()` | `cog.adelete()` |
+| `cog.context()` | `cog.acontext()` |
+| `cog.get_messages()` | `cog.aget_messages()` |
+| `cog.store_summary()` | `cog.astore_summary()` |
+| `cog.get_current_summary()` | `cog.aget_current_summary()` |
+| `cog.search_summaries()` | `cog.asearch_summaries()` |
+| `cog.delete_session()` | `cog.adelete_session()` |
+
+## Basic Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        # Add memories
+        await cog.aadd(
+            messages=[{"role": "user", "content": "I prefer dark mode."}],
+            owner_id="user_1",
+        )
+
+        # Search
+        results = await cog.asearch(query="preferences", owner_id="user_1")
+        for r in results:
+            print(r.content, r.score)
+
+        # Get all memories
+        memories = await cog.aget(owner_id="user_1")
+        for m in memories.memories:
+            print(m.content)
+
+asyncio.run(main())
+```
+
+## Async Context Manager
+
+The `async with` pattern ensures the HTTP client is properly closed:
+
+```python
+async with Cognis(api_key="sk-your-api-key") as cog:
+    await cog.aadd(messages=msgs, owner_id="user_1")
+    results = await cog.asearch(query="test", owner_id="user_1")
+# Client automatically closed
+```
+
+## Concurrent Operations
+
+Run multiple memory operations in parallel:
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def enrich_agents(cog, user_ids):
+    """Search memories for multiple users concurrently."""
+    tasks = [
+        cog.asearch(query="preferences", owner_id=uid, limit=5)
+        for uid in user_ids
+    ]
+    return await asyncio.gather(*tasks)
+
+async def main():
+    async with Cognis() as cog:
+        results = await enrich_agents(cog, ["user_1", "user_2", "user_3"])
+        for uid, memories in zip(["user_1", "user_2", "user_3"], results):
+            print(f"{uid}: {len(memories)} memories")
+
+asyncio.run(main())
+```
+
+<Note>
+Async methods are hosted-only. The open-source `lyzr-cognis` package is sync only.
+</Note>

@@ -1,0 +1,16 @@
+---
+title: Get Knowledge Base
+openapi: get /knowledge-base/{id}
+---
+
+**GET** /knowledge_base`  
+Retrieve a list of all Knowledge Bases available to the authenticated user.
+
+## Description
+This endpoint fetches all existing Knowledge Bases created under the authenticated user's account. It returns metadata such as KB ID, name, description, and timestamps.
+
+## Request
+
+**Headers**
+- `x-api-key`: API key for authentication (required)
+- `accept`: `application/json`

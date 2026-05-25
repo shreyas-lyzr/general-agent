@@ -1,0 +1,135 @@
+---
+title: "Knowledge Bases Overview"
+sidebarTitle: "Overview"
+description: "Build RAG-powered agents with knowledge bases"
+---
+
+Knowledge bases enable Retrieval Augmented Generation (RAG) by storing and querying documents. Agents can use knowledge bases to answer questions based on your documents, websites, and other content.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Create a knowledge base
+kb = studio.create_knowledge_base(
+    name="product_docs",
+    vector_store="qdrant",
+    embedding_model="text-embedding-3-large"
+)
+
+# Add documents
+kb.add_pdf("manual.pdf")
+kb.add_website("https://docs.example.com", max_pages=50)
+
+# Create an agent with the knowledge base
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    goal="Answer questions using documentation",
+    instructions="Use the knowledge base to answer questions accurately"
+)
+
+# Query with the knowledge base
+response = agent.run(
+    "How do I reset my password?",
+    knowledge_bases=[kb]
+)
+print(response.response)
+```
+
+## What is a Knowledge Base?
+
+A knowledge base is a vector database that stores your documents as embeddings. When an agent receives a question, it:
+
+1. **Searches** the knowledge base for relevant content
+2. **Retrieves** the most relevant chunks
+3. **Generates** a response using the retrieved context
+
+This is called Retrieval Augmented Generation (RAG).
+
+## Supported Document Types
+
+| Type | Method | Description |
+|------|--------|-------------|
+| PDF | `add_pdf()` | PDF documents |
+| DOCX | `add_docx()` | Word documents |
+| TXT | `add_txt()` | Plain text files |
+| Website | `add_website()` | Web pages with crawling |
+| Text | `add_text()` | Raw text strings |
+
+## Vector Store Providers
+
+| Provider | ID | Description |
+|----------|-----|-------------|
+| Qdrant | `qdrant` | Default, high-performance vector database |
+| Weaviate | `weaviate` | Open-source vector search engine |
+| PG Vector | `pg_vector` | PostgreSQL with vector extension |
+| Milvus | `milvus` | Scalable vector database |
+| Neptune | `neptune` | Amazon Neptune graph database |
+
+## Key Operations
+
+### Create
+
+```python
+kb = studio.create_knowledge_base(
+    name="my_kb",
+    vector_store="qdrant"
+)
+```
+
+### Add Documents
+
+```python
+kb.add_pdf("document.pdf")
+kb.add_website("https://example.com")
+kb.add_text("Custom content", source="custom")
+```
+
+### Query
+
+```python
+results = kb.query("search term", top_k=5)
+for result in results:
+    print(f"{result.score:.2f}: {result.text}")
+```
+
+### Use with Agent
+
+```python
+response = agent.run(
+    "What is the return policy?",
+    knowledge_bases=[kb]
+)
+```
+
+## Retrieval Types
+
+| Type | Description |
+|------|-------------|
+| `basic` | Standard vector similarity search |
+| `mmr` | Maximal Marginal Relevance (diverse results) |
+| `hyde` | Hypothetical Document Embeddings |
+| `time_aware` | Time-decay weighted retrieval |
+
+## Next Steps
+
+<Card title="Creating Knowledge Bases" icon="plus" href="/lyzr-adk/knowledge-bases/creating-kb">
+  Learn all creation options and configuration
+</Card>
+
+<Card title="Adding Documents" icon="file-plus" href="/lyzr-adk/knowledge-bases/adding-documents">
+  Add PDFs, websites, and other content
+</Card>
+
+<Card title="Querying" icon="magnifying-glass" href="/lyzr-adk/knowledge-bases/querying">
+  Search and retrieve from knowledge bases
+</Card>
+
+<Card title="Managing" icon="gear" href="/lyzr-adk/knowledge-bases/managing-kb">
+  Update, delete, and manage documents
+</Card>

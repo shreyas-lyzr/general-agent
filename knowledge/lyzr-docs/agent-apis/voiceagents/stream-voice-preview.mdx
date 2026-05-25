@@ -1,0 +1,18 @@
+---
+openapi: get /config/tts-voice-preview
+---
+
+Stream a short audio sample of a specific voice directly from the TTS provider.
+
+When users are building Voice Agents, reading that a voice is "warm and energetic" often isn't enough—they need to hear it. This endpoint proxies the audio preview from providers like ElevenLabs or Cartesia so you can play it directly in your application's UI.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You must provide two query parameters to successfully fetch the audio:
+
+1. **`providerId`**: The ID of the provider hosting the voice (e.g., `elevenlabs`, `cartesia`).
+2. **`url`**: The exact URL of the preview audio file. You can find this URL inside the `previewUrl` field when querying the [List Provider Voices](/api-reference/config/list-provider-voices) endpoint.

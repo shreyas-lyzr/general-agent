@@ -1,0 +1,96 @@
+---
+title: Custom Tool Creation Using Studio
+sidebarTitle: Custom Tools
+---
+
+## 💻 Have Your Own API or Specialized Functionality?
+Create a powerful, custom tool directly on the Lyzr Agent Studio!
+
+Lyzr’s **Custom Tools** allow you to significantly extend the platform by defining your own specialized actions and integrations. You can seamlessly integrate your existing internal APIs and custom functionalities to equip your AI agents with truly unique and specialized capabilities that go beyond standard integrations.
+
+<Card title="Custom Tool Creation Guide" icon="hammer" href="https://www.youtube.com/watch?v=35ps6gzIPTE">
+  Learn to equip agents with OpenAPI, code, and custom tools via video tutorial.
+</Card>
+
+---
+
+## 🔬 Types of Custom Tools
+
+Custom Tools are categorized into two distinct types based on the underlying method of integration, providing flexibility for various technical requirements.
+
+Below displays the option to select between the two types of custom tools:
+
+![](../../../assets/images/studio/tools9.png)
+
+### 1. Custom OpenAPI Tools
+
+* **Description:** This integration method is specifically designed for connecting to any external service or API that rigorously adheres to the **OpenAPI (formerly known as Swagger) specification**. This is the most efficient method for integrating existing APIs, microservices, or external services that have a defined, structured specification file.
+* **Integration Process:** You provide the OpenAPI specification file (in either JSON or YAML format), and the Lyzr platform automatically parses the schema. This automatic parsing defines the tool's structure, identifies all available actions (endpoints), specifies the necessary input parameters, and establishes the expected output structures.
+
+When setting up a Custom OpenAPI Tool, you need to provide the specification file and define essential metadata, such as the tool name and a descriptive purpose:
+
+![](../../../assets/images/studio/tools11.png)
+
+### 2. Custom ACI (Agent-Controlled Interface) Tools
+
+* **Description:** The ACI tool type provides a framework for defining custom functionalities using **Python code snippets** executed securely within the Lyzr environment. This is the ideal choice for implementing complex or highly specialized business logic, integrating with services that lack a traditional API, or creating unique agent-controlled workflows that require custom computational steps.
+* **Open Source Commitment:** Lyzr is actively working towards **open-sourcing the ACI tooling via ACI.dev**. This initiative is aimed at giving users complete transparency and control over their execution logic, data governance, and overall operational environment.
+
+The interface for defining an ACI tool focuses on providing the functional Python code snippet that the agent will execute:
+
+![](../../../assets/images/studio/tools12.png)
+
+---
+
+## 🛠️ Adding Custom Tools to Your Agent
+
+You can connect any agent with one or more custom tools to enhance its capabilities and enable real-time action execution based on the logic you define.
+
+### 1. Navigate to Tools Section
+
+Go to the **Tools** section in the sidebar. This is the central management area for all tools. Here, you will find the options to manage existing tools or add new ones.
+
+### 2. Select Tool
+
+* **Select Tool:** If the custom tool has already been created, choose it from the list of available tools. You must then provide a precise description of how this specific tool will function and assist the agent in the current context.
+
+![](../../../assets/images/studio/tools1.png)
+
+### 3. Add Tool
+
+* **Add Tool:** To create a **new** Custom Tool (either OpenAPI or ACI), use the "Add Tool" option.
+
+![](../../../assets/images/studio/tools2.png)
+
+This image shows the option to select a custom tool you have already configured:
+
+![](../../../assets/images/studio/tools10.png)
+
+### 4. Configure and Register the Tool
+
+Once you select the option to create a new tool, fill out the configuration form completely to define your tool’s inputs, outputs, and behavior.
+
+![](../../../assets/images/studio/tools3.png)
+
+* **Inputs:** Define all the parameters your tool accepts. For each parameter, specify its descriptive name, data type (e.g., string, integer), and whether it is a required input for execution.
+* **Implementation:** Provide the core functionality source. This will be the OpenAPI specification file or the Python code snippet that powers the tool's logic.
+* **Tests (optional):** It is highly recommended to add sample inputs and the corresponding expected outputs. This crucial step helps validate the tool's correctness and functionality before it is deployed for agent use.
+* Click **Add Tool** to successfully register your custom tool with the Lyzr platform.
+
+---
+
+## 🗑️ Delete a Tool
+
+If you need to permanently remove a custom tool from your platform:
+
+1.  Navigate to the Tools list and locate the specific tool.
+2.  Click the **Delete** button associated with that tool.
+
+![](../../../assets/images/studio/tools4.png)
+
+1.  A modal dialog will appear, requiring you to confirm the deletion.
+2.  Once confirmed, the tool and all its associated metadata and configuration data will be **permanently removed** from the Lyzr system.
+
+---
+
+**Summary:** Lyzr’s Custom Tools allow you to extend the platform by defining your own actions and integrations. Seamlessly integrate your existing APIs (via OpenAPI) or specialized functionalities (via ACI code) to equip your AI agents with specialized capabilities. With these steps, you can rapidly build, test, and maintain robust custom integrations right within the Lyzr Studio.

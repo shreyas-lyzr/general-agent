@@ -1,0 +1,29 @@
+---
+title: "List Agent Shares"
+openapi: get /agents/{agentId}/shares
+---
+
+Retrieve a complete list of users who currently have shared access to a specific Voice Agent. 
+
+If your platform supports collaborative agent building or shared organization access, this endpoint allows you to programmatically verify which `user_ids` are permitted to view, edit, or interact with a given agent configuration.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You must provide the agent's ID in the URL path.
+
+* **`agentId`:** The 24-character unique identifier of the agent whose share list you want to retrieve.
+
+### Understanding the Response
+
+A successful `200 OK` response will return a lightweight JSON object containing two fields:
+
+* **`agent_id`:** Confirms the ID of the agent you queried.
+* **`user_ids`:** An array of strings representing the internal IDs of users who have been granted access to this agent. If the agent is completely private to its creator, this array may be empty.
+
+### Common Errors
+
+* **`404 Agent not found`:** This typically means the `agentId` provided does not exist within your organization, or it was previously deleted. Double-check the ID string for typos.

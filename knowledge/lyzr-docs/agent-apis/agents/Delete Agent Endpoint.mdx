@@ -1,0 +1,36 @@
+---
+title: "Delete Agent Endpoint"
+openapi: delete /agents/{agent_id}
+---
+
+### Endpoint
+
+**DELETE** `/v3/agents/{agent_id}`
+
+### Authentication
+
+- Requires an API key (`x-api-key`) in the request headers.
+
+### Path Parameters
+
+| Parameter  | Type   | Description                               |
+| ---------- | ------ | ----------------------------------------- |
+| `agent_id` | string | Unique identifier of the agent to delete. |
+
+### Request Example (cURL)
+
+```sh
+curl -X DELETE "https://agent-prod.studio.lyzr.ai/v3/agents/{agent_id}" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-REPLACED-API-KEY"
+```
+
+### Response Example
+
+```json
+{
+  "message": "Agent deleted successfully."
+}
+```
+
+---

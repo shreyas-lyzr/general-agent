@@ -1,0 +1,33 @@
+---
+title: Toxicity Checker
+openapi: post /toxicity-meter/
+---
+
+### Endpoint
+**POST** `/toxicity-meter/`
+
+### Base URL
+`https://rai-prod.studio.lyzr.ai`
+
+### Authentication
+API Key (`x-api-key`) must be included in the request header.
+
+### Request Body
+
+| Field         | Type   | Required | Description                          |
+|---------------|--------|----------|--------------------------------------|
+| `input_text`  | string | Yes      | The text to analyze for toxicity.    |
+| `agent_id`    | string | Yes      | The associated agent's unique ID.    |
+| `session_id`  | string | Yes      | The current session's unique ID.     |
+| `run_id`      | string | No       | Optional run ID for traceability.    |
+
+#### Example Request Body
+```json
+{
+  "input_text": "What the hell!"
+  "agent_id": "67e3aff94c4db47d2999cdef",
+  "session_id": "67e3aff94c4db47d2999cdef-g6bayx8ijn",
+  "run_id": "string"
+}
+
+```

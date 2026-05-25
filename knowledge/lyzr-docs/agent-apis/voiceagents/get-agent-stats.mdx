@@ -1,0 +1,25 @@
+---
+title: "Get Agent Stats"
+openapi: get /transcripts/agent/{agentId}/stats
+---
+
+Retrieve high-level, aggregated statistics about a specific Voice Agent's performance and usage history.
+
+If you are building an analytics dashboard for your users, this endpoint is highly efficient. Instead of downloading every single transcript to calculate metrics locally, this endpoint instantly returns pre-calculated totals and averages directly from the server.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+* **`agentId` (Path Parameter):** The 24-character unique identifier of the agent whose statistics you want to retrieve.
+
+### Understanding the Analytics Response
+
+A successful `200 OK` request returns a lightweight JSON object packed with actionable data:
+
+* **`totalCalls`**: The absolute volume of conversations this agent has handled since it was created.
+* **`browserCalls`**: How many of those calls originated from a web-based widget or browser interface.
+* **`phoneCalls`**: How many calls were routed through a telephony or SIP trunk integration (e.g., standard phone lines).
+* **`avgMessages`**: A great indicator of conversation depth. A higher average message count usually means the agent is successfully engaging users in longer, back-and-forth dialogue rather than quick drop-offs.

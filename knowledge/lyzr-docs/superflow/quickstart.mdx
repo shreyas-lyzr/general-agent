@@ -1,0 +1,116 @@
+---
+title: "Build your first SuperFlow"
+sidebarTitle: "Quickstart"
+---
+
+This quickstart walks you through building, running, and inspecting a minimal SuperFlow — a Trigger that hands input to an LLM and returns its response.
+
+You'll do everything in the Studio UI; no code required, and no need to set up an agent first.
+
+## What you'll build
+
+A two-node SuperFlow:
+
+1. A **Trigger** that accepts a message as input.
+2. An **LLM** node that calls a model with that message and returns the answer.
+
+By the end you'll know how to create a SuperFlow, add and connect nodes, configure them, run it, and inspect the output.
+
+## Steps
+
+### 1. Open SuperFlow
+
+In [Agent Studio](https://studio.lyzr.ai), open the SuperFlow section from the sidebar. You'll land on the SuperFlow list page.
+
+### 2. Create a new SuperFlow
+
+Click **New SuperFlow** in the top-right.
+
+A modal appears. You can:
+
+- Pick a **template** from the gallery, or
+- Click **Start Blank** to start with an empty canvas.
+
+For this quickstart, choose **Start Blank**, give it a name (for example, *Hello SuperFlow*), and confirm.
+
+### 3. Get to know the canvas
+
+The editor opens with an **empty canvas**. Take a moment to orient yourself:
+
+- The **node palette** is on the left. Search or scroll to find nodes; drag them onto the canvas, or click to add.
+- The **canvas** is in the middle. You can pan, zoom, and use the controls in the bottom-left.
+- The **toolbar** sits in the top-right with Undo, Redo, Auto-align, Save, History, Approvals, Copy as JSON, and Run buttons.
+- The **save indicator** shows **Saved**, **Saving…**, or **Unsaved changes**. SuperFlow auto-saves a few seconds after every edit.
+
+### 4. Add the Trigger
+
+Every SuperFlow needs exactly one **Trigger** node — it's the entry point.
+
+In the node palette on the left, search for **Trigger** and drag it onto the canvas. That's it — no configuration needed for this quickstart. Whatever message you type in the Run panel later will flow straight to the LLM.
+
+### 5. Add an LLM node
+
+Back in the node palette, search for **LLM**. Drag it onto the canvas to the right of the Trigger.
+
+The LLM node is a one-shot model call — pick a model, give it a system prompt and a query, get a response. There's no agent to set up first, which makes it the fastest way to get something running.
+
+### 6. Connect the nodes
+
+Drag from the Trigger's output handle (the dot on its right edge) to the LLM node's input handle (the dot on its left edge). A connecting edge appears.
+
+If either node shows an "unreachable" warning, double-check the connection — every node must trace back to the Trigger.
+
+### 7. Configure the LLM
+
+Click the **LLM** node. In the right drawer:
+
+- **Provider** — pick a provider (for example, *OpenAI*).
+- **Model** — pick a model (for example, *gpt-4o-mini*).
+- **System prompt** — write a short instruction, for example:
+
+  ```
+  You are a helpful assistant. Answer the user's question concisely in one or two sentences.
+  ```
+
+Leave the **Query** field empty. The LLM node automatically picks up the message coming from the Trigger — you don't need to wire it in by hand.
+
+Leave **Temperature** and **Max tokens** at their defaults for now.
+
+<Tip>
+Want to wire the query explicitly (for example, when your trigger payload has multiple fields)? Use an expression like `{{ $('Trigger').json.message }}` in the Query field, or click the field reference picker to insert it for you. See [Expressions & data flow](./expressions) for the full syntax.
+</Tip>
+
+<Tip>
+Once you're comfortable with the LLM node, try the **AI Agent** node next. It runs a fully-configured Lyzr agent (with its tools, knowledge bases, and memory) as a single step — the right choice when you want to reuse an agent you've already built.
+</Tip>
+
+### 8. Run it
+
+Click the **Run** button in the top-right of the toolbar (it looks like a play icon, tooltip **Run SuperFlow**). The execution panel slides in from the right.
+
+Type your message in the input area — for example, *"What is SuperFlow in one sentence?"* — and click **Run**. The message flows straight to the LLM node.
+
+### 9. Watch the run
+
+As the SuperFlow runs:
+
+- Each node on the canvas shows a live status. Amber pulse = running, green check = completed, red = error.
+- Edges connecting active nodes animate while data flows.
+- The execution panel shows each node's output as it completes. Click a node's card to expand its JSON output.
+
+When the run finishes, expand the **LLM** card to see the model's response.
+
+### 10. Iterate
+
+You now have a working SuperFlow. From here you can:
+
+- Add more nodes — try an **If** node to branch based on the LLM's response, or an **HTTP Request** to send the answer somewhere.
+- Swap the LLM node for an **AI Agent** node when you want tool calls, knowledge-base lookups, or memory.
+- Open **History** in the toolbar to replay past runs and inspect their outputs.
+- Convert this run into a webhook or a scheduled trigger — see [Triggers & schedules](./triggers-and-schedules).
+
+## What's next
+
+- [Node reference](./node-reference) — the catalog of nodes you can add to a SuperFlow.
+- [Expressions & data flow](./expressions) — how to wire data between nodes.
+- [Running, monitoring & approvals](./running-and-approvals) — testing runs, history, and human approvals.

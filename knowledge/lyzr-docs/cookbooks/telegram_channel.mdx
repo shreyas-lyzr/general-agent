@@ -1,0 +1,136 @@
+# Connecting Lyzr Agents to Telegram: A Cookbook
+
+This guide walks you through deploying a Lyzr AI agent as a Telegram bot. Once configured, users can message your bot directly and get responses from your agent — no code required.
+
+---
+
+## Prerequisites
+
+- A [Lyzr Studio](https://studio.lyzr.ai/) account with at least one agent created
+- A Telegram account
+
+---
+
+## How It Works
+
+```
+User Message → Telegram
+                    ↓
+             Lyzr Webhook receives it
+                    ↓
+             Agent runs inference
+                    ↓
+             Response sent back to user
+```
+---
+
+## Step 1: Create a Telegram Bot
+
+1. Open Telegram and search for **@BotFather**
+2. Send `/newbot`
+3. Follow the prompts — choose a display name and a username (username must end in `bot`, e.g. `my_lyzr_bot`)
+4. BotFather will reply with a **bot token** that looks like:
+   ```
+   123456789:ABCDefghIJKLmnopQRSTuvwxyz-1234567
+   ```
+5. Copy and save this token
+
+> 💡 Keep your bot token private — anyone with it can control your bot.
+
+---
+
+## Step 2: Create the Channel in Lyzr
+
+1. Open the **Agent Builder** page in the Lyzr UI
+2. Click the **Channels** button (top-right toolbar, left of Executions)
+3. Click **Configure** next to **Telegram**
+4. Fill in the form:
+
+   | Field | Value |
+   |---|---|
+   | Bot Token | Paste the token from BotFather |
+   | Default Agent | Select the agent you want to handle messages |
+
+5. Click **Create Channel**
+
+After creation, Lyzr automatically calls Telegram's `setWebhook` API. The configured channel will appear in your Channels list.
+
+---
+
+## Step 3: Test Your Bot
+
+1. Open Telegram and search for your bot by username (e.g. `@my_lyzr_bot`)
+2. Click **Start** or send `/start`
+3. Send any message — your agent should reply within a few seconds
+
+---
+
+## Linking Multiple Agents to a Channel
+
+You can link more than one agent to a single channel. Users can then switch between agents using built-in commands.
+
+### Via the Lyzr UI
+
+1. Open **Channels** in the Agent Builder
+2. Click **Manage agents** on your configured channel
+3. Toggle agents on/off to link or unlink them
+4. Each linked agent gets a **name** used with the `/switch` command
+
+### Via the API
+
+**Add an agent:**
+```bash
+curl -X POST "https://your-server.com/v3/channels/{channel_id}/agents" \
+  -H "x-api-key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agent_id": "67e4d6983e456a9f92912044",
+    "name": "Support Agent"
+  }'
+```
+
+**Remove an agent:**
+```bash
+curl -X DELETE "https://your-server.com/v3/channels/{channel_id}/agents/{agent_id}" \
+  -H "x-api-key: your-api-key"
+```
+
+> The default agent cannot be removed. To change it, delete the channel and recreate it with a different default agent.
+
+---
+
+## Bot Commands
+
+Once multiple agents are linked, users can interact using these built-in commands:
+
+| Command | Description |
+|---|---|
+| `/agents` | List all agents linked to this channel |
+| `/list` | Same as `/agents` |
+| `/switch <name>` | Switch to a different agent by name |
+
+**Example:**
+```
+/agents
+→ Available agents (use /switch <name> to select one):
+  • Support Agent — 67e4d6983e456a9f92912044
+  • Sales Agent — 67e4d6673e456a9f9291203d
+
+/switch Sales Agent
+→ Switched to agent 'Sales Agent'. How can I help you?
+```
+
+Agent selection is **per-user and persistent** — each person's active agent is remembered across messages until they switch again.
+
+---
+
+## Troubleshooting
+
+### Bot doesn't respond to messages
+
+- Confirm the webhook was registered by checking the Channels list in the Lyzr UI
+
+### Bot token invalid
+
+- Ensure you copied the full token from BotFather, including the numeric prefix before the colon
+- Send `/token` to BotFather to regenerate if needed

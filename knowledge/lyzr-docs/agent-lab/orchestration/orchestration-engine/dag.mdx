@@ -1,0 +1,35 @@
+---
+title: What is DAG?
+sidebarTitle: What is DAG?
+---
+
+A **DAG (Directed Acyclic Graph)** is a type of graph structure that consists of **nodes** and **directed edges**, where:
+
+- Each **edge** has a direction (from one node to another)
+- There are **no cycles** — you cannot start from a node and return to it by following the direction of the edges
+
+In simple terms, a DAG is like a flowchart where tasks move in one direction and never loop back.
+
+---
+
+## Why DAGs Matter in Orchestration
+
+In orchestration systems like **Lyzr Agent Orchestration (LAO)**, DAGs play a critical role in defining **task flows** or **execution pipelines**. Each task or agent is represented as a node, and the edges define the order of execution.
+
+---
+
+## 🛠️ Benefits of Using DAGs in Orchestration
+
+### ✅ **Clear Task Dependencies**
+DAGs allow you to define which tasks depend on others, making the execution order explicit and easy to visualize.
+
+### ✅ **Parallel Execution**
+Independent branches of a DAG can run in parallel, improving performance and efficiency.
+
+### ✅ **Failure Isolation**
+Since each node is isolated and independent, failures can be detected and handled without collapsing the entire pipeline.
+
+### ✅ **Reproducibility**
+By defining a clear execution flow, DAGs make processes predictable, repeatable, and easier to debug.
+
+---

@@ -1,0 +1,144 @@
+---
+title: "Configuration"
+sidebarTitle: "Configuration"
+description: "Initialization, API keys, search tuning, and advanced settings for both hosted and open-source"
+---
+
+## Initialization
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis
+
+    # Default — connects to production
+    cog = Cognis(api_key="sk-your-api-key")
+
+    # With custom timeout
+    cog = Cognis(api_key="sk-your-api-key", timeout=60)
+
+    # With environment selection
+    cog = Cognis(api_key="sk-your-api-key", env="dev")
+    ```
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `api_key` | `str` | `$LYZR_API_KEY` | Lyzr API key |
+    | `env` | `str \| ServiceURLs` | `"prod"` | Environment: `"prod"`, `"dev"`, `"local"`, or custom |
+    | `timeout` | `int` | `30` | Request timeout in seconds |
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    # Basic — at least one of owner_id/agent_id/session_id required
+    m = Cognis(owner_id="user_1")
+
+    # With custom data directory
+    m = Cognis(owner_id="user_1", data_dir="./my_data")
+
+    # With explicit API key
+    m = Cognis(owner_id="user_1", gemini_api_key="your-gemini-key")
+    ```
+
+    | Parameter | Type | Default | Description |
+    |-----------|------|---------|-------------|
+    | `gemini_api_key` | `str` | `$GEMINI_API_KEY` or `$GOOGLE_API_KEY` | Gemini API key for embeddings |
+    | `owner_id` | `str` | — | Memory owner identifier |
+    | `agent_id` | `str` | `None` | Agent identifier |
+    | `session_id` | `str` | Auto-generated | Session identifier |
+    | `data_dir` | `str` | `~/.cognis` | Local storage directory |
+    | `config` | `CognisConfig` | Defaults | Configuration overrides |
+  </Tab>
+</Tabs>
+
+## Multi-Tenant Scoping
+
+Every Cognis operation uses scoping identifiers to isolate memories. This works the same in both versions.
+
+| Identifier | Purpose | Example |
+|------------|---------|---------|
+| `owner_id` | Scope to a user/tenant | `"user_alice"` |
+| `agent_id` | Scope to an agent | `"support_bot"` |
+| `session_id` | Scope to a conversation | `"sess_abc123"` |
+
+<Note>
+At least one of `owner_id`, `agent_id`, or `session_id` must be provided for every operation.
+</Note>
+
+```python
+# User-scoped memories (across all sessions)
+cog.add(messages=msgs, owner_id="user_alice")
+
+# Session-scoped memories
+cog.add(messages=msgs, owner_id="user_alice", session_id="sess_1")
+
+# Agent-specific memories
+cog.add(messages=msgs, agent_id="support_bot", owner_id="user_alice")
+```
+
+## Search Tuning (Open Source)
+
+The open-source version exposes `CognisConfig` for fine-grained search tuning. These defaults were optimized from ablation studies on the LoCoMo benchmark.
+
+```python
+from cognis import Cognis, CognisConfig
+
+config = CognisConfig(
+    # RRF fusion weights
+    vector_weight=0.70,           # 70% vector search
+    bm25_weight=0.30,             # 30% keyword search
+    rrf_k=10,                     # RRF constant
+    similarity_threshold=0.3,     # Minimum score to include
+
+    # Recency
+    recency_boost_weight=0.25,
+    recency_half_life_seconds=120.0,
+
+    # Models
+    embedding_model="gemini/gemini-embedding-2-preview",
+    llm_model="gpt-4.1-mini",    # For fact extraction
+
+    # Embedding dimensions (Matryoshka)
+    embedding_full_dim=768,       # Full precision reranking
+    embedding_small_dim=256,      # Fast candidate shortlisting
+)
+
+m = Cognis(config=config, owner_id="user_1")
+```
+
+### Full CognisConfig Reference
+
+| Field | Default | Description |
+|-------|---------|-------------|
+| `vector_weight` | `0.70` | Weight for vector search in RRF fusion |
+| `bm25_weight` | `0.30` | Weight for BM25 keyword search |
+| `rrf_k` | `10` | RRF constant (higher = smoother rank distribution) |
+| `similarity_threshold` | `0.3` | Minimum similarity to include results |
+| `shortlist_size` | `200` | 256D candidates before 768D reranking |
+| `recency_boost_weight` | `0.25` | Recency boost strength |
+| `recency_half_life_seconds` | `120.0` | Recency decay half-life |
+| `enable_temporal_decay` | `True` | Time-based relevance decay |
+| `enable_temporal_query_detection` | `True` | Detect "last week", "yesterday" queries |
+| `embedding_model` | `"gemini/gemini-embedding-2-preview"` | Embedding model via LiteLLM |
+| `embedding_full_dim` | `768` | Full-dimension embedding size |
+| `embedding_small_dim` | `256` | Shortlist embedding size |
+| `llm_model` | `"gpt-4.1-mini"` | LLM for fact extraction |
+| `update_similarity_threshold` | `0.85` | Threshold for updating vs creating new memory |
+| `add_similarity_threshold` | `0.70` | Threshold below which new memory is always created |
+| `enable_immediate_recall` | `True` | 256D vector index for raw messages |
+| `immediate_recall_ttl_hours` | `48` | TTL for immediate recall entries |
+
+### Custom Categories
+
+Override the default 13 categories:
+
+```python
+config = CognisConfig(
+    categories={
+        "product_feedback": "User feedback about products and features",
+        "support_issues": "Technical issues and bug reports",
+        "preferences": "User preferences and settings",
+    }
+)
+```

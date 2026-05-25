@@ -1,0 +1,22 @@
+---
+title: "List Realtime Options"
+openapi: get /config/realtime-options
+---
+
+Retrieve the complete catalog of supported realtime voice providers and their respective capabilities. 
+
+Our engine aggregates multiple state-of-the-art Voice AI providers into a single interface. This endpoint acts as a "discovery" route, returning all the configuration data you need to build dynamic agent-creation forms in your own UI.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Understanding the Configuration Payload
+
+A successful request returns a `providers` array. Currently, the API supports leading realtime engines including **OpenAI**, **Gemini**, **Ultravox**, and **xAI Grok**. 
+
+Each provider object contains the following nested data:
+
+* **`models`**: The specific realtime models available (e.g., `gpt-realtime`, `gemini-2.5-flash-native-audio`).
+* **`languages`**: Found inside each model object, this is an extensive array of supported ISO language codes (like `en`, `es`, `hi`, `ja`) indicating what languages the model can natively understand and speak.
+* **`voices`**: The available voice identities you can apply to the agent.

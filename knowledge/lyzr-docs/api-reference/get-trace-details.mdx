@@ -1,0 +1,31 @@
+---
+title: "Get Trace Details"
+openapi: get /traces/session/{sessionId}/{traceId}
+---
+
+Dive deep into the exact execution steps of a single Voice Agent action.
+
+While the [List Session Traces](/api-reference/traces/list-session-traces) endpoint gives you a high-level overview of a call's latency and cost, this endpoint exposes the raw, underlying data. It acts as an X-ray for your agent, revealing the exact prompts sent to the LLM, the model parameters used, and the precise token breakdown.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You need two identifiers to retrieve a specific trace:
+1. **`sessionId` (Path):** The UUID of the LiveKit session where the action occurred.
+2. **`traceId` (Path):** The ID of the specific trace you want to inspect.
+
+### Demystifying the `observations` Array
+
+The core value of this endpoint lies in the `observations` array. An observation represents a single unit of work (like an LLM generation, a tool call, or a database retrieval). 
+
+When debugging agent behavior, look closely at these fields within each observation:
+
+* **`input` & `output`**: The exact string or JSON payload sent to the model, and the exact string returned. This is critical for debugging why an agent said something unexpected.
+* **`model` & `modelParameters`**: Confirms which model (e.g., `gpt-4o`) handled the request and the temperature/top_p settings applied at that exact moment.
+* **`usageDetails` & `costDetails`**: A granular breakdown of prompt tokens vs. completion tokens, and the exact fractional USD cost associated with this single step.
+* **`latency` & `Timing`**: Compare `startTime`, `completionStartTime` (time to first token), and `endTime` to pinpoint exactly where delays are happening in your pipeline.
+
+### Troubleshooting Errors

@@ -1,0 +1,72 @@
+---
+title: "Configuration"
+sidebarTitle: "Configuration"
+description: "Global settings, per-project config, environment variables, and memory scoping"
+---
+
+## Global Settings
+
+Stored in `~/.cognis-claude/settings.json`. These apply to all projects.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `apiKey` | `string` | — | Your Lyzr API key |
+| `maxMemoryItems` | `number` | `5` | Maximum memories loaded into session context |
+| `debug` | `boolean` | `false` | Enable debug logging |
+| `signalExtraction` | `boolean` | `false` | Only capture important conversation turns (instead of full session) |
+| `signalKeywords` | `string[]` | 17 built-in | Keywords that trigger signal capture |
+| `signalTurnsBefore` | `number` | `3` | Context turns to include before a signal keyword |
+
+**Default signal keywords:** `remember`, `architecture`, `bug`, `fix`, `pattern`, `convention`, `decision`, `important`, `note`, `todo`, `caveat`, `workaround`, `implementation`, `refactor`, `solution`, `design`, `tradeoff`
+
+## Per-Project Config
+
+Override settings per project in `.claude/.cognis-claude/config.json`. Run `/claude-cognis:project-config` to configure interactively, or create the file manually.
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `apiKey` | `string` | Global key | Project-specific API key |
+| `ownerId` | `string` | System username | Override the owner identifier |
+| `agentId` | `string` | Auto-generated | Override the personal agent ID |
+| `repoAgentId` | `string` | `repo_<name>` | Override the team agent ID |
+| `signalExtraction` | `boolean` | Global setting | Override signal extraction for this project |
+| `signalKeywords` | `string[]` | Global setting | Override signal keywords for this project |
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LYZR_API_KEY` | — | Lyzr API key (required if not in settings) |
+| `COGNIS_API_URL` | `https://memory.studio.lyzr.ai` | Custom API base URL |
+| `COGNIS_OWNER_ID` | System username | Override owner identifier |
+| `COGNIS_PRIVATE` | `false` | Set `true` to disable cross-session memories for this terminal |
+| `COGNIS_ISOLATE_WORKTREES` | `false` | Set `true` to treat git worktrees as separate projects |
+
+## API Key Priority
+
+Keys are resolved in this order (first found wins):
+
+1. Per-project config (`.claude/.cognis-claude/config.json`)
+2. Environment variable (`LYZR_API_KEY`)
+3. Global settings (`~/.cognis-claude/settings.json`)
+
+## Memory Scoping
+
+Cognis separates memory into two scopes:
+
+**Personal memory** — Tied to your identity and the current project. Only you see these. The `agent_id` is derived from a SHA256 hash of your git root, making it unique per project per user.
+
+**Team memory** — Tied to the repository name. Shared across everyone using the plugin on the same repo. The `agent_id` is the sanitized repo name (e.g., `repo_my_project`).
+
+When you search memories, both scopes are queried by default so you get the full picture.
+
+## Privacy and Data
+
+- **No data sent without an API key.** If `LYZR_API_KEY` is not set, all hooks exit immediately — no network requests
+- **SessionStart hook** sends search queries to retrieve your stored memories. No conversation data is sent
+- **UserPromptSubmit hook** sends the first 150 characters of your prompt to find relevant memories. Trivial inputs ("yes", "ok", slash commands) are skipped
+- **Stop hook** sends a compressed summary of your session. Tool outputs are intelligently abbreviated (file edits become one-line summaries). Raw transcripts are not stored
+- **All data is scoped** to your `owner_id` and `agent_id`
+- **Signal extraction** (`signalExtraction: true`) limits capture to turns containing specific keywords, rather than the full session
+- **Privacy mode** (`COGNIS_PRIVATE=true`) disables memory entirely for a terminal session
+- **Delete your data** anytime using the `delete_memory` or `delete_all_memories` MCP tools

@@ -1,0 +1,55 @@
+---
+title: API Build Path
+sidebarTitle: Lyzr APIs
+---
+
+## Lyzr Agent API
+
+For developers and AI practitioners, the Lyzr Agent API offers full programmatic control over agent lifecycle management:
+
+- **Create & Configure Agents:** Set system prompts, personas, tools, and knowledge bases via API calls.
+- **Flexible Integration:** Embed agents into your applications, chatbots, or workflows.
+- **Advanced Features:** Manage agent state, sessions, and orchestrate multi-agent scenarios.
+- **Scalability:** Designed to support enterprise-grade deployments with robust security and compliance.
+- **Monitoring & Analytics:** Gain insights on agent interactions and performance metrics.
+
+The API enables deep customization and automation for teams building complex AI-powered solutions requiring code-level flexibility.
+
+
+The API Build Path provides a fully code-driven approach to creating, configuring, and deploying AI agents using Lyzr’s RESTful services. This workflow is ideal for engineering teams who need automation, CI/CD integration, and full control over every stage of the agent lifecycle.
+
+## 1. Authentication and Environment Setup
+
+First, obtain your API keys from the Lyzr console and store them securely as environment variables. Install the Lyzr SDK or configure your HTTP client to include the API key in request headers.
+
+## 2. Project Provisioning
+
+Use the API to create a new project by sending a request that includes your project name, description, default vector store selection, and memory configuration. The service will return a project identifier for subsequent calls.
+
+## 3. Data Connector Management
+
+Programmatically register data connectors by specifying connector type (e.g., database or file upload), connection details, and any required authentication parameters. Each connector will be validated and assigned a unique identifier in your project.
+
+## 4. Knowledge Base Operations
+
+Create and manage knowledge bases through API requests that define the KB name, description, and underlying vector database. Ingest documents by uploading files or passing URLs; the API will handle parsing, embedding, and indexing behind the scenes.
+
+## 5. Agent Configuration
+
+Define your agent by sending a configuration object that includes metadata (name, role, prompt templates), memory features (short-term, long-term), safety settings, and references to any custom tools. The API will return an agent ID to be used for testing and deployment.
+
+## 6. Testing and Validation
+
+Submit test prompts to your agent via a dedicated testing endpoint. The response will include the generated output, retrieval metadata, and compliance logs. Use these results to iterate on your agent’s configuration programmatically.
+
+## 7. Deployment and Release Management
+
+Promote your agent to production by updating its deployment status through an API call or by invoking a deployment endpoint. Integrate this step into your CI/CD pipelines to automate version control, rollbacks, and environment-specific configurations.
+
+## 8. Monitoring and Insights
+
+Retrieve usage metrics, log files, and performance dashboards via API endpoints. Use these insights to detect anomalies, measure user engagement, and trigger automated alerts or scaling events.
+
+---
+
+This API-first workflow ensures reproducibility and scalability, allowing you to embed Lyzr into your development lifecycle seamlessly. For detailed API references and code examples, see the Lyzr API documentation.

@@ -1,0 +1,76 @@
+---
+title: "Get Messages"
+sidebarTitle: "Get Messages"
+description: "Retrieve raw conversation messages (not extracted memories)"
+---
+
+The `get_messages()` method retrieves the original conversation messages stored via `add()`. Unlike `get()` which returns extracted memory records, this returns the raw user/assistant message pairs.
+
+## Basic Usage
+
+```python
+from lyzr import Cognis
+
+cog = Cognis()
+
+messages = cog.get_messages(
+    owner_id="user_alice",
+    session_id="sess_001",
+)
+for msg in messages.get("messages", []):
+    print(f"[{msg['role']}] {msg['content']}")
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `owner_id` | `str` | None | User/tenant scope |
+| `session_id` | `str` | None | Session scope |
+| `agent_id` | `str` | None | Agent scope |
+| `limit` | `int` | None | Max messages to return |
+| `latest` | `bool` | `False` | Return only the most recent messages |
+| `cross_session` | `bool` | `False` | Include messages from all sessions |
+
+## Use Cases
+
+**Conversation replay** — Show a user their previous conversation:
+
+```python
+messages = cog.get_messages(
+    owner_id="user_alice",
+    session_id="sess_001",
+    limit=50,
+)
+```
+
+**Latest context** — Get the most recent messages for prompt injection:
+
+```python
+messages = cog.get_messages(
+    owner_id="user_alice",
+    session_id="sess_001",
+    latest=True,
+    limit=10,
+)
+```
+
+**Cross-session history** — Pull messages from all sessions:
+
+```python
+messages = cog.get_messages(
+    owner_id="user_alice",
+    cross_session=True,
+    limit=100,
+)
+```
+
+## Async
+
+```python
+messages = await cog.aget_messages(owner_id="user_alice", session_id="sess_001")
+```
+
+<Note>
+`get_messages()` is hosted-only. In the open-source `lyzr-cognis` package, raw messages are stored in SQLite and accessible via `get_context()` as part of the short-term memory.
+</Note>

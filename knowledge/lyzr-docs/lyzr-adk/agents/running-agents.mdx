@@ -1,0 +1,458 @@
+---
+title: "Running Agents"
+sidebarTitle: "Running Agents"
+description: "Execute agents and handle responses"
+---
+
+Run agents using `agent.run()` to process messages and get responses. Supports streaming, structured outputs, and runtime knowledge base integration.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Answer questions",
+    instructions="Be concise and accurate"
+)
+
+# Run the agent
+response = agent.run("What is machine learning?")
+print(response.response)
+```
+
+## Function Signature
+
+```python
+agent.run(
+    message: str,
+    session_id: str = None,
+    stream: bool = False,
+    user_id: str = None,
+    knowledge_bases: List[KnowledgeBase] = None,
+    **kwargs
+) -> AgentResponse | BaseModel | Iterator[AgentStream]
+```
+
+## Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `message` | str | Yes | - | User message to process |
+| `session_id` | str | No | Auto-generated | Session ID for conversation continuity |
+| `stream` | bool | No | False | Enable streaming responses |
+| `user_id` | str | No | Auto-generated | User identifier |
+| `knowledge_bases` | List | No | None | Knowledge bases for RAG at runtime |
+
+## Return Value
+
+The return type depends on configuration:
+
+| Configuration | Return Type |
+|---------------|-------------|
+| Default | `AgentResponse` |
+| `response_model` set | Pydantic model instance |
+| `stream=True` | `Iterator[AgentStream]` |
+
+---
+
+## Basic Usage
+
+### Simple Run
+
+```python
+response = agent.run("Hello, how are you?")
+print(response.response)
+print(response.session_id)
+```
+
+### With Session ID
+
+Maintain conversation context across multiple runs:
+
+```python
+session_id = "user_123_session"
+
+# First message
+response1 = agent.run("My name is Alice", session_id=session_id)
+
+# Second message - agent remembers context
+response2 = agent.run("What's my name?", session_id=session_id)
+print(response2.response)  # "Your name is Alice"
+```
+
+### With User ID
+
+```python
+response = agent.run(
+    "What's the weather?",
+    user_id="user_456"
+)
+```
+
+---
+
+## Streaming Responses
+
+Get real-time responses as they're generated:
+
+```python
+for chunk in agent.run("Tell me a story", stream=True):
+    print(chunk.content, end="", flush=True)
+
+    if chunk.done:
+        print("\n--- Generation complete ---")
+        print(f"Session: {chunk.session_id}")
+```
+
+### AgentStream Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `content` | str | Accumulated content so far |
+| `delta` | str | New content in this chunk |
+| `done` | bool | True if this is the final chunk |
+| `session_id` | str | Session identifier |
+| `chunk_index` | int | Index of this chunk |
+| `metadata` | dict | Additional metadata |
+| `structured_data` | BaseModel | Parsed structured data (final chunk only) |
+| `artifact_files` | List[Artifact] | Generated files (final chunk only) |
+
+### Streaming with Progress
+
+```python
+import sys
+
+for chunk in agent.run("Generate a report", stream=True):
+    # Print delta (just the new text)
+    if chunk.delta:
+        sys.stdout.write(chunk.delta)
+        sys.stdout.flush()
+
+    # Handle completion
+    if chunk.done:
+        print("\n")
+        if chunk.artifact_files:
+            print(f"Generated {len(chunk.artifact_files)} file(s)")
+```
+
+---
+
+## Structured Outputs
+
+Get type-safe responses using Pydantic models:
+
+```python
+from pydantic import BaseModel
+
+class MovieReview(BaseModel):
+    title: str
+    rating: float
+    summary: str
+    pros: list[str]
+    cons: list[str]
+
+# Create agent with response model
+agent = studio.create_agent(
+    name="Movie Critic",
+    provider="gpt-4o",
+    role="Movie critic",
+    goal="Review movies",
+    instructions="Provide detailed, balanced reviews",
+    response_model=MovieReview
+)
+
+# Run returns typed Pydantic model
+review: MovieReview = agent.run("Review the movie Inception")
+
+# Type-safe access with IDE autocomplete
+print(review.title)      # "Inception"
+print(review.rating)     # 9.2
+print(review.pros)       # ["Mind-bending plot", "Great visuals"]
+```
+
+### Nested Models
+
+```python
+from pydantic import BaseModel
+from typing import List
+
+class Author(BaseModel):
+    name: str
+    expertise: str
+
+class Article(BaseModel):
+    title: str
+    author: Author
+    sections: List[str]
+    word_count: int
+
+agent = studio.create_agent(
+    name="Writer",
+    provider="gpt-4o",
+    response_model=Article
+)
+
+article: Article = agent.run("Write an article about AI")
+print(article.author.name)
+print(article.sections)
+```
+
+### Streaming with Structured Output
+
+```python
+agent = studio.create_agent(
+    name="Analyzer",
+    provider="gpt-4o",
+    response_model=Analysis
+)
+
+for chunk in agent.run("Analyze this data", stream=True):
+    print(chunk.content, end="", flush=True)
+
+    if chunk.done:
+        # Final chunk contains parsed structured data
+        result: Analysis = chunk.structured_data
+        print(f"\nSentiment: {result.sentiment}")
+```
+
+---
+
+## Runtime Knowledge Bases
+
+Pass knowledge bases at runtime for RAG:
+
+```python
+# Create knowledge base
+kb = studio.create_knowledge_base(name="Product Docs")
+kb.add_pdf("manual.pdf")
+kb.add_website("https://docs.example.com")
+
+# Create agent (without KB)
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Support agent",
+    goal="Answer product questions",
+    instructions="Use the knowledge base to answer questions"
+)
+
+# Pass KB at runtime
+response = agent.run(
+    "How do I reset my password?",
+    knowledge_bases=[kb]
+)
+```
+
+### Multiple Knowledge Bases
+
+```python
+product_kb = studio.create_knowledge_base(name="Products")
+product_kb.add_pdf("products.pdf")
+
+policy_kb = studio.create_knowledge_base(name="Policies")
+policy_kb.add_pdf("policies.pdf")
+
+response = agent.run(
+    "What's the return policy for product X?",
+    knowledge_bases=[product_kb, policy_kb]
+)
+```
+
+### Custom KB Configuration
+
+Use `with_config()` to customize retrieval settings:
+
+```python
+response = agent.run(
+    "Find detailed specifications",
+    knowledge_bases=[
+        kb.with_config(
+            top_k=10,                    # Return more results
+            score_threshold=0.7,         # Higher relevance threshold
+            retrieval_type="mmr"         # Diverse results
+        )
+    ]
+)
+```
+
+---
+
+## AgentResponse Object
+
+The response object contains:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `response` | str | The agent's text response |
+| `session_id` | str | Session identifier |
+| `message_id` | str | Unique message ID |
+| `metadata` | dict | Additional metadata |
+| `tool_calls` | List[dict] | Tools called during execution |
+| `raw_response` | dict | Raw API response |
+| `artifact_files` | List[Artifact] | Generated files |
+
+### Working with Responses
+
+```python
+response = agent.run("Create a report")
+
+# Access response text
+print(response.response)
+
+# Check session
+print(f"Session: {response.session_id}")
+
+# Check for generated files
+if response.has_files():
+    for artifact in response.files:
+        print(f"File: {artifact.name} ({artifact.format_type})")
+        artifact.download(f"./downloads/{artifact.name}")
+
+# Access metadata
+if response.metadata:
+    print(f"Tokens used: {response.metadata.get('tokens')}")
+
+# Convert to dictionary
+data = response.to_dict()
+```
+
+---
+
+## Error Handling
+
+```python
+from lyzr.exceptions import (
+    LyzrError,
+    AuthenticationError,
+    ValidationError,
+    APIError,
+    RateLimitError,
+    TimeoutError,
+    InvalidResponseError
+)
+
+try:
+    response = agent.run("Process this request")
+    print(response.response)
+
+except AuthenticationError:
+    print("Invalid API key")
+
+except ValidationError as e:
+    print(f"Invalid input: {e}")
+
+except RateLimitError:
+    print("Rate limit exceeded, please wait")
+
+except TimeoutError:
+    print("Request timed out")
+
+except InvalidResponseError as e:
+    print(f"Failed to parse response: {e}")
+
+except APIError as e:
+    print(f"API error: {e}")
+
+except LyzrError as e:
+    print(f"ADK error: {e}")
+```
+
+---
+
+## Examples
+
+### Chatbot with Memory
+
+```python
+agent = studio.create_agent(
+    name="Chatbot",
+    provider="gpt-4o",
+    role="Conversational assistant",
+    goal="Have helpful conversations",
+    instructions="Be friendly and remember context",
+    memory=30
+)
+
+session = "chat_session_1"
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == "quit":
+        break
+
+    response = agent.run(user_input, session_id=session)
+    print(f"Bot: {response.response}")
+```
+
+### Document Q&A
+
+```python
+# Setup KB
+kb = studio.create_knowledge_base(name="Documents")
+kb.add_pdf("contract.pdf")
+kb.add_pdf("guidelines.pdf")
+
+# Create agent
+agent = studio.create_agent(
+    name="Doc Assistant",
+    provider="gpt-4o",
+    role="Document analyst",
+    goal="Answer questions about documents",
+    instructions="Cite specific sections when answering"
+)
+
+# Query documents
+questions = [
+    "What is the payment terms?",
+    "What are the cancellation conditions?",
+    "Summarize the key obligations"
+]
+
+for question in questions:
+    response = agent.run(question, knowledge_bases=[kb])
+    print(f"Q: {question}")
+    print(f"A: {response.response}\n")
+```
+
+### Data Extraction
+
+```python
+from pydantic import BaseModel
+from typing import List
+
+class Contact(BaseModel):
+    name: str
+    email: str
+    phone: str
+    company: str
+
+class ExtractedContacts(BaseModel):
+    contacts: List[Contact]
+    total: int
+
+agent = studio.create_agent(
+    name="Extractor",
+    provider="gpt-4o",
+    role="Data extractor",
+    goal="Extract structured data from text",
+    instructions="Extract all contact information",
+    response_model=ExtractedContacts
+)
+
+text = """
+Meeting attendees:
+- John Smith (john@acme.com, 555-1234) from Acme Corp
+- Jane Doe (jane@widgets.io, 555-5678) from Widgets Inc
+"""
+
+result: ExtractedContacts = agent.run(f"Extract contacts from: {text}")
+
+for contact in result.contacts:
+    print(f"{contact.name} - {contact.email} - {contact.company}")
+```

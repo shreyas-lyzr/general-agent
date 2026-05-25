@@ -1,0 +1,56 @@
+---
+title: 🛠️ GitHub Integration with Lyzr
+sidebarTitle: GitHub
+---
+
+The **GitHub** integration empowers Lyzr agents to interact with your development workflows—creating, managing, and retrieving repositories, issues, pull requests, and more.
+
+---
+
+## ✨ Key Features
+
+- Read and update issues, pull requests, and repos.
+- Create new issues and label them contextually.
+- Monitor commits and review open PRs.
+- Automate documentation generation or changelogs.
+
+---
+
+## 💼 Example Use Cases
+
+### 1. Issue Summarizer Bot
+An agent that reads new GitHub issues and summarizes them into Slack or Notion for team triage.
+
+> **Prompt**: “Summarize all open issues with label ‘bug’ from the API repo.”
+
+### 2. Smart Changelog Generator
+Automatically draft changelogs from merged PRs and push them into the project wiki.
+
+> **Workflow**: GitHub → PR merged → Summary → Markdown changelog
+
+### 3. CI/CD Status Tracker
+Get real-time build status updates and PR reviews directly into your Slack or dashboard agents.
+
+---
+
+## 🚀 Supported GitHub Objects
+
+- Repositories
+- Commits
+- Issues
+- Pull Requests
+- Webhooks & Events
+
+---
+
+## 🛠 How to Set Up
+
+1. Go to **Tools > Add GitHub Integration**.
+2. Authenticate via GitHub OAuth.
+3. Select scope access (e.g., `repo`, `workflow`, `read:user`).
+4. Test with:
+   > “Create an issue titled ‘Fix signup bug on mobile’ in lyzr/webapp.”
+
+---
+
+With GitHub + Lyzr, engineering teams can drive productivity through intelligent dev assistants.

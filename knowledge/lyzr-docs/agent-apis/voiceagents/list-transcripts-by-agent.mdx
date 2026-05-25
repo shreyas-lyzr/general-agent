@@ -1,0 +1,32 @@
+---
+title: "List Transcripts by Agent"
+openapi: get /transcripts/agent/{agentId}
+---
+
+Retrieve a complete, paginated history of all conversations handled by a specific Voice Agent. 
+
+If you have built multiple agents (e.g., one for Customer Support and another for Sales), this endpoint makes it incredibly easy to isolate the call logs for just one of those entities. This is the perfect endpoint to power an "Agent Performance" or "Recent Calls" view in your application's dashboard.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+* **`agentId` (Path Parameter):** The 24-character unique identifier of the agent whose transcripts you want to view. 
+
+### Managing Large Datasets
+
+Agents that handle high volumes of calls will quickly accumulate thousands of transcripts. Use the query parameters to control how much data you receive at once:
+
+* **`limit`**: Defines how many session records to return in a single response (default is usually 10 or 20).
+* **`offset`**: Allows you to skip a specific number of records. If your `limit` is 10, an `offset` of 10 will fetch page 2.
+* **`sort`**: Choose `desc` to see the most recently completed calls first, or `asc` to view them in the order they occurred historically.
+
+### Understanding the Response
+
+A successful `200 OK` response returns a standard pagination object. 
+
+* **`items`**: An array containing the actual transcript objects. Each object includes the `chatHistory`, the `sessionReport` (if configured), and metadata like `durationMs` and `messageCount`.
+* **`total`**: The absolute total number of transcripts this agent has recorded.
+* **`nextOffset`**: A highly useful property that tells your frontend exactly what `offset` value to pass in your next API call to fetch the next page of results.

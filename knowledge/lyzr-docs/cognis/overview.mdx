@@ -1,0 +1,92 @@
+---
+title: "Cognis"
+sidebarTitle: "Overview"
+description: "Memory layer for AI agents — remember facts, preferences, and context across conversations"
+---
+
+## What is Cognis
+
+Cognis is a memory layer for AI agents. It lets your agents remember things — user preferences, past conversations, decisions, facts — and recall them when they matter.
+
+When a user tells your agent "I'm vegetarian" in one session, Cognis makes sure the agent knows that next time it recommends a restaurant. When a support agent resolves a billing issue, Cognis remembers the context so the next agent in the chain doesn't ask the same questions again.
+
+## How It Works
+
+1. **You send conversation messages** (user/assistant pairs) to Cognis
+2. **Cognis extracts facts** automatically — names, preferences, decisions, context — using LLM-powered extraction with auto-categorization
+3. **Your agent searches memories** before responding — Cognis returns the most relevant facts using hybrid search (vector similarity + keyword matching)
+4. **Memories persist across sessions** — scoped by user, agent, and session so the right context reaches the right agent for the right user
+
+## Architecture
+
+![Cognis Architecture](https://github.com/user-attachments/assets/4a5849c8-76ac-44e3-bb4f-e03edbdddc98)
+
+## Core Capabilities
+
+- **Hybrid search** — Matryoshka vector embeddings + BM25 keyword matching, fused with Reciprocal Rank Fusion
+- **Smart extraction** — LLM automatically pulls discrete facts from conversations and categorizes them (identity, preferences, work, interests, etc.)
+- **Multi-tenant scoping** — `owner_id`, `agent_id`, `session_id` — isolate memories per user, per agent, per conversation
+- **Context assembly** — Combine short-term conversation history with long-term memories into a single LLM-ready context
+
+## Quick Example
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis()
+
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content="My name is Alice. I'm vegetarian and love hiking."),
+            CognisMessage(role="assistant", content="Nice to meet you, Alice!"),
+        ],
+        owner_id="user_alice",
+    )
+
+    results = cog.search(query="food preferences", owner_id="user_alice")
+    for r in results:
+        print(r.content)
+    # → "Alice is vegetarian"
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    m.add([
+        {"role": "user", "content": "My name is Alice. I'm vegetarian and love hiking."},
+        {"role": "assistant", "content": "Nice to meet you, Alice!"},
+    ])
+
+    resp = m.search("food preferences")
+    for r in resp["results"]:
+        print(r["content"])
+    # → "Alice is vegetarian"
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+Cognis is available as a **hosted API** (`pip install lyzr-adk`) and an **open-source library** (`pip install lyzr-cognis`). The core architecture is the same — [see the comparison](/cognis/comparison). There's also a [Claude Code plugin](/cognis/claude-cognis/overview) for persistent memory across coding sessions.
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/cognis/quickstart">
+    Install and run your first memory operations in 3 minutes
+  </Card>
+  <Card title="Configuration" icon="gear" href="/cognis/configuration">
+    API keys, init params, search weight tuning
+  </Card>
+  <Card title="API Reference" icon="book" href="/cognis/api-reference">
+    Complete method signatures and return types
+  </Card>
+  <Card title="Cookbooks" icon="utensils" href="/cognis/cookbooks/overview">
+    CrewAI, LangChain, LangGraph, and Agno integrations
+  </Card>
+</CardGroup>

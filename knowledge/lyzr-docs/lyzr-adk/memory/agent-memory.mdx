@@ -1,0 +1,361 @@
+---
+title: "Agent Memory"
+sidebarTitle: "Agent Memory"
+description: "Configure conversation memory for agents"
+---
+
+Agent memory maintains conversation context across multiple messages. Configure memory at agent creation or add it to existing agents.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Create agent with memory
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Have contextual conversations",
+    instructions="Remember what the user told you",
+    memory=30  # Remember last 30 messages
+)
+
+# Conversation with context
+session = "my_session"
+agent.run("My favorite color is blue", session_id=session)
+response = agent.run("What's my favorite color?", session_id=session)
+# "Your favorite color is blue"
+```
+
+---
+
+## Adding Memory at Creation
+
+Use the `memory` parameter when creating an agent:
+
+```python
+agent = studio.create_agent(
+    name="Bot",
+    provider="gpt-4o",
+    role="Assistant",
+    goal="Help users",
+    instructions="Be helpful",
+    memory=30  # Integer: number of messages to remember
+)
+```
+
+### Memory Parameter
+
+| Value | Range | Description |
+|-------|-------|-------------|
+| Integer | 1-50 | Number of recent messages to keep in context |
+
+```python
+# Small memory (quick exchanges)
+agent = studio.create_agent(..., memory=10)
+
+# Medium memory (typical conversations)
+agent = studio.create_agent(..., memory=30)
+
+# Large memory (complex multi-turn tasks)
+agent = studio.create_agent(..., memory=50)
+
+# Maximum memory
+agent = studio.create_agent(..., memory=50)
+```
+
+---
+
+## Adding Memory to Existing Agent
+
+Use `agent.add_memory()` to enable memory on an existing agent.
+
+```python
+agent.add_memory(max_messages: int = 10) -> Agent
+```
+
+### Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `max_messages` | int | 10 | Messages to remember (1-50) |
+
+### Example
+
+```python
+# Create agent without memory
+agent = studio.create_agent(
+    name="Bot",
+    provider="gpt-4o"
+)
+
+# Add memory later
+agent = agent.add_memory(max_messages=50)
+
+# Verify
+print(agent.has_memory())  # True
+```
+
+---
+
+## Checking Memory Status
+
+### has_memory()
+
+Check if memory is enabled.
+
+```python
+agent.has_memory() -> bool
+```
+
+```python
+if agent.has_memory():
+    print("Memory is enabled")
+else:
+    print("No memory configured")
+```
+
+### get_memory_config()
+
+Get the current memory configuration.
+
+```python
+agent.get_memory_config() -> dict | None
+```
+
+```python
+config = agent.get_memory_config()
+if config:
+    print(f"Max messages: {config['max_messages_context_count']}")
+    print(f"Provider: {config['provider']}")
+```
+
+---
+
+## Removing Memory
+
+Disable memory for an agent.
+
+```python
+agent.remove_memory() -> Agent
+```
+
+```python
+agent = agent.remove_memory()
+print(agent.has_memory())  # False
+```
+
+---
+
+## Session Management
+
+Memory is scoped to sessions. Each session maintains its own conversation history.
+
+### Using session_id
+
+```python
+agent = studio.create_agent(..., memory=30)
+
+# User 1's session
+agent.run("I need help with billing", session_id="user_1")
+agent.run("My account ID is 12345", session_id="user_1")
+
+# User 2's session (separate context)
+agent.run("I have a technical question", session_id="user_2")
+agent.run("My software version is 3.0", session_id="user_2")
+
+# Each session has independent memory
+agent.run("What's my account ID?", session_id="user_1")  # Knows: 12345
+agent.run("What version am I using?", session_id="user_2")  # Knows: 3.0
+```
+
+### Auto-Generated Sessions
+
+If no `session_id` is provided, one is auto-generated:
+
+```python
+# Each call gets a new session (no memory continuity)
+agent.run("My name is Alice")  # Session: session_abc123
+agent.run("What's my name?")    # Session: session_def456 (different!)
+# Agent doesn't remember because sessions are different
+```
+
+### Persistent Session IDs
+
+For continuous conversations, use consistent session IDs:
+
+```python
+import uuid
+
+# Generate once per user/conversation
+session_id = f"user_{user_id}_session"
+
+# Use consistently
+agent.run("Message 1", session_id=session_id)
+agent.run("Message 2", session_id=session_id)
+agent.run("Message 3", session_id=session_id)
+# All messages share context
+```
+
+---
+
+## Examples
+
+### Chatbot with Memory
+
+```python
+agent = studio.create_agent(
+    name="Chatbot",
+    provider="gpt-4o",
+    role="Friendly chatbot",
+    goal="Have engaging conversations",
+    instructions="Be friendly and remember what users tell you",
+    memory=50
+)
+
+def chat(user_id: str):
+    session = f"chat_{user_id}"
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "quit":
+            break
+
+        response = agent.run(user_input, session_id=session)
+        print(f"Bot: {response.response}")
+
+chat("user_123")
+```
+
+### Support Agent
+
+```python
+agent = studio.create_agent(
+    name="Support Agent",
+    provider="gpt-4o",
+    role="Customer support specialist",
+    goal="Resolve customer issues efficiently",
+    instructions="""
+    1. Gather relevant information about the issue
+    2. Remember details shared by the customer
+    3. Provide step-by-step solutions
+    4. Confirm resolution before closing
+    """,
+    memory=50  # Longer memory for complex issues
+)
+
+session = "support_ticket_456"
+
+# Multi-turn support conversation
+agent.run("I can't access my account", session_id=session)
+agent.run("I've tried resetting my password but it didn't work", session_id=session)
+agent.run("My email is john@example.com", session_id=session)
+response = agent.run("What should I do next?", session_id=session)
+# Agent knows: can't access, tried password reset, email is john@example.com
+```
+
+### Teaching Assistant
+
+```python
+agent = studio.create_agent(
+    name="Tutor",
+    provider="gpt-4o",
+    role="Patient teaching assistant",
+    goal="Help students learn at their own pace",
+    instructions="""
+    - Adapt to the student's level
+    - Remember what topics they've covered
+    - Build on previous explanations
+    - Provide practice problems based on struggles
+    """,
+    memory=50
+)
+
+session = "lesson_python_basics"
+
+agent.run("I want to learn Python", session_id=session)
+agent.run("I already know basic variables", session_id=session)
+agent.run("I'm confused about loops", session_id=session)
+response = agent.run("Can you explain with an example?", session_id=session)
+# Tutor knows: learning Python, knows variables, confused about loops
+```
+
+---
+
+## Memory Size Considerations
+
+### Small Memory (1-20 messages)
+
+```python
+agent = studio.create_agent(..., memory=10)
+```
+
+Best for:
+- Quick Q&A
+- Single-turn tasks
+- Stateless interactions
+
+### Medium Memory (20-50 messages)
+
+```python
+agent = studio.create_agent(..., memory=30)
+```
+
+Best for:
+- Typical conversations
+- Support interactions
+- General-purpose chatbots
+
+### Large Memory (30-50 messages)
+
+```python
+agent = studio.create_agent(..., memory=50)
+```
+
+Best for:
+- Complex multi-turn tasks
+- Research sessions
+- Long-form content creation
+
+<Note>
+Larger memory increases context size, which may affect response latency and token usage. Choose based on your use case.
+</Note>
+
+---
+
+## Best Practices
+
+### Consistent Session IDs
+
+```python
+# Good: Consistent session per user/conversation
+session = f"user_{user_id}_conv_{conversation_id}"
+agent.run(msg, session_id=session)
+
+# Bad: Random or missing session IDs
+agent.run(msg)  # Auto-generated, no continuity
+```
+
+### Appropriate Memory Size
+
+```python
+# Quick support: small memory
+support_agent = studio.create_agent(..., memory=20)
+
+# Complex research: large memory
+research_agent = studio.create_agent(..., memory=50)
+```
+
+### Clear Session Boundaries
+
+```python
+# Start new session for new conversations
+def start_new_conversation(user_id: str) -> str:
+    import uuid
+    return f"user_{user_id}_{uuid.uuid4().hex[:8]}"
+
+session = start_new_conversation("user_123")
+```

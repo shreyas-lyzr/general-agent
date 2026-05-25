@@ -1,0 +1,71 @@
+---
+title: "Memory Categories"
+sidebarTitle: "Memory Categories"
+description: "13 auto-tagged categories for extracted memories"
+---
+
+When Cognis extracts facts from conversation messages, each memory is automatically assigned a category. This enables filtered retrieval and helps organize what the agent knows about a user.
+
+## Default Categories
+
+| Category | Description | Example |
+|----------|-------------|---------|
+| `identity` | Personal identity, name, demographics, age, location | "Alice is 28 years old" |
+| `relationships` | Family, friends, social connections, pets | "Alice has a dog named Max" |
+| `work_career` | Job, profession, workplace, colleagues, business | "Alice works at Google as a data scientist" |
+| `learning` | Education, skills, knowledge, certifications, languages | "Alice speaks French and Python" |
+| `wellness` | Health, fitness, medical conditions, diet, exercise | "Alice runs 5K every morning" |
+| `lifestyle` | Daily habits, routines, sleep, transportation | "Alice commutes by bike" |
+| `interests` | Hobbies, passions, entertainment, sports, games | "Alice loves hiking and Taylor Swift" |
+| `preferences` | Likes, dislikes, choices, favorites, style | "Alice prefers dark mode" |
+| `plans_goals` | Future plans, aspirations, goals, dreams, intentions | "Alice plans to visit Japan next year" |
+| `experiences` | Past events, travel, memories, experiences | "Alice went to Bali last summer" |
+| `opinions` | Views, beliefs, attitudes, philosophical | "Alice thinks remote work is more productive" |
+| `context` | Session-specific context, current tasks, immediate needs | "Alice is debugging a FastAPI endpoint" |
+| `misc` | Anything that doesn't fit other categories | General facts |
+
+## Accessing Categories
+
+Categories are stored in the memory's metadata:
+
+```python
+resp = m.get_all()
+for mem in resp["memories"]:
+    print(f"[{mem['metadata']['category']}] {mem['content']}")
+
+# [identity] Alice's name is Alice
+# [work_career] Alice works at Google as a data scientist
+# [interests] Alice loves hiking
+```
+
+## Custom Categories
+
+Override the defaults by passing a custom dictionary to `CognisConfig`:
+
+```python
+from cognis import Cognis, CognisConfig
+
+config = CognisConfig(
+    categories={
+        "product_feedback": "User feedback about products and features",
+        "support_issues": "Technical issues and bug reports",
+        "account_info": "Account details, subscription, billing",
+        "preferences": "User preferences and settings",
+        "misc": "Anything else",
+    }
+)
+
+m = Cognis(config=config, owner_id="user_1")
+```
+
+The LLM extraction prompt adapts to use your custom categories for classification.
+
+## How Categorization Works
+
+During `add()`, the LLM extraction step:
+
+1. Reads the conversation messages
+2. Extracts discrete facts as individual memory records
+3. Assigns each fact to the most appropriate category from the configured list
+4. Checks for duplicates against existing memories (threshold: 0.85 similarity)
+5. Stores new facts or updates existing ones with versioning

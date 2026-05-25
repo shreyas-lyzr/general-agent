@@ -1,0 +1,46 @@
+---
+
+title: "Retrieval-Augmented Generation (RAG)"
+sidebarTitle: "RAG"
+description: "Overview of Retrieval-Augmented Generation and how Lyzr leverages it for accurate, context-rich responses."
+---
+
+## Overview
+
+Retrieval-Augmented Generation (RAG) combines the strengths of information retrieval with generative models. By fetching relevant documents or data at query time and feeding them into an LLM, RAG ensures that responses are grounded in up-to-date, factual information rather than relying solely on the model’s pre-trained knowledge.
+
+---
+
+## RAG Workflow in Lyzr
+
+1. **Query Reception**
+   The user’s question or request is received by the agent.
+2. **Document Retrieval**
+   The agent queries configured vector stores or knowledge bases to fetch top-N relevant passages.
+3. **Reranking & Filtering**
+   Retrieved passages are optionally reranked and filtered for relevance and quality.
+4. **Prompt Assembly**
+   Selected passages are inserted into a structured prompt template alongside the original query.
+5. **Generation**
+   The LLM processes the prompt and generates a response that references the retrieved context.
+6. **Citation & Delivery**
+   Final answers include citations or links to the source documents, enhancing transparency and traceability.
+
+---
+
+## Core Components
+
+* **Vector Store**: A scalable database for embedding vectors (e.g., FAISS, Pinecone, Weaviate).
+* **Embedding Model**: Converts text into high-dimensional vectors reflective of semantic meaning.
+* **Reranker**: Reorders retrieved results to surface the most relevant information.
+* **Prompt Template**: Defines how retrieved context and user input are combined to form the LLM prompt.
+* **Citation Module**: Automatically formats and attaches source references to generated outputs.
+
+---
+
+## Benefits
+
+* **Accuracy**: Grounds responses in actual source material, reducing hallucinations.
+* **Up-to-Date**: Leverages live data sources to provide current information.
+* **Traceability**: Citations make it easy to verify and audit the origin of the generated content.
+* **Customizability**: Tune each component—embeddings, retriever, reranker, parser—to fit domain-specific needs.

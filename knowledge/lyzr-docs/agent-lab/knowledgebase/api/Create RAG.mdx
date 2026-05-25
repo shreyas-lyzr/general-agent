@@ -1,0 +1,88 @@
+---
+title: Create RAG Configuration
+openapi: post /rag/
+---
+
+### Endpoint
+
+**POST** `/v3/rag/`
+
+### Authentication
+
+API Key (`x-api-key`) must be included in the header.
+
+### Request Body (JSON)
+
+```json
+{
+  "user_id": "string",
+  "llm_credential_id": "string",
+  "embedding_credential_id": "string",
+  "vector_db_credential_id": "string",
+  "description": "",
+  "collection_name": "string",
+  "llm_model": "string",
+  "embedding_model": "string",
+  "vector_store_provider": "string",
+  "semantic_data_model": false,
+  "meta_data": {}
+}
+```
+
+### Curl Request
+
+```bash
+curl -X POST "https://rag-dev.test.studio.lyzr.ai/v3/rag/" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-REDACTED" ^
+-d "{
+  \"user_id\": \"string\",
+  \"llm_credential_id\": \"string\",
+  \"embedding_credential_id\": \"string\",
+  \"vector_db_credential_id\": \"string\",
+  \"description\": \"\",
+  \"collection_name\": \"string\",
+  \"llm_model\": \"string\",
+  \"embedding_model\": \"string\",
+  \"vector_store_provider\": \"string\",
+  \"semantic_data_model\": false,
+  \"meta_data\": {}
+}"
+```
+
+### Response Example
+
+```json
+{
+  "id": "string",
+  "user_id": "string",
+  "llm_credential_id": "string",
+  "embedding_credential_id": "string",
+  "vector_db_credential_id": "string",
+  "description": "",
+  "collection_name": "string",
+  "llm_model": "string",
+  "embedding_model": "string",
+  "vector_store_provider": "string",
+  "semantic_data_model": false,
+  "meta_data": {}
+}
+```
+
+### Error Response (422 Validation Error)
+
+```json
+{
+  "detail": [
+    {
+      "loc": [
+        "string",
+        0
+      ],
+      "msg": "string",
+      "type": "string"
+    }
+  ]
+}
+```

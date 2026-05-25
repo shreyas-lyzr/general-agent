@@ -1,0 +1,59 @@
+---
+title: "Lyzr Agents as MCP Servers"
+sidebarTitle: "Usage"
+---
+
+## Usage
+
+1. Configure the tool in your **MCP CLIENT** (Claude Desktop or Cursor)
+2. **RESTART** your MCP client
+3. **WAIT** for the tools to initialize (tools icon will appear)
+4. Your Lyzr agents will show up as **AVAILABLE TOOLS**
+5. You can now **DIRECTLY INTERACT** with your agents through the MCP interface
+
+![Tools Icon](https://raw.githubusercontent.com/rasswanth-lyzr/course_content_agent/refs/heads/main/tools_icon.png)
+*The tools icon appears when Lyzr MCP tools are successfully loaded*
+
+## Troubleshooting
+
+### Tool not appearing in MCP client
+
+* Check the syntax of your configuration file
+* Verify that API credentials are correct
+* Restart your client after making changes
+
+### Authentication errors
+
+* Ensure both `LYZR_API_KEY` and `LYZR_USER_ID` are correctly set
+* Confirm your Lyzr account has access to the necessary agents
+
+### Connection issues
+
+* Check your internet connection
+* Look for any firewall restrictions that may block the tool
+
+## Requirements
+
+* Python installed - [python.org](https://www.python.org/downloads/)
+* [uv](https://docs.astral.sh/uv/) package manager
+* A valid Lyzr account
+* MCP-compatible client (Claude Desktop, Cursor, etc.)
+
+## Running the Tool Directly
+
+Once `uv` is installed, you can run the Lyzr MCP Tool Call directly from your terminal:
+
+```bash
+uvx lyzr-mcp-tool-call@latest
+```
+
+## Support
+
+For any issues:
+
+* Contact Lyzr support: [support@lyzr.ai](mailto:support@lyzr.ai)
+* Make sure you're using the latest version:
+
+```bash
+uvx lyzr-mcp-tool-call@latest
+```

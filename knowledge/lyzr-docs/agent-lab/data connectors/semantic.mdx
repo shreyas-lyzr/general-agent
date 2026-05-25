@@ -1,0 +1,47 @@
+---
+title: Database Connectors & Semantic Models
+sidebarTitle: Semantic Models
+---
+
+Lyzr Agent Studio allows your AI agents to connect seamlessly with all leading **SQL** (Structured Query Language) and **NoSQL** data sources available in the market. This critical capability enables your agents to move beyond static, pre-loaded information and access, analyze, and reason over your organization's real, live operational data in real time.
+
+This integration is the foundation for creating powerful **Data Query Agents**, which are often referred to as **Text-to-SQL Agents**. Once connected, your agent can:
+1.  **Receive** natural language questions from a user (e.g., "Show me last month's sales by region").
+2.  **Convert** that natural language question into an accurate, executable database query (such as a complex SQL statement).
+3.  **Execute** the query against the database.
+4.  **Process** the results and provide accurate, data-driven insights in clear, natural language back to the user in real time.
+
+🎥 **Here’s a quick video on how to build a Text-to-SQL Agent:** [Watch Video](https://www.youtube.com/watch?v=yzn6xOGs9lk)
+
+### The Role of the Semantic Model
+
+Connecting an entire, complex, and often massive corporate database directly to a single agent is inefficient, resource-intensive, and provides excessive, irrelevant context. Lyzr solves this challenge by requiring the creation of a **Semantic Model**.
+
+* **Definition:** A Semantic Model is a crucial conceptual layer that holds only a **relevant subset** of your database schema. It includes only the specific tables, columns, and relationships required for that particular agent's task.
+* **Purpose:** By holding only the relevant information, the Semantic Model ensures:
+    * **Optimal Performance:** The agent has a focused scope, which drastically improves the speed and accuracy of query generation and execution.
+    * **Accurate Context:** It gives the agent the precise, necessary context to understand your data relationships and terminology, allowing it to generate highly accurate and context-appropriate queries.
+    * **Data Governance:** It acts as a controlled boundary, ensuring the agent can only access the data authorized for its function, enhancing security.
+
+### 🔌 Supported Database Connectors
+
+Lyzr offers robust, built-in connectivity to a comprehensive range of popular and enterprise-grade data stores, covering major cloud and on-premise solutions.
+
+The image below displays the variety of database connectors available within the Lyzr Agent Studio:
+
+![](../../../assets/images/data1.png)
+
+| Type | Data Connector | Details | Status |
+| :--- | :--- | :--- | :--- |
+| **Relational (SQL)** | **PostgreSQL** | A powerful open-source object-relational database system. | Fully Supported |
+| | **MySQL** | The world's most popular open-source relational database. | Fully Supported |
+| | **Amazon Redshift** | Amazon's fully managed, petabyte-scale cloud data warehouse service. | Fully Supported |
+| | **Google BigQuery** | Google Cloud's serverless, highly scalable, and cost-effective cloud data warehouse. | Fully Supported |
+| | **Azure SQL** | Microsoft's intelligent, scalable, cloud database service. | Fully Supported |
+| | **Microsoft SQL Server** | The widely-used enterprise-level relational database management system. | Fully Supported |
+| | **Snowflake** | The cloud-based data platform known for its unique architecture and scalability. | Upcoming |
+| **NoSQL** | **MongoDB** | A leading general purpose, document-based distributed database. | Fully Supported |
+| **Cloud/Data Lake**| **Databricks** | Integration with the unified data platform for data engineering, ML, and analytics. | Upcoming |
+| **Files** | **File Upload (CSV, Excel, JSON)** | Direct connectivity for analyzing data stored in common flat file formats. | Fully Supported |
+
+---

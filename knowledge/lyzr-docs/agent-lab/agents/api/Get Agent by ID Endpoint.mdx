@@ -1,0 +1,42 @@
+---
+title: Get Agent by ID Endpoint
+openapi: get /agent/{agent_id}
+---
+
+
+### Endpoint
+
+**GET** `/v3/agents/{agent_id}`
+
+### Authentication
+
+- Requires an API key (`x-api-key`) in the request headers.
+
+### Path Parameters
+
+| Parameter  | Type   | Description                                 |
+| ---------- | ------ | ------------------------------------------- |
+| `agent_id` | string | Unique identifier of the agent to retrieve. |
+
+### Request Example (cURL)
+
+```sh
+curl -X GET "https://agent-prod.studio.lyzr.ai/v3/agents/{agent_id}"
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-REPLACED-API-KEY"
+```
+
+### Response Example
+
+```json
+{
+  "agent_id": "67e21aecd0da0fb69fe95780",
+  "name": "Finance Advisor",
+  "description": "Personalized Financial Planning Assistant",
+  "model": "gpt-4o-mini",
+  "provider_id": "OpenAI",
+  "features": [...]
+}
+```
+
+---

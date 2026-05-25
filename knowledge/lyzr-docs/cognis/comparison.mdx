@@ -1,0 +1,179 @@
+---
+title: "Hosted vs Open Source"
+sidebarTitle: "Hosted vs OSS"
+description: "Compare Cognis Hosted (lyzr-adk) and Open Source (lyzr-cognis) to choose the right fit"
+icon: "code-compare"
+---
+
+## Which Cognis is right for you?
+
+Cognis is available in two flavors. Choose based on your priorities:
+
+<CardGroup cols={2}>
+  <Card title="Hosted (lyzr-adk)" icon="cloud" href="/cognis/quickstart">
+    **Managed, production-ready**
+
+    Get started in 5 minutes with the Lyzr cloud API. Full async, 6 retrieval strategies, summaries.
+  </Card>
+
+  <Card title="Open Source (lyzr-cognis)" icon="code-branch" href="/cognis/quickstart">
+    **Local-first, zero infrastructure**
+
+    Runs entirely in-process. SQLite + Qdrant local. 3 dependencies, ~156 MB.
+  </Card>
+</CardGroup>
+
+---
+
+## Feature Comparison
+
+| Feature | Hosted | Open Source |
+|---------|--------|-------------|
+| | | |
+| **Setup** | | |
+| Install | `pip install lyzr-adk` | `pip install lyzr-cognis` |
+| Time to first memory | ~2 minutes | ~3 minutes |
+| Infrastructure needed | None (cloud API) | None (in-process) |
+| API keys | `LYZR_API_KEY` | `GEMINI_API_KEY` + `OPENAI_API_KEY` |
+| Data storage | Lyzr cloud | Local (`~/.cognis/`) |
+| | | |
+| **Core Memory** | | |
+| Add messages | ✅ | ✅ |
+| Semantic search | ✅ | ✅ |
+| Get/list memories | ✅ | ✅ |
+| Delete memories | ✅ | ✅ |
+| Update memories | ✅ | ❌ (auto-dedup on add) |
+| Get context | ✅ `cog.context()` | ✅ `m.get_context()` |
+| Smart deduplication | ✅ | ✅ |
+| Memory scoping | ✅ `owner_id`, `agent_id`, `session_id` | ✅ Same model |
+| | | |
+| **Search & Retrieval** | | |
+| Hybrid search (vector + BM25) | ✅ | ✅ RRF fusion (70/30) |
+| Matryoshka embeddings | ✅ | ✅ (256D → 768D) |
+| Recency boost | ✅ | ✅ Exponential decay |
+| Temporal query detection | ✅ | ✅ |
+| Cross-session search | ✅ `cross_session=True` | ❌ (global scope by default) |
+| Immediate recall | ✅ | ✅ (256D session-scoped) |
+| Retrieval strategies | 6 (COGNIS, FOUR_WAY_TEMPR, etc.) | 1 (hybrid RRF) |
+| | | |
+| **Advanced** | | |
+| Async support | ✅ Full (`aadd`, `asearch`, etc.) | ❌ Sync only |
+| Summaries | ✅ `store_summary`, `search_summaries` | ❌ |
+| Get raw messages | ✅ `get_messages()` | ❌ |
+| Delete session | ✅ `delete_session()` | ✅ `clear(session_id=...)` |
+| Memory categories | 15 | 13 (customizable) |
+| Memory versioning | ✅ | ✅ |
+| Context manager | ✅ Sync + async | ✅ Sync only |
+| | | |
+| **Infrastructure** | | |
+| Storage backend | MongoDB + Qdrant + Neo4j + OpenSearch | SQLite + Qdrant local |
+| Embedding provider | Pluggable (OpenAI, Nomic, Gemini) | Gemini 2 |
+| Data residency | Lyzr cloud | Your machine |
+| Multi-tenant | ✅ Production-scale | ✅ Single-machine |
+| Dependencies | `lyzr-adk` | 3 packages (~156 MB) |
+| | | |
+| **Pricing** | | |
+| License | Usage-based | MIT (free) |
+| Infrastructure costs | Included | Embedding + extraction API costs |
+| Support | Included | Community + GitHub |
+
+---
+
+## Decision Guide
+
+### Choose **Hosted** if you want:
+
+<CardGroup cols={2}>
+  <Card icon="bolt" title="Production Scale">
+    Managed infrastructure, auto-scaling, and enterprise storage (MongoDB + Neo4j).
+  </Card>
+  <Card icon="rotate" title="Async Support">
+    Full async/await API for high-throughput applications.
+  </Card>
+  <Card icon="book" title="Summaries">
+    Store and search conversation summaries across sessions.
+  </Card>
+  <Card icon="puzzle-piece" title="Lyzr Ecosystem">
+    Seamless integration with Lyzr Agent Studio and the ADK.
+  </Card>
+</CardGroup>
+
+### Choose **Open Source** if you need:
+
+<CardGroup cols={2}>
+  <Card icon="lock" title="Data Privacy">
+    All data stays on your machine. No cloud dependency for storage.
+  </Card>
+  <Card icon="feather" title="Lightweight">
+    3 dependencies, ~156 MB install. Runs in-process, no servers.
+  </Card>
+  <Card icon="wrench" title="Custom Configuration">
+    Tune search weights, swap embedding models, customize categories.
+  </Card>
+  <Card icon="dollar-sign" title="Free">
+    MIT license. Only pay for embedding and extraction API calls.
+  </Card>
+</CardGroup>
+
+---
+
+## API Shape Comparison
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis(api_key="sk-your-api-key")
+
+    # Add — returns dict
+    cog.add(
+        messages=[CognisMessage(role="user", content="Hello")],
+        owner_id="user_1",
+    )
+
+    # Search — returns List[CognisSearchResult] (objects with .content, .score)
+    results = cog.search(query="greeting", owner_id="user_1", limit=5)
+    for r in results:
+        print(r.content, r.score)
+
+    # Get — returns CognisMemoryList (object with .memories)
+    memories = cog.get(owner_id="user_1")
+    for m in memories.memories:
+        print(m.id, m.content)
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_1")
+
+    # Add — returns dict with "success", "memories", "session_message_count"
+    m.add([{"role": "user", "content": "Hello"}])
+
+    # Search — returns dict with "results" list of dicts
+    resp = m.search("greeting", limit=5)
+    for r in resp["results"]:
+        print(r["content"], r["score"])
+
+    # Get all — returns dict with "memories" list of dicts
+    resp = m.get_all()
+    for mem in resp["memories"]:
+        print(mem["memory_id"], mem["content"])
+
+    m.close()  # Required
+    ```
+  </Tab>
+</Tabs>
+
+## Still Not Sure?
+
+<CardGroup cols={2}>
+  <Card title="Try Hosted" icon="rocket" href="/cognis/quickstart">
+    Get started with the hosted API in 5 minutes
+  </Card>
+  <Card title="Try Open Source" icon="github" href="/cognis/quickstart">
+    Install locally and run your first memory operations
+  </Card>
+</CardGroup>

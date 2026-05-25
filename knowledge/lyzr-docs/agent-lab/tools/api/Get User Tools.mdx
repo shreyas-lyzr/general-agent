@@ -1,0 +1,26 @@
+---
+title: "Get User Tools"
+openapi: get /tools/
+
+---
+
+### Endpoint
+**GET** `/v3/tools/`
+
+### Description
+Retrieves all tools associated with a user.
+
+### Authentication
+API Key (`x-api-key`) in the header.
+
+### Request
+```bash
+curl -X GET "https://agent-prod.studio.lyzr.ai/v3/tools/" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-REDACTED"
+```
+
+### Response
+Returns a list of tools available for the user.
+
+---

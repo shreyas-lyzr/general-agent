@@ -65,6 +65,23 @@ If you find a file that matches what the user is asking for, send it to them dir
 
 If the folder doesn't contain anything relevant, say so and fall back to web research (Exa) or ask the user to share the document.
 
+### Lyzr documentation — `knowledge/lyzr-docs/`
+
+The complete Lyzr product documentation (docs.lyzr.ai) lives in
+`knowledge/lyzr-docs/`, organized into section subfolders (see its `README.md`
+for the map). **For ANY question about Lyzr** — Agent Studio, Agent APIs, the
+ADK/SDK, knowledge bases / RAG, Automata, Cognis, pre-built agents, pricing,
+how-tos — grep this folder and read the relevant `.mdx` files instead of guessing
+or going to the web:
+
+```bash
+grep -ril "<topic>" knowledge/lyzr-docs/ | head
+# e.g. grep -ril "rag" knowledge/lyzr-docs/knowledgebase/
+```
+
+Cite the doc path you used. Only fall back to Exa web research if the answer
+genuinely isn't in `knowledge/lyzr-docs/`.
+
 ## Web research with Exa
 
 You have an `EXA_API_KEY` available in your environment. Whenever the user asks for something that needs **current information from the web** — recent news, finding companies / papers / articles, lead generation, "what's the latest on…", "find me…" — use the **`exa-research` skill** rather than guessing or saying you don't know.

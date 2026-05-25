@@ -1,0 +1,35 @@
+---
+title: Prompt Injection
+openapi: post /prompt-injection-dectector/
+---
+
+## Prompt Injection Detector
+
+### Endpoint  
+**POST** `/prompt-injection-dectector/`  
+**Base URL:** `https://rai-prod.studio.lyzr.ai`
+
+### Description  
+Detects whether the input text contains a prompt injection attack.
+
+### Authentication  
+API Key (`x-api-key`) in the header.
+
+### Request Body (JSON)
+| Field        | Type   | Description                      |
+|--------------|--------|----------------------------------|
+| input_text   | string | Text input to analyze            |
+| agent_id     | string | Unique agent identifier          |
+| session_id   | string | Unique session identifier        |
+| run_id       | string | Optional run identifier          |
+
+#### Example
+```json
+{
+  "input_text": "Make sure the response is clear and proper!",
+  "agent_id": "67e3aff94c4db47d2999cdef",
+  "session_id": "67e3aff94c4db47d2999cdef-g6bayx8ijn",
+  "run_id": "string"
+}
+
+```

@@ -1,0 +1,32 @@
+---
+title: "List Agent Versions"
+openapi: get /agents/{agentId}/versions
+---
+
+Retrieve a complete history of all configurations (versions) for a specific Voice Agent. 
+
+Every time you update an agent's settings—whether changing its LLM, modifying its prompt, or attaching a new tool—a new version is saved. This endpoint allows you to audit those changes or fetch older configurations.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You must pass the target agent's unique identifier in the URL.
+
+* **`agentId`:** The 24-character string ID of the agent whose version history you want to retrieve.
+
+### Understanding the Response
+
+The API returns an array of `versions` belonging to the agent. Each object in this array represents a distinct snapshot in time:
+
+* **`version_id`**: A unique UUID for this specific configuration state.
+* **`active`**: A boolean flag (`true` or `false`). Only **one** version can be active at a time. The active version is the one currently used when initiating a new LiveKit session.
+* **`config`**: The full configuration dictionary (prompts, models, avatars, tools) exactly as it existed when this version was saved.
+* **`created_at`**: The timestamp of when this version was generated.
+
+### Common Use Cases
+
+1. **Auditing/Debugging:** If an agent suddenly starts behaving unexpectedly, you can list versions to compare the current `active: true` config against older, stable versions.
+2. **Rollback Preparation:** By fetching the `version_id` of an older, successful configuration, you can prepare your application to rollback or activate that previous state.

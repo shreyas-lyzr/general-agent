@@ -1,0 +1,130 @@
+---
+title: "Lyzr - NANDA MCP Server Cookbook"
+sidebarTitle: "Lyzr - NANDA"
+description: "Building a Lyzr MCP Server on NANDA"
+---
+
+## Prerequisites
+
+1. Lyzr Agent
+2. NANDA Account
+
+## Implementation Steps
+
+### 1. Set Up Your Project
+
+```bash
+mkdir my-lyzr-mcp-server
+cd my-lyzr-mcp-server
+python -m venv venv
+source venv/bin/activate
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install mcp uvicorn starlette httpx
+```
+
+### 3. Create the Server
+
+```python
+from mcp.server.fastmcp import FastMCP
+from starlette.applications import Starlette
+from mcp.server.sse import SseServerTransport
+from starlette.requests import Request
+from starlette.routing import Mount, Route
+import uvicorn
+import requests
+import json
+from uuid import uuid4
+import os
+
+# Initialize FastMCP server
+mcp = FastMCP("lyzr-mcp-server")
+
+LYZR_API_KEY = os.getenv("LYZR_API_KEY")
+
+@mcp.tool()
+async def lyzr_chat_api(agent_id: str, message: str) -> str:
+    url = "https://agent-dev.test.studio.lyzr.ai/v3/inference/chat/"
+    payload = json.dumps({
+        "user_id": "user@email.com",
+        "agent_id": agent_id,
+        "session_id": str(uuid4().hex),
+        "message": message
+    })
+    headers = {
+        'Content-Type': 'application/json',
+        'x-api-key': LYZR_API_KEY
+    }
+    response = requests.post(url, headers=headers, data=payload)
+    return response.text
+
+
+def create_app():
+    sse = SseServerTransport("/messages/")
+
+    async def handle_sse(request: Request):
+        async with sse.connect_sse(request.scope, request.receive, request._send) as (read, write):
+            await mcp._mcp_server.run(read, write, mcp._mcp_server.create_initialization_options())
+
+    return Starlette(
+        routes=[
+            Route("/sse", endpoint=handle_sse),
+            Mount("/messages/", app=sse.handle_post_message),
+        ],
+    )
+
+if __name__ == "__main__":
+    app = create_app()
+    uvicorn.run(app, host="0.0.0.0", port=8080)
+```
+
+### 4. Run Your Server
+
+```bash
+export LYZR_API_KEY="your-real-key-here"
+python server.py
+```
+
+
+## Registering on NANDA
+
+### 1. Sign Up
+Visit the NANDA registration page and click **"Sign Up"** to create an account.
+
+### 2. Complete Profile
+Fill in your details:
+- First & Last Name
+- Email Address
+- Password
+- Organization Name
+
+### 3. Verify Email
+Look for a verification email and follow the link.
+
+---
+
+## Registering Your MCP Server with NANDA
+
+### 1. Access Server Registration
+After logging in, go to **"Register Server"**.
+
+### 2. Fill the Form
+- **Name**: Your server’s title
+- **Slug**: URL-safe ID
+- **Description**: Explain the server’s capabilities
+- **Provider**: Your org or name
+- **URL**: Your server’s SSE endpoint
+- **Types**: agent, resource, or tool
+- **Tags**: Keywords
+- **Logo**: Optional image
+
+### 3. Submit
+Review the details and submit your registration.
+
+---
+
+You're now ready to launch your Lyzr MCP server and connect it to NANDA!
+

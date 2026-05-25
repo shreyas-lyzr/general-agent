@@ -1,0 +1,537 @@
+---
+title: "Agent Features"
+sidebarTitle: "Agent Features"
+description: "Add memory, tools, contexts, RAI, and more to agents"
+---
+
+Enhance agents with features like memory, local tools, contexts, RAI guardrails, file output, image generation, and evaluation capabilities.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Help users",
+    instructions="Be helpful and accurate"
+)
+
+# Add features
+agent = agent.add_memory(30)
+agent.add_tool(my_function)
+```
+
+---
+
+## Memory
+
+Enable conversation memory to maintain context across messages.
+
+### Add Memory
+
+```python
+agent.add_memory(max_messages: int = 10) -> Agent
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `max_messages` | int | 10 | Messages to remember (1-50) |
+
+```python
+# Add memory for 30 messages
+agent = agent.add_memory(30)
+
+# Conversation maintains context
+agent.run("My name is John", session_id="session_1")
+agent.run("What's my name?", session_id="session_1")
+# Agent remembers: "Your name is John"
+```
+
+### Check Memory
+
+```python
+agent.has_memory() -> bool
+```
+
+```python
+if agent.has_memory():
+    print("Memory is enabled")
+```
+
+### Get Memory Config
+
+```python
+agent.get_memory_config() -> dict | None
+```
+
+```python
+config = agent.get_memory_config()
+if config:
+    print(f"Max messages: {config['max_messages_context_count']}")
+```
+
+### Remove Memory
+
+```python
+agent.remove_memory() -> Agent
+```
+
+```python
+agent = agent.remove_memory()
+```
+
+---
+
+## Local Tools
+
+Add Python functions as tools that the agent can execute.
+
+### Add Tool
+
+```python
+agent.add_tool(tool) -> Agent
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `tool` | callable or Tool | Python function or Tool object |
+
+### Function-Based Tool
+
+```python
+def get_weather(city: str) -> str:
+    """Get current weather for a city"""
+    # Your implementation
+    return f"Weather in {city}: 72°F, Sunny"
+
+def search_database(query: str, limit: int = 10) -> str:
+    """Search the database for records"""
+    # Your implementation
+    return f"Found {limit} results for '{query}'"
+
+# Add tools to agent
+agent.add_tool(get_weather)
+agent.add_tool(search_database)
+
+# Agent can now call these functions
+response = agent.run("What's the weather in New York?")
+```
+
+### Tool Object
+
+```python
+from lyzr import Tool
+
+tool = Tool(
+    name="calculate",
+    description="Perform mathematical calculations",
+    parameters={
+        "type": "object",
+        "properties": {
+            "expression": {
+                "type": "string",
+                "description": "Math expression to evaluate"
+            }
+        },
+        "required": ["expression"]
+    },
+    function=lambda expression: str(eval(expression))
+)
+
+agent.add_tool(tool)
+```
+
+### Multiple Tools
+
+```python
+def read_file(path: str) -> str:
+    """Read contents of a file"""
+    with open(path) as f:
+        return f.read()
+
+def write_file(path: str, content: str) -> str:
+    """Write content to a file"""
+    with open(path, "w") as f:
+        f.write(content)
+    return f"Written to {path}"
+
+def list_files(directory: str) -> str:
+    """List files in a directory"""
+    import os
+    return str(os.listdir(directory))
+
+# Add all tools
+agent.add_tool(read_file)
+agent.add_tool(write_file)
+agent.add_tool(list_files)
+
+# Agent orchestrates tool usage
+response = agent.run("Read config.json and summarize it")
+```
+
+---
+
+## Contexts
+
+Add background information as key-value pairs.
+
+### Add Context
+
+```python
+agent.add_context(context: Context) -> Agent
+```
+
+```python
+# Create context
+company_info = studio.create_context(
+    name="company",
+    value="Acme Corp - Founded 2020, 50k customers, SaaS platform"
+)
+
+# Add to agent
+agent = agent.add_context(company_info)
+```
+
+### List Contexts
+
+```python
+agent.list_contexts() -> List[dict]
+```
+
+```python
+contexts = agent.list_contexts()
+for ctx in contexts:
+    print(f"Context: {ctx}")
+```
+
+### Remove Context
+
+```python
+agent.remove_context(context: Context) -> Agent
+```
+
+```python
+agent = agent.remove_context(company_info)
+```
+
+### Multiple Contexts
+
+```python
+company = studio.create_context(
+    name="company",
+    value="Acme Corp - SaaS platform"
+)
+
+pricing = studio.create_context(
+    name="pricing",
+    value="Basic: $10/mo, Pro: $50/mo, Enterprise: Custom"
+)
+
+support_hours = studio.create_context(
+    name="support_hours",
+    value="24/7 for Pro and Enterprise, 9-5 PST for Basic"
+)
+
+# Add all contexts
+agent = agent.add_context(company)
+agent = agent.add_context(pricing)
+agent = agent.add_context(support_hours)
+```
+
+---
+
+## RAI Guardrails
+
+Add Responsible AI policies for content safety.
+
+### Add RAI Policy
+
+```python
+agent.add_rai_policy(policy: RAIPolicy) -> Agent
+```
+
+```python
+from lyzr import PIIType, PIIAction, SecretsAction
+
+# Create policy
+policy = studio.create_rai_policy(
+    name="SafePolicy",
+    description="Content safety guardrails",
+    toxicity_threshold=0.3,
+    secrets_detection=SecretsAction.MASK,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.SSN: PIIAction.BLOCK
+    }
+)
+
+# Add to agent
+agent = agent.add_rai_policy(policy)
+```
+
+### Check RAI Policy
+
+```python
+agent.has_rai_policy() -> bool
+```
+
+```python
+if agent.has_rai_policy():
+    print("RAI guardrails enabled")
+```
+
+### Remove RAI Policy
+
+```python
+agent.remove_rai_policy() -> Agent
+```
+
+```python
+agent = agent.remove_rai_policy()
+```
+
+---
+
+## File Output
+
+Enable agents to generate files (PDF, DOCX, etc.).
+
+### Enable File Output
+
+```python
+agent.enable_file_output() -> Agent
+```
+
+```python
+agent = agent.enable_file_output()
+
+response = agent.run("Create a PDF report about Q1 sales")
+
+if response.has_files():
+    for artifact in response.files:
+        print(f"Generated: {artifact.name}")
+        artifact.download(f"./downloads/{artifact.name}")
+```
+
+### Check File Output
+
+```python
+agent.has_file_output() -> bool
+```
+
+### Disable File Output
+
+```python
+agent.disable_file_output() -> Agent
+```
+
+---
+
+## Image Generation
+
+Enable agents to generate images.
+
+### Set Image Model
+
+```python
+agent.set_image_model(image_model: ImageModelConfig) -> Agent
+```
+
+```python
+from lyzr.image_models import DallE, Gemini
+
+# Use DALL-E 3
+agent = agent.set_image_model(DallE.DALL_E_3)
+
+# Or use Gemini
+agent = agent.set_image_model(Gemini.PRO)
+```
+
+### Available Models
+
+| Class | Models |
+|-------|--------|
+| `DallE` | `DALL_E_3`, `DALL_E_2`, `GPT_IMAGE_1`, `GPT_IMAGE_1_5` |
+| `Gemini` | `PRO`, `FLASH` |
+
+### Generate Images
+
+```python
+from lyzr.image_models import DallE
+
+agent = agent.set_image_model(DallE.DALL_E_3)
+
+response = agent.run("Create an image of a sunset over mountains")
+
+if response.has_files():
+    for artifact in response.files:
+        artifact.download(f"./images/{artifact.name}")
+```
+
+### Check Image Output
+
+```python
+agent.has_image_output() -> bool
+```
+
+### Disable Image Output
+
+```python
+agent.disable_image_output() -> Agent
+```
+
+---
+
+## Evaluation Features
+
+Enable self-reflection, bias checking, and LLM judging.
+
+### Reflection
+
+Self-reflection helps reduce hallucinations by having the agent review its responses.
+
+```python
+agent.enable_reflection() -> Agent
+agent.disable_reflection() -> Agent
+agent.has_reflection() -> bool
+```
+
+```python
+# Enable reflection
+agent = agent.enable_reflection()
+
+# Agent will self-reflect before responding
+response = agent.run("Explain quantum computing")
+```
+
+### Bias Check
+
+Check responses for potential bias.
+
+```python
+agent.enable_bias_check() -> Agent
+agent.disable_bias_check() -> Agent
+agent.has_bias_check() -> bool
+```
+
+```python
+agent = agent.enable_bias_check()
+```
+
+### LLM Judge
+
+Use a third-party LLM to evaluate responses.
+
+```python
+agent.enable_llm_judge() -> Agent
+agent.disable_llm_judge() -> Agent
+agent.has_llm_judge() -> bool
+```
+
+```python
+agent = agent.enable_llm_judge()
+```
+
+### Groundedness
+
+Validate responses against known facts.
+
+```python
+agent.add_groundedness_facts(facts: List[str]) -> Agent
+agent.remove_groundedness() -> Agent
+agent.has_groundedness() -> bool
+```
+
+```python
+agent = agent.add_groundedness_facts([
+    "Company was founded in 2020",
+    "Headquarters is in San Francisco",
+    "CEO is John Smith",
+    "Annual revenue is $50M"
+])
+
+# Agent validates responses against these facts
+response = agent.run("When was the company founded?")
+```
+
+---
+
+## Combined Example
+
+```python
+from lyzr import Studio, PIIType, PIIAction, SecretsAction
+from lyzr.image_models import DallE
+
+studio = Studio(api_key="your-api-key")
+
+# Create base agent
+agent = studio.create_agent(
+    name="Full-Featured Bot",
+    provider="gpt-4o",
+    role="Enterprise assistant",
+    goal="Help with various tasks securely",
+    instructions="Be helpful while maintaining security"
+)
+
+# Add memory
+agent = agent.add_memory(50)
+
+# Add tools
+def search_docs(query: str) -> str:
+    """Search internal documentation"""
+    return f"Results for: {query}"
+
+agent.add_tool(search_docs)
+
+# Add context
+company_ctx = studio.create_context(
+    name="company",
+    value="Acme Corp - Enterprise software"
+)
+agent = agent.add_context(company_ctx)
+
+# Add RAI policy
+policy = studio.create_rai_policy(
+    name="EnterprisePolicy",
+    description="Enterprise security",
+    toxicity_threshold=0.2,
+    secrets_detection=SecretsAction.BLOCK,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK
+    }
+)
+agent = agent.add_rai_policy(policy)
+
+# Enable file and image output
+agent = agent.enable_file_output()
+agent = agent.set_image_model(DallE.DALL_E_3)
+
+# Enable evaluation features
+agent = agent.enable_reflection()
+agent = agent.enable_bias_check()
+
+# Add groundedness facts
+agent = agent.add_groundedness_facts([
+    "Product launched in 2020",
+    "Over 1000 enterprise customers"
+])
+
+# Verify features
+print(f"Memory: {agent.has_memory()}")
+print(f"RAI: {agent.has_rai_policy()}")
+print(f"File output: {agent.has_file_output()}")
+print(f"Image output: {agent.has_image_output()}")
+print(f"Reflection: {agent.has_reflection()}")
+print(f"Bias check: {agent.has_bias_check()}")
+print(f"Groundedness: {agent.has_groundedness()}")
+
+# Use the fully-featured agent
+response = agent.run("Create a product overview document")
+```

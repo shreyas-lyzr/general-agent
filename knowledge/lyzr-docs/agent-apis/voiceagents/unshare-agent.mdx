@@ -1,0 +1,32 @@
+---
+title: "Unshare Agent"
+openapi: post /agents/{agentId}/unshare
+---
+
+Revoke access to a specific Voice Agent for one or more users. 
+
+This endpoint is the counterpart to the Share Agent endpoint. Use it when team members change projects, leave the organization, or no longer need visibility into an agent's configuration.
+
+<Warning>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request. Only users with administrative rights over the agent should perform this action.
+</Warning>
+
+### Required Parameters & Payload
+
+1. **`agentId` (Path Parameter):** The 24-character unique ID of the agent in the URL path.
+2. **Request Body:** A JSON payload identifying who should lose access and who is authorizing it.
+   * **`email_ids`**: An array of strings containing the email addresses of the users whose access is being revoked.
+   * **`admin_user_id`**: The ID of the administrator or owner who is authorizing this unshare action.
+
+### Example Usage
+
+To remove access for two specific users, your request body should look like this:
+
+```json
+{
+  "email_ids": [
+    "contractor1@external.com",
+    "developer3@yourcompany.com"
+  ],
+  "admin_user_id": "admin_98765"
+}

@@ -1,0 +1,31 @@
+---
+title: "Get Agent Details"
+openapi: get /agents/{agentId}
+---
+
+Retrieve the complete configuration profile of a specific Voice Agent. 
+
+This endpoint is particularly useful when you need to audit an agent's current settings, verify its configured LLM/TTS engine, or dynamically load its variables into your own application's UI before starting a live session.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header.
+</Info>
+
+### Required Parameters
+
+To fetch an agent, you must provide its `agentId` directly in the URL path. 
+
+* **`agentId`:** The unique identifier generated when the agent was first created (e.g., `1bca24a70cf2e9fb0c722a35`).
+
+### Understanding the Response
+
+If the agent is successfully located, the API returns a `200 OK` status with the full agent object. 
+
+* **`id`**: Confirms the ID of the fetched agent.
+* **`config`**: The exact configuration dictionary powering the agent. This includes all prompt instructions (`agent_role`, `agent_goal`), configured voice/avatar models, and any connected tools or knowledge bases.
+* **`createdAt` & `updatedAt`**: Timestamps to help you track configuration changes over time.
+
+### Troubleshooting Common Errors
+
+* **`400 Invalid agent id`**: This usually occurs if the ID string is malformed or not the correct length. Ensure there are no trailing spaces in your path.
+* **`404 Agent not found`**: The format of the ID is correct, but no agent exists with this identifier in your organization. Double-check the ID or verify that the agent hasn't been deleted.

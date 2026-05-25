@@ -1,0 +1,28 @@
+---
+title: "Delete Agent"
+openapi: delete /agents/{agentId}
+---
+
+Use this endpoint to permanently remove a saved Voice Agent from your organization. 
+
+<Warning>
+  **Irreversible Action:** Deleting an agent cannot be undone. Any ongoing or future LiveKit sessions attempting to use this `agentId` will fail. Please ensure you are deleting the correct agent.
+</Warning>
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+You must pass the agent's unique identifier in the request URL.
+
+* **`agentId`:** The 24-character string ID of the agent you wish to delete (e.g., `1bca24a70cf2e9fb0c722a35`).
+
+### Understanding the Response
+
+Unlike GET or POST requests, a successful deletion does not return a JSON payload. 
+
+* **`204 No Content`**: This is the success response. It means the server successfully processed the request and the agent has been completely removed.
+* **`400 Invalid agent id`**: The ID provided does not match the expected format. Check for typos or accidental spaces in your URL path.
+* **`404 Agent not found`**: The server could not locate an agent with that ID. It may have already been deleted, or the ID might belong to a different organization.

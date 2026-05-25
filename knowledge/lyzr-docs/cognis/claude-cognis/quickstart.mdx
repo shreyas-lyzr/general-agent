@@ -1,0 +1,64 @@
+---
+title: "Quickstart"
+sidebarTitle: "Quickstart"
+description: "Install Claude-Cognis and give Claude Code persistent memory in under 2 minutes"
+---
+
+## 1. Get Your API Key
+
+Sign up at [studio.lyzr.ai](https://studio.lyzr.ai) and copy your API key.
+
+## 2. Install the Plugin
+
+In Claude Code, run:
+
+```
+/plugin marketplace add Lyzr-Cognis/claude-cognis
+/plugin install claude-cognis
+```
+
+## 3. Set Your API Key
+
+**Option A: Environment variable**
+
+```bash
+export LYZR_API_KEY="your-api-key"
+```
+
+**Option B: Persistent settings file**
+
+Create `~/.cognis-claude/settings.json`:
+
+```json
+{ "apiKey": "your-api-key" }
+```
+
+## That's It
+
+Cognis now works automatically:
+- **Session start** — Loads relevant personal and team memories into context
+- **During session** — Surfaces memories based on what you're working on
+- **Session end** — Summarizes and saves your conversation
+
+## Try It Out
+
+| Command | What it does |
+|---------|-------------|
+| `/claude-cognis:recall` | Resume your last session — loads context from where you left off |
+| `/claude-cognis:memory-stats` | See what Cognis has stored (memory count, session history) |
+| `/claude-cognis:index` | Analyze and index your current codebase for future reference |
+
+You can also use natural language:
+- *"What did I work on yesterday?"* — triggers memory search
+- *"Remember that we decided to use JWT for auth"* — saves to persistent memory
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/cognis/claude-cognis/configuration">
+    Customize settings, per-project config, and privacy controls
+  </Card>
+  <Card title="Features" icon="list" href="/cognis/claude-cognis/features">
+    Full reference for hooks, MCP tools, skills, and commands
+  </Card>
+</CardGroup>

@@ -1,0 +1,267 @@
+---
+title: "Creating Knowledge Bases"
+sidebarTitle: "Creating"
+description: "Create and configure knowledge bases for RAG"
+---
+
+Create knowledge bases using `studio.create_knowledge_base()` with customizable vector stores, embedding models, and configurations.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+kb = studio.create_knowledge_base(
+    name="product_docs",
+    vector_store="qdrant",
+    embedding_model="text-embedding-3-large",
+    llm_model="gpt-4o",
+    description="Product documentation knowledge base"
+)
+
+print(f"Created KB: {kb.id}")
+```
+
+## Function Signature
+
+```python
+studio.create_knowledge_base(
+    name: str,
+    vector_store: str = "qdrant",
+    embedding_model: str = "text-embedding-3-large",
+    llm_model: str = "gpt-4o",
+    description: str = None,
+    **kwargs
+) -> KnowledgeBase
+```
+
+## Parameters
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `name` | str | Yes | - | KB name (lowercase, numbers, underscores only) |
+| `vector_store` | str | No | `"qdrant"` | Vector store provider |
+| `embedding_model` | str | No | `"text-embedding-3-large"` | Embedding model for vectorization |
+| `llm_model` | str | No | `"gpt-4o"` | LLM for query processing |
+| `description` | str | No | None | KB description (max 1000 chars) |
+
+### Name Requirements
+
+The `name` parameter must:
+- Contain only **lowercase letters**, **numbers**, and **underscores**
+- Be 1-100 characters long
+
+```python
+# Valid names
+kb = studio.create_knowledge_base(name="customer_support")
+kb = studio.create_knowledge_base(name="product_docs_2024")
+kb = studio.create_knowledge_base(name="faq_kb")
+
+# Invalid names (will raise ValidationError)
+kb = studio.create_knowledge_base(name="Customer Support")  # Uppercase, spaces
+kb = studio.create_knowledge_base(name="product-docs")      # Hyphens
+```
+
+---
+
+## Vector Store Options
+
+| Provider | Value | Description |
+|----------|-------|-------------|
+| Qdrant | `"qdrant"` | High-performance, default choice |
+| Weaviate | `"weaviate"` | Open-source, GraphQL API |
+| PG Vector | `"pg_vector"` | PostgreSQL extension |
+| Milvus | `"milvus"` | Scalable, cloud-native |
+| Neptune | `"neptune"` | Amazon Neptune |
+
+### Examples
+
+```python
+# Qdrant (default)
+kb = studio.create_knowledge_base(
+    name="docs_qdrant",
+    vector_store="qdrant"
+)
+
+# Weaviate
+kb = studio.create_knowledge_base(
+    name="docs_weaviate",
+    vector_store="weaviate"
+)
+
+# PG Vector (PostgreSQL)
+kb = studio.create_knowledge_base(
+    name="docs_postgres",
+    vector_store="pg_vector"
+)
+
+# Milvus
+kb = studio.create_knowledge_base(
+    name="docs_milvus",
+    vector_store="milvus"
+)
+
+# Amazon Neptune
+kb = studio.create_knowledge_base(
+    name="docs_neptune",
+    vector_store="neptune"
+)
+```
+
+---
+
+## Embedding Models
+
+The embedding model converts text into vectors for similarity search.
+
+```python
+# OpenAI text-embedding-3-large (default, recommended)
+kb = studio.create_knowledge_base(
+    name="my_kb",
+    embedding_model="text-embedding-3-large"
+)
+
+# OpenAI text-embedding-3-small (faster, smaller)
+kb = studio.create_knowledge_base(
+    name="my_kb",
+    embedding_model="text-embedding-3-small"
+)
+```
+
+---
+
+## LLM Model
+
+The LLM model processes queries and generates responses from retrieved content.
+
+```python
+# GPT-4o (default)
+kb = studio.create_knowledge_base(
+    name="my_kb",
+    llm_model="gpt-4o"
+)
+
+# GPT-4o Mini (faster, cheaper)
+kb = studio.create_knowledge_base(
+    name="my_kb",
+    llm_model="gpt-4o-mini"
+)
+```
+
+---
+
+## Examples
+
+### Basic Knowledge Base
+
+```python
+kb = studio.create_knowledge_base(name="support_docs")
+```
+
+### Full Configuration
+
+```python
+kb = studio.create_knowledge_base(
+    name="enterprise_kb",
+    vector_store="qdrant",
+    embedding_model="text-embedding-3-large",
+    llm_model="gpt-4o",
+    description="Enterprise documentation for customer support"
+)
+```
+
+### Multiple Knowledge Bases
+
+```python
+# Product documentation
+product_kb = studio.create_knowledge_base(
+    name="product_docs",
+    description="Product manuals and guides"
+)
+
+# FAQ knowledge base
+faq_kb = studio.create_knowledge_base(
+    name="faq_kb",
+    description="Frequently asked questions"
+)
+
+# Policy documents
+policy_kb = studio.create_knowledge_base(
+    name="policy_docs",
+    description="Company policies and procedures"
+)
+```
+
+---
+
+## Return Value
+
+Returns a `KnowledgeBase` object with methods:
+
+| Method | Description |
+|--------|-------------|
+| `add_pdf()` | Add PDF document |
+| `add_docx()` | Add Word document |
+| `add_txt()` | Add text file |
+| `add_website()` | Add website content |
+| `add_text()` | Add raw text |
+| `query()` | Search the knowledge base |
+| `list_documents()` | List all documents |
+| `delete_documents()` | Delete specific documents |
+| `reset()` | Clear all documents |
+| `update()` | Update configuration |
+| `delete()` | Delete the knowledge base |
+| `with_config()` | Create runtime configuration |
+
+### KnowledgeBase Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | str | Unique identifier |
+| `name` | str | KB name |
+| `collection_name` | str | Vector DB collection name |
+| `description` | str | KB description |
+| `vector_store_provider` | str | Vector store display name |
+| `embedding_model` | str | Embedding model name |
+| `llm_model` | str | LLM model name |
+| `created_at` | str | Creation timestamp |
+| `updated_at` | str | Last update timestamp |
+
+---
+
+## Error Handling
+
+```python
+from lyzr.exceptions import ValidationError, APIError
+
+try:
+    kb = studio.create_knowledge_base(
+        name="Invalid Name!",  # Invalid characters
+        vector_store="unknown_store"  # Unknown provider
+    )
+except ValidationError as e:
+    print(f"Validation error: {e.message}")
+except APIError as e:
+    print(f"API error: {e.message}")
+```
+
+---
+
+## Next Steps
+
+After creating a knowledge base, add documents:
+
+```python
+kb = studio.create_knowledge_base(name="my_kb")
+
+# Add documents
+kb.add_pdf("manual.pdf")
+kb.add_website("https://docs.example.com")
+
+# Use with an agent
+response = agent.run("Question?", knowledge_bases=[kb])
+```
+
+See [Adding Documents](/lyzr-adk/knowledge-bases/adding-documents) for more details.

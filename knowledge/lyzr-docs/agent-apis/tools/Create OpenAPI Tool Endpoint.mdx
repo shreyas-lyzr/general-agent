@@ -1,0 +1,65 @@
+---
+title: "Create OpenAPI Tool Endpoint"
+openapi: post /tools/
+---
+
+### Endpoint
+**POST** `/v3/tools/`
+
+### Description
+Creates a new tool using an OpenAPI schema with custom configurations.
+
+### Authentication
+API Key (`x-api-key`) in the header.
+
+### Request Parameters
+| Parameter             | Type    | Description |
+|-----------------------|---------|-------------|
+| `tool_set_name`       | String  | Name for the tool set (prefixed with `openapi-`). |
+| `openapi_schema`      | Object  | OpenAPI schema for tool definition. |
+| `default_headers`     | Object  | Optional default headers for requests. |
+| `default_query_params`| Object  | Optional default query parameters. |
+| `default_body_params` | Object  | Optional default body parameters. |
+| `endpoint_defaults`   | Object  | Optional endpoint-specific default parameters. |
+| `enhance_descriptions` | Boolean | Whether to enhance descriptions using OpenAI. |
+| `openai_api_key`     | String  | OpenAI API key (if enhancement is enabled). |
+
+### Request Example
+```json
+{
+  "tool_set_name": "hello",
+  "openapi_schema": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Sample API",
+      "version": "1.0.0",
+      "description": "A sample API specification"
+    },
+    "servers": [
+      {
+        "url": "https://api.example.com/v1",
+        "description": "Production server"
+      }
+    ]
+  },
+  "default_headers": {
+    "Content-Type": "application/json"
+  },
+  "enhance_descriptions": true,
+  "openai_api_key": "YOUR_OPENAI_API_KEY"
+}
+```
+
+### Curl Request
+```bash
+curl -X POST "https://agent-prod.studio.lyzr.ai/v3/tools/" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-REDACTED" ^
+-d '{"tool_set_name":"string","openapi_schema":{},"default_headers":{},"default_query_params":{},"default_body_params":{},"endpoint_defaults":{},"enhance_descriptions":false,"openai_api_key":null}'
+```
+
+### Response
+Returns tool IDs for the created tools.
+
+---

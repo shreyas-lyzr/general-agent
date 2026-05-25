@@ -1,0 +1,790 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Docs",
+  "colors": {
+    "primary": "#4C2E1D",
+    "light": "#F7F3ED",
+    "dark": "#171717"
+  },
+  "favicon": "/assets/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Introduction",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "introduction/getting-started/intro",
+              "introduction/getting-started/what-makes-us-unique",
+              "introduction/getting-started/credits",
+              "introduction/getting-started/what-can-you-build-on-lyzr",
+              "introduction/getting-started/quickstarts"
+            ]
+          },
+          {
+            "group": "Using Lyzr",
+            "pages": [
+              "introduction/using-lyzr/components",
+              "introduction/using-lyzr/Howtouse/Studio",
+              "introduction/using-lyzr/Howtouse/API"
+            ]
+          },
+          {
+            "group": "Models",
+            "pages": [
+              "introduction/models/overview",
+              "introduction/models/gpt",
+              "introduction/models/claude",
+              "introduction/models/aws-bedrock",
+              "introduction/models/google",
+              "introduction/models/perplexity",
+              "introduction/models/groq"
+            ]
+          },
+          {
+            "group": "Key Concepts",
+            "pages": [
+              "introduction/key-concepts/Glossary",
+              "introduction/key-concepts/Structured",
+              "introduction/key-concepts/rag",
+              "introduction/key-concepts/responsibleai",
+              "introduction/key-concepts/manager-agent"
+            ]
+          },
+          {
+            "group": "Community",
+            "pages": [
+              "introduction/community/community"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "introduction/support/contact",
+              "introduction/support/faqs"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "introduction/using-lyzr/Howtouse/Studio"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Lyzr Agent Studio",
+        "groups": [
+          {
+            "group": "Build Paths",
+            "pages": [
+              {
+                "group": "Studio Agent (No-code Interface)",
+                "pages": [
+                  "agent-lab/build-paths/agentbuilder/build",
+                  "agent-lab/build-paths/studio/studiopath"
+                ]
+              },
+              {
+                "group": "Lyzr ADK",
+                "pages": [
+                  "agent-lab/build-paths/adkpath"
+                ]
+              },
+              {
+                "group": "Lyzr Developer API (Programmatic Access)",
+                "pages": [
+                  "agent-lab/build-paths/api/apipath"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "agent-lab/agents/introduction"
+            ]
+          },
+          {
+            "group": "Voice Agent",
+            "pages": [
+              "agent-lab/voice agent/voice",
+              "agent-lab/voice agent/monitor",
+              "agent-lab/voice agent/web socket",
+              "agent-lab/voice agent/streaming"
+            ]
+          },
+          {
+            "group": "Knowledge Base",
+            "pages": [
+              "agent-lab/knowledgebase/introduction",
+              "agent-lab/knowledgebase/studiokb",
+              "agent-lab/knowledgebase/studiosem",
+              "agent-lab/knowledgebase/studiokg"
+            ]
+          },
+          {
+            "group": "Agent Features",
+            "pages": [
+              "agent-lab/agent features/memory",
+              "agent-lab/agent features/max",
+              "agent-lab/agent features/Image output",
+              "agent-lab/agent features/web socket",
+              "agent-lab/agent features/structured",
+              "agent-lab/agent features/ppt",
+              "agent-lab/agent features/global context",
+              "agent-lab/agent features/agent events",
+              "agent-lab/agent features/schedulers",
+              "agent-lab/agent features/webhooks"
+            ]
+          },
+          {
+            "group": "Data Connectors",
+            "pages": [
+              "agent-lab/dataconnectors/introduction",
+              "agent-lab/dataconnectors/qdrant",
+              "agent-lab/dataconnectors/weaviate",
+              "agent-lab/dataconnectors/singlestore",
+              "agent-lab/dataconnectors/neo",
+              "agent-lab/dataconnectors/milvus"
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              "agent-lab/tools/tools overview",
+              "agent-lab/tools/Ready Tools",
+              "agent-lab/tools/MCP",
+              {
+                "group": "Available Tools",
+                "pages": [
+                  "agent-lab/tools/ready/gmail",
+                  "agent-lab/tools/ready/slack",
+                  "agent-lab/tools/ready/clickup",
+                  "agent-lab/tools/ready/notion",
+                  "agent-lab/tools/ready/outlook",
+                  "agent-lab/tools/ready/googlecalender",
+                  "agent-lab/tools/ready/googledrive",
+                  "agent-lab/tools/ready/googletasks",
+                  "agent-lab/tools/ready/calendly",
+                  "agent-lab/tools/ready/github",
+                  "agent-lab/tools/ready/discord",
+                  "agent-lab/tools/ready/twitter",
+                  "agent-lab/tools/ready/spotify",
+                  "agent-lab/tools/ready/youtube",
+                  "agent-lab/tools/ready/perplexity"
+                ]
+              },
+              "agent-lab/tools/Custom Tools"
+            ]
+          },
+          {
+            "group": "Monitoring & Testing",
+            "pages": [
+              "agent-lab/agent eval/tracing",
+              "agent-lab/agent eval/agentsimulation"
+            ]
+          },
+          {
+            "group": "Responsible & Safe AI",
+            "pages": [
+              "agent-lab/responsible-safe-ai/Responsible",
+              "agent-lab/responsible-safe-ai/Safe"
+            ]
+          },
+          {
+            "group": "Orchestration",
+            "pages": [
+              "agent-lab/orchestration/orchestration-engine/comparison",
+              {
+                "group": "Manager Agent",
+                "pages": [
+                  "agent-lab/manageragent/studio",
+                  "agent-lab/manageragent/api"
+                ]
+              },
+              {
+                "group": "Workflow",
+                "pages": [
+                  "agent-lab/orchestration/studio",
+                  "agent-lab/orchestration/workflow/intro",
+                  "agent-lab/orchestration/workflow/web-socket",
+                  "agent-lab/orchestration/workflow/node-types",
+                  "agent-lab/orchestration/workflow/enterprise-pattern",
+                  "agent-lab/orchestration/workflow/error-handling"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Lyzr Agents as MCP Servers",
+            "pages": [
+              "agent-lab/lyzr-mcp/introduction",
+              "agent-lab/lyzr-mcp/setup",
+              "agent-lab/lyzr-mcp/usage"
+            ]
+          },
+          {
+            "group": "Account & Team Mangement",
+            "pages": [
+              "agent-lab/plans",
+              "agent-lab/accounts-billing",
+              "agent-lab/team-management",
+              "agent-lab/audit-logs"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "SuperFlow",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "superflow/what-is-superflow",
+              "superflow/quickstart",
+              "superflow/reliability"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "superflow/node-reference",
+              "superflow/expressions",
+              "superflow/triggers-and-schedules",
+              "superflow/running-and-approvals"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Lyzr ADK",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "lyzr-adk/overview",
+              "lyzr-adk/studio"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "lyzr-adk/agents/overview",
+              "lyzr-adk/agents/creating-agents",
+              "lyzr-adk/agents/running-agents",
+              "lyzr-adk/agents/managing-agents",
+              "lyzr-adk/agents/agent-features"
+            ]
+          },
+          {
+            "group": "Knowledge Bases",
+            "pages": [
+              "lyzr-adk/knowledge-bases/overview",
+              "lyzr-adk/knowledge-bases/creating-kb",
+              "lyzr-adk/knowledge-bases/adding-documents",
+              "lyzr-adk/knowledge-bases/querying",
+              "lyzr-adk/knowledge-bases/managing-kb"
+            ]
+          },
+          {
+            "group": "Memory",
+            "pages": [
+              "lyzr-adk/memory/overview",
+              "lyzr-adk/memory/agent-memory"
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              "lyzr-adk/tools/overview",
+              "lyzr-adk/tools/creating-tools",
+              "lyzr-adk/tools/tool-execution"
+            ]
+          },
+          {
+            "group": "Contexts",
+            "pages": [
+              "lyzr-adk/contexts/contexts"
+            ]
+          },
+          {
+            "group": "RAI Guardrails",
+            "pages": [
+              "lyzr-adk/rai-guardrails/overview",
+              "lyzr-adk/rai-guardrails/creating-policies",
+              "lyzr-adk/rai-guardrails/rai-features"
+            ]
+          },
+          {
+            "group": "Structured Outputs",
+            "pages": [
+              "lyzr-adk/structured-outputs/structured-outputs"
+            ]
+          },
+          {
+            "group": "File & Image Output",
+            "pages": [
+              "lyzr-adk/file-image-output/overview",
+              "lyzr-adk/file-image-output/file-generation",
+              "lyzr-adk/file-image-output/image-generation"
+            ]
+          },
+          {
+            "group": "Streaming",
+            "pages": [
+              "lyzr-adk/streaming/streaming"
+            ]
+          },
+          {
+            "group": "Reference",
+            "pages": [
+              "lyzr-adk/providers/providers",
+              "lyzr-adk/responses/responses",
+              "lyzr-adk/exceptions/exceptions"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Lyzr Cognis",
+        "groups": [
+          {
+            "group": "Cognis",
+            "pages": [
+              "cognis/overview",
+              "cognis/quickstart",
+              "cognis/configuration",
+              "cognis/comparison"
+            ]
+          },
+          {
+            "group": "Memory Operations",
+            "pages": [
+              "cognis/add-memories",
+              "cognis/search-memories",
+              "cognis/get-memories",
+              "cognis/update-memories",
+              "cognis/delete-memories",
+              "cognis/api-reference",
+              {
+                "group": "Features",
+                "pages": [
+                  "cognis/features/hybrid-search",
+                  "cognis/features/memory-categories",
+                  "cognis/features/session-management",
+                  "cognis/features/context",
+                  "cognis/features/async-client",
+                  "cognis/features/summaries",
+                  "cognis/features/cross-session",
+                  "cognis/features/retrieval-strategies",
+                  "cognis/features/get-messages",
+                  "cognis/features/delete-session"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Claude-Cognis",
+            "pages": [
+              "cognis/claude-cognis/overview",
+              "cognis/claude-cognis/quickstart",
+              "cognis/claude-cognis/configuration",
+              "cognis/claude-cognis/features"
+            ]
+          },
+          {
+            "group": "Cognis Cookbooks",
+            "pages": [
+              "cognis/cookbooks/overview",
+              "cognis/cookbooks/getting-started",
+              "cognis/cookbooks/cognis-crewai",
+              "cognis/cookbooks/cognis-agno",
+              "cognis/cookbooks/cognis-langgraph",
+              "cognis/cookbooks/cognis-langchain"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Docs",
+        "groups": [
+          {
+            "group": "Agent",
+            "pages": [
+              "agent-apis/agents/agent events",
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/agents/Introduction",
+                  "agent-apis/agents/Get Agent By API Key",
+                  "agent-apis/agents/Create Agent",
+                  "agent-apis/agents/Chat",
+                  "agent-apis/agents/MultimodalChat",
+                  "agent-apis/agents/Stream Chat",
+                  "agent-apis/agents/Get Agent Version",
+                  "agent-apis/agents/List Agent Version",
+                  "agent-apis/agents/Get Agent by ID Endpoint",
+                  "agent-apis/agents/Update Agent Endpoint",
+                  "agent-apis/agents/Delete Agent Endpoint"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Voice Agent",
+            "pages": [
+              {
+                "group": "Configs API Endpoints",
+                "pages": [
+                  "agent-apis/voiceagents/list-realtime-options",
+                  "agent-apis/voiceagents/list-pipeline-options",
+                  "agent-apis/voiceagents/list-tts-voice-providers",
+                  "agent-apis/voiceagents/list-provider-voices",
+                  "agent-apis/voiceagents/stream-voice-preview"
+                ]
+              },
+              {
+                "group": "Agent API Endpoints",
+                "pages": [
+                  "agent-apis/voiceagents/create-agent",
+                  "agent-apis/voiceagents/get-agent-details",
+                  "agent-apis/voiceagents/delete-agent",
+                  "agent-apis/voiceagents/list-agents",
+                  "agent-apis/voiceagents/list-agent-versions",
+                  "agent-apis/voiceagents/activate-agent-version",
+                  "agent-apis/voiceagents/share-agent",
+                  "agent-apis/voiceagents/list-agent-shares",
+                  "agent-apis/voiceagents/unshare-agent"
+                ]
+              },
+              {
+                "group": "Transcripts API Endpoints",
+                "pages": [
+                  "agent-apis/voiceagents/get-transcript",
+                  "agent-apis/voiceagents/list-transcripts-by-agent",
+                  "agent-apis/voiceagents/list-transcripts",
+                  "agent-apis/voiceagents/stream-transcript-audio",
+                  "agent-apis/voiceagents/get-agent-stats"
+                ]
+              },
+              {
+                "group": "Trace API Endpoints",
+                "pages": [
+                  "agent-apis/voiceagents/get-trace-details",
+                  "agent-apis/voiceagents/list-session-traces"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Sessions",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/sessions/get-session-history-endpoint",
+                  "agent-apis/sessions/get-session-payload-endpoint",
+                  "agent-apis/sessions/get-sessions-endpoint-by-agent-endpoint",
+                  "agent-apis/sessions/get-published-sessions-endpoint-by-agent-endpoint",
+                  "agent-apis/sessions/get-session-full-conversation-endpoint",
+                  "agent-apis/sessions/get-session-history-endpoint-by-agent"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Knowledgebase",
+            "pages": [
+              {
+                "group": "Parse API Endpoints",
+                "pages": [
+                  "agent-apis/knowledgebase/Parse Website",
+                  "agent-apis/knowledgebase/Parse CSV",
+                  "agent-apis/knowledgebase/Parse Text",
+                  "agent-apis/knowledgebase/Parse PDF"
+                ]
+              },
+              {
+                "group": "Train API Endpoints",
+                "pages": [
+                  "agent-apis/knowledgebase/trainrag",
+                  "agent-apis/knowledgebase/trainragdocx",
+                  "agent-apis/knowledgebase/trainragtxt",
+                  "agent-apis/knowledgebase/Train Website",
+                  "agent-apis/knowledgebase/Train Txt"
+                ]
+              },
+              {
+                "group": "RAG API Endpoints",
+                "pages": [
+                  "agent-apis/knowledgebase/Create RAG",
+                  "agent-apis/knowledgebase/Get RAG Config",
+                  "agent-apis/knowledgebase/Update RAG Config",
+                  "agent-apis/knowledgebase/Delete RAG Config",
+                  "agent-apis/knowledgebase/Get Configs By User",
+                  "agent-apis/knowledgebase/Get Rag Docs",
+                  "agent-apis/knowledgebase/Reset RAG",
+                  "agent-apis/knowledgebase/Retrieve RAG"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Semantic Model",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/knowledgebase/create-documentation-agent",
+                  "agent-apis/knowledgebase/get-documentation-agents",
+                  "agent-apis/knowledgebase/connect-database-to-rag-endpoint",
+                  "agent-apis/knowledgebase/save-documentation-endpoint",
+                  "agent-apis/knowledgebase/save-documentation-task-endpoint",
+                  "agent-apis/knowledgebase/fetch-table-names",
+                  "agent-apis/knowledgebase/preview-table-data"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Knowledge Graph",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/knowledgebase/trainkg",
+                  "agent-apis/knowledgebase/trainkgweb",
+                  "agent-apis/knowledgebase/Train Neo-4j Task",
+                  "agent-apis/knowledgebase/Train Neo-4j Text",
+                  "agent-apis/knowledgebase/Get Knowledge Graph",
+                  "agent-apis/knowledgebase/Deduplicate Entities"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/tools/Get User Tools",
+                  "agent-apis/tools/Create OpenAPI Tool Endpoint",
+                  "agent-apis/tools/Get OpenAPI Tool Info",
+                  "agent-apis/tools/Execute OpenAPI Tool",
+                  "agent-apis/tools/Get Tool Endpoint",
+                  "agent-apis/tools/Update Tool Endpoint",
+                  "agent-apis/tools/Delete Tool Endpoint",
+                  "agent-apis/tools/Toggle Tool",
+                  "agent-apis/tools/Create Tool Credential Endpoint",
+                  "agent-apis/tools/Update Tool Credential Endpoint",
+                  "agent-apis/tools/Delete Tool Credential Endpoint"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Responsible & Safe AI",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/responsible-safe-ai/Create RAI Policy",
+                  "agent-apis/responsible-safe-ai/Get User Policies",
+                  "agent-apis/responsible-safe-ai/Prompt Injection",
+                  "agent-apis/responsible-safe-ai/Toxicity"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Orchestration (Manager Agent)",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/orchestration/api"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Orchestration (Workflow)",
+            "pages": [
+              {
+                "group": "API Endpoints",
+                "pages": [
+                  "agent-apis/orchestration/create-workflow-endpoint",
+                  "agent-apis/orchestration/get-workflow-endpoint",
+                  "agent-apis/orchestration/list-workflows-endpoint",
+                  "agent-apis/orchestration/update-workflow-endpoint",
+                  "agent-apis/orchestration/execute-workflow-endpoint",
+                  "agent-apis/orchestration/delete-workflow-endpoint"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Cookbooks",
+        "groups": [
+          {
+            "group": "Cookbooks",
+            "pages": [
+              "cookbooks/Choosing Model",
+              "cookbooks/lyzr-nanda",
+              "cookbooks/software-manager",
+              "cookbooks/Data Analyst Agent",
+              "cookbooks/Product Support Chatbot",
+              "cookbooks/voice-agent",
+              "cookbooks/Responsible AI",
+              "cookbooks/Tooling",
+              {
+                "group": "External Integrations",
+                "pages": [
+                  "cookbooks/ms_teams_channel",
+                  "cookbooks/slack_channel",
+                  "cookbooks/telegram_channel"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Visit Studio - Agent Builder",
+          "href": "https://studio.lyzr.ai",
+          "icon": "Rocket"
+        },
+        {
+          "anchor": "Join Discord",
+          "href": "https://discord.gg/uaHrgJQxAv",
+          "icon": "Discord"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/assets/logo/LyzrLight.svg",
+    "dark": "/assets/logo/LyzrDark.svg"
+  },
+  "api": {
+    "playground": {
+      "display": "interactive",
+      "proxy": false
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Lyzr",
+        "href": "https://lyzr.ai"
+      },
+      {
+        "label": "Blog",
+        "href": "https://lyzr.ai/blog/"
+      },
+      {
+        "label": "Industries",
+        "href": "https://lyzr.ai/industries/"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Book Demo",
+      "href": "https://www.lyzr.ai/book-demo"
+    }
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/lyzrai",
+      "github": "https://github.com/LyzrCore/lyzr",
+      "linkedin": "https://www.linkedin.com/company/lyzr-platform"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/cookbooks/voice agent",
+      "destination": "/cookbooks/voice-agent"
+    },
+    {
+      "source": "/cookbooks/cognis-crewai",
+      "destination": "/cookbooks/cognis/cognis-crewai"
+    },
+    {
+      "source": "/cookbooks/cognis-agno",
+      "destination": "/cookbooks/cognis/cognis-agno"
+    },
+    {
+      "source": "/cookbooks/cognis-langchain",
+      "destination": "/cookbooks/cognis/cognis-langchain"
+    },
+    {
+      "source": "/cookbooks/cognis-langgraph",
+      "destination": "/cookbooks/cognis/cognis-langgraph"
+    },
+    {
+      "source": "/open-source/overview",
+      "destination": "/cognis/overview"
+    },
+    {
+      "source": "/open-source/cognis/overview",
+      "destination": "/cognis/open-source/overview"
+    },
+    {
+      "source": "/open-source/cognis/quickstart",
+      "destination": "/cognis/open-source/quickstart"
+    },
+    {
+      "source": "/open-source/cognis/configuration",
+      "destination": "/cognis/open-source/configuration"
+    },
+    {
+      "source": "/open-source/cognis/hosted-vs-oss",
+      "destination": "/cognis/comparison"
+    },
+    {
+      "source": "/open-source/cognis/api-reference",
+      "destination": "/cognis/open-source/api-reference"
+    },
+    {
+      "source": "/open-source/claude-cognis/overview",
+      "destination": "/cognis/claude-cognis/overview"
+    },
+    {
+      "source": "/open-source/claude-cognis/quickstart",
+      "destination": "/cognis/claude-cognis/quickstart"
+    },
+    {
+      "source": "/lyzr-adk/memory/cognis-overview",
+      "destination": "/cognis/hosted/overview"
+    },
+    {
+      "source": "/lyzr-adk/memory/add-memories",
+      "destination": "/cognis/hosted/add-memories"
+    },
+    {
+      "source": "/lyzr-adk/memory/search-memories",
+      "destination": "/cognis/hosted/search-memories"
+    },
+    {
+      "source": "/lyzr-adk/memory/get-memories",
+      "destination": "/cognis/hosted/get-memories"
+    },
+    {
+      "source": "/lyzr-adk/memory/update-memories",
+      "destination": "/cognis/hosted/update-memories"
+    },
+    {
+      "source": "/lyzr-adk/memory/delete-memories",
+      "destination": "/cognis/hosted/delete-memories"
+    }
+  ]
+}

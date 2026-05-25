@@ -1,0 +1,29 @@
+---
+title: Lyzr Automata
+sidebarTitle: "Introduction"
+description: 'A low-code multi-agent automation framework'
+---
+
+Lyzr Automata is a sophisticated multi-agent automation framework designed to keep things simple, with a focus on workflow efficiency and effectiveness. It enables the creation of multiple nodes with agents, tasks, and functions and integrates these nodes to build a pipeline. The agents and tasks can run independently and complete the provided instructions, thus entering a stable state.
+
+![Lyzr Automata](../assets/images/lyzr-automata/chart.png)
+
+## What constitutes the simplest agent automation framework?
+| Automata Constructs | Description                                                                                                      | Types & Examples                           |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Agents              | Agents have a persona and are designed to perform a task.                                                        | Prompt, Code, Integration, RAG, Chat, Data |
+| Tasks               | Tasks are detailed set of instructions that the agent takes up and completes.                                    | Eg: Summarize a meeting transcript         |
+| Functions           | Functions (or tools) are non-logic components designed to perform a repetitive or simple function.               | Eg: Perplexity Search Tool                 |
+| Nodes               | Nodes are the states in the Automata pipeline. A node always has an Agent, a Task, and, if required, a function. |                                            |
+| Pipelines           | A pipeline is a set of nodes strung together to execute a workflow.                                              |                                            |
+| Models              | Models are LLMs called by the Nodes with an agent that requires an LLM.                                          | Prebuilt Models: OpenAI, Perplexity        |
+
+## How does Lyzr Automata compare with competitors?
+
+**LangGraph**: LangGraph by Langchain is a good tool to build workflow automation. But the complexity of Langchain and LCEL introduces a steep learning curve.
+
+**AutoGen**: AutoGen is the OG of agents. The AutoGen framework was the first to introduce multi-agent interaction. However, due to its complexity, AutoGen has issues around debugging.
+
+**CrewAI** is an open-source library built on Langchain. It is probably better than AutoGen in usability, but the underlying Langchain framework makes it heavy.
+
+**Agents Dev**: A UI-powered code approach to building agents. Agents Dev can only handle sequential workflows and no DAG.

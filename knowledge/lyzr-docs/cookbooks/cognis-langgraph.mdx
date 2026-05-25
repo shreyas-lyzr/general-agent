@@ -1,0 +1,292 @@
+---
+title: "Lyzr Cognis + LangGraph"
+sidebarTitle: "Cognis + LangGraph"
+description: "Add persistent memory to LangGraph agents using Lyzr Cognis"
+---
+
+## Overview
+
+[LangGraph](https://langchain-ai.github.io/langgraph/) lets you build stateful, multi-step agent workflows as directed graphs. By integrating [Lyzr Cognis](https://docs.lyzr.ai) as dedicated graph nodes, you can add persistent memory retrieval and storage as first-class steps in your agent pipeline.
+
+**What you'll build:** A support chatbot with a `retrieve → respond → store` graph that automatically recalls customer history and persists new interactions.
+
+**Why Cognis + LangGraph?** LangGraph excels at defining explicit control flow for agents. Cognis memory nodes slot naturally into this graph — giving you fine-grained control over when and how memory is retrieved, used, and stored.
+
+## Prerequisites
+
+```bash
+pip install lyzr-adk langgraph langchain-openai
+```
+
+Set your environment variables:
+
+```bash
+export LYZR_API_KEY="your-lyzr-api-key"
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+## Quick Start
+
+```python
+from langgraph.graph import StateGraph, END
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis()
+
+def retrieve(state):
+    results = cog.search(query=state["user_input"], owner_id=state["owner_id"], limit=5)
+    return {"memory_context": "\n".join(f"- {r.content}" for r in results)}
+
+def respond(state):
+    # Your LLM call here, using state["memory_context"]
+    return {"response": "..."}
+
+def store(state):
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=state["user_input"]),
+            CognisMessage(role="assistant", content=state["response"]),
+        ],
+        owner_id=state["owner_id"],
+    )
+    return {}
+
+graph = StateGraph(dict)
+graph.add_node("retrieve", retrieve)
+graph.add_node("respond", respond)
+graph.add_node("store", store)
+graph.set_entry_point("retrieve")
+graph.add_edge("retrieve", "respond")
+graph.add_edge("respond", "store")
+graph.add_edge("store", END)
+app = graph.compile()
+```
+
+## Complete Example: Support Chatbot
+
+### Step 1: Define the State
+
+```python
+import operator
+from typing import Annotated, List, TypedDict
+
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_openai import ChatOpenAI
+from langgraph.graph import StateGraph, END
+
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis()
+llm = ChatOpenAI(model="gpt-4o")
+
+
+class ChatState(TypedDict):
+    messages: Annotated[List, operator.add]  # accumulated conversation
+    user_input: str
+    owner_id: str
+    session_id: str
+    memory_context: str
+    response: str
+```
+
+### Step 2: Define Graph Nodes
+
+```python
+def retrieve_context(state: ChatState) -> dict:
+    """Search Cognis for relevant customer history."""
+    results = cog.search(
+        query=state["user_input"],
+        owner_id=state["owner_id"],
+        limit=5,
+    )
+    if results:
+        context = "\n".join(f"- {r.content}" for r in results)
+    else:
+        context = "No previous interactions found."
+    return {"memory_context": context}
+
+
+def generate_response(state: ChatState) -> dict:
+    """Generate a response using the LLM with memory context."""
+    system_msg = (
+        "You are a helpful product support agent. Use the customer's "
+        "history to provide personalized assistance.\n\n"
+        f"Customer history:\n{state['memory_context']}"
+    )
+    messages = [
+        SystemMessage(content=system_msg),
+        *state["messages"],
+        HumanMessage(content=state["user_input"]),
+    ]
+    result = llm.invoke(messages)
+    return {
+        "response": result.content,
+        "messages": [
+            HumanMessage(content=state["user_input"]),
+            AIMessage(content=result.content),
+        ],
+    }
+
+
+def store_memory(state: ChatState) -> dict:
+    """Persist the interaction in Cognis."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=state["user_input"]),
+            CognisMessage(role="assistant", content=state["response"]),
+        ],
+        owner_id=state["owner_id"],
+        session_id=state["session_id"],
+        agent_id="support_langgraph",
+    )
+    return {}
+```
+
+### Step 3: Add Conditional Edges
+
+Skip storing trivial messages (greetings, single-word replies):
+
+```python
+def should_store(state: ChatState) -> str:
+    """Route: store meaningful messages, skip trivial ones."""
+    trivial = {"hi", "hello", "hey", "thanks", "bye", "ok"}
+    if state["user_input"].strip().lower() in trivial:
+        return "skip"
+    return "store"
+```
+
+### Step 4: Build and Compile the Graph
+
+```python
+graph = StateGraph(ChatState)
+
+graph.add_node("retrieve", retrieve_context)
+graph.add_node("respond", generate_response)
+graph.add_node("store", store_memory)
+
+graph.set_entry_point("retrieve")
+graph.add_edge("retrieve", "respond")
+graph.add_conditional_edges("respond", should_store, {
+    "store": "store",
+    "skip": END,
+})
+graph.add_edge("store", END)
+
+app = graph.compile()
+```
+
+### Step 5: Run Conversations
+
+```python
+# First interaction
+result = app.invoke({
+    "messages": [],
+    "user_input": "I'm having trouble with my Pro subscription.",
+    "owner_id": "customer_42",
+    "session_id": "support_session_1",
+    "memory_context": "",
+    "response": "",
+})
+print(result["response"])
+
+# Second interaction — memory recalls the subscription issue
+result = app.invoke({
+    "messages": result["messages"],
+    "user_input": "I tried logging out and back in but it still doesn't work.",
+    "owner_id": "customer_42",
+    "session_id": "support_session_1",
+    "memory_context": "",
+    "response": "",
+})
+print(result["response"])
+
+# New session — Cognis remembers the customer
+result = app.invoke({
+    "messages": [],
+    "user_input": "Hi, I had issues last time. Is everything fixed?",
+    "owner_id": "customer_42",
+    "session_id": "support_session_2",
+    "memory_context": "",
+    "response": "",
+})
+print(result["response"])  # Will reference the previous Pro subscription issue
+```
+
+## Cognis Methods Reference
+
+| Method | Description | When to Use |
+|--------|-------------|-------------|
+| `cog.add(messages, owner_id, session_id, agent_id)` | Store conversation messages | After each interaction |
+| `cog.search(query, owner_id, limit)` | Semantic search over memories | Before generating a response |
+| `cog.get(owner_id, limit)` | List all memories for a user | Displaying user profile |
+| `cog.context(current_messages, owner_id, session_id)` | Server-assembled context | When you want Cognis to manage context assembly |
+| `cog.delete(memory_id, owner_id)` | Remove a specific memory | User requests data deletion |
+| `cog.update(memory_id, content)` | Update a memory's content | Correcting stored information |
+
+## Advanced Patterns
+
+### Using `cog.context()` in a Graph Node
+
+Replace the manual `search()` + format step with Cognis server-side context assembly:
+
+```python
+def retrieve_context_v2(state: ChatState) -> dict:
+    """Use cog.context() for server-assembled context."""
+    context = cog.context(
+        current_messages=[
+            CognisMessage(role="user", content=state["user_input"]),
+        ],
+        owner_id=state["owner_id"],
+        session_id=state["session_id"],
+        enable_long_term_memory=True,
+        cross_session=True,
+    )
+    return {"memory_context": str(context)}
+```
+
+### Async Graph Nodes
+
+Use Cognis async methods for non-blocking graph execution:
+
+```python
+async def retrieve_context_async(state: ChatState) -> dict:
+    results = await cog.asearch(
+        query=state["user_input"],
+        owner_id=state["owner_id"],
+        limit=5,
+    )
+    context = "\n".join(f"- {r.content}" for r in results) if results else ""
+    return {"memory_context": context}
+
+
+async def store_memory_async(state: ChatState) -> dict:
+    await cog.aadd(
+        messages=[
+            CognisMessage(role="user", content=state["user_input"]),
+            CognisMessage(role="assistant", content=state["response"]),
+        ],
+        owner_id=state["owner_id"],
+        session_id=state["session_id"],
+    )
+    return {}
+```
+
+### Cross-Session Memory
+
+Enable cross-session search to recall interactions from previous support tickets:
+
+```python
+results = cog.search(
+    query="subscription issues",
+    owner_id="customer_42",
+    cross_session=True,
+    limit=10,
+)
+```
+
+## Next Steps
+
+- [Cognis + LangChain](/cookbooks/cognis-langchain) — Simpler LCEL chain integration
+- [Cognis + CrewAI](/cookbooks/cognis-crewai) — Add memory to multi-agent crews
+- [Cognis + Agno](/cookbooks/cognis-agno) — Tool-based memory for autonomous agents
+- [Lyzr ADK Memory Documentation](/lyzr-adk/memory/overview) — Full Cognis API reference

@@ -1,0 +1,50 @@
+---
+title: Knowledge Base
+sidebarTitle: "Knowledge Base"
+description: 'Using Knowledge Bases in Lyzr'
+---
+
+Knowledge bases are a comprehensive repository of information made up of several different kinds of content. All of this information allows businesses to efficiently manage, access, and leverage diverse forms of data to enhance the effectiveness of the agent.
+
+For each knowledge base, you need to choose a vector store. Vector stores are specialized data stores that enable indexing and retrieving information based on vector representations. These vectors, called embeddings, capture the semantic meaning of data that has been embedded.
+
+## Setting Up a Knowledge Base
+
+1. Click Knowledge Base from the sidebar menu → Create New.
+
+2. Enter a description and select a Vector Store from the following:
+
+   1. Qdrant
+   2. Weaviate
+   3. PG-Vector (to be configured)
+   4. Singlestore&#x9;
+
+3. Select a LLM embedding model from the following:
+
+   1. Text-embedding-3-small
+   2. Text-embedding-3-large
+   3. Text-embedding-ada-002
+
+4. Ensure that "Use as Semantic Model" is turned off.
+
+5. Click Save to create the knowledge base.
+
+6. Click Upload to add files, a Website URL, or Raw Text for document-based retrieval.
+
+7. Label and structure files for optimized search.
+
+## Supported File Types
+
+* PDFs, .docx, .txt – Supported document formats.
+* Website URL – Allows URL input with configurable crawl depth and maximum number of pages to scrape.
+* Raw Text – Reads and processes plain text input.
+
+A maximum of 5 files can be uploaded at once.
+
+## Examples
+
+1. **Customer Support & FAQs**: Answer customer queries using a knowledge base of FAQs, policy documents, and support articles. Example: A Banking FAQ Agent that retrieves loan terms and policy details.
+
+2. **HR & Employee Assistance:** Help employees get quick answers on company policies, benefits, and leave policies. Example: A Company Handbook Agent that pulls details from an HR knowledge base.
+
+3. **Personalized Learning Assistants**: Answer student queries by pulling from educational resources and textbooks. Example: A Math Help Agent that retrieves formulas and solutions from a pre-uploaded curriculum.

@@ -1,0 +1,100 @@
+---
+title: "Enterprise Integration Patterns"
+sidebarTitle: Usecases
+---
+
+## Enterprise Integration Patterns
+
+**What These Are:** Common workflow patterns that solve real business problems. Use these as templates for your own integrations.
+
+### Pattern 1: Customer Support Automation
+
+**Business Problem:** Manual customer support is slow, inconsistent, and doesn't scale.
+
+**How This Workflow Solves It:** Automatically analyzes customer messages, routes to appropriate systems, and provides instant responses.
+
+```
+Customer Query → AI Classification → Route to Agent → Update CRM → Send Response
+       ↓              ↓                  ↓             ↓           ↓
+   WebSocket      WebSocket          WebSocket     WebSocket   WebSocket
+```
+
+**What Each Step Does:**
+
+1. **Customer Query** (Input Node): Receives customer message, email, priority
+2. **AI Classification** (Agent Node): AI analyzes sentiment, urgency, category
+3. **Route to Agent** (Conditional Node): Routes based on complexity/urgency
+4. **Update CRM** (API Node): Creates ticket in Salesforce/ServiceNow
+5. **Send Response** (API Node): Sends email/Slack notification to customer
+
+**Business Value:**
+
+- Instant response to customers (not hours later)
+- Consistent categorization and routing
+- Automatic CRM updates
+- Escalation of urgent issues
+
+**Enterprise Result:** 80% faster response time, improved customer satisfaction, reduced support team workload.
+
+---
+
+### Pattern 2: Data Processing Pipeline
+
+**Business Problem:** Manual data validation and processing is error-prone and time-consuming.
+
+**How This Workflow Solves It:** Automated validation, AI-powered analysis, and quality control with human oversight.
+
+```
+Data Input → Validation → AI Analysis → Quality Check → Export Results
+     ↓          ↓            ↓             ↓              ↓
+  Monitor    Monitor      Monitor       Monitor        Monitor
+```
+
+**What Each Step Does:**
+
+1. **Data Input** (Input Node): Receives CSV/JSON data files
+2. **Validation** (Agent Node): AI checks data quality, format, completeness
+3. **AI Analysis** (Agent Node): AI extracts insights, patterns, anomalies
+4. **Quality Check** (Conditional Node): Routes based on confidence score
+5. **Export Results** (API Node): Saves to database/sends to downstream systems
+
+**Business Value:**
+
+- Automated data quality control
+- Consistent analysis methodology
+- Human review only when needed
+- Real-time processing status
+
+**Enterprise Result:** 90% reduction in manual data review, consistent quality standards, faster time-to-insights.
+
+---
+
+### Pattern 3: Approval Workflow
+
+**Business Problem:** Manual approval processes are bottlenecks that slow down business operations.
+
+**How This Workflow Solves It:** Automated content generation with human oversight only where required.
+
+```
+Content Generation → Manager Review → Legal Review → Publish
+       ↓                 ↓              ↓             ↓
+    Auto              Human          Human         Auto
+```
+
+**What Each Step Does:**
+
+1. **Content Generation** (Agent Node): AI creates content based on templates/data
+2. **Manager Review** (Approval Node): Manager approves/rejects via email/Slack
+3. **Legal Review** (Approval Node): Legal team reviews for compliance
+4. **Publish** (API Node): Automatically publishes to website/sends to customers
+
+**Business Value:**
+
+- Faster content creation
+- Consistent quality and tone
+- Proper approvals maintained
+- Audit trail for compliance
+
+**Enterprise Result:** 70% faster content publishing, maintained quality control, full compliance tracking.
+
+---

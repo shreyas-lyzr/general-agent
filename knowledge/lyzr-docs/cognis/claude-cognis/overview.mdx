@@ -1,0 +1,50 @@
+---
+title: "Claude-Cognis"
+sidebarTitle: "Overview"
+description: "Persistent memory plugin for Claude Code — remembers your work across sessions"
+---
+
+<Frame>
+  <img src="/assets/images/cognis/claude-cognis-banner.svg" alt="Cognis for Claude Code" />
+</Frame>
+
+Claude-Cognis is a Claude Code plugin that gives Claude persistent memory across coding sessions. Relevant context loads automatically when you start a session, memories surface as you work, and your session is saved when you stop.
+
+## Features
+
+- **Automatic context** — Relevant memories load at session start. Claude already knows what you've been working on
+- **Mid-session memory** — As you work, relevant memories surface based on what you're asking about
+- **Session capture** — Sessions are automatically summarized and saved with tool-aware compression
+- **Session recall** — Pick up where you left off with `/claude-cognis:recall`
+- **Personal + team memory** — Your memories are private by default; team knowledge is shared across everyone on the same repo
+- **Semantic search** — Find past decisions, patterns, and context using natural language
+- **Codebase indexing** — Store your project's architecture so Claude understands your codebase from message one
+- **Smart context assembly** — Short-term and long-term memory intelligently combined for the most relevant context
+
+## Architecture
+
+<Frame>
+  <img src="/assets/images/cognis/claude-cognis-architecture.svg" alt="Claude-Cognis Architecture" />
+</Frame>
+
+Claude-Cognis integrates with Claude Code through three mechanisms:
+- **Hooks** — Background automation (session start/stop, prompt enrichment)
+- **MCP Tools** — 8 tools for direct memory operations
+- **Skills** — Natural language triggers for search and save
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/cognis/claude-cognis/quickstart">
+    Install and configure in under 2 minutes
+  </Card>
+  <Card title="Configuration" icon="gear" href="/cognis/claude-cognis/configuration">
+    Global settings, per-project config, environment variables
+  </Card>
+  <Card title="Features" icon="list" href="/cognis/claude-cognis/features">
+    Hooks, MCP tools, skills, and commands reference
+  </Card>
+  <Card title="Cognis Python SDK" icon="python" href="/cognis/quickstart">
+    Open-source Python memory library for your own agents
+  </Card>
+</CardGroup>

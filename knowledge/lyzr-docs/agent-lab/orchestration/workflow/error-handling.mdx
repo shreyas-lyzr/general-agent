@@ -1,0 +1,49 @@
+---
+title: "Error Handling & Tips"
+sidebarTitle: Errors & Tips
+---
+
+## Error Handling
+
+### Error Response Format
+
+```json
+{
+  "status": "failed",
+  "error": {
+    "type": "NodeExecutionError",
+    "message": "Agent API timeout",
+    "node": "ai_processor", 
+    "code": "TIMEOUT"
+  },
+  "partial_results": {
+    "user_input": {"data": "..."}
+  }
+}
+```
+
+### Common Errors & Solutions
+
+| Error            | Cause               | Solution                       |
+| ---------------- | ------------------- | ------------------------------ |
+| `TIMEOUT`        | Node took too long  | Retry or increase timeout      |
+| `INVALID_CONFIG` | Wrong parameters    | Check node configuration       |
+| `API_RATE_LIMIT` | Too many requests   | Implement backoff              |
+| `AUTH_ERROR`     | Invalid credentials | Check API keys                 |
+| `NETWORK_ERROR`  | Connection issues   | Retry with exponential backoff |
+
+---
+
+## 💡 Pro Tips
+
+1. **Use Agent Studio UI**: Always design workflows visually first, then export JSON for API use
+2. **Start Simple**: Begin with 2-3 node workflows, add complexity gradually
+3. **Test Everything**: Use staging environment that mirrors production
+4. **Monitor Early**: Set up WebSocket monitoring from day one
+5. **Copy-Paste JSON**: Don't manually write workflow_data - get it from the Studio
+6. **Document Workflows**: Keep track of what each workflow does
+7. **Version Control**: Treat workflow definitions as code
+8. **Error Recovery**: Always plan for failure scenarios
+9. **Performance**: Monitor execution times and optimize bottlenecks
+
+---

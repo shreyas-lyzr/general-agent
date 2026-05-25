@@ -1,0 +1,48 @@
+---
+title: "Get Agents By API Key"
+openapi: get /agents/
+---
+
+### **Endpoint:**
+**GET** `/v3/agents/`
+
+### **Request Headers:**
+| Header        | Type   | Required | Description             |
+|--------------|--------|----------|-------------------------|
+| x-api-key    | String | Yes      | API key for authentication |
+| accept       | String | Yes      | Expected response format (application/json) |
+
+### **Request Example (cURL):**
+```sh
+curl -X GET "https://agent-prod.studio.lyzr.ai/v3/agents/" ^
+     -H "accept: application/json" ^
+     -H "x-api-key: sk-default-XXXXXXX"
+```
+
+### **Request Example (Python):**
+```python
+import requests
+
+url = "https://agent-prod.studio.lyzr.ai/v3/agents/"
+headers = {
+    "accept": "application/json",
+    "x-api-key": "sk-default-XXXXXXX"
+}
+
+response = requests.get(url, headers=headers)
+print(response.status_code)
+print(response.json())  # Print response data
+```
+
+### **Response:**
+```json
+{
+  "agents": [
+    {
+      "id": "12345",
+      "name": "Finance Advisor",
+      "description": "Personalized Financial Planning Assistant"
+    }
+  ]
+}
+```

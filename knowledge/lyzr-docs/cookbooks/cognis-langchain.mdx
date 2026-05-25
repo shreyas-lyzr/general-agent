@@ -1,0 +1,230 @@
+---
+title: "Lyzr Cognis + LangChain"
+sidebarTitle: "Cognis + LangChain"
+description: "Add persistent memory to LangChain agents using Lyzr Cognis"
+---
+
+## Overview
+
+[Lyzr Cognis](https://docs.lyzr.ai) is a managed memory service that gives your AI agents the ability to remember past interactions. By integrating Cognis with [LangChain](https://python.langchain.com/), you can build conversational chains that recall user preferences, past topics, and context across sessions — without managing your own vector store.
+
+**What you'll build:** A personal tutor chatbot that remembers each student's learning style, progress, and preferences across sessions using an LCEL chain with Cognis memory.
+
+**Why Cognis + LangChain?** LangChain provides powerful chain composition (LCEL) and prompt management. Cognis adds persistent, searchable memory that survives beyond a single session or chain invocation — giving your agents true long-term memory.
+
+## Prerequisites
+
+```bash
+pip install lyzr-adk langchain langchain-openai
+```
+
+Set your environment variables:
+
+```bash
+export LYZR_API_KEY="your-lyzr-api-key"
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+## Quick Start
+
+```python
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis()
+llm = ChatOpenAI(model="gpt-4o")
+
+# Search for relevant memories
+results = cog.search(query="user preferences", owner_id="user_123", limit=5)
+memory_text = "\n".join(f"- {r.content}" for r in results)
+
+# Build chain with memory context
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant."),
+    MessagesPlaceholder(variable_name="memory_context"),
+    ("human", "{input}"),
+])
+chain = prompt | llm
+
+# Invoke with memory
+response = chain.invoke({
+    "input": "What should I cook tonight?",
+    "memory_context": [SystemMessage(content=f"User memories:\n{memory_text}")] if results else [],
+})
+
+# Store the interaction
+cog.add(
+    messages=[
+        CognisMessage(role="user", content="What should I cook tonight?"),
+        CognisMessage(role="assistant", content=response.content),
+    ],
+    owner_id="user_123",
+)
+```
+
+## Complete Example: Personal Tutor Chatbot
+
+### Step 1: Initialize Clients
+
+```python
+import os
+from typing import List
+
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_openai import ChatOpenAI
+
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis(api_key=os.getenv("LYZR_API_KEY"))
+llm = ChatOpenAI(model="gpt-4o")
+```
+
+### Step 2: Create the Prompt Template
+
+Use `MessagesPlaceholder` to inject Cognis memories alongside the chat history:
+
+```python
+prompt = ChatPromptTemplate.from_messages([
+    ("system",
+     "You are a helpful personal tutor. Adapt your teaching style based on "
+     "what you know about the student from past interactions."),
+    MessagesPlaceholder(variable_name="memory_context"),
+    MessagesPlaceholder(variable_name="chat_history"),
+    ("human", "{input}"),
+])
+
+chain = prompt | llm
+```
+
+### Step 3: Build the Chat Function
+
+```python
+def retrieve_memory_context(query: str, owner_id: str) -> List[SystemMessage]:
+    """Search Cognis for relevant memories and format as LangChain messages."""
+    results = cog.search(query=query, owner_id=owner_id, limit=5)
+    if not results:
+        return []
+    formatted = "\n".join(f"- {r.content}" for r in results)
+    return [SystemMessage(content=f"Relevant memories about this student:\n{formatted}")]
+
+
+def store_interaction(user_input: str, response: str, owner_id: str, session_id: str):
+    """Persist the conversation turn in Cognis."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=user_input),
+            CognisMessage(role="assistant", content=response),
+        ],
+        owner_id=owner_id,
+        session_id=session_id,
+    )
+
+
+def chat(user_input: str, chat_history: list, owner_id: str, session_id: str) -> str:
+    # 1. Retrieve relevant memories
+    memory_msgs = retrieve_memory_context(user_input, owner_id)
+
+    # 2. Generate response via LCEL chain
+    result = chain.invoke({
+        "input": user_input,
+        "memory_context": memory_msgs,
+        "chat_history": chat_history,
+    })
+
+    # 3. Store interaction in Cognis
+    store_interaction(user_input, result.content, owner_id, session_id)
+
+    return result.content
+```
+
+### Step 4: Run Multi-Turn Conversation
+
+```python
+chat_history = []
+
+# Turn 1: Student introduces themselves
+response = chat(
+    "I'm a visual learner and prefer examples over theory.",
+    chat_history, owner_id="student_001", session_id="session_1",
+)
+chat_history.append(HumanMessage(content="I'm a visual learner..."))
+chat_history.append(AIMessage(content=response))
+
+# Turn 2: Ask about a topic
+response = chat(
+    "Teach me about list comprehensions in Python.",
+    chat_history, owner_id="student_001", session_id="session_1",
+)
+
+# New session — memory recalls preferences automatically
+response = chat(
+    "I'd like to learn about decorators today.",
+    chat_history=[],  # fresh session
+    owner_id="student_001", session_id="session_2",
+)
+# The tutor will adapt to the visual learning style from memory
+```
+
+## Cognis Methods Reference
+
+| Method | Description | When to Use |
+|--------|-------------|-------------|
+| `cog.add(messages, owner_id, session_id, agent_id)` | Store conversation messages | After each interaction |
+| `cog.search(query, owner_id, limit)` | Semantic search over memories | Before generating a response |
+| `cog.get(owner_id, limit)` | List all memories for a user | Displaying user profile |
+| `cog.context(current_messages, owner_id, session_id)` | Server-assembled context | When you want Cognis to manage context assembly |
+| `cog.delete(memory_id, owner_id)` | Remove a specific memory | User requests data deletion |
+| `cog.update(memory_id, content)` | Update a memory's content | Correcting stored information |
+
+## Advanced Patterns
+
+### Using `cog.context()` for Server-Side Assembly
+
+Instead of manually searching and formatting memories, let Cognis assemble the full context:
+
+```python
+context = cog.context(
+    current_messages=[
+        CognisMessage(role="user", content="Teach me about decorators"),
+    ],
+    owner_id="student_001",
+    session_id="session_2",
+    max_short_term_messages=20,
+    enable_long_term_memory=True,
+    cross_session=True,
+)
+# context contains assembled messages with short-term + long-term memory
+```
+
+### Async Support
+
+All Cognis methods have async variants for use with LangChain's async chains:
+
+```python
+# Use aadd, asearch, acontext for async
+results = await cog.asearch(query="python topics", owner_id="student_001", limit=5)
+await cog.aadd(messages=[...], owner_id="student_001")
+```
+
+### Cross-Session Memory
+
+Search across all sessions for a user:
+
+```python
+results = cog.search(
+    query="learning progress",
+    owner_id="student_001",
+    cross_session=True,
+    limit=10,
+)
+```
+
+## Next Steps
+
+- [Cognis + LangGraph](/cookbooks/cognis-langgraph) — Use memory as graph nodes in a stateful workflow
+- [Cognis + CrewAI](/cookbooks/cognis-crewai) — Add memory to multi-agent crews
+- [Cognis + Agno](/cookbooks/cognis-agno) — Tool-based memory for autonomous agents
+- [Lyzr ADK Memory Documentation](/lyzr-adk/memory/overview) — Full Cognis API reference

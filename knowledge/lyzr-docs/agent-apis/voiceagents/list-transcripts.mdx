@@ -1,0 +1,43 @@
+---
+openapi: get /transcripts
+---
+
+Retrieve a detailed, paginated list of past conversational sessions. 
+
+The Transcripts endpoint is one of the most powerful tools in the API. It allows you to fetch full chat histories, audit agent performance, extract metadata (like call duration and message counts), and review post-call session reports.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header. You will only receive transcripts that fall under your authorized organizational or user scope.
+</Info>
+
+### Powerful Filtering Capabilities
+
+To analyze specific slices of your data, you can combine multiple query parameters.
+
+#### 1. Entity Filters
+Target specific conversations using IDs:
+* **`agentId`**: View all conversations handled by a specific Voice Agent. Great for evaluating how well a newly deployed agent is performing.
+* **`sessionId`**: Retrieve the exact transcript for a single, known conversation.
+* **`orgId`**: Filter calls belonging to a specific organization (useful for multi-tenant applications).
+
+#### 2. Time-Based Filters
+Extract records from specific date ranges using ISO-8601 formatted timestamps (e.g., `2026-03-01T00:00:00Z`):
+* **`from`**: The start date/time.
+* **`to`**: The end date/time.
+
+#### 3. Sorting & Pagination
+Manage large datasets effectively:
+* **`limit` & `offset`**: Standard pagination controls. 
+* **`sort`**: Order your results chronologically (`asc`) or see the most recent calls first (`desc`).
+
+### Understanding the Response Payload
+
+A successful request returns a paginated list containing an `items` array. Each item in this array represents a single session and contains rich metadata.
+
+**Key fields in a Transcript object:**
+* **`chatHistory`**: An array of message objects representing the turn-by-turn conversation between the human user and the Voice Agent.
+* **`sessionReport`**: An intelligent, auto-generated summary or structured data extraction from the call (if configured on your agent).
+* **Call Metrics**:
+  * **`durationMs`**: Total length of the session in milliseconds.
+  * **`messageCount`**: Total number of turns/messages exchanged.
+  * **`closeReason`**: Why the session ended (e.g., user disconnected, timeout, or agent ended the call).

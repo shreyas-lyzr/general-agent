@@ -1,0 +1,54 @@
+---
+title: "Create Single Task Agent"
+openapi: post /agents/template/single-task
+---
+
+
+
+### **Endpoint:**
+**POST** `/v3/agents/template/single-task`
+
+### **Description:**
+Creates a new agent specifically for a single-task operation.
+
+### **Request Headers:**
+| Header        | Type   | Required | Description             |
+|--------------|--------|----------|-------------------------|
+| x-api-key    | String | Yes      | API key for authentication |
+| accept       | String | Yes      | Expected response format (application/json) |
+| content-type | String | Yes      | Format of request body (application/json) |
+
+### **Request Body:**
+```json
+{
+  "name": "string",
+  "description": "string",
+  "agent_role": "string",
+  "agent_instructions": "string",
+  "examples": "string",
+  "features": [
+    {
+      "type": "string",
+      "config": {},
+      "priority": 0
+    }
+  ],
+  "tool": "string",
+  "tool_usage_description": "string",
+  "llm_credential_id": "string",
+  "response_format": {},
+  "provider_id": "string",
+  "model": "string",
+  "top_p": 0,
+  "temperature": 0
+}
+```
+
+### **Request Example (cURL):**
+```sh
+curl -X POST "https://agent-prod.studio.lyzr.ai/v3/agents/template/single-task" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-XXXXXXX" ^
+-d "{\"name\":\"string\",\"description\":\"string\",\"agent_role\":\"string\",\"agent_instructions\":\"string\",\"examples\":\"string\",\"features\":[{\"type\":\"string\",\"config\":{},\"priority\":0}],\"tool\":\"string\",\"tool_usage_description\":\"string\",\"llm_credential_id\":\"string\",\"response_format\":{},\"provider_id\":\"string\",\"model\":\"string\",\"top_p\":0,\"temperature\":0}"
+```

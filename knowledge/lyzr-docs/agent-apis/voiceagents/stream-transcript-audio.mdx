@@ -1,0 +1,27 @@
+---
+title: "Stream Transcript Audio"
+openapi: get /transcripts/{sessionId}/audio
+---
+
+Retrieve the actual voice recording of a completed session as an `.ogg` audio file. 
+
+While the standard transcript endpoints provide the text version of a conversation, this endpoint allows you to play back the actual human and agent voices. This is incredibly valuable for QA, sentiment analysis, or embedding a playback widget directly into your own application's dashboard.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+<Warning>
+  **Prerequisites for Audio Playback:** Audio will only be available if `audio_recording_enabled: true` was set in your Agent's configuration when the session took place. Furthermore, your organization must have storage configured to retain these files.
+</Warning>
+
+### Required Parameters
+
+* **`sessionId` (Path Parameter):** The unique UUID of the completed LiveKit session.
+
+### Handling the Response
+
+Unlike most of our API endpoints which return JSON, a successful `200 OK` response from this endpoint returns a **binary byte stream** with a `Content-Type` of `audio/ogg`. 
+
+**Example usage in a web application:**
+Because it returns raw audio, you can often plug this endpoint directly into an HTML `<audio>` tag within your authenticated frontend, or fetch it via a standard GET request and convert it into a Blob for playback.

@@ -1,0 +1,24 @@
+---
+title: "Get RAI Policies"
+openapi: get /v1/rai/policies
+---
+
+### Endpoint
+**GET** `/v1/rai/policies`
+
+### Description
+Fetches all RAI policies for the authenticated user.
+
+### Base URL
+`https://rai-prod.studio.lyzr.ai`
+
+### Authentication
+API Key (`x-api-key`) must be included in the header.
+
+### Curl Request
+```bash
+curl -X GET "https://rai-prod.studio.lyzr.ai/v1/rai/policies" \
+-H "accept: application/json" \
+-H "x-api-key: sk-default-REDACTED"
+
+```

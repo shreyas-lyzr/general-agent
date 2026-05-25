@@ -1,0 +1,121 @@
+---
+title: 
+sidebarTitle: "Responsible and Safe AI"
+---
+
+# Lyzr API Responsible & Safe AI Documentation
+
+## 1. Introduction
+Ensuring **Responsible & Safe AI** is critical in AI development. Lyzr provides configurable features that help in mitigating biases, preventing toxicity, ensuring factual correctness, and guarding against prompt injection attacks.
+
+## 2. Responsible AI Features
+
+### a) Context Relevance
+- Ensures AI responses are **aligned with the input query**.
+- Prevents AI from drifting away from the intended topic.
+
+### b) Reflection
+- The AI evaluates its own response before generating a final answer.
+- Improves logical consistency.
+
+### c) Groundedness
+- Ensures AI responses are based on **verifiable facts**.
+- Helps maintain accuracy and prevent hallucinations.
+- **Configuration:**
+  - Define key facts AI should adhere to.
+  - Example:
+    ```json
+    {
+      "type": "GROUNDEDNESS",
+      "config": {
+        "facts": [
+          "Medical advice should be from verified sources.",
+          "AI should not provide emergency medical help."
+        ]
+      }
+    }
+    ```
+
+## 3. Safe AI Features
+
+### a) Fairness & Bias
+- Detects and mitigates biased responses.
+- Ensures inclusivity and ethical AI behavior.
+
+### b) Toxicity Check
+- Filters out harmful, offensive, or inappropriate language.
+- Helps maintain user-friendly interactions.
+
+### c) Prompt Injection Protection
+- Prevents users from **manipulating AI** into behaving undesirably.
+- **Configuration:**
+  - Set a **threshold** (0-1) to determine sensitivity.
+  - Example:
+    ```json
+    {
+      "type": "PROMPT_INJECTION",
+      "config": {
+        "threshold": 1
+      }
+    }
+    ```
+
+## 4. Example Implementation
+Here is a JSON configuration example for a **Healthcare AI Assistant** implementing Responsible & Safe AI features:
+
+```json
+{
+  "name": "Healthcare AI Assistant",
+  "description": "An AI-powered assistant providing medical insights while ensuring responsible and safe AI usage.",
+  "agent_role": "You are a trusted medical assistant providing evidence-based health insights.",
+  "agent_instructions": "Use medical knowledge and reference trusted sources to provide accurate and responsible healthcare information. Avoid diagnosing or prescribing medications.",
+  "examples": null,
+  "features": [
+    {
+      "type": "CONTEXT_RELEVANCE",
+      "priority": 0,
+      "config": {}
+    },
+    {
+      "type": "SRS",
+      "config": {
+        "max_tries": 2,
+        "modules": {
+          "reflection": true,
+          "bias": true,
+          "toxicity": true
+        }
+      },
+      "priority": 0
+    },
+    {
+      "type": "GROUNDEDNESS",
+      "config": {
+        "facts": [
+          "All medical advice should be referenced from verified healthcare sources.",
+          "The assistant should not provide emergency medical advice."
+        ]
+      },
+      "priority": 0
+    },
+    {
+      "type": "PROMPT_INJECTION",
+      "config": {
+        "threshold": 1
+      },
+      "priority": 0
+    }
+  ],
+  "tool": null,
+  "tool_usage_description": null,
+  "provider_id": "OpenAI",
+  "temperature": "0.7",
+  "top_p": "0.9",
+  "llm_credential_id": "lyzr_openai",
+  "model": "gpt-4o-mini"
+}
+```
+
+## 5. Conclusion
+By leveraging Lyzr’s **Responsible & Safe AI** features, developers can create AI agents that are ethical, factual, and free from harmful content. Proper configuration of these features enhances **trustworthiness and usability** while preventing AI manipulation and bias-related issues.
+

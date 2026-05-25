@@ -1,0 +1,261 @@
+---
+title: Chat Agent API Documentation
+---
+
+This document explains how to interact with the Lyzr Chatbot API using Python scripts. The examples use the `requests` library to perform HTTP requests to the API endpoints.
+
+### Prerequisites
+
+1. Ensure that the Docker container is running.
+2. Install the `requests` library if you haven't already:
+    
+    ```bash
+    pip install requests
+    
+    ```
+    
+
+### Base URL
+
+Update the `BASE_URL` variable to match the server's actual address if necessary.
+
+```python
+BASE_URL = "<http://localhost:8000>"
+
+```
+
+### Creating a Chatbot Configuration
+
+### Sample Configuration
+
+```json
+{
+    "exclude_hidden": true,
+    "filename_as_id": true,
+    "recursive": true,
+    "required_exts": [
+        "string"
+    ],
+    "system_prompt": "",
+    "query_wrapper_prompt": "",
+    "embed_model": {
+        "embedding_type": "OpenAIEmbedding",
+        "model ": "text-embedding-ada-002",
+        "api_key": "sk-"
+    },
+    "llm_params": {
+        "model": "gpt-4-1106-preview",
+        "api_key": "sk-",
+        "stream": true
+    },
+    "vector_store_params": {
+        "vector_store_type": "WeaviateVectorStore",
+        "url": "https://<domain>.weaviate.network",
+        "api_key": "",
+        "index_name": "LyzrCore"
+    },
+    "service_context_params": {},
+    "chat_engine_params": {
+        "chat_mode": "context",
+        "similarity_top_k": 50,
+        "system_prompt": "You are a helpful Assistant"
+    },
+    "retriever_params": {
+        "retriever_type": "Simple"
+    }
+}
+
+```
+
+To create a new chatbot configuration, send a POST request to the `/create/config` endpoint.
+
+```python
+import requests
+import json
+
+# Define the configuration
+config = {
+    "exclude_hidden": True,
+    "filename_as_id": True,
+    "recursive": True,
+    "required_exts": ["string"],
+    "system_prompt": "",
+    "query_wrapper_prompt": "",
+    "embed_model": {
+        "embedding_type": "OpenAIEmbedding",
+        "model": "text-embedding-ada-002",
+        "api_key": "sk-"
+    },
+    "llm_params": {
+        "model": "gpt-4-1106-preview",
+        "api_key": "sk-",
+        "stream": True
+    },
+    "vector_store_params": {
+        "vector_store_type": "WeaviateVectorStore",
+        "url": "https://<domain>.weaviate.network",
+        "api_key": "",
+        "index_name": "LyzrCore"
+    },
+    "service_context_params": {},
+    "chat_engine_params": {
+        "chat_mode": "context",
+        "similarity_top_k": 50,
+        "system_prompt": "You are a helpful Assistant"
+    },
+    "retriever_params": {
+        "retriever_type": "Simple"
+    }
+}
+
+# Send the request
+response = requests.post(f"{BASE_URL}/create/config", json=config)
+response.raise_for_status()
+config_id = response.json()
+print(f"Config ID: {config_id}")
+
+```
+
+### Creating a Chatbot from PDF Files
+
+To create a new chatbot instance from multiple PDF files, send a POST request to the `/create/from-pdf/{config_id}` endpoint.
+
+```python
+import requests
+
+# Define the PDF files to upload
+files = [
+    ('files', ('test1.pdf', open('path/to/test1.pdf', 'rb'), 'application/pdf')),
+    ('files', ('test2.pdf', open('path/to/test2.pdf', 'rb'), 'application/pdf'))
+]
+
+# Send the request
+response = requests.post(f"{BASE_URL}/create/from-pdf/{config_id}", files=files)
+response.raise_for_status()
+chatbot_info = response.json()
+print(f"Chatbot Info: {chatbot_info}")
+
+```
+
+### Checking Chatbot Status
+
+To check if a chatbot instance exists, send a GET request to the `/check/{chatbot_id}` endpoint.
+
+```python
+import requests
+
+# Send the request
+response = requests.get(f"{BASE_URL}/check/{chatbot_info['chatbot_id']}")
+response.raise_for_status()
+status = response.json()
+print(f"Chatbot Status: {status}")
+
+```
+
+### Chatting with the Chatbot
+
+To interact with a specific chatbot instance, send a POST request to the `/chat/{chatbot_id}` endpoint with a message and chat history.
+
+```python
+import requests
+
+# Define the chat history
+chat_history = [
+    {"role": "user", "content": "Hello, how are you?"}
+]
+
+# Define the data to send
+data = {
+    "message": "Tell me about the PDFs",
+    "chat_history": chat_history
+}
+
+# Send the request
+response = requests.post(f"{BASE_URL}/chat/{chatbot_info['chatbot_id']}", json=data)
+response.raise_for_status()
+chat_response = response.json()
+print(f"Chat Response: {chat_response}")
+
+```
+
+### Health Check
+
+To perform a health check on the API, send a GET request to the `/health` endpoint.
+
+```python
+import requests
+
+# Send the request
+response = requests.get(f"{BASE_URL}/health")
+response.raise_for_status()
+health_status = response.json()
+print(f"Health Status: {health_status}")
+
+```
+
+### Recreating a Chatbot with New Configuration
+
+To recreate a chatbot instance with a new configuration, send a POST request to the `/recreate/{chatbot_id}/{config_id}` endpoint with the new configuration.
+
+```python
+import requests
+import json
+
+# Define the new configuration
+new_config = {
+    "name": "UpdatedChatBot",
+    "description": "This is an updated test chatbot",
+    "version": "1.1"
+}
+
+# Send the request
+response = requests.post(f"{BASE_URL}/recreate/{chatbot_info['chatbot_id']}/{config_id}", json=new_config)
+response.raise_for_status()
+recreate_status = response.json()
+print(f"Recreate Status: {recreate_status}")
+
+```
+
+### Creating a Chatbot from DOCX Files
+
+To create a new chatbot instance from multiple DOCX files, send a POST request to the `/create/from-docx/{config_id}` endpoint.
+
+```python
+import requests
+
+# Define the DOCX files to upload
+files = [
+    ('files', ('test1.docx', open('path/to/test1.docx', 'rb'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')),
+    ('files', ('test2.docx', open('path/to/test2.docx', 'rb'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'))
+]
+
+# Send the request
+response = requests.post(f"{BASE_URL}/create/from-docx/{config_id}", files=files)
+response.raise_for_status()
+chatbot_info = response.json()
+print(f"Chatbot Info: {chatbot_info}")
+
+```
+
+### Creating a Chatbot from Text Files
+
+To create a new chatbot instance from multiple text files, send a POST request to the `/create/from-text/{config_id}` endpoint.
+
+```python
+import requests
+
+# Define the text files to upload
+files = [
+    ('files', ('test1.txt', open('path/to/test1.txt', 'rb'), 'text/plain')),
+    ('files', ('test2.txt', open('path/to/test2.txt', 'rb'), 'text/plain'))
+]
+
+# Send the request
+response = requests.post(f"{BASE_URL}/create/from-text/{config_id}", files=files)
+response.raise_for_status()
+chatbot_info = response.json()
+print(f"Chatbot Info: {chatbot_info}")
+
+```
+
+This documentation provides step-by-step instructions on how to interact with the Chatbot API using Python scripts. Adjust the `BASE_URL` as necessary to match the server's actual address.

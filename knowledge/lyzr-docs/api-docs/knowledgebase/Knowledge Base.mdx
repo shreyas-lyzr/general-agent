@@ -1,0 +1,144 @@
+---
+title: Knowledge Base
+---
+# Lyzr API Knowledge Base Documentation
+
+## 1. Introduction
+The **Knowledge Base (KB)** in Lyzr enables AI agents to retrieve and utilize structured and unstructured information effectively. By leveraging KB, agents can answer queries with accurate, contextually relevant responses. 
+
+The KB can store information in various formats, such as text, documents, and links, and it supports different retrieval mechanisms to enhance accuracy.
+
+## 2. Creating a Knowledge Base
+Lyzr provides an interface to create and manage Knowledge Bases through the **Lyzr Studio**. You can either create a new KB or use an existing one by configuring it in the agent.
+
+### Steps to Create a Knowledge Base in Lyzr Studio:
+1. Navigate to **Lyzr Studio**.
+2. Go to the **Knowledge Base** section.
+3. Click on **Create Knowledge Base**.
+4. Provide a **KB name** and configure necessary settings.
+5. Upload documents, text, or links to populate the KB.
+6. Set retrieval type, chunking size, and indexing method.
+
+## 3. Configuring a Knowledge Base in an AI Agent
+Once the KB is created, it must be linked to an agent. Below is the JSON configuration for integrating a KB into an agent:
+
+```json
+{
+  "type": "KNOWLEDGE_BASE",
+  "priority": 0,
+  "config": {
+    "lyzr_rag": {
+      "base_url": "https://rag-prod.studio.lyzr.ai",
+      "rag_id": "YOUR_RAG_ID",
+      "rag_name": "YOUR_KB_NAME",
+      "params": {
+        "top_k": 10,
+        "retrieval_type": "basic",
+        "score_threshold": 0
+      }
+    }
+  },
+  "top_p": 0.9
+}
+```
+
+### Explanation of Parameters:
+- **`rag_id`**: Unique identifier for the Knowledge Base.
+- **`rag_name`**: Name of the Knowledge Base.
+- **`top_k`**: Number of top results to retrieve.
+- **`retrieval_type`**: Defines how retrieval works.
+  - `basic`: Standard retrieval.
+  - `MMR`: Maximal Marginal Relevance for diverse results.
+  - `HyDE`: Hypothetical Document Embeddings for generating more contextually rich responses.
+- **`score_threshold`**: Defines the minimum relevance score for retrieved documents.
+- **`top_p`**: Controls nucleus sampling, limiting less probable results.
+
+## 4. Available Retrieval Types
+Lyzr supports different retrieval mechanisms, allowing flexible and optimized data fetching.
+
+### a) **Basic Retrieval**
+- Standard retrieval mechanism.
+- Uses vector similarity matching to fetch relevant documents.
+- Suitable for general-purpose knowledge extraction.
+
+### b) **MMR (Maximal Marginal Relevance)**
+- Ensures diverse and relevant results.
+- Reduces redundancy by balancing relevance and diversity.
+- Best for cases where varied perspectives are needed.
+
+### c) **HyDE (Hypothetical Document Embeddings)**
+- Generates synthetic documents to enhance query relevance.
+- Improves retrieval quality for open-ended queries.
+- Useful when existing data lacks explicit context.
+
+## 5. Chunking Strategy
+Chunking is a critical part of KB management that helps break large documents into manageable parts. 
+
+### Parameters:
+- **Number of chunks**: Determines how documents are split.
+- **Chunk size**: Controls the granularity of document segmentation.
+- **Overlap settings**: Helps maintain context continuity between chunks.
+
+## 6. Example Implementation
+Here’s a complete agent configuration utilizing a Knowledge Base:
+
+```json
+{
+  "name": "Legal AI Assistant",
+  "description": "An AI-powered legal assistant that provides legal insights using a knowledge base.",
+  "agent_role": "",
+  "agent_instructions": "",
+  "examples": null,
+  "features": [
+    {
+      "type": "KNOWLEDGE_BASE",
+      "priority": 0,
+      "config": {
+        "lyzr_rag": {
+          "base_url": "https://rag-prod.studio.lyzr.ai",
+          "rag_id": "67e3ad466f89848eb19c1fba",
+          "rag_name": "legalla8h",
+          "params": {
+            "top_k": 5,
+            "retrieval_type": "MMR",
+            "score_threshold": 0.7
+          }
+        }
+      }
+    }
+  ],
+  "tool": null,
+  "tool_usage_description": null,
+  "provider_id": "OpenAI",
+  "temperature": "0.7",
+  "top_p": "0.9",
+  "llm_credential_id": "lyzr_openai",
+  "model": "gpt-4o-mini"
+}
+```
+
+### Explanation:
+- The AI assistant uses **LegalDocsKB** to answer legal queries.
+- **MMR retrieval** ensures diverse and accurate legal references.
+- The **score threshold** is set to `0.7` to filter out irrelevant documents.
+- **top_k = 5** ensures that the agent retrieves the five most relevant results.
+- **top_p = 0.9** ensures controlled response diversity.
+
+## 7. Managing Knowledge Base Content
+Once a KB is created, it can be managed in **Lyzr Studio**:
+
+### a) Adding Content:
+- Upload new documents.
+- Add text-based knowledge entries.
+- Provide URLs to fetch external information.
+
+### b) Deleting Content:
+- Remove outdated or incorrect entries.
+- Adjust knowledge base structure as needed.
+
+### c) Updating Retrieval Parameters:
+- Modify retrieval type for better accuracy.
+- Adjust chunking strategy based on document complexity.
+
+## 8. Conclusion
+Using the **Knowledge Base** in Lyzr, AI agents can effectively retrieve structured information, improving the accuracy and reliability of responses. By configuring the **retrieval type**, **chunking settings**, **top-k parameters**, and **top_p**, users can optimize AI performance based on specific application needs.

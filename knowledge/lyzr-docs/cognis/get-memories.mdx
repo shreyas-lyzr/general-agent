@@ -1,0 +1,199 @@
+---
+title: "Get Memories"
+sidebarTitle: "Get Memories"
+description: "Retrieve and list all stored memories from Cognis"
+---
+
+Cognis provides two methods for retrieving memories: `get()` lists all memories with pagination support, and `get_memory()` fetches a single memory by its ID.
+
+## List All Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis
+
+    cog = Cognis(api_key="sk-your-api-key")
+
+    memories = cog.get(owner_id="user_alice")
+
+    for memory in memories:
+        print(f"{memory.id}: {memory.content}")
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    resp = m.get_all()
+
+    for mem in resp["memories"]:
+        print(f"{mem['memory_id']}: {mem['content']}")
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+### `get()` Method Signature
+
+```python
+cog.get(
+    owner_id: str | None = None,
+    agent_id: str | None = None,
+    session_id: str | None = None,
+    limit: int | None = None,
+    offset: int | None = None,
+    include_historical: bool | None = None,
+    cross_session: bool | None = None,
+) -> CognisMemoryList
+```
+
+### `get()` Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner_id` | `str` | No* | Filter by owner/user identifier. |
+| `agent_id` | `str` | No* | Filter by agent identifier. |
+| `session_id` | `str` | No* | Filter by session identifier. |
+| `limit` | `int` | No | Maximum number of memories to return. |
+| `offset` | `int` | No | Number of records to skip (for pagination). |
+| `include_historical` | `bool` | No | Include previous versions of updated memories. |
+| `cross_session` | `bool` | No | Retrieve memories across all sessions. |
+
+<Note>
+*At least one of `owner_id`, `agent_id`, or `session_id` must be provided.
+</Note>
+
+### `CognisMemoryList` Response
+
+`get()` returns a `CognisMemoryList` object that is iterable and supports `len()`:
+
+```python
+memories = cog.get(owner_id="user_alice")
+
+print(len(memories))       # Number of memories
+print(memories.total)      # Total count
+print(memories[0].content) # Access by index
+
+for memory in memories:
+    print(memory.content)
+```
+
+### `CognisMemoryRecord` Fields
+
+Each memory in the list is a `CognisMemoryRecord` with the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | `str` | Memory record ID. |
+| `content` | `str` | The memory content. |
+| `owner_id` | `str \| None` | Owner identifier. |
+| `agent_id` | `str \| None` | Agent identifier. |
+| `session_id` | `str \| None` | Session identifier. |
+| `status` | `str \| None` | Memory status. |
+| `is_current` | `bool \| None` | Whether this is the current version. |
+| `version` | `int \| None` | Version number. |
+| `salience_score` | `float \| None` | Importance score. |
+| `decay_score` | `float \| None` | Temporal decay score. |
+| `metadata` | `Dict \| None` | Additional metadata. |
+| `created_at` | `str \| None` | Creation timestamp. |
+| `updated_at` | `str \| None` | Last update timestamp. |
+
+## Get a Single Memory
+
+Retrieve a specific memory by its ID:
+
+```python
+memory = cog.get_memory(memory_id="mem_abc123")
+
+print(memory.id)
+print(memory.content)
+print(memory.created_at)
+```
+
+### `get_memory()` Method Signature
+
+```python
+cog.get_memory(
+    memory_id: str,
+    owner_id: str | None = None,
+) -> CognisMemoryRecord
+```
+
+### `get_memory()` Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `memory_id` | `str` | Yes | The ID of the memory to retrieve. |
+| `owner_id` | `str` | No | Owner identifier for additional scoping. |
+
+## Pagination
+
+Use `limit` and `offset` to paginate through large result sets:
+
+```python
+# First page
+page1 = cog.get(owner_id="user_alice", limit=10, offset=0)
+
+# Second page
+page2 = cog.get(owner_id="user_alice", limit=10, offset=10)
+
+# Process all pages
+offset = 0
+page_size = 20
+while True:
+    page = cog.get(owner_id="user_alice", limit=page_size, offset=offset)
+    if len(page) == 0:
+        break
+    for memory in page:
+        print(memory.content)
+    offset += page_size
+```
+
+## Include Historical Versions
+
+Retrieve previous versions of memories that have been updated:
+
+```python
+memories = cog.get(
+    owner_id="user_alice",
+    include_historical=True,
+)
+
+for memory in memories:
+    print(f"v{memory.version}: {memory.content} (current: {memory.is_current})")
+```
+
+## Cross-Session Retrieval
+
+Retrieve memories from all sessions for an owner:
+
+```python
+all_memories = cog.get(
+    owner_id="user_alice",
+    cross_session=True,
+)
+```
+
+## Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        # List all memories
+        memories = await cog.aget(owner_id="user_alice")
+        for memory in memories:
+            print(memory.content)
+
+        # Get a specific memory
+        memory = await cog.aget_memory(memory_id="mem_abc123")
+        print(memory.content)
+
+asyncio.run(main())
+```

@@ -1,0 +1,120 @@
+---
+title: "Running, monitoring & approvals"
+sidebarTitle: "Running & approvals"
+---
+
+Once your SuperFlow is built, the editor gives you everything you need to test it, watch it execute, debug failures, manage in-flight runs, handle human approvals, and share the SuperFlow with teammates. This page walks through each.
+
+## Testing a run
+
+Click the **Run** button in the top-right toolbar of the editor (tooltip *Run SuperFlow*) to open the execution panel.
+
+In the panel:
+
+- Type your input in the **Simple mode** text area, or toggle to **JSON mode** (link at the top right of the input area) to send a structured payload as raw JSON.
+- If your Trigger expects a file (for example, with a document node downstream), the input area shows a drag-and-drop file picker and the run button reads **Upload & Run**.
+- Click **Run** to submit. The button changes to **Running…** while the SuperFlow is executing.
+
+## Live monitoring
+
+While a SuperFlow runs, status is shown in two places.
+
+**On the canvas** — every node displays its live state:
+
+- Amber pulse — currently executing.
+- Green check — completed successfully.
+- Red × — errored.
+- Blue pause — awaiting a human approval.
+
+The edges between nodes animate while data flows along them, so you can see the run's progress at a glance.
+
+**In the execution panel** — each node has an expandable card that fills in as the node completes. Click a card to see the node's JSON output. Output-style nodes (those that produce final results) are expanded automatically.
+
+## Lifecycle controls
+
+For long-running SuperFlows, you can intervene from the execution panel. All three controls are backed by durable state — they survive service restarts and behave consistently even under concurrent operator action.
+
+- **Pause** — request a cooperative pause. The run pauses at the next boundary between nodes (it won't interrupt a node mid-execution). Paused runs stay paused even across restarts.
+- **Resume** — continue a paused run from where it stopped. Completed nodes stay completed; the next pending node starts fresh.
+- **Terminate** — cancel the run outright. Any in-flight work is stopped, and the run is marked as cancelled. Cancellation is final.
+
+A run can be paused and resumed unlimited times without losing data. While paused, the run consumes essentially no resources.
+
+## Retries on failure
+
+Every retryable node can be configured to automatically retry on transient failures. In a node's configuration drawer, expand the **Retry** section and toggle **Retry on failure** on. Then set:
+
+- **Max attempts** — how many times the engine will retry before declaring the node failed.
+- **Wait between attempts** — backoff delay in milliseconds.
+
+Retries are themselves durable. If the service restarts mid-backoff, the engine remembers exactly how many attempts have been made and resumes the retry sequence from the correct count — you never accidentally end up with more attempts than configured.
+
+When the max-attempt count is exceeded, the node fails permanently and the entire run errors out. The failed run shows up in **History** with the failing node and its error preserved, so you can diagnose and re-run.
+
+For more on the durability properties that back retries, pauses, and the rest of the engine, see [Reliability & durable execution](./reliability).
+
+## Execution history
+
+Click the **History** button in the toolbar to open the history drawer on the right side of the canvas.
+
+The drawer has two tabs:
+
+- **Executions** — past runs of this SuperFlow, with their status, trigger source, and timestamps.
+- **Approvals** — pending approval requests waiting for a human decision (see below).
+
+Click any past run to **replay** it on the canvas:
+
+- Every node shows the status it had during that run.
+- Clicking a node opens its output drawer with the JSON it emitted in that specific run.
+- Re-run from a specific node if you want to retry just the failed tail of a previous run.
+
+History is the fastest way to debug a failed run — you can see exactly which node failed, what it received, and what it tried to do.
+
+## Human-in-the-loop approvals
+
+When a SuperFlow reaches a [Wait for Approval](./node-reference#wait-for-approval) node, the run **pauses durably** and waits for a person to act.
+
+While paused:
+
+- The run's status changes to "Awaiting approval".
+- The node shows the blue pause indicator on the canvas.
+- A new entry appears in the **Approvals** tab of the history drawer, including the configured approval message (with any expressions resolved against the live data).
+- Anyone with access to the SuperFlow can review the request.
+
+The approver has two choices:
+
+- **Approve** — the run continues down the node's *Output 0* path with the input items flowing through unchanged.
+- **Reject** — the run continues down the node's *Output 1* path. You typically connect this output to a "send rejection email" or "mark as denied" chain.
+
+**The wait costs nothing.** Paused runs sit in durable storage, not in a hot-running process — a SuperFlow can wait minutes, hours, days, or weeks for a human without consuming a thread or holding memory. Service restarts during a paused-awaiting-approval state are invisible to the workflow: the moment a human responds, the run resumes from exactly the same point.
+
+Approvals don't time out automatically. They sit pending until acted on, unless your SuperFlow uses a parallel Wait node to enforce a deadline. This makes Wait for Approval safe for slow-moving processes — onboarding flows that wait on customer action, escalation paths that wait on managers, anything you'd normally need a separate ticketing system to track.
+
+## Sharing a SuperFlow
+
+By default, only the user who created a SuperFlow can see it. To collaborate, share it with teammates.
+
+From the SuperFlow list page (or from the editor toolbar), click the **Share** button on a SuperFlow you own. A modal opens listing your organization members:
+
+- Tick the teammates you want to share with.
+- Confirm.
+
+Shared collaborators can:
+
+- View the SuperFlow and its execution history.
+- Edit nodes and configuration.
+- Run the SuperFlow manually or trigger its schedules.
+
+Only the **owner** can:
+
+- Delete the SuperFlow.
+- Change who it's shared with.
+
+Re-opening the Share modal at any time lets you add or remove people. Removing everyone returns the SuperFlow to a private state.
+
+## Where to go from here
+
+- [Reliability & durable execution](./reliability) — the full guarantees behind retries, pauses, and replay.
+- [Node reference](./node-reference) — explore the rest of the node catalog.
+- [Triggers & schedules](./triggers-and-schedules) — move from manual runs to webhooks or scheduled execution.
+- [Expressions & data flow](./expressions) — keep going on data wiring.

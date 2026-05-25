@@ -1,0 +1,444 @@
+---
+title: "Contexts"
+sidebarTitle: "Contexts"
+description: "Provide background information to agents"
+---
+
+Contexts are key-value pairs that provide persistent background information to agents. Use contexts to inject company information, user preferences, or any data that should be available across all conversations.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Create a context
+context = studio.create_context(
+    name="company_info",
+    value="Acme Corp is a technology company founded in 2020. We specialize in AI solutions."
+)
+
+# Add context to agent
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    goal="Help customers with inquiries"
+)
+agent.add_context(context)
+
+# Agent now has company info available
+response = agent.run("What does your company do?")
+# Uses company_info context to answer
+```
+
+---
+
+## Creating Contexts
+
+### studio.create_context()
+
+```python
+studio.create_context(
+    name: str,
+    value: str
+) -> Context
+```
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | str | Yes | Context name (key) |
+| `value` | str | Yes | Context value |
+
+### Example
+
+```python
+# Company information
+company_ctx = studio.create_context(
+    name="company",
+    value="""
+    Company: TechCorp Inc.
+    Industry: Software Development
+    Founded: 2015
+    Headquarters: San Francisco, CA
+    Products: Cloud solutions, AI platforms
+    """
+)
+
+# Pricing information
+pricing_ctx = studio.create_context(
+    name="pricing",
+    value="""
+    Basic Plan: $29/month
+    Pro Plan: $99/month
+    Enterprise: Custom pricing
+    All plans include 24/7 support
+    """
+)
+
+# User preferences
+user_ctx = studio.create_context(
+    name="user_preferences",
+    value="Language: English, Timezone: PST, Communication style: Professional"
+)
+```
+
+---
+
+## Getting Contexts
+
+### studio.get_context()
+
+Retrieve a context by ID:
+
+```python
+context = studio.get_context("context_id")
+
+print(f"Name: {context.name}")
+print(f"Value: {context.value}")
+print(f"Created: {context.created_at}")
+```
+
+### studio.list_contexts()
+
+List all contexts:
+
+```python
+contexts = studio.list_contexts()
+
+for ctx in contexts:
+    print(f"{ctx.name}: {ctx.value[:50]}...")
+
+# With pagination
+contexts = studio.list_contexts(skip=0, limit=10)
+print(f"Total contexts: {len(contexts)}")
+```
+
+---
+
+## Updating Contexts
+
+### context.update()
+
+```python
+context.update(value: str) -> Context
+```
+
+Update the value of a context:
+
+```python
+context = studio.get_context("context_id")
+
+# Update the value
+context = context.update(
+    value="Updated company information: TechCorp Inc. - Now with 500+ employees"
+)
+
+print(f"Updated: {context.value}")
+```
+
+### studio.contexts.update()
+
+Update via module:
+
+```python
+updated = studio.contexts.update(
+    context_id="context_id",
+    value="New value for the context"
+)
+```
+
+---
+
+## Deleting Contexts
+
+### context.delete()
+
+```python
+context = studio.get_context("context_id")
+success = context.delete()
+
+if success:
+    print("Context deleted")
+```
+
+### studio.contexts.delete()
+
+Delete via module:
+
+```python
+studio.contexts.delete("context_id")
+```
+
+---
+
+## Context Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | str | Context ID |
+| `name` | str | Context name (key) |
+| `value` | str | Context value |
+| `api_key` | str | Associated API key |
+| `created_at` | str | Creation timestamp |
+| `updated_at` | str | Last update timestamp |
+
+---
+
+## Adding Contexts to Agents
+
+### At Creation
+
+```python
+context = studio.create_context(name="info", value="Background info")
+
+agent = studio.create_agent(
+    name="Bot",
+    provider="gpt-4o",
+    contexts=[context]  # Pass context during creation
+)
+```
+
+### After Creation
+
+```python
+agent = studio.create_agent(name="Bot", provider="gpt-4o")
+context = studio.create_context(name="info", value="Background info")
+
+# Add context to agent
+agent.add_context(context)
+```
+
+### Multiple Contexts
+
+```python
+company_ctx = studio.create_context(name="company", value="...")
+product_ctx = studio.create_context(name="products", value="...")
+policy_ctx = studio.create_context(name="policies", value="...")
+
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    contexts=[company_ctx, product_ctx, policy_ctx]
+)
+```
+
+---
+
+## Use Cases
+
+### Company Knowledge Base
+
+```python
+# Create comprehensive company context
+company_ctx = studio.create_context(
+    name="company_knowledge",
+    value="""
+    COMPANY OVERVIEW
+    ================
+    Name: Acme Technologies
+    Founded: 2018
+    CEO: Jane Smith
+    Employees: 250+
+
+    PRODUCTS
+    ========
+    - AcmeCloud: Cloud infrastructure platform
+    - AcmeAI: AI/ML development tools
+    - AcmeSecure: Cybersecurity solutions
+
+    SUPPORT HOURS
+    =============
+    Monday-Friday: 9 AM - 6 PM EST
+    Weekend: Email only
+    Emergency: 24/7 for Enterprise customers
+
+    CONTACT
+    =======
+    Support: support@acme.com
+    Sales: sales@acme.com
+    Phone: 1-800-ACME-123
+    """
+)
+
+support_agent = studio.create_agent(
+    name="Support Agent",
+    provider="gpt-4o",
+    role="Customer support representative",
+    goal="Answer customer questions accurately",
+    instructions="Use the company knowledge to answer questions",
+    contexts=[company_ctx]
+)
+```
+
+### User Personalization
+
+```python
+def create_user_context(user_data: dict) -> Context:
+    """Create personalized context for a user"""
+    value = f"""
+    USER PROFILE
+    ============
+    Name: {user_data['name']}
+    Account Type: {user_data['account_type']}
+    Member Since: {user_data['member_since']}
+    Preferred Language: {user_data['language']}
+    Timezone: {user_data['timezone']}
+
+    PREFERENCES
+    ===========
+    Communication: {user_data['comm_style']}
+    Notifications: {user_data['notifications']}
+    """
+
+    return studio.create_context(
+        name=f"user_{user_data['id']}",
+        value=value
+    )
+
+# Use with agent
+user_ctx = create_user_context({
+    "id": "12345",
+    "name": "John Doe",
+    "account_type": "Premium",
+    "member_since": "2023-01",
+    "language": "English",
+    "timezone": "EST",
+    "comm_style": "Professional",
+    "notifications": "Email"
+})
+
+agent.add_context(user_ctx)
+response = agent.run("What's my account status?")
+```
+
+### Dynamic Pricing
+
+```python
+# Update pricing context regularly
+def update_pricing():
+    prices = fetch_current_prices()  # Your pricing logic
+
+    pricing_ctx = studio.get_context("pricing_context_id")
+    pricing_ctx.update(
+        value=f"""
+        CURRENT PRICING (as of {datetime.now()})
+
+        Basic: ${prices['basic']}/month
+        Pro: ${prices['pro']}/month
+        Enterprise: Contact sales
+
+        Current Promotions:
+        - 20% off annual plans
+        - Free trial: 14 days
+        """
+    )
+
+# Schedule regular updates
+update_pricing()
+```
+
+### Regulatory Compliance
+
+```python
+compliance_ctx = studio.create_context(
+    name="compliance_rules",
+    value="""
+    COMPLIANCE GUIDELINES
+    =====================
+
+    GDPR Requirements:
+    - Always ask for consent before collecting data
+    - Provide data deletion options
+    - Explain data usage clearly
+
+    HIPAA (Healthcare):
+    - Never share patient information
+    - Redirect medical questions to professionals
+    - Log all healthcare-related inquiries
+
+    Financial Services:
+    - Include required disclaimers
+    - Don't provide specific investment advice
+    - Recommend consulting licensed advisors
+    """
+)
+
+agent = studio.create_agent(
+    name="Compliant Bot",
+    provider="gpt-4o",
+    role="Customer service agent",
+    instructions="Follow all compliance guidelines strictly",
+    contexts=[compliance_ctx]
+)
+```
+
+---
+
+## Best Practices
+
+### Structured Content
+
+```python
+# Good: Well-organized structure
+context = studio.create_context(
+    name="faq",
+    value="""
+    FAQ
+    ===
+
+    Q: What is the return policy?
+    A: 30-day money-back guarantee for all products.
+
+    Q: How do I reset my password?
+    A: Click 'Forgot Password' on the login page.
+
+    Q: Do you offer international shipping?
+    A: Yes, we ship to 50+ countries.
+    """
+)
+```
+
+### Keep Values Focused
+
+```python
+# Good: Focused, relevant information
+company_ctx = studio.create_context(
+    name="company_basics",
+    value="TechCorp - AI solutions company. Support: support@tech.com"
+)
+
+# Avoid: Too much unrelated information
+# bad_ctx = studio.create_context(
+#     name="everything",
+#     value="Company info + pricing + policies + history + ..."  # Too broad
+# )
+```
+
+### Regular Updates
+
+```python
+# Create a refresh function for dynamic data
+def refresh_inventory_context():
+    inventory = get_current_inventory()  # Your inventory system
+
+    ctx = studio.get_context("inventory_id")
+    ctx.update(value=format_inventory(inventory))
+
+# Call periodically
+refresh_inventory_context()
+```
+
+### Naming Conventions
+
+```python
+# Good: Clear, descriptive names
+studio.create_context(name="company_info", value="...")
+studio.create_context(name="product_catalog", value="...")
+studio.create_context(name="user_123_preferences", value="...")
+
+# Avoid: Vague names
+# studio.create_context(name="ctx1", value="...")
+# studio.create_context(name="data", value="...")
+```

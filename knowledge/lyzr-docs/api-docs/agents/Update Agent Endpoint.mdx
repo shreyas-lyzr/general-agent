@@ -1,0 +1,66 @@
+---
+title: "Update Agent Endpoint"
+openapi: put /agents/{agent_id}
+---
+
+### Description
+
+Updates the configuration of an existing agent.
+
+### Endpoint
+
+**PUT** `/v3/agents/{agent_id}`
+
+### Authentication
+
+- Requires an API key (`x-api-key`) in the request headers.
+
+### Path Parameters
+
+| Parameter  | Type   | Description                               |
+| ---------- | ------ | ----------------------------------------- |
+| `agent_id` | string | Unique identifier of the agent to update. |
+
+### Request Body (JSON)
+
+```json
+{
+  "name": "string",
+  "system_prompt": "string",
+  "description": "string",
+  "features": [
+    {
+      "type": "string",
+      "config": {},
+      "priority": 0
+    }
+  ],
+  "tools": ["string"],
+  "llm_credential_id": "string",
+  "provider_id": "string",
+  "model": "string",
+  "top_p": 0,
+  "temperature": 0,
+  "response_format": {}
+}
+```
+
+### Request Example (cURL)
+
+```sh
+curl -X PUT "https://agent-prod.studio.lyzr.ai/v3/agents/{agent_id}" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-REPLACED-API-KEY" ^
+-d "{\"name\":\"string\",\"system_prompt\":\"string\",\"description\":\"string\",\"features\":[{\"type\":\"string\",\"config\":{},\"priority\":0}],\"tools\":[\"string\"],\"llm_credential_id\":\"string\",\"provider_id\":\"string\",\"model\":\"string\",\"top_p\":0,\"temperature\":0,\"response_format\":{}}"
+```
+
+### Response Example
+
+```json
+{
+  "message": "Agent updated successfully."
+}
+```
+
+---

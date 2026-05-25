@@ -1,0 +1,111 @@
+---
+title: AWS Bedrock Models
+sidebarTitle: "AWS Bedrock"
+description: "A fully managed service that offers a choice of high-performing foundation models from leading AI companies via a single API."
+---
+
+AWS Bedrock provides a diverse range of models from Amazon, Anthropic, Meta, Mistral, and OpenAI (OSS). Note that Bedrock models **require configuration** as mentioned in the Lyzr setup guide.
+
+<AccordionGroup>
+  <Accordion title="Amazon Nova Family" defaultOpen={false}>
+    Amazon’s homegrown generation of models designed for frontier intelligence and industry-leading price-performance.
+
+    **Nova Pro**
+    - **Use Cases:** Complex multimodal reasoning, video summarization, and high-accuracy application development.
+    - **Highlights:** Best combination of speed and accuracy; capable of executing multi-step agentic processes.
+
+    **Nova Lite**
+    - **Use Cases:** Low-cost processing of images, videos, and documents; real-time customer conversations.
+    - **Highlights:** Lightning-fast multimodal model; handles high-volume visual Q&A tasks efficiently.
+
+    **Nova Micro**
+    - **Use Cases:** High-speed text-only tasks, instant chatbots, and lightweight content generation.
+    - **Highlights:** Lowest-latency response in the Nova family; optimized for massive scale at ultra-low cost.
+  </Accordion>
+
+  <Accordion title="Anthropic Claude on Bedrock" defaultOpen={false}>
+    A suite of models known for high reliability, advanced reasoning, and industry-leading safety.
+
+    **Claude 3.7 Sonnet**
+    - **Use Cases:** Hybrid reasoning tasks where the model can "think" deeply or respond instantly.
+    - **Highlights:** Anthropic's most intelligent model to date; excels in coding and autonomous tool-use.
+
+    **Claude 3.5 Sonnet (v1 & v2)**
+    - **Use Cases:** Complex data analysis, sophisticated content creation, and enterprise-grade agentic workflows.
+    - **Highlights:** Version 2 offers significant gains in coding (SWE-bench) and native "Computer Use" capabilities.
+
+    **Claude 3 Sonnet**
+    - **Use Cases:** Large-scale data processing and high-speed RAG applications.
+    - **Highlights:** Balanced performance for enterprise tasks requiring high throughput.
+
+    **Claude 3.5 Haiku**
+    - **Use Cases:** Real-time customer support, high-speed code suggestions, and data labeling.
+    - **Highlights:** Matches the intelligence of Claude 3 Opus while maintaining the speed of the Haiku line.
+
+    **Claude 3 Haiku**
+    - **Use Cases:** Lightweight automation and extremely fast response applications.
+    - **Highlights:** The most cost-effective and fastest model in the Claude 3 family.
+
+    **Claude 3 Opus**
+    - **Use Cases:** Deep research, complex scientific queries, and highly nuanced creative writing.
+    - **Highlights:** Top-tier reasoning for the most difficult cognitive tasks.
+  </Accordion>
+
+  <Accordion title="Meta Llama Family" defaultOpen={false}>
+    State-of-the-art open models optimized for reasoning and multimodal tasks.
+
+    **Llama 3.3 70B Instruct**
+    - **Use Cases:** Enterprise-level reasoning, complex decision-making, and high-level AI assistants.
+    - **Highlights:** Provides performance comparable to much larger models with higher efficiency.
+
+    **Llama 3.2 90B Vision Instruct**
+    - **Use Cases:** Visual reasoning, image captioning, and document-based visual question answering.
+    - **Highlights:** Meta's flagship multimodal model; excels at understanding high-resolution images.
+
+    **Llama 3.2 11B Vision Instruct**
+    - **Use Cases:** Content creation requiring visual context and conversational AI with vision.
+    - **Highlights:** A powerful mid-sized multimodal model for efficient visual-text tasks.
+
+    **Llama 3.2 3B Instruct**
+    - **Use Cases:** Mobile AI writing assistants and low-latency customer service apps.
+    - **Highlights:** Designed for environments with limited computational resources.
+
+    **Llama 3.2 1B Instruct**
+    - **Use Cases:** On-device summarization, retrieval, and personal information management.
+    - **Highlights:** Ultra-lightweight; perfect for edge devices and mobile integration.
+  </Accordion>
+
+  <Accordion title="Mistral AI Models" defaultOpen={false}>
+    Models known for their transparency, efficiency, and strong performance in European languages.
+
+    **Mistral Large**
+    - **Use Cases:** Multilingual reasoning, complex coding, and large-context document analysis.
+    - **Highlights:** Top-tier reasoning capabilities with a 128K context window.
+
+    **Mistral Small**
+    - **Use Cases:** High-volume classification, summarization, and fast text processing.
+    - **Highlights:** Optimized for cost-efficiency without sacrificing logic.
+
+    **Mistral 8x7B Instruct**
+    - **Use Cases:** Multi-agent systems and general-purpose conversational flows.
+    - **Highlights:** Uses Mixture-of-Experts (MoE) for high performance at lower inference costs.
+
+    **Mistral-7B Instruct**
+    - **Use Cases:** Simple chatbots and lightweight text generation.
+    - **Highlights:** A compact, highly efficient model for basic NLP tasks.
+  </Accordion>
+
+  <Accordion title="OpenAI GPT-OSS (Imported)" defaultOpen={false}>
+    Open-weight models by OpenAI, available via Bedrock's Custom Model Import.
+
+    **GPT-OSS 120B (1:0)**
+    - **Use Cases:** Complex reasoning, advanced coding, and STEM-focused research.
+    - **Highlights:** Matches OpenAI o4-mini performance; features deep "Chain-of-Thought" reasoning.
+
+    **GPT-OSS 20B (1:0)**
+    - **Use Cases:** Real-time reasoning, on-device assistants, and low-latency agentic tasks.
+    - **Highlights:** Matches OpenAI o3-mini performance; highly efficient for local-style inference on cloud hardware.
+  </Accordion>
+</AccordionGroup>
+
+> 🛡️ **Enterprise Ready:** All models on AWS Bedrock are deployed within your AWS environment, ensuring your data is never used to train the underlying provider models.

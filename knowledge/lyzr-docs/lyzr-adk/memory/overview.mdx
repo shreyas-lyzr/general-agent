@@ -1,0 +1,141 @@
+---
+title: "Memory Overview"
+sidebarTitle: "Overview"
+description: "Enable conversation memory for agents"
+---
+
+Memory allows agents to maintain conversation context across multiple messages within a session. This enables natural, contextual conversations where the agent remembers previous interactions.
+
+<Note>
+For standalone memory operations (add, search, get, update, delete), see the [Cognis documentation](/cognis/overview).
+</Note>
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+# Create agent with memory
+agent = studio.create_agent(
+    name="Conversational Bot",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Have natural conversations",
+    instructions="Remember context from previous messages",
+    memory=30  # Remember last 30 messages
+)
+
+# Start a conversation
+session_id = "user_123_session"
+
+agent.run("My name is Alice", session_id=session_id)
+agent.run("I'm interested in Python programming", session_id=session_id)
+response = agent.run("What's my name and what am I interested in?", session_id=session_id)
+
+# Agent remembers: "Your name is Alice and you're interested in Python programming"
+```
+
+## How Memory Works
+
+1. **Messages are stored** per session using the `session_id`
+2. **Context is maintained** across multiple `agent.run()` calls
+3. **Recent messages** are included in the agent's context window
+4. **Older messages** are automatically pruned based on `max_messages`
+
+## Memory Configuration
+
+| Parameter | Range | Description |
+|-----------|-------|-------------|
+| `memory` | 1-50 | Number of recent messages to remember |
+
+### At Agent Creation
+
+```python
+agent = studio.create_agent(
+    name="Bot",
+    provider="gpt-4o",
+    memory=30  # Keep last 30 messages
+)
+```
+
+### On Existing Agent
+
+```python
+agent = agent.add_memory(max_messages=50)
+```
+
+## Session Management
+
+Memory is scoped to sessions. Use `session_id` to maintain separate conversations:
+
+```python
+# User 1's conversation
+agent.run("Hello", session_id="user_1_session")
+agent.run("My name is Bob", session_id="user_1_session")
+
+# User 2's conversation (separate context)
+agent.run("Hello", session_id="user_2_session")
+agent.run("My name is Carol", session_id="user_2_session")
+
+# Each session has its own memory
+```
+
+## Use Cases
+
+### Customer Support
+
+```python
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    memory=50
+)
+
+session = "support_12345"
+agent.run("I bought a laptop last week", session_id=session)
+agent.run("The screen is flickering", session_id=session)
+agent.run("What solutions do you have?", session_id=session)
+# Agent knows: bought laptop last week, screen flickering
+```
+
+### Multi-Turn Tasks
+
+```python
+agent = studio.create_agent(
+    name="Research Assistant",
+    provider="gpt-4o",
+    role="Research assistant",
+    memory=50
+)
+
+session = "research_session"
+agent.run("Let's research climate change", session_id=session)
+agent.run("Focus on renewable energy solutions", session_id=session)
+agent.run("What are the key findings?", session_id=session)
+```
+
+### Tutoring
+
+```python
+agent = studio.create_agent(
+    name="Math Tutor",
+    provider="gpt-4o",
+    role="Math tutor",
+    memory=30
+)
+
+session = "lesson_1"
+agent.run("I'm learning algebra", session_id=session)
+agent.run("I struggle with quadratic equations", session_id=session)
+agent.run("Can you give me a practice problem?", session_id=session)
+# Tutor remembers: algebra, struggles with quadratics
+```
+
+## Next Steps
+
+<Card title="Agent Memory" icon="brain" href="/lyzr-adk/memory/agent-memory">
+  Learn all memory configuration options
+</Card>

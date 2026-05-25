@@ -1,0 +1,142 @@
+---
+title: "Understanding Credits"
+sidebarTitle: "What are Credits?"
+---
+
+## 📘 Understanding Credits in Lyzr Agent Studio
+
+Lyzr Agent Studio uses a **credit-based compute system** to manage infrastructure usage, ensure system fairness, and optimize for both low-latency experimentation and high-throughput production.
+
+Every action that invokes computation — whether model inference, semantic indexing, or multi-agent orchestration — is **metered** in terms of **credits**. To simplify usage tracking, **1 credit now directly equals $1**. This allows users to monitor and scale usage predictably across plans at a glance.
+
+---
+
+## 🔹 Credit Allocation and Plans
+
+Lyzr credits are provisioned based on your account's subscription tier. Credits reset or replenish on a fixed schedule and can be supplemented as needed.
+
+### Free Tier
+- **5 credits/month** ($5 value) automatically provisioned to each new account.
+- These credits refresh **monthly** based on your signup date.
+- Ideal for trying out agents, creating simple RAG flows, and basic API calls.
+
+### Paid Plans
+- Credit allocation scales with plan level (Starter, Pro, Enterprise).
+- Plans are available on **monthly** or **annual** billing cycles.
+- Top-ups can be purchased at any time.
+
+### One-Time Top-Ups
+- Used to prevent service interruptions when monthly quota is exhausted.
+- Credits from top-ups **do not expire**.
+- Stackable with recurring plan credits.
+
+---
+
+## 🔹 What Consumes Credits?
+
+Lyzr’s platform operations are broken down into credit-metered units. Because the system is now 1:1 with the dollar, usage now deducts **fractional credits**. The following subsystems contribute to credit consumption:
+
+### 1. **Language Model Inference**
+- **Token-based billing** per LLM (similar to OpenAI’s pricing model).
+- Models have differing **price-per-token** multipliers:
+
+| Model            | Relative Credit Usage | Typical Use Case                              |
+|------------------|------------------------|-----------------------------------------------|
+| GPT-4o Mini       | 1×                     | Lightweight chatbots, simple instructions     |
+| GPT-4o            | 16×                    | Strategic reasoning, agents with memory       |
+| Claude Haiku      | 2×                     | Midweight contextual interactions             |
+| Claude Opus       | 15–20×                 | Deep reasoning and multi-hop workflows        |
+
+> 💡 *Heavier models yield higher accuracy, but also consume more tokens. Choose based on your use case.*
+
+---
+
+### 2. **Token Length: Input + Output**
+
+- Lyzr computes usage on the **combined token length** of:
+  - **Prompt** (agent logic, user input, KB context)
+  - **Response** (model output)
+- This includes:
+  - RAG-pulled knowledge
+  - Agent history (if memory is enabled)
+  - Instruction chains and multi-agent dependencies
+
+> Example: A long SQL-generating prompt with schema context and 500-word response can consume up to 3–5× more credits than a standard chat exchange.
+
+---
+
+### 3. **Platform Features & Services**
+
+| Feature                 | Credit Usage       | Notes                                                                 |
+|-------------------------|--------------------|-----------------------------------------------------------------------|
+| **Memory** | Free               | Stores interaction context for multi-turn dialogue. No credit cost.   |
+| **Tools Execution** | Fixed Cost         | Each invocation of a 3P integration (e.g., Slack, Gmail) uses credits.|
+| **Knowledge Base** | Indirect           | No feature cost, but large documents increase prompt size.            |
+| **Semantic Model** | Indirect + Inference | Embeds tabular metadata, uses credits when LLM is invoked.          |
+| **Knowledge Graph** | Indirect + Processing | Graph traversal + node summarization incurs token load.              |
+| **Context Relevance** | Moderate           | Adds LLM-based ranking layer over retrieved chunks.                  |
+| **Groundedness Checks** | Fixed per use      | Post-response factuality validation using internal validators.       |
+| **Responsible AI** | Variable           | Cost depends on number of submodules invoked (e.g., profanity).      |
+
+---
+
+## 🔹 Credit Consumption Examples
+
+*Note: These values reflect the updated display where 1 credit = $1. Typical usage results in fractional deductions.*
+
+| Scenario                                                     | Approximate Credit Cost |
+|--------------------------------------------------------------|--------------------------|
+| Simple agent query using GPT-4o Mini                         | 0.01 – 0.02 credits      |
+| Tool-based agent querying Gmail + Slack                      | 0.10 – 0.25 credits      |
+| RAG agent using 5 PDF files with GPT-4                       | 0.20 – 0.60 credits      |
+| Text-to-SQL with Semantic Model (with schema + sample rows)  | 0.15 – 0.50 credits      |
+| Agent using Claude Opus with Context Relevance + RAI         | 0.80 – 1.20 credits      |
+
+---
+
+## 🔹 Credit Management Best Practices
+
+To avoid excessive credit burn, especially on larger workloads:
+
+- ✅ **Use light models (GPT-4o Mini, Haiku)** during development and testing.
+- ✅ **Limit file size and chunk count** in KBs when setting up RAG.
+- ✅ **Disable unnecessary modules** like RAI or Groundedness for internal use-cases.
+- ✅ **Use preview tools** in Studio to inspect prompt-token size before triggering agent run.
+
+---
+
+## 🔹 Monitoring Credit Usage (Coming Soon)
+
+Lyzr will soon support **in-dashboard analytics** to monitor:
+
+- Credit burn by agent
+- Model-specific usage
+- Peak usage windows
+- Alerts for low-credit thresholds
+
+---
+
+## 🔹 Credit Expiry and Overflow
+
+| Plan Type         | Expiry Rules              | Overflow Handling                             |
+|-------------------|---------------------------|----------------------------------------------|
+| Free Plan         | Resets every 30 days      | No rollover                                  |
+| Monthly Plan      | Resets monthly            | No rollover unless top-up applied            |
+| Annual Plan       | Renewed annually          | Quota spreads evenly or loaded in full       |
+| One-Time Top-Up   | **Never expires** | Used after subscription credits are exhausted|
+
+---
+
+## Summary
+
+| Component              | Role                                                       |
+|------------------------|------------------------------------------------------------|
+| Credits                | Unit of Lyzr compute usage (**1 credit = $1**)            |
+| Tracked Dimensions     | Model, token count, tools, features                        |
+| Replenishment          | Monthly/annual plans or one-time top-ups                   |
+| Monitoring             | In progress (dashboard reporting soon)                     |
+| Optimization           | Choose light models, minimize token overhead, selective tools|
+
+---
+
+With this understanding, developers and builders on Lyzr can architect intelligent agents **efficiently and affordably**, optimizing both performance and compute cost.

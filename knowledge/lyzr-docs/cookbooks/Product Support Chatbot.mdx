@@ -1,0 +1,151 @@
+---
+title: Product Support Chatbot that Reads 100+ Web Pages
+sidebarTitle: Lyzr - Product Chatbot
+---
+
+Let’s build a **Product Support Chatbot** that can read and answer questions from your entire documentation , — even if it spans over 100+ web pages.
+
+This chatbot can live inside your **product** or on your **website** and will automatically refer to your docs to answer user questions accurately.
+
+---
+
+### **Step 1: Build Your Agent**
+
+1. Go to **Agent Builder** and create a new agent.
+2. Define your **Agent Role**, **Goal**, and **Instructions** , — e.g.,
+    
+    > “You are a Product Support Chatbot that helps users answer queries about [Your Product]. Always refer to the documentation for accurate answers.”
+    > 
+3. Once configured, your agent is ready. *(You can refer to the sample Agent JSON provided for guidance.)*
+
+```jsx
+{
+  "name": "Lyzr Support Agent",
+  "description": "Answers queries regarding Lyzr",
+  "agent_role": "You are an Expert Customer Support Agent for Lyzr, dedicated to providing clear and informative answers to user inquiries about Lyzr.",
+  "agent_goal": "Your goal is to answer users question about Lyzr",
+  "agent_instructions": "1. Acknowledge the user’s question with a friendly response.\n2. Provide accurate, factual, and concise information based on available knowledge sources (e.g., docs, FAQs, product pages).\n3. If the information is not available, gracefully admit it and suggest where the user can find more information.\n4. Use SIMPLE and CLEAR language, avoiding jargon unless necessary.\n5. Maintain a FRIENDLY, PROFESSIONAL, and SOLUTION-ORIENTED tone.\n6. Encourage users to ask follow-up questions if they need further clarity.\n7. Always rely on verified content from the Lyzr Knowledge Base or website; do not guess or create information.",
+  "examples": null,
+  "tool": "",
+  "tool_usage_description": "{}",
+  "tool_configs": [],
+  "provider_id": "OpenAI",
+  "model": "gpt-5-mini",
+  "temperature": "0.7",
+  "top_p": "0.9",
+  "llm_credential_id": "lyzr_openai",
+  "features": [
+    {
+      "type": "MEMORY",
+      "config": {
+        "max_messages_context_count": 10
+      },
+      "priority": 0
+    },
+    {
+      "type": "KNOWLEDGE_BASE",
+      "config": {
+        "lyzr_rag": {},
+        "agentic_rag": [
+          {
+            "rag_id": "68d12897fffa467f1a9e33bf",
+            "top_k": 5,
+            "retrieval_type": "basic",
+            "score_threshold": 0
+          },
+          {
+            "rag_id": "68cd381b2f7f90e6d8089f30",
+            "top_k": 5,
+            "retrieval_type": "basic",
+            "score_threshold": 0
+          }
+        ]
+      },
+      "priority": 0
+    }
+  ],
+  "managed_agents": [],
+  "response_format": {
+    "type": "text"
+  },
+  "store_messages": true,
+  "file_output": false
+}
+```
+
+---
+
+### **Step 2: Create a Knowledge Base**
+
+1. From the sidebar, open **Knowledge Base**.
+2. Click **Create New Knowledge Base**.
+3. Choose **Knowledge Base** from the pop-up that gives you 3 options, give it a name, and click **Create**.
+4. (Optional) Update the **Embedding Model** and **Vector Store** settings if you need custom configurations.
+
+![](../../../cookbooks/assets/c1.png)
+
+---
+
+### **Step 3: Add Content Sources**
+
+Once your Knowledge Base is created, you’ll see options to add:
+
+- **Files (PDF, DOCX)** — Upload directly if you have internal guides or PDFs.
+- **Websites** — Use this to connect your documentation site (e.g., `docs.lyzr.ai`).
+- **Text** — Add plain text or FAQs manually if needed.
+
+![](../../../cookbooks/assets/c2.png)
+
+---
+
+### **Step 4: Crawl Your Documentation Website**
+
+1. Under **Website**, enter your documentation URL (e.g., `https://docs.lyzr.ai`).
+2. Click on **Advanced Crawling Options** to configure details:
+    - **Depth** – How many link levels to follow from the starting page
+    - **Workers** – Number of parallel crawlers (higher = faster, but heavier on resources)
+    - **Delay** – Time gap between requests to prevent server overload
+    - **Headless Browser** – Enable for JavaScript-heavy websites
+    - **Sitemap Discovery** – Uses `sitemap.xml` for faster and more structured crawling
+    - **Wait for JavaScript** – Ensures full content loads before extraction
+
+💡 *If this sounds too technical, you can simply go with the default options.*
+
+![](../../../cookbooks/assets/c3.png)
+
+1. Click **Continue** → review the summary → then click **Crawl Website**.
+2. The crawler will start discovering all web pages under your docs site.
+
+Once crawling is complete, you’ll see all the discovered pages.
+
+You can **select all**, or **pick specific ones** to add to your Knowledge Base.
+
+Click **Process,**  — the system will now scrape and process the information.
+
+![](../../../cookbooks/assets/c4.png)
+
+After processing, your documentation pages will be successfully added to your Knowledge Base.
+
+You can upload files in additional to the websites to give your agent more context.
+
+---
+
+### **Step 5: Link the Knowledge Base to Your Agent**
+
+1. Go back to your **Agent**.
+2. In the **Core Features** section, enable **Knowledge Base**.
+3. Select the Knowledge Base you just created.
+
+Your agent can now **read from both uploaded files and your website documentation.**
+
+![](../../../cookbooks/assets/c5.png)
+
+![](../../../cookbooks/assets/c6.png)
+
+You can test your agent in the **inference screen** and fine-tune its instructions based on responses before deployment.
+
+---
+
+### ✅ **Result**
+
+You now have a **fully functional support chatbot** that can reference 100+ documentation pages to provide accurate, contextual answers to users,  — whether embedded inside your product or on your website.

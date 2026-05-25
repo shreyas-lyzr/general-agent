@@ -1,0 +1,46 @@
+---
+title: Multi-Channel Customer Support
+sidebarTitle: Use Case 
+---
+Multi-Channel Customer Support
+
+In this example, a Manager Agent orchestrates a customer support workflow across chat, email, and SMS channels, dynamically routing tasks to specialized agents based on user preferences and message content.
+
+## Workflow Overview
+
+1. **User Inquiry Intake**
+
+   * The Manager Agent receives an incoming support request via the primary channel (chat, email, or SMS).
+
+2. **Channel Classification**
+
+   * A sentiment analysis worker agent evaluates the message tone and urgency.
+   * If negative sentiment or high urgency is detected, prioritize chat or SMS for real-time engagement.
+
+3. **Intent Detection & Routing**
+
+   * An NLU agent parses the request to identify intent (e.g., billing, technical issue, feature request).
+   * The Manager Agent maps the intent to the appropriate domain specialist agent (Billing Agent, Tech Support Agent, Product Feedback Agent).
+
+4. **Contextual Response Generation**
+
+   * The chosen worker agent generates a draft response, leveraging the Knowledge Base for relevant documentation or past resolutions.
+
+5. **Approval & Escalation**
+
+   * For sensitive cases (e.g., account closures), the Manager Agent routes the draft to a human supervisor agent for review.
+   * Based on the supervisor’s decision, the final response is sent via the user’s preferred channel.
+
+6. **Follow-up & Logging**
+
+   * After resolution, a follow-up task is scheduled to check user satisfaction.
+   * All interactions, metrics, and context are logged in Long-Term Memory for future personalization.
+
+## Key Benefits Demonstrated
+
+* **Adaptability**: Dynamically switches channels for optimal user experience.
+* **Scalability**: Distributes workload across multiple worker agents to handle high volumes.
+* **Resilience**: Implements fallback to human review for edge cases.
+* **Personalization**: Leverages memory and KB context for tailored responses.
+
+---

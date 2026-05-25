@@ -1,0 +1,122 @@
+---
+title: OpenAI Models
+sidebarTitle: "OpenAI"
+description: "Industry-leading LLMs available in Lyzr, ranging from ultra-fast mini models to advanced reasoning and frontier systems."
+---
+
+Lyzr integrates with OpenAI’s most powerful models, offering a spectrum of capabilities from real-time multimodal interaction to complex, deep-thinking reasoning. These models are available to use without any additional configuration.
+
+<AccordionGroup>
+  <Accordion title="GPT-5" defaultOpen={false}>
+    OpenAI's latest frontier model featuring a "Unified Thinking" system that automatically routes queries between fast responses and deep reasoning.
+
+    **Use Cases:**
+    - High-stakes enterprise orchestration
+    - Complex multi-step planning and autonomous agents
+    - Advanced research and data synthesis
+
+    **Highlights:**
+    - Native multimodality (text, vision, and audio trained together)
+    - 400K context window with high reliability
+    - Adjustable "Reasoning Effort" (Minimal to High)
+  </Accordion>
+
+  <Accordion title="GPT-5.1" defaultOpen={false}>
+    A refined version of the GPT-5 baseline, optimized for improved conversational tone and enhanced personalization.
+
+    **Use Cases:**
+    - Personalized AI assistants
+    - Dynamic customer experience agents
+    - Content creation with specific brand-voice requirements
+
+    **Highlights:**
+    - Warmer, more human-like interaction style
+    - Improved instruction-following consistency
+    - Better performance in creative writing and brainstorming
+  </Accordion>
+
+  <Accordion title="GPT-5-mini / GPT-5-nano" defaultOpen={false}>
+    Scalable variants of the GPT-5 architecture designed for efficiency and edge deployment.
+
+    **Use Cases:**
+    - **Mini:** Real-time API calls, lightweight agents, and summarization.
+    - **Nano:** On-device processing, privacy-preserving mobile apps, and instant classification.
+
+    **Highlights:**
+    - Maintains the "Unified Thinking" logic at a lower cost
+    - Ideal for high-volume, low-latency production environments
+    - Minimal token usage for equivalent GPT-5 quality tasks
+  </Accordion>
+
+  <Accordion title="o3 Reasoning" defaultOpen={false}>
+    The flagship of the "o-series," specifically engineered for tasks requiring intense logic and sequential reasoning.
+
+    **Use Cases:**
+    - Advanced coding and technical debugging
+    - Complex mathematical proofs and scientific analysis
+    - Strategic decision-making and policy evaluation
+
+    **Highlights:**
+    - Direct "Chain-of-Thought" processing visible to the user
+    - High-tier performance on STEM benchmarks (AIME, ARC-AGI)
+    - First reasoning model with autonomous tool-use (Search, Python)
+  </Accordion>
+
+  <Accordion title="o4-mini" defaultOpen={false}>
+    A breakthrough small-scale reasoning model that delivers deep analytical capabilities at a fraction of the cost.
+
+    **Use Cases:**
+    - High-volume reasoning tasks (e.g., analyzing thousands of legal docs)
+    - STEM-focused educational tools
+    - Cost-effective structured data extraction
+
+    **Highlights:**
+    - 20% better performance than o3-mini with 10x lower cost
+    - 200K context window for long-context reasoning
+    - Native multimodal support within the reasoning chain
+  </Accordion>
+
+  <Accordion title="GPT-4.1" defaultOpen={false}>
+    An enterprise-optimized flagship model focused on high-throughput, reliability, and precision in instruction following.
+
+    **Use Cases:**
+    - Real-world software engineering (Excel at code diffs)
+    - Extracting insights from 1M+ token documents
+    - Predictable, low-latency business workflows
+
+    **Highlights:**
+    - Massively expanded 1M token context window
+    - Significantly better at "Format Following" (JSON, XML, YAML)
+    - Half the latency of GPT-4o for complex tasks
+  </Accordion>
+
+  <Accordion title="GPT-4o" defaultOpen={false}>
+    A versatile, multimodal model designed for natural, real-time human-computer interaction.
+
+    **Use Cases:**
+    - Real-time voice translation and customer support
+    - Interactive video analysis and vision-based troubleshooting
+    - Multimodal RAG applications
+
+    **Highlights:**
+    - Sub-320ms latency for audio/visual inputs
+    - "Omni" architecture (handles text, audio, and images natively)
+    - Balanced performance across 50+ languages
+  </Accordion>
+
+  <Accordion title="GPT-4o-mini" defaultOpen={false}>
+    The most cost-efficient and fastest small model in the GPT-4o family.
+
+    **Use Cases:**
+    - Lightweight chatbots and simple Q&A
+    - Basic sentiment analysis and text classification
+    - Rapid prototyping of AI-powered features
+
+    **Highlights:**
+    - Over 60% cheaper than GPT-3.5 Turbo
+    - Faster than its larger counterpart for text-only tasks
+    - Supports the same 128K context window as the flagship
+  </Accordion>
+</AccordionGroup>
+
+> 💡 **Recommendation:** Use **GPT-5** for complex autonomous agents, **o3/o4-mini** for heavy logic or math, and **GPT-4.1** for long-document analysis and coding tasks.

@@ -1,0 +1,49 @@
+---
+title: "Delete Session"
+sidebarTitle: "Delete Session"
+description: "Clear all messages and memories from a session"
+---
+
+The `delete_session()` method removes all messages and extracted memories for a specific session. Use it for GDPR compliance, user data cleanup, or resetting a conversation.
+
+## Basic Usage
+
+```python
+from lyzr import Cognis
+
+cog = Cognis()
+
+success = cog.delete_session(
+    owner_id="user_alice",
+    session_id="sess_001",
+    agent_id="support_bot",  # optional
+)
+print(success)  # True
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner_id` | `str` | Yes | User/tenant identifier |
+| `session_id` | `str` | Yes | Session to delete |
+| `agent_id` | `str` | No | Agent scope (if memories are agent-scoped) |
+
+## What Gets Deleted
+
+- All raw messages stored in this session
+- All memories extracted from this session's messages
+- Session summaries associated with this session
+
+## Async
+
+```python
+success = await cog.adelete_session(
+    owner_id="user_alice",
+    session_id="sess_001",
+)
+```
+
+<Note>
+The open-source equivalent is `m.clear(session_id="sess_001")` which clears memories scoped to a session.
+</Note>

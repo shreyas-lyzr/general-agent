@@ -1,0 +1,74 @@
+# Memory Management API Documentation
+
+## 1. Introduction
+Memory management in AI agents is essential for maintaining context across interactions. It ensures that the AI can remember previous conversations, user preferences, and contextual information, improving user experience and response accuracy.
+
+## 2. Memory Types
+Lyzr agents support two types of memory:
+
+### a) Long-Term Memory
+- **Purpose**: Stores persistent user interactions over extended periods.
+- **Use Case**: Helps the agent remember user preferences, past interactions, and historical context across multiple sessions.
+- **Behavior**: Retains memory beyond a single conversation, ensuring the AI can build on past interactions.
+- **JSON Configuration:**
+  ```json
+  {
+    "type": "LONG_TERM_MEMORY",
+    "config": {},
+    "priority": 0
+  }
+  ```
+
+### b) Short-Term Memory
+- **Purpose**: Stores session-based information to maintain contextual flow within an ongoing conversation.
+- **Use Case**: Enables better conversation coherence within a single interaction.
+- **Behavior**: Memory resets after a session ends, meaning it is temporary and does not persist across sessions.
+- **JSON Configuration:**
+  ```json
+  {
+    "type": "SHORT_TERM_MEMORY",
+    "config": {},
+    "priority": 0
+  }
+  ```
+
+## 3. Example Usage
+### Implementing Memory in an AI Agent
+When creating an AI agent, memory can be configured as follows:
+
+```json
+{
+  "name": "Fitness Coach",
+  "description": "AI-powered fitness assistant providing workout plans, nutrition advice, and recovery tips.",
+  "agent_role": "You are an Expert FITNESS ASSISTANT.",
+  "agent_instructions": "You are an Expert FITNESS ASSISTANT. Your task is to PROVIDE the BEST POSSIBLE EXERCISE SUGGESTIONS and FITNESS guidance to help customers achieve their fitness goals.",
+  "features": [
+    {
+      "type": "LONG_TERM_MEMORY",
+      "config": {},
+      "priority": 0
+    },
+    {
+      "type": "SHORT_TERM_MEMORY",
+      "config": {},
+      "priority": 0
+    }
+  ],
+  "tool": "",
+  "tool_usage_description": "",
+  "provider_id": "OpenAI",
+  "model": "gpt-4o-mini",
+  "temperature": "0.7",
+  "top_p": "0.9",
+  "llm_credential_id": "lyzr_openai",
+  "examples": ""
+}
+```
+
+### Explanation of the Example
+- **Long-Term Memory**: Ensures the AI remembers user preferences over time, such as fitness goals and past workout routines.
+- **Short-Term Memory**: Allows the AI to maintain context within a single session, like remembering exercises discussed within a conversation.
+- **Practical Use**: If a user asks, "What workout should I do today?", the AI can provide personalized suggestions based on their history (long-term memory). If the user follows up with, "Can you modify it for a knee injury?", the AI will retain session-specific adjustments (short-term memory).
+
+This configuration ensures a seamless and intelligent user experience in fitness coaching or any other AI-driven assistant application.
+

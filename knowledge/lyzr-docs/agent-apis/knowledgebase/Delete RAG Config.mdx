@@ -1,0 +1,44 @@
+---
+title: Delete RAG Configuration
+openapi: delete /v3/rag/{config_id}/
+---
+
+### Description
+Deletes an existing Rag configuration by its ID.
+
+### Endpoint
+**DELETE** `/v3/rag/{config_id}/`
+
+### Authentication
+API Key (`x-api-key`) must be included in the request headers.
+
+### Path Parameters
+
+| Parameter   | Type   | Description                       |
+|-------------|--------|---------------------------------|
+| `config_id` | string | Unique identifier of the Rag config to delete. |
+
+### Response
+
+| Code | Description           |
+|------|-----------------------|
+| 200  | Successful Response    |
+| 422  | Validation Error      |
+
+### Response Body Example (200)
+
+```json
+{
+  "success": true
+}
+
+```
+
+```bash
+
+curl -X DELETE "https://rag-dev.test.studio.lyzr.ai/v3/rag/{config_id}/" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-EXAMPLEKEY123"
+
+
+```

@@ -1,0 +1,29 @@
+---
+title: "List Session Traces"
+openapi: get /traces/session/{sessionId}
+---
+
+Retrieve deep observability metrics and execution traces for a specific voice session.
+
+Powered by our Langfuse integration, traces provide a "under the hood" look at exactly what your Voice Agent was thinking and doing during a conversation. This endpoint is vital for debugging slow response times, auditing prompt logic, and tracking your exact LLM token costs per call.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request. You can only view traces for sessions within your authorized scope.
+</Info>
+
+### Required Parameters & Pagination
+
+* **`sessionId` (Path Parameter):** The unique UUID of the LiveKit session you want to inspect.
+
+Because a single session might generate many internal traces (e.g., one for STT, one for LLM reasoning, one for TTS generation), this endpoint is paginated using query parameters:
+* **`page`**: The specific page of results you want to fetch (defaults to 1).
+* **`limit`**: How many trace objects to return per page.
+
+### Understanding the Trace Payload
+
+A successful request returns a list of trace objects and pagination metadata. Each trace in the `traces` array contains actionable insights:
+
+* **`latencySeconds`**: Exactly how long this specific generation or action took. If your agent is responding slowly, look for spikes here to identify the bottleneck.
+* **`totalCostUsd`**: The calculated cost of the tokens consumed during this trace, allowing you to monitor unit economics on a per-call basis.
+* **`observationCount`**: The number of individual steps or spans recorded within this trace.
+* **`htmlPath`**: A highly useful localized path or URL you can use to visualize the trace in a graphical UI (if supported by your dashboard implementation).

@@ -1,0 +1,81 @@
+---
+title: Components
+sidebarTitle: Components
+description: Understanding the core components of Lyzr’s agent framework and Studio.
+---
+
+Lyzr’s power comes from its modular and flexible architecture, enabling developers and enterprises to build sophisticated AI agents quickly. Below are the essential components that make up the Lyzr ecosystem:
+
+## 1. Agent Builder
+
+The **Agent Builder** is the heart of Lyzr Studio where you create and configure AI agents. It provides a user-friendly interface to:
+
+- Define agent **name** and **description** for easy identification and purpose clarity  
+- Select and configure **LLM models** from a broad provider list (OpenAI, Claude, Google, and more)  
+- Set the **agent role** and **instructions**, guiding the agent’s behavior and output style  
+- Optionally add **tools** to extend agent capabilities, such as sending emails, fetching data, or integrating with external systems  
+- Attach **knowledge bases** for domain-specific information, enhancing the agent’s accuracy and relevance  
+- Choose from a variety of **features** to customize agent behavior and performance  
+
+## 2. Knowledge Base
+
+The **Knowledge Base** is a repository of structured and unstructured data that agents use to answer questions and provide informed responses. It supports:
+
+- Integration with documents, databases, and custom content  
+- RAG (Retrieval-Augmented Generation) pipelines to fetch and generate accurate answers  
+- Citation of source documents, ensuring transparency and trustworthiness  
+
+## 3. Tools
+
+Tools are modular functions or APIs that your agent can invoke to perform specific tasks beyond text generation. Examples include:
+
+- Sending emails  
+- Performing calculations  
+- Querying external databases or APIs  
+- Executing workflow commands  
+
+Adding tools makes agents actionable and increases their utility in real-world scenarios.
+
+## 4. Features
+
+Lyzr offers a rich set of optional features to enhance your agent’s capabilities:
+
+- Memory management for short-term and long-term context retention  
+- Reinforcement Learning with Human Feedback (RLHF) to continuously improve agent behavior  
+- Multi-LLM switching for optimized performance and cost-efficiency  
+- Safety filters and Responsible AI controls integrated into inference pipelines  
+
+## 5. Multi-Agent Orchestration
+
+Lyzr supports advanced orchestration of multiple agents working collaboratively via:
+
+- **Directed Acyclic Graph (DAG) orchestration**: Ideal for workflows with clearly defined task dependencies  
+- **Managerial orchestration**: Adaptive, goal-driven orchestration where a manager agent dynamically assigns subtasks and monitors progress  
+
+This enables complex automation workflows and multi-step AI processes with traceability and fault tolerance.
+
+## 6. Lyzr Studio
+
+The **Studio** is a visual, low-code platform for building, testing, and managing your AI agents. Key capabilities include:
+
+- Intuitive agent builder UI with drag-and-drop tools and configuration options  
+- Real-time agent testing console to simulate interactions  
+- Management dashboards for monitoring agent performance, event logs, and usage metrics  
+- Access to AI Academy for training and upskilling your team on generative AI  
+
+## 7. REST API
+
+For developers and enterprises requiring programmatic control, Lyzr offers a comprehensive **REST API** enabling:
+
+- Agent creation, modification, and deletion  
+- Running inference calls and streaming responses  
+- Managing knowledge bases and tools  
+- Monitoring agent usage and health  
+
+This API-first approach facilitates seamless integration of AI agents into existing software systems and workflows.
+
+---
+
+Together, these components form a robust and extensible foundation to build, deploy, and manage secure, scalable, and responsible AI applications using Lyzr.
+
+For detailed guidance on how to use these components in practice, please refer to the [How to Use](./how-to-use.md) section.

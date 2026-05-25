@@ -1,0 +1,181 @@
+---
+title: "Knowledge Graph"
+sidebarTitle: "Knowledge Graph Studio"
+---
+
+
+## Conceptual Overview
+
+The Knowledge Graph in Lyzr enables highly accurate, deeply contextual question answering by mapping and maintaining relationships between entities across your documents. It uses a graph database (Neo4J) to semantically link information, turning isolated data chunks into a connected web of knowledge.
+
+This allows the system to understand not just **what** is said, but **how** different concepts and entities relate—unlocking powerful reasoning capabilities for your agents.
+
+### What is a Knowledge Graph?
+
+A Knowledge Graph is a structured representation of data where entities (like people, places, concepts, etc.) are nodes, and the relationships between them are edges. In Lyzr, this graph is automatically constructed from your documents using:
+
+- Named Entity Recognition (NER)
+- Relationship Extraction
+- Custom Domain Ontologies (optional)
+
+Once ingested and connected in Neo4J, the Knowledge Graph can answer multi-hop and context-heavy queries far beyond the capability of traditional RAG pipelines.
+![](../../../assets/images/studio/kg5.png)
+### Why Use a Knowledge Graph?
+
+While vector-based RAG systems are excellent at surface-level retrieval, they struggle with:
+
+- Cross-document reasoning
+- Entity disambiguation
+- Relationship-based navigation
+- Long-context memory
+
+The Knowledge Graph complements traditional RAG with structural reasoning and is ideal when your questions require deep understanding, such as:
+
+- "How does the approval process work across departments?"
+- "Which tools are linked to a specific use case?"
+- "What dependencies exist between tasks or agents?"
+
+## Core Workflow
+
+1. **Ingestion**: Upload unstructured data (e.g., PDFs, DOCX, TXT, web URLs) to Lyzr.
+2. **Extraction**:
+   - Identify entities and their relationships using NLP.
+   - Construct a graph schema dynamically.
+3. **Graph Construction**:
+   - Store nodes and edges in Neo4J.
+   - Maintain bidirectional and typed relationships.
+4. **Query Interface**:
+   - Users or agents ask questions.
+   - System translates queries into Cypher or traverses graph paths to extract relevant subgraphs.
+5. **Answer Generation**:
+   - Graph insights are used alongside language models to produce rich, precise responses.
+
+## Key Components
+
+| Component             | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| Entity Nodes          | Real-world concepts, objects, or people identified in your data             |
+| Relationships         | Descriptive links between nodes (e.g., “uses”, “belongs to”, “managed by”)  |
+| Neo4J Integration     | High-performance, native graph database to store and traverse the knowledge |
+| Contextual Retrieval  | Questions resolve into graph walks rather than isolated embeddings          |
+| Hybrid RAG Strategy   | Combines graph-based insights with LLM generation for best-in-class results |
+
+## Benefits
+
+- **High Accuracy**: The structured graph minimizes hallucinations in long or complex queries.
+- **Deep Reasoning**: Agents can understand multi-hop relationships across data silos.
+- **Dynamic Updates**: Graphs evolve as new data is added or relationships change.
+- **Visual Exploration**: Neo4J allows visual navigation for data analysts and builders.
+- **LLM Synergy**: Graph context acts as a factual backbone for AI-driven conversations.
+
+## Ideal Use Cases
+
+- Knowledge-heavy enterprises (e.g., legal, healthcare, policy)
+- Cross-functional documentation
+- Process and workflow mapping
+- Research papers with references and citations
+- Any domain with strong semantic structure or entity-based navigation
+
+## AI-Powered Navigation
+
+The Knowledge Graph transforms static documents into an intelligent, connected web of meaning. It elevates Lyzr's AI from just **retrieving** information to truly **understanding** it—paving the way for advanced enterprise reasoning and explainability.
+
+
+Lyzr Studio’s **Knowledge Graph** empowers you to transform unstructured documents into deeply connected semantic networks — enabling advanced reasoning and multi-hop question answering. This is ideal when your domain requires relationship-based understanding beyond simple retrieval.
+
+---
+
+## 1. Choose Knowledge Base Type
+
+Start by selecting **Knowledge Graph** as the type when creating a new Knowledge Base. This will activate Lyzr’s graph-building and Neo4J integration features.
+
+![](../../../assets/images/studio/kg1.png)
+
+Knowledge Graphs are ideal for content where relationships between concepts, people, tools, or processes are important (e.g., legal documents, SOPs, or technical documentation).
+
+---
+
+## 2. Prerequisite: Set Up a Neo4J Account
+
+Before using the Knowledge Graph feature, you must configure a Neo4J database instance. Follow these steps:
+
+### Create a Neo4J Aura Account (Cloud)
+
+1. Visit [https://neo4j.com/cloud](https://neo4j.com/cloud) and sign up for a **Neo4J Aura** free or paid account.
+2. Create a new **project** and launch a **free-tier database**.
+3. Once created, copy the following credentials from your Neo4J dashboard:
+   - **URI** (e.g., `neo4j+s://yourdb.neo4j.io`)
+   - **Username**
+   - **Password**
+4. You can test the connection directly inside the Neo4J Console to ensure it works.
+
+> **Tip:** Use the free tier during development. Upgrade only when you scale.
+
+---
+
+## 3. Configure Neo4J in Lyzr
+
+Once your Neo4J instance is ready:
+
+1. Go to **Studio > Data Connectors**.
+2. Click **Create New**.
+3. Select **Neo4J** from the list of database types.
+4. Enter:
+   - **Name** (e.g., "My Knowledge Graph DB")
+   - **URI**, **Username**, and **Password** from your Neo4J account.
+
+Lyzr will now be able to construct and manage a graph-based semantic layer using this connection.
+
+---
+
+## 4. Upload and Parse Documents
+
+Next, upload your documents or text files. Supported formats include:
+
+- PDF, DOCX, TXT, Markdown
+- Multiple files can be uploaded at once
+
+Lyzr will automatically:
+- Parse content using intelligent NLP techniques
+- Identify entities and their types
+- Extract semantic relationships (e.g., "Person A manages Team B", "Tool X is used for Task Y")
+
+---
+
+## 5. Graph Construction and Storage
+
+Using the parsed content and connected Neo4J backend:
+
+- **Entities** become nodes in the graph (e.g., people, tools, organizations).
+- **Relationships** are modeled as typed edges with directionality.
+- The resulting graph is stored in Neo4J and visualizable through native tools.
+
+This structure enables complex reasoning and dynamic query resolution.
+
+---
+
+## 6. Query the Knowledge Graph
+
+Once built, your KB can be queried via agents or directly from Studio.
+
+- Use natural language (e.g., “Which tools are used in the product launch process?”).
+- Lyzr translates queries into graph traversals using Cypher (Neo4J query language).
+- Results can span across multiple documents and entities.
+
+> Compared to traditional RAG, this method ensures **higher accuracy** and **semantic depth**.
+
+---
+
+## Summary
+
+| Feature                     | Description                                                            |
+|----------------------------|------------------------------------------------------------------------|
+| Neo4J Integration           | Link to a cloud-hosted or self-managed graph database.                 |
+| Relationship-Aware Parsing | Automatically detect and map entities + their relationships.           |
+| Multi-Hop Query Support     | Resolve complex questions across document relationships.               |
+| Visual Graph Inspection     | Leverage Neo4J's visual tools for debugging and exploration.           |
+| Ideal Use Case              | Policy docs, technical workflows, org charts, process documents.       |
+
+---
+
+The **Knowledge Graph** KB elevates your AI agents from basic retrieval to **knowledge reasoning** — making them capable of navigating context-rich, connected data spaces effortlessly.

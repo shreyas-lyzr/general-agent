@@ -1,0 +1,150 @@
+---
+title: "Multimodal Chat Inference v3"
+sidebarTitle: "Multimodal API"
+description: "Use multimodal assets (PDFs, DOCXs, images) in conversations with Lyzr Agents."
+---
+
+The **Multimodal Inference API** enables rich, intelligent conversations with AI agents by combining text input with contextual understanding from uploaded assets (PDFs, DOCX, and images).
+
+You can:
+- Chat naturally with an agent
+- Provide documents or images as input (via asset IDs)
+- Receive responses that incorporate those files
+
+---
+
+## 🔁 Endpoint
+
+### `POST /v3/inference/chat/`
+
+Initiates or continues a chat with an AI agent. The agent can use uploaded assets for context, making this a multimodal interaction.
+
+---
+
+## 📥 Request
+
+### Headers
+
+| Key | Value |
+|-----|-------|
+| Accept | application/json |
+| Content-Type | application/json |
+
+### Body Parameters
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | string | User identifier |
+| `agent_id` | string | ID of the agent to chat with |
+| `session_id` | string | Unique identifier to track session |
+| `message` | string | User's message to the agent |
+| `assets` | array | List of asset IDs (PDFs, DOCXs, Images) |
+
+### Sample Request
+
+```json
+{
+  "user_id": "default_user",
+  "agent_id": "research_agent_001",
+  "session_id": "abc123-session-xyz",
+  "message": "Summarize the attached document.",
+  "assets": ["6fefwfw84930dfe", "6fewfwf12023ab"]
+}
+```
+
+---
+
+## 📤 Response
+
+### 200 OK
+
+```json
+{
+  "status": "success",
+  "agent_response": "The attached document discusses...",
+  "session_id": "abc123-session-xyz",
+  "agent_id": "research_agent_001"
+}
+```
+
+---
+
+## 🔍 Multimodal Use Case Examples
+
+### 1. Ask Questions About a PDF
+
+```json
+{
+  "message": "What are the key takeaways from this research paper?",
+  "assets": ["asset_923fdf21"]
+}
+```
+
+### 2. Describe an Image
+
+```json
+{
+  "message": "What is in this image?",
+  "assets": ["asset_image8921"]
+}
+```
+
+### 3. Reference Multiple Files
+
+```json
+{
+  "message": "Compare the information in these two reports.",
+  "assets": ["asset_q1_report", "asset_q2_report"]
+}
+```
+
+---
+
+## 📎 How to Get `asset_id`s
+
+To use the `assets` field, first upload your files via:
+
+### `POST /v3/assets/upload`
+
+Get `asset_id` from the response and include it in your chat inference call.
+
+---
+
+## 🧠 Tips
+
+- Keep using the same `session_id` to maintain context in a chat.
+- Agents can handle multiple file types in a single request.
+- Files are securely stored and accessible only by the authenticated user.
+
+---
+
+## 🧪 Python Example
+
+```python
+import requests
+import uuid
+
+url = "https://agent-prod.studio.lyzr.ai/v3/inference/chat/"
+headers = {
+    "accept": "application/json",
+    "Content-Type": "application/json"
+}
+payload = {
+    "user_id": "default_user",
+    "agent_id": "my_agent_01",
+    "session_id": str(uuid.uuid4()),
+    "message": "Summarize this document.",
+    "assets": ["your_asset_id_here"]
+}
+response = requests.post(url, headers=headers, json=payload)
+print(response.json())
+```
+
+---
+
+## 🚫 Errors
+
+| Code | Meaning | Reason |
+|------|---------|--------|
+| 422 | Validation Error | Missing required fields or bad asset ID |
+| 500 | Internal Server Error | API failed to process due to an issue |

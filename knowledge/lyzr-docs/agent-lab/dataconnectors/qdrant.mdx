@@ -1,0 +1,48 @@
+---
+title: Qdrant Vector Store
+sidebarTitle: Qdrant
+---
+
+### **Connecting Qdrant Vector Store**
+
+Lyzr allows you to seamlessly integrate with Qdrant, a high-performance vector database, to manage and retrieve your high-dimensional data. By connecting your Qdrant cluster, your agents gain the ability to perform efficient similarity searches and maintain a robust knowledge base.
+
+---
+
+### **Configuration & Connection**
+
+To establish a connection between Lyzr and Qdrant, you will need to provide credentials from your Qdrant Cloud dashboard:
+
+* **Unique Name:** Assign a recognizable name to this connection (e.g., "Production_Vectors") to identify it within the Lyzr platform.
+* **Vector Store API Key:** This is your secure access token. It ensures that only authorized applications can interact with your database.
+* **Vector Store URL:** The specific endpoint (Cluster URL) where your Qdrant instance is hosted.
+
+---
+
+### **Retrieving Your Credentials**
+
+Follow these steps within your Qdrant Cloud account to find the required information:
+
+#### **1. Creating a Cluster**
+If you haven't already, you must create a cluster. You can choose between a **Free Cluster** for testing or a **Dedicated Cluster** for production-ready environments with high availability.
+![Create Qdrant Cluster](../../../assets/images/studio/qdran2.png)
+*Figure 1: The Qdrant Cloud dashboard for cluster creation.*
+
+#### **2. Obtaining the Endpoint and API Key**
+Once your cluster (e.g., "trial") is active, generate an API key. Qdrant will display both the **API Key** and the **Cluster Endpoint** simultaneously.
+> **Note:** Ensure you copy and store your API Key immediately, as it cannot be accessed in full length again after closing the dialog.
+
+![API Key and Endpoint details](../../../assets/images/studio/qdran3.png)
+*Figure 2: Viewing the API Key and Cluster Endpoint in Qdrant Cloud.*
+
+---
+
+### **Finalizing the Connection**
+
+Input the gathered details into the Lyzr connection modal to authorize the link.
+
+![Lyzr Qdrant Connection Modal](../../../assets/images/studio/qdran0.png)
+*Figure 3: Entering Qdrant credentials into the Lyzr interface.*
+
+* **Status:** Upon clicking **Submit**, Lyzr will attempt to verify the connection. A successful connection allows you to begin indexing documents immediately.
+* **Data Privacy:** By connecting your store, ensure your documents do not contain sensitive personal data unless compliant with applicable data protection laws.

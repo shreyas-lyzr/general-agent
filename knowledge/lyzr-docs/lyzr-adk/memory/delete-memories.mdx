@@ -1,0 +1,113 @@
+---
+title: "Delete Memories"
+sidebarTitle: "Delete Memories"
+description: "Remove individual memories or clear entire sessions from Cognis"
+---
+
+Cognis provides two deletion methods: `delete()` removes a single memory by ID, and `delete_session()` clears all messages and memories from an entire session.
+
+## Delete a Single Memory
+
+```python
+from lyzr import Cognis
+
+cog = Cognis(api_key="sk-your-api-key")
+
+success = cog.delete(memory_id="mem_abc123")
+print(success)  # True
+```
+
+### `delete()` Method Signature
+
+```python
+cog.delete(
+    memory_id: str,
+    owner_id: str | None = None,
+) -> bool
+```
+
+### `delete()` Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `memory_id` | `str` | Yes | The ID of the memory to delete. |
+| `owner_id` | `str` | No | Owner identifier for additional scoping. |
+
+### Response
+
+Returns `True` if the memory was successfully deleted.
+
+## Delete an Entire Session
+
+Remove all messages and memories associated with a session:
+
+```python
+success = cog.delete_session(
+    owner_id="user_alice",
+    session_id="sess_001",
+)
+print(success)  # True
+```
+
+### `delete_session()` Method Signature
+
+```python
+cog.delete_session(
+    owner_id: str,
+    session_id: str,
+    agent_id: str | None = None,
+) -> bool
+```
+
+### `delete_session()` Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `owner_id` | `str` | Yes | Owner/user identifier. |
+| `session_id` | `str` | Yes | Session identifier to clear. |
+| `agent_id` | `str` | No | Agent identifier to further scope the deletion. |
+
+### Response
+
+Returns `True` if the session was successfully cleared.
+
+## Search and Delete Workflow
+
+A common pattern is to search for a memory, then delete it:
+
+```python
+# Find the memory
+results = cog.search(query="outdated preference", owner_id="user_alice")
+
+if results:
+    memory_id = results[0].id
+    print(f"Deleting: {results[0].content}")
+
+    # Delete it
+    cog.delete(memory_id=memory_id, owner_id="user_alice")
+    print("Deleted successfully")
+```
+
+## Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        # Delete a single memory
+        await cog.adelete(memory_id="mem_abc123")
+
+        # Clear an entire session
+        await cog.adelete_session(
+            owner_id="user_alice",
+            session_id="sess_001",
+        )
+
+asyncio.run(main())
+```
+
+<Warning>
+Deletion is irreversible. Once a memory or session is deleted, it cannot be recovered. Consider searching and reviewing memories before deleting them.
+</Warning>

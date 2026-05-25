@@ -1,0 +1,44 @@
+---
+title: "Cognis Memory Cookbooks"
+sidebarTitle: "Overview"
+description: "Integration guides for adding persistent memory to your AI agents"
+---
+
+Step-by-step guides for integrating Cognis memory with popular agent frameworks. Each cookbook includes working code for both the **hosted** (lyzr-adk) and **open-source** (lyzr-cognis) versions.
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card title="Your First Memory" icon="rocket" href="/cognis/cookbooks/getting-started">
+    Add, search, and retrieve memories in 3 minutes. Covers both hosted and open-source.
+  </Card>
+  <Card title="Hosted vs Open Source" icon="code-compare" href="/cognis/comparison">
+    Not sure which version to use? Compare features, APIs, and trade-offs.
+  </Card>
+</CardGroup>
+
+## Framework Integrations
+
+<CardGroup cols={2}>
+  <Card title="Cognis + CrewAI" icon="users" href="/cognis/cookbooks/cognis-crewai">
+    Inject user preferences into multi-agent crew backstories and store results for future runs.
+  </Card>
+  <Card title="Cognis + Agno" icon="robot" href="/cognis/cookbooks/cognis-agno">
+    Expose memory as tools that agents autonomously decide when to use.
+  </Card>
+  <Card title="Cognis + LangGraph" icon="diagram-project" href="/cognis/cookbooks/cognis-langgraph">
+    Memory as graph nodes in a retrieve → respond → store pipeline.
+  </Card>
+  <Card title="Cognis + LangChain" icon="link" href="/cognis/cookbooks/cognis-langchain">
+    LCEL chain integration with memory injection via MessagesPlaceholder.
+  </Card>
+</CardGroup>
+
+## Integration Patterns
+
+| Framework | Pattern | Description |
+|-----------|---------|-------------|
+| CrewAI | Manual injection | Retrieve → inject into backstory → run crew → store results |
+| Agno | Tool-based | Memory ops as `@tool` decorators; agent decides when to use |
+| LangGraph | Graph nodes | Dedicated nodes for retrieve/store in explicit control flow |
+| LangChain | LCEL chains | Memory retrieval as prompt injection; store after chain execution |

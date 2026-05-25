@@ -1,0 +1,172 @@
+---
+title: "Add Memories"
+sidebarTitle: "Add Memories"
+description: "Store conversation messages into Cognis memory"
+---
+
+The `add` method stores conversation messages into memory. Cognis automatically extracts key facts, preferences, and context from the messages and stores them as discrete, searchable memory records.
+
+## Basic Usage
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis
+
+    cog = Cognis(api_key="sk-your-api-key")
+
+    result = cog.add(
+        messages=[
+            {"role": "user", "content": "My name is Alice and I work at Acme Corp."},
+            {"role": "assistant", "content": "Nice to meet you, Alice! What do you do at Acme Corp?"},
+        ],
+        owner_id="user_alice",
+    )
+
+    print(result)
+    # {"success": True, "session_id": "..."}
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    result = m.add([
+        {"role": "user", "content": "My name is Alice and I work at Acme Corp."},
+        {"role": "assistant", "content": "Nice to meet you, Alice! What do you do at Acme Corp?"},
+    ])
+
+    print(result)
+    # {"success": True, "message": "Extracted 2 memories from 2 messages", ...}
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+## Method Signature
+
+```python
+cog.add(
+    messages: List[Dict[str, str] | CognisMessage],
+    owner_id: str | None = None,
+    agent_id: str | None = None,
+    session_id: str | None = None,
+) -> Dict[str, Any]
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `messages` | `List[Dict[str, str] \| CognisMessage]` | Yes | List of conversation messages. Each message must have `role` and `content` keys. |
+| `owner_id` | `str` | No* | Owner/user identifier for scoping memories. |
+| `agent_id` | `str` | No* | Agent identifier for scoping memories. |
+| `session_id` | `str` | No* | Session identifier for scoping memories. |
+
+<Note>
+*At least one of `owner_id`, `agent_id`, or `session_id` must be provided.
+</Note>
+
+## Response
+
+Returns a dictionary with operation results:
+
+```json
+{
+  "success": true,
+  "session_id": "sess_abc123",
+  "memories_created": 2
+}
+```
+
+## Using CognisMessage Objects
+
+Instead of plain dictionaries, you can use `CognisMessage` objects for type safety:
+
+```python
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis(api_key="sk-your-api-key")
+
+result = cog.add(
+    messages=[
+        CognisMessage(role="user", content="I prefer dark mode in all apps."),
+        CognisMessage(role="assistant", content="Noted! I'll keep that preference in mind."),
+    ],
+    owner_id="user_alice",
+)
+```
+
+## Multi-Turn Conversations
+
+You can add longer conversations with multiple message pairs:
+
+```python
+result = cog.add(
+    messages=[
+        {"role": "user", "content": "I'm working on a Python project."},
+        {"role": "assistant", "content": "What kind of project?"},
+        {"role": "user", "content": "A REST API using FastAPI."},
+        {"role": "assistant", "content": "FastAPI is a great choice!"},
+        {"role": "user", "content": "I need help with authentication."},
+        {"role": "assistant", "content": "I'd recommend using OAuth2 with JWT tokens."},
+    ],
+    owner_id="user_alice",
+    session_id="project_session",
+)
+```
+
+## Scoping with Multiple Identifiers
+
+Combine identifiers for fine-grained memory scoping:
+
+```python
+# User + agent scoped
+cog.add(
+    messages=messages,
+    owner_id="user_alice",
+    agent_id="support_bot",
+)
+
+# User + session scoped
+cog.add(
+    messages=messages,
+    owner_id="user_alice",
+    session_id="sess_001",
+)
+
+# All three identifiers
+cog.add(
+    messages=messages,
+    owner_id="user_alice",
+    agent_id="support_bot",
+    session_id="sess_001",
+)
+```
+
+## Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        result = await cog.aadd(
+            messages=[
+                {"role": "user", "content": "I love hiking on weekends."},
+                {"role": "assistant", "content": "That sounds fun!"},
+            ],
+            owner_id="user_alice",
+        )
+        print(result)
+
+asyncio.run(main())
+```
+
+<Tip>
+Send messages in natural conversation pairs (user/assistant) for best memory extraction. The service extracts facts from context, so richer conversations produce more useful memories.
+</Tip>

@@ -1,0 +1,28 @@
+---
+title: "Toggle Tool"
+openapi: patch /tools/{tool_id}
+---
+### Description
+Enable or disable a tool dynamically.
+
+### Endpoint
+**PATCH** `/v3/tools/{tool_id}`
+
+### Authentication
+API Key (x-api-key) must be included in the header.
+
+### Path Parameters
+- `tool_id` (string) - The ID of the tool to update.
+
+### Query Parameters
+- `enabled` (boolean) - Set `true` to enable or `false` to disable the tool.
+
+### Response
+A message confirming that the tool was updated.
+
+### Example Request
+```sh
+curl -X PATCH "https://agent-prod.studio.lyzr.ai/v3/tools/tool_id?enabled=1" ^
+-H "accept: application/json" ^
+-H "x-api-key: sk-default-EXAMPLEKEY123"
+```

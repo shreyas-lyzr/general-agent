@@ -1,0 +1,232 @@
+---
+title: "API Reference"
+sidebarTitle: "API Reference"
+description: "Complete method signatures and return types for the open-source Cognis class"
+---
+
+## Cognis Class
+
+```python
+from cognis import Cognis
+
+m = Cognis(
+    gemini_api_key="...",       # Optional — falls back to $GEMINI_API_KEY
+    owner_id="user_1",          # At least one of owner_id/agent_id/session_id required
+    agent_id=None,
+    session_id=None,            # Auto-generated if not provided
+    data_dir="~/.cognis",
+    config=None,                # Optional CognisConfig
+)
+```
+
+## Core Methods
+
+All methods accept optional `owner_id`, `agent_id`, `session_id` overrides per call.
+
+### `add(messages, ...)`
+
+Store messages and extract memories. The LLM extracts facts, deduplicates against existing memories, and indexes them.
+
+```python
+result = m.add(
+    messages=[
+        {"role": "user", "content": "I work at Google."},
+        {"role": "assistant", "content": "That's great!"},
+    ],
+    owner_id=None,      # Override instance owner_id
+    agent_id=None,      # Override instance agent_id
+    session_id=None,    # Override instance session_id
+)
+```
+
+**Returns:**
+```python
+{
+    "success": True,
+    "message": "Extracted 2 memories from 2 messages",
+    "session_message_count": 2,
+    "memories": [
+        {"memory_id": "...", "content": "User works at Google", "metadata": {...}},
+    ],
+}
+```
+
+---
+
+### `search(query, limit, ...)`
+
+Hybrid RRF search across extracted memories and session messages.
+
+```python
+resp = m.search(
+    query="Where does the user work?",
+    limit=10,           # Default: 10
+    owner_id=None,
+    agent_id=None,
+    session_id=None,
+)
+```
+
+**Returns:**
+```python
+{
+    "success": True,
+    "results": [
+        {"memory_id": "...", "content": "User works at Google", "score": 0.87, ...},
+    ],
+    "count": 1,
+    "query": "Where does the user work?",
+}
+```
+
+---
+
+### `get(memory_id, owner_id)`
+
+Get a single memory by ID.
+
+```python
+resp = m.get(memory_id="mem_abc123", owner_id=None)
+```
+
+**Returns:**
+```python
+{"success": True, "memory": {"memory_id": "...", "content": "...", ...}}
+# or
+{"success": False, "memory": None}
+```
+
+---
+
+### `get_all(limit, offset, ...)`
+
+List all memories for the owner/agent.
+
+```python
+resp = m.get_all(
+    limit=100,              # Default: 100
+    offset=0,               # Default: 0
+    owner_id=None,
+    agent_id=None,
+    include_historical=False,  # Include superseded versions
+)
+```
+
+**Returns:**
+```python
+{
+    "success": True,
+    "memories": [{"memory_id": "...", "content": "...", "metadata": {...}}, ...],
+    "total": 42,
+    "limit": 100,
+    "offset": 0,
+}
+```
+
+---
+
+### `delete(memory_id, owner_id)`
+
+Delete a specific memory from both SQLite and Qdrant.
+
+```python
+resp = m.delete(memory_id="mem_abc123", owner_id=None)
+```
+
+**Returns:**
+```python
+{"success": True, "message": "Memory mem_abc123 deleted"}
+# or
+{"success": False, "message": "Memory mem_abc123 not found"}
+```
+
+---
+
+### `get_context(messages, ...)`
+
+Get LLM-ready context combining short-term session messages and long-term memories.
+
+```python
+ctx = m.get_context(
+    messages=[{"role": "user", "content": "Tell me about myself"}],  # Optional current turn
+    max_short_term=30,          # Max recent messages from session
+    include_long_term=True,     # Include semantic search results
+    owner_id=None,
+    agent_id=None,
+    session_id=None,
+)
+```
+
+**Returns:**
+```python
+{
+    "short_term": [{"role": "user", "content": "...", "timestamp": "..."}, ...],
+    "long_term": [{"memory_id": "...", "content": "...", "score": 0.87}, ...],
+    "short_term_count": 5,
+    "long_term_count": 3,
+    "context_string": "Relevant memories:\n- User works at Google\n- User loves hiking",
+}
+```
+
+---
+
+### `clear(owner_id, session_id)`
+
+Clear all memories. Optionally scoped to a session.
+
+```python
+resp = m.clear(owner_id=None, session_id=None)
+```
+
+**Returns:**
+```python
+{"success": True, "message": "Deleted 42 memories"}
+```
+
+---
+
+### `count(owner_id)`
+
+Count current memories for an owner.
+
+```python
+n = m.count(owner_id=None)  # Returns int
+```
+
+## Session Management Methods
+
+```python
+m.new_session()             # Generate a new session ID, returns the new ID
+m.set_session("ses_x")      # Switch to a different session
+m.set_owner("user_2")       # Switch owner
+m.set_agent("agent_2")      # Switch agent
+```
+
+### Properties
+
+```python
+m.session_id    # Current session ID
+m.owner_id      # Current owner ID
+m.agent_id      # Current agent ID
+```
+
+## Lifecycle
+
+```python
+m.close()       # Close SQLite + Qdrant connections (required)
+```
+
+Or use a context manager:
+
+```python
+with Cognis(owner_id="user_1") as m:
+    m.add([{"role": "user", "content": "Hello"}])
+# Automatically closed
+```
+
+## Scoping Rules
+
+- **Extracted memories** are global to `(owner_id, agent_id)` — persist across sessions
+- **Raw messages** are scoped to `(owner_id, agent_id, session_id)` — session-local
+- **Search** returns global memories + current session messages
+- **get_context** reads short-term from session, long-term globally

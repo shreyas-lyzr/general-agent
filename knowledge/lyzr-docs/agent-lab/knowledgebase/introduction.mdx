@@ -1,0 +1,121 @@
+---
+title: "Understanding Knowledge Systems in Lyzr"
+sidebarTitle: "Intro to Knowledge Stack"
+description: "A comprehensive overview of Lyzr's three core knowledge systems—Knowledge Base, Knowledge Graph, and Semantic Model—to help you choose the right tool for your agents and data."
+---
+
+Lyzr provides three powerful frameworks to structure, retrieve, and reason over your data:  
+**Knowledge Base**, **Knowledge Graph**, and **Semantic Model**. Each serves a specific purpose in enabling intelligent AI behavior for different kinds of information.
+
+This guide will help you understand what each system does, when to use it, and how they complement each other.
+
+---
+
+## 🔍 Knowledge Base (KB)
+
+The **Knowledge Base** is a retrieval-first system designed for **unstructured content** like PDFs, DOCX, TXT, or web pages. It breaks your documents into chunks, embeds them as vectors, and retrieves the most relevant pieces for LLMs to answer user queries.
+
+### Best for:
+- Domain-specific documents
+- FAQs, manuals, policy documents
+- Basic RAG (Retrieval-Augmented Generation) pipelines
+
+### How it works:
+1. **Chunking**: Splits documents into context-rich sections.
+2. **Vectorization**: Embeds chunks into a vector store (e.g., Pinecone, Qdrant).
+3. **Retrieval**: Finds top-matching chunks when a question is asked.
+4. **Generation**: LLM creates answers using retrieved content.
+
+### Benefits:
+- Quick setup with minimal preprocessing
+- Flexible retrieval strategies: Basic, MMR, HyDE
+- Works well with general text sources
+
+---
+
+## 🌐 Knowledge Graph
+
+The **Knowledge Graph** transforms your unstructured data into **structured, interconnected nodes and relationships**, allowing for advanced multi-hop reasoning and deeper understanding.
+
+Built on **Neo4J**, it excels in scenarios where relationships between concepts matter as much as the content itself.
+
+### Best for:
+- Complex interlinked content
+- Entity-centric domains (e.g., legal, healthcare, HR)
+- Cross-document or multi-hop questions
+
+### How it works:
+1. **NER & Relation Extraction**: Identifies entities and their links.
+2. **Graph Construction**: Builds a Neo4J graph with nodes & edges.
+3. **Graph Querying**: Enables traversal-based retrieval for LLMs.
+
+### Benefits:
+- High accuracy on relational queries
+- Low hallucination rate for complex reasoning
+- Visual exploration and traversal possible
+
+👉 Dive into the [Knowledge Graph Guide](../knowledge-graph) to learn more.
+
+---
+
+## 📊 Semantic Model
+
+The **Semantic Model** bridges the gap between **structured tabular data** (like SQL tables, CSVs) and **natural language understanding**. It enriches tables with human-readable descriptions so AI agents can explain, search, and query data effectively.
+
+### Best for:
+- Internal tools and analytics teams
+- AI assistants for data documentation
+- Natural language interfaces over databases
+
+### How it works:
+1. **Column-level Descriptions**: Auto-generates purpose for each column.
+2. **Table Summaries**: Explains what each table is about.
+3. **Vector Embedding**: Enables semantic search and natural language querying.
+
+### Benefits:
+- Makes raw tables understandable by humans and AI
+- Powers doc agents, RAG, and search over databases
+- No need for deep technical understanding of the schema
+
+👉 Explore the [Semantic Model Guide](../semantic-model) for setup details.
+
+---
+
+## 🧠 Choosing the Right Knowledge Tool
+
+| Use Case                              | Use this system         |
+|---------------------------------------|--------------------------|
+| General unstructured documents        | Knowledge Base (KB)     |
+| Questions about complex relationships | Knowledge Graph          |
+| Tabular data with structure           | Semantic Model           |
+| Entity-specific reasoning             | Knowledge Graph          |
+| Policy or FAQ automation              | Knowledge Base           |
+| Internal DB or table QA               | Semantic Model           |
+| Multi-hop or "how does X relate to Y" | Knowledge Graph          |
+| Explaining column meanings            | Semantic Model           |
+
+---
+
+## 🧩 Combined Usage (Hybrid AI)
+
+These systems are not mutually exclusive. In many cases, combining them leads to better AI performance:
+
+- Use **Knowledge Base** for broad document access.
+- Overlay a **Knowledge Graph** for deep relationship reasoning.
+- Attach a **Semantic Model** for querying your structured data.
+
+Together, they create a **hybrid retrieval and reasoning stack**—ideal for production-grade, intelligent, and explainable AI agents.
+
+---
+
+## Ready to Build?
+
+Start by understanding your data type and the problem you're solving:
+
+- If it's **documents**, go with the **Knowledge Base**.
+- If it's about **connections**, use the **Knowledge Graph**.
+- If it's **tabular or relational**, build a **Semantic Model**.
+
+Then follow each respective guide to get hands-on inside **Lyzr Studio**.
+
+---

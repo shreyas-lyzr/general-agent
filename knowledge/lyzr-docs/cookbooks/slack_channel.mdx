@@ -1,0 +1,236 @@
+# Connecting Lyzr Agents to Slack: A Cookbook
+
+This guide walks you through deploying a Lyzr AI agent as a Slack bot. Once configured, users can DM your bot directly and get responses from your agent.
+
+---
+
+## Prerequisites
+
+- A [Lyzr Studio](https://studio.lyzr.ai/) account with at least one agent created
+- A Slack workspace where you have permission to install apps
+
+---
+
+## How It Works
+
+```
+User Message → Slack
+                    ↓
+             Lyzr Webhook receives it
+                    ↓
+             Agent runs inference
+                    ↓
+             Response sent back to user
+```
+
+---
+
+## Step 1: Create a Slack App
+
+1. Go to [api.slack.com/apps](https://api.slack.com/apps) and click **Create New App**
+2. Choose **From scratch**
+3. Enter an app name and select your Slack workspace
+4. Click **Create App**
+
+![](../cookbooks/assets/slack1.png)
+
+---
+
+## Step 2: Configure OAuth Scopes
+
+1. In your app settings, go to **OAuth & Permissions** in the left sidebar
+2. Scroll down to **Bot Token Scopes** and add the following scopes:
+
+   | Scope | Purpose |
+   |---|---|
+   | `chat:write` | Send messages back to users |
+   | `im:read` | Read direct messages |
+   | `im:history` | Access DM message history |
+
+3. Scroll up and click **Install to Workspace**
+4. Click **Allow** on the permission screen
+5. Copy the **Bot User OAuth Token** — it starts with `xoxb-`:
+   ```
+   xoxb-<your-slack-bot-token>
+   ```
+
+> 💡 Save this as your `bot_token`.
+
+![](../cookbooks/assets/slack2.png)
+
+---
+
+## Step 3: Get Your Signing Secret
+
+1. Go to **Basic Information** in the left sidebar
+2. Scroll down to **App Credentials**
+3. Copy the **Signing Secret**
+
+> 💡 Save this as your `signing_secret`.
+
+---
+
+## Step 4: Enable App Home Messaging
+
+> ⚠️ This step is required. Without it, users will see *"Sending messages to this app has been turned off"* when trying to DM the bot.
+
+1. Go to **App Home** in the left sidebar
+2. Scroll to **Show Tabs**
+3. Enable **Allow users to send Slash commands and messages from the messages tab**
+4. Click **Save Changes**
+
+---
+
+## Step 5: Get Your Bot User ID
+
+1. Open Slack
+2. Open your bot's profile
+3. Click the three-dot menu
+![](../cookbooks/assets/slack3.png)
+4. Open App Details
+5. **Copy member ID**
+![](../cookbooks/assets/slack4.png)
+
+---
+
+## Step 6: Create the Channel in Lyzr
+
+1. Open the **Agent Builder** page in the Lyzr UI
+2. Click the **Channels** button
+3. Click **Configure** next to **Slack**
+4. Fill in the form:
+
+   | Field | Value |
+   |---|---|
+   | Bot Token | `xoxb-...` token from Step 2 |
+   | Signing Secret | Secret from Step 3 |
+   | Bot User ID | Member ID from Step 5 |
+   | Default Agent | Select the agent you want to handle messages |
+
+5. Click **Create Channel**
+6. A **webhook URL** will be displayed — copy it. It looks like:
+   ```
+   https://your-server.com/v3/channels/webhook/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+   ```
+
+---
+
+## Step 7: Register the Webhook URL in Slack
+
+1. Go back to [api.slack.com/apps](https://api.slack.com/apps) → your app
+2. Go to **Event Subscriptions** in the left sidebar
+3. Toggle **Enable Events** to **ON**
+4. Paste the webhook URL from Step 6 into the **Request URL** field
+5. Slack will immediately send a verification request — Lyzr handles this automatically. Wait for the ✓ **Verified** checkmark to appear
+6. Scroll down to **Subscribe to bot events** and add:
+   - `message.im` — to receive direct messages sent to the bot
+7. Click **Save Changes**
+
+![](../cookbooks/assets/slack5.png)
+
+---
+
+## Step 8: Reinstall the App
+
+Any time you change scopes or events, Slack requires a reinstall to apply the changes.
+
+1. Go to **OAuth & Permissions** in the left sidebar
+2. Click **Reinstall to Workspace**
+3. Click **Allow**
+
+---
+
+## Step 9: Test Your Bot
+
+1. In Slack, click **Apps** in the left sidebar (or search for your app name)
+2. Click your app to open a DM
+3. Send any message — your agent should reply within a few seconds
+
+---
+
+## Linking Multiple Agents to a Channel
+
+You can link more than one agent to a single channel. Users can then switch between agents using built-in commands.
+
+### Via the Lyzr UI
+
+1. Open **Channels** in the Agent Builder
+2. Click **Manage agents** on your configured channel
+3. Toggle agents on/off to link or unlink them
+4. Each linked agent gets a **name** used with the `/switch` command
+
+### Via the API
+
+**Add an agent:**
+```bash
+curl -X POST "https://your-server.com/v3/channels/{channel_id}/agents" \
+  -H "x-api-key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agent_id": "67e4d6983e456a9f92912044",
+    "name": "Support Agent"
+  }'
+```
+
+**Remove an agent:**
+```bash
+curl -X DELETE "https://your-server.com/v3/channels/{channel_id}/agents/{agent_id}" \
+  -H "x-api-key: your-api-key"
+```
+
+> The default agent cannot be removed. To change it, delete the channel and recreate it with a different default agent.
+
+---
+
+## Bot Commands
+
+Once multiple agents are linked, users can interact using these built-in commands:
+
+| Command | Description |
+|---|---|
+| `/agents` | List all agents linked to this channel |
+| `/list` | Same as `/agents` |
+| `/switch <name>` | Switch to a different agent by name |
+
+**NOTE**: Add an empty space before the slash commands
+
+**Example:**
+```
+/agents
+→ Available agents (use /switch <name> to select one):
+  • Support Agent — 67e4d6983e456a9f92912044
+  • Sales Agent — 67e4d6673e456a9f9291203d
+
+/switch Sales Agent
+→ Switched to agent 'Sales Agent'. How can I help you?
+```
+
+Agent selection is **per-user and persistent** — each person's active agent is remembered across messages until they switch again.
+
+---
+
+## Troubleshooting
+
+### "Sending messages to this app has been turned off"
+
+Go to **App Home → Show Tabs**, enable **Allow users to send Slash commands and messages from the messages tab**, then reinstall the app.
+
+### Commands not working
+
+Press an **empty space** before typing **/agents** or other commands. Slash (/)  is considered as an inbuilt slack command otherwise
+
+### Bot receives messages but doesn't reply
+
+Your `bot_token` is likely invalid or the `chat:write` scope is missing. Go to **OAuth & Permissions**, verify `chat:write` is listed under Bot Token Scopes, reinstall the app, and copy the fresh `xoxb-` token into Lyzr.
+
+### Slack verification fails when pasting the webhook URL
+
+Server must be publicly reachable at the moment you paste the URL — Slack sends a challenge request immediately.
+
+### "Your URL didn't respond with the value of the `challenge` parameter"
+
+The server is not running or not reachable.
+
+### `/switch` command not working
+
+Agent names are case-insensitive but must match exactly (ignoring leading/trailing spaces). Run `/agents` first to see the exact names available.

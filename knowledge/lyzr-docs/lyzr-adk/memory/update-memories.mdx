@@ -1,0 +1,141 @@
+---
+title: "Update Memories"
+sidebarTitle: "Update Memories"
+description: "Modify existing memory content or metadata in Cognis"
+---
+
+The `update` method modifies an existing memory record's content or metadata. It returns the updated `CognisMemoryRecord` after the change is applied.
+
+## Basic Usage
+
+```python
+from lyzr import Cognis
+
+cog = Cognis(api_key="sk-your-api-key")
+
+updated = cog.update(
+    memory_id="mem_abc123",
+    content="User's name is Alice Johnson (updated)",
+)
+
+print(updated.content)
+```
+
+## Method Signature
+
+```python
+cog.update(
+    memory_id: str,
+    content: str | None = None,
+    metadata: Dict[str, Any] | None = None,
+    owner_id: str | None = None,
+) -> CognisMemoryRecord
+```
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `memory_id` | `str` | Yes | The ID of the memory to update. |
+| `content` | `str` | No | New content to replace the existing memory text. |
+| `metadata` | `Dict[str, Any]` | No | New metadata to attach to the memory. |
+| `owner_id` | `str` | No | Owner identifier for scoping. |
+
+## Response
+
+Returns the updated `CognisMemoryRecord` with all fields reflecting the changes:
+
+```json
+{
+  "id": "mem_abc123",
+  "content": "User's name is Alice Johnson (updated)",
+  "owner_id": "user_alice",
+  "version": 2,
+  "is_current": true,
+  "updated_at": "2025-01-15T12:00:00Z"
+}
+```
+
+## Update Content
+
+```python
+# Search for the memory first
+results = cog.search(query="user's name", owner_id="user_alice")
+memory_id = results[0].id
+
+# Update the content
+updated = cog.update(
+    memory_id=memory_id,
+    content="User's name is Alice Johnson, she recently got married.",
+)
+
+print(f"Updated: {updated.content}")
+print(f"Version: {updated.version}")
+```
+
+## Update Metadata
+
+```python
+updated = cog.update(
+    memory_id="mem_abc123",
+    metadata={"category": "personal", "confidence": 0.95},
+)
+
+print(updated.metadata)
+# {"category": "personal", "confidence": 0.95}
+```
+
+## Update Both Content and Metadata
+
+```python
+updated = cog.update(
+    memory_id="mem_abc123",
+    content="User prefers Python 3.12 for new projects.",
+    metadata={"topic": "programming", "last_verified": "2025-01-15"},
+)
+```
+
+## Search, Update, and Verify Workflow
+
+A common pattern is to search for a memory, update it, and verify the change:
+
+```python
+# 1. Search for relevant memory
+results = cog.search(query="programming language", owner_id="user_alice")
+
+if results:
+    memory_id = results[0].id
+    print(f"Found: {results[0].content}")
+
+    # 2. Update it
+    updated = cog.update(
+        memory_id=memory_id,
+        content="User is proficient in Python, TypeScript, and Rust.",
+    )
+
+    # 3. Verify
+    verified = cog.get_memory(memory_id=memory_id)
+    print(f"Verified: {verified.content}")
+```
+
+## Async Usage
+
+```python
+import asyncio
+from lyzr import Cognis
+
+async def main():
+    async with Cognis(api_key="sk-your-api-key") as cog:
+        updated = await cog.aupdate(
+            memory_id="mem_abc123",
+            content="Updated memory content",
+            metadata={"source": "manual_update"},
+        )
+        print(updated.content)
+
+asyncio.run(main())
+```
+
+<Tip>
+Use `include_historical=True` in `cog.get()` to retrieve previous versions of a memory after updating it. This lets you track how a memory has changed over time.
+</Tip>

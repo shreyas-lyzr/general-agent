@@ -1,0 +1,97 @@
+---
+title: Choosing the Right Model for Your Use Case
+sidebarTitle: Lyzr - Product Guide 
+---
+
+At **Lyzr**, we maintain a **model-agnostic** philosophy, giving you complete flexibility to choose from a vast library of **commercial** and **open-source** models directly within **Agent Studio**.
+
+The core challenge lies in balancing performance with operational constraints. You must view model selection not as choosing the "best" model, but as finding the optimal trade-off between **Intelligence** (Reasoning, Accuracy) and **Efficiency** (Cost, Latency). 
+
+---
+
+### Key Parameters for Model Selection
+
+Every Large Language Model (LLM) decision hinges on these six interconnected metrics:
+
+1.  **Cost:** The primary driver is **token usage** (input tokens read + output tokens generated). Top-tier models are significantly more expensive per million tokens than fast, low-latency models.
+2.  **Latency (Speed):** The **end-to-end response time** (Time to First Token + Time to Last Token). Low latency is non-negotiable for real-time user-facing applications (e.g., chat), while high-intelligence models often require longer **"thinking" time** for complex reasoning, increasing latency.
+3.  **Context Size (Memory):** Defines how much data (measured in tokens) the model can analyze in a single prompt. This includes the entire conversation history, input documents, and tool schemas. Larger context windows (e.g., 1M+ tokens) are vital for **document processing** and **long-running agentic tasks**.
+4.  **Reasoning & Intelligence:** The model’s ability to handle complex logic, multi-step planning, mathematical inference, and synthesizing ideas (**Chain-of-Thought**). This is the key differentiator for top-tier models.
+5.  **Web Search & Tool Integration:** The model's inherent ability to access **live data** (via built-in or external tools) or execute **code** within a sandboxed environment. This is crucial for agents that need up-to-the-minute information or programmatic execution.
+6.  **Extra Capabilities (Modality):** Features beyond text, such as **Multimodal** understanding (image, audio, video input) and generation capabilities (Image/Code/Audio output).
+
+---
+
+### 🧩 Matching Model Type to Use Case
+
+The model choice directly dictates the maximum complexity and speed your Agent can achieve.
+
+| Use Case Category | Characteristics | Recommended Models | Ideal Lyzr Agent Scenario |
+| :--- | :--- | :--- | :--- |
+| **1. Medium Intelligence, Fast Response, Low Cost** | Prioritizes **speed (low latency)** and **cost-efficiency**. Acceptable for basic summarization, classification, and simple Q&A. | **Gemini Flash Models**, **Mistral 7B**, **Claude Sonnet** (for balancing speed/context) | **Customer Support Bots**, **Workflow Automation Assistants**, **Fast Chat Assistants** (e.g., GPT-5 Mini) |
+| **2. High Intelligence, Slower Response, Costlier** | Prioritizes **accuracy** and **complex reasoning**. Necessary for multi-step tasks, deep analysis, and high-stakes decision support. | **GPT-5 Series**, **Claude Opus Series**, **Gemini Pro Series** | **Research Writing**, **Data Analytics Engines**, **Strategic Planning**, **Multi-Agent Orchestration** |
+| **3. Ultra-Fast, Real-Time Inference** | Extreme focus on **minimal latency**, often served on specialized hardware. Cost is secondary to speed. | **Groq-supported models** (e.g., Llama 3 8B, Llama 3 70B), **Haiku** | **Real-Time Voice Bots**, **Live Code Assistants**, **High-Frequency Trading Agents** |
+
+---
+
+### 🧠 When to Use Readymade vs. Bring Your Own Model (BYOM)
+
+Lyzr supports both commercial APIs and your own hosted models, each serving distinct business needs.
+
+| Decision Point | Use Readymade (Commercial) Models | Use Bring Your Own Model (BYOM) |
+| :--- | :--- | :--- |
+| **Setup & Maintenance** | **Quick setup**, **stable API**, maintenance handled by the provider. | Requires **your own compute infrastructure** (GPU/CPU hosting, scaling, monitoring). |
+| **Data Control** | Data handled according to provider's terms (often anonymized but leaves your environment). | **Full data privacy and residency control** (data never leaves your servers). |
+| **Customization** | Limited to prompt engineering and fine-tuning via provider APIs. | **Full fine-tuning flexibility** on proprietary data. |
+| **Cost Structure** | **Pay-per-token** (variable, scales with usage). | **Predictable fixed cost** (for infrastructure) with no per-token billing. |
+
+> 💡 *Lyzr allows secure BYOM integration, enabling you to connect **private, fine-tuned, or open-source model endpoints** directly into Agent Studio for data compliance and custom performance.*
+
+### ⚠️ The Open Source Model Trade-off
+
+**Open source models** (like Llama 3, Mistral, Mixtral, Gemma) offer unparalleled control but come with infrastructure complexity.
+
+| Use Open Source Models When | Drawbacks to Consider |
+| :--- | :--- |
+| **Data Privacy** is paramount and internal compliance requires an on-premise or private cloud deployment. | **Lower Baseline Intelligence** compared to commercial flagships (e.g., GPT-5, Opus). |
+| You must **fine-tune** the model on unique, proprietary data to achieve a specific domain capability. | Requires **significant compute resources** (GPU hosting, scaling, monitoring). |
+| You want a fixed, **predictable cost** model based on hardware, not variable token usage. | **Higher maintenance burden** (updating versions, patching security). |
+
+---
+
+### Detailed Provider Strengths & Use Case Mapping
+
+| Provider | Core Strengths | Ideal Agent Use Cases |
+| :--- | :--- | :--- |
+| **OpenAI (GPT)** | **Top-Tier Reasoning**, complex logic, best-in-class coding & tool usage, massive ecosystem. | **Complex High-Intelligence Agents**, Coding Assistants, High-Value Document Analysis. |
+| **Anthropic (Claude)** | **Long Context Window**, structured thinking, superior performance in **safety and coherence**, enterprise-grade. | **Enterprise Chatbots**, Legal/Policy Review, Multi-hour Agentic Workflows. |
+| **Google (Gemini)** | **Native Multimodality** (text, image, audio, video), strong general-purpose reasoning. | **Visual Reasoning (OCR)**, Multimodal Assistants (e.g., analyzing graphs in a document). |
+| **Mistral / Mixtral** | **Lightweight, Extremely Fast**, high throughput, excellent balance of quality for its size. | **Low-Latency APIs**, Budget-friendly tasks, Simple Classification/Extraction at scale. |
+| **Groq (Hardware Acceleration)** | **Ultra-low Latency Inference** (sub-100ms response), specializing in speed. | **Real-Time Interactive Agents**, Voice Chatbots, Time-Sensitive Financial Monitoring. |
+| **Meta (Llama 3)** | **Fully Open Source**, excellent performance for BYOM, strong foundation for fine-tuning. | **Private/On-Premise Deployments**, Custom Fine-Tuned Domain Experts. |
+
+---
+
+### 🎯 Use Case vs. Model Recommendation Matrix
+
+| Use Case | Recommended Models | Key Model Rationale |
+| :--- | :--- | :--- |
+| **Image Recognition (OCR)** | **Gemini 3 Pro** | Strong native multimodal reasoning and visual understanding. |
+| **Image Generation** | **Gemini Nano Banana Series** | Specialized models built for high-fidelity, controllable image creation. |
+| **High Reasoning / Strategy** | **Claude Opus Series, GPT 5 Series, Gemini 3 Pro** | Highest benchmarks in complex logic, planning, and long-horizon tasks. |
+| **Multi-Agent Orchestration** | **Claude Opus Series, GPT 5 Series, Gemini 3 Pro** | Requires robust reasoning to break down goals, manage tool use, and synthesize multiple worker outputs. |
+| **Fastest to Answer / Real-Time** | **Groq-supported Models, Haiku, Gemini 2.5 Flash** | Optimized for throughput and minimal latency using specialized infrastructure or model architecture. |
+| **General Chat Assistants** | **GPT 5 Mini, Gemini 2.5 Flash, Claude Sonnet** | Optimal balance of cost, speed, and sufficient reasoning for conversational tasks. |
+| **High Context Window Size** | **Gemini 3 Pro, Claude 4.5 Sonnet, Claude Opus** | Models offering 200K, 1M, or larger token contexts for deep document analysis. |
+
+### 🧭 Pro Tip: Iterative Model Selection
+
+The best practice is always an **iterative approach**:
+
+1.  **Start with the Balanced Tier:** Begin with reliable, reasonably priced models like **GPT-5 Mini** or **Claude Sonnet**.
+2.  **Test & Measure:** Deploy your Agent and carefully track **response quality**, **latency**, and **cost** for real user queries.
+3.  **Iterate:**
+    * If **Reasoning/Accuracy** is lacking, upgrade to a **High Intelligence** model (Opus/GPT-5/Gemini Pro).
+    * If **Latency/Cost** is too high, downgrade to a **Fast/Low Cost** model (Flash/Haiku/Groq).
+
+By rigorously testing these trade-offs, you ensure your Agent delivers the best possible user experience within your budget.

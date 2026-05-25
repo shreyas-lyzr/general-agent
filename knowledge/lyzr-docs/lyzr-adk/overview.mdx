@@ -1,0 +1,222 @@
+---
+title: "Lyzr ADK Overview"
+sidebarTitle: "Overview"
+description: "Get started with the Lyzr Agent Development Kit (ADK) for building AI agents"
+---
+
+The Lyzr ADK (Agent Development Kit) is a Python library for building, deploying, and managing AI agents. It provides a simple, intuitive interface to create agents with features like RAG, memory, tools, and responsible AI guardrails.
+
+## Installation
+
+Install the ADK using pip:
+
+```bash
+pip install lyzr-adk
+```
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+# Initialize the SDK
+studio = Studio(api_key="your-api-key")
+
+# Create an agent
+agent = studio.create_agent(
+    name="My Assistant",
+    provider="gpt-4o",
+    role="Helpful assistant",
+    goal="Help users with their questions",
+    instructions="Be concise and accurate"
+)
+
+# Run the agent
+response = agent.run("What is machine learning?")
+print(response.response)
+```
+
+## Authentication
+
+The ADK requires an API key for authentication.
+
+### Getting Your API Key
+
+1. Sign in to [Lyzr Studio](https://studio.lyzr.ai)
+2. Go to your [Account page](https://studio.lyzr.ai/account/)
+3. Copy your API key
+
+<Warning>
+Keep your API key secure. Never commit it to version control or share it publicly.
+</Warning>
+
+### Providing the API Key
+
+You can provide the API key in three ways:
+
+#### Direct Parameter
+
+```python
+studio = Studio(api_key="your-api-key")
+```
+
+#### Environment Variable
+
+```bash
+export LYZR_API_KEY="your-api-key"
+```
+
+```python
+studio = Studio()  # Reads from LYZR_API_KEY
+```
+
+#### .env File
+
+Create a `.env` file in your project root:
+
+```
+LYZR_API_KEY=your-api-key
+```
+
+```python
+studio = Studio()  # Auto-loads from .env
+```
+
+## Key Concepts
+
+### Studio
+
+The `Studio` class is the main entry point. It manages connections and provides methods to create and manage all resources.
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+```
+
+### Agents
+
+Agents are AI-powered entities that can understand and respond to messages. Each agent has a provider (LLM), role, goal, and instructions.
+
+```python
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support agent",
+    goal="Resolve customer issues",
+    instructions="Be empathetic and solution-oriented"
+)
+
+response = agent.run("I need help with my order")
+```
+
+### Knowledge Bases
+
+Knowledge bases enable RAG (Retrieval Augmented Generation) by storing and querying documents.
+
+```python
+kb = studio.create_knowledge_base(
+    name="Product Docs",
+    vector_store="qdrant",
+    embedding_model="text-embedding-3-large"
+)
+
+kb.add_pdf("manual.pdf")
+kb.add_website("https://docs.example.com", max_pages=50)
+```
+
+### Memory
+
+Memory allows agents to maintain conversation context across sessions.
+
+```python
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    memory=30  # Keep last 30 messages
+)
+```
+
+### Tools
+
+Tools let agents execute Python functions to perform actions.
+
+```python
+def get_weather(city: str) -> str:
+    """Get current weather for a city"""
+    return f"Weather in {city}: 72°F, Sunny"
+
+agent.add_tool(get_weather)
+```
+
+### Contexts
+
+Contexts provide background information to agents as key-value pairs.
+
+```python
+context = studio.create_context(
+    name="company_info",
+    value="Acme Corp - Founded 2020, 50k customers"
+)
+
+agent = studio.create_agent(..., contexts=[context])
+```
+
+### RAI Guardrails
+
+Responsible AI policies provide safety features like toxicity detection, PII handling, and content filtering.
+
+```python
+from lyzr import PIIType, PIIAction
+
+policy = studio.create_rai_policy(
+    name="SafePolicy",
+    description="Content safety guardrails",
+    toxicity_threshold=0.3,
+    pii_detection={PIIType.CREDIT_CARD: PIIAction.BLOCK}
+)
+
+agent = studio.create_agent(..., rai_policy=policy)
+```
+
+## Supported Providers
+
+The ADK supports multiple LLM providers:
+
+| Provider | Models |
+|----------|--------|
+| OpenAI | gpt-4o, gpt-4o-mini, gpt-5, o3, o4-mini |
+| Anthropic | claude-sonnet-4.5, claude-opus-4.5, claude-3.7 |
+| Google | gemini-2.0-flash, gemini-2.5-pro, gemini-3.0-pro |
+| Groq | llama-3.3-70b, llama-4-maverick |
+| Perplexity | sonar, sonar-pro |
+| AWS Bedrock | nova-pro, claude-3.7-sonnet |
+
+## Context Manager
+
+The ADK supports context manager pattern for automatic cleanup:
+
+```python
+with Studio(api_key="your-api-key") as studio:
+    agent = studio.create_agent(...)
+    response = agent.run("Hello")
+# Connection automatically closed
+```
+
+## Next Steps
+
+<Card title="Studio" icon="terminal" href="/lyzr-adk/studio">
+  Learn about the Studio class and initialization options
+</Card>
+
+<Card title="Agents" icon="robot" href="/lyzr-adk/agents/overview">
+  Create and manage AI agents
+</Card>
+
+<Card title="Knowledge Bases" icon="database" href="/lyzr-adk/knowledge-bases/overview">
+  Build RAG-powered agents with document retrieval
+</Card>
+
+<Card title="Providers" icon="server" href="/lyzr-adk/providers/providers">
+  See all supported LLM providers and models
+</Card>

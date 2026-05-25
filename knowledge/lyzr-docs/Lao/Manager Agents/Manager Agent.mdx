@@ -1,0 +1,97 @@
+---
+title : "Manager Agent in Lyzr Agents"
+---
+## Overview
+
+The **Manager Agent** architecture in Lyzr allows for modular, composable workflows where one agent (the manager) can coordinate and delegate tasks to multiple other specialized agents (called *managed agents*). This enables powerful, flexible automation where complex multi-step operations can be executed efficiently by splitting responsibilities between agents.
+
+For example, in a fitness assistant setup:
+- The **main agent** provides personalized fitness advice.
+- A **managed agent** like `Mail Generator` can take the generated diet plan or fitness routine and email it to the user.
+
+---
+
+## How It Works
+
+### Structure in Agent JSON
+
+In the agent JSON configuration, the `managed_agents` field is used to declare and reference one or more agents that the main agent can call to perform specific sub-tasks.
+
+```json
+"managed_agents": [
+  {
+    "id": "67f632f43e4bcae4a5cfd109",
+    "name": "Mail Generator",
+    "usage_description": "Generate a proper diet plan and mail it to the user, whenever the user starts to chat ask for their mail ID 1st"
+  }
+]
+```
+
+### Fields Breakdown
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Unique identifier of the managed agent (retrieved from the Lyzr Agent database). |
+| `name` | string | Human-readable name of the agent for referencing and understanding purpose. |
+| `usage_description` | string | Description of how and when to invoke this agent. Acts as a system-level guide to help orchestrate agent responsibilities. |
+
+---
+
+## Benefits of Manager Agent Structure
+
+- **Separation of Concerns**: Each agent handles a specific role (e.g., fitness vs. email).
+- **Reusability**: Managed agents like `Mail Generator` can be reused across multiple parent agents.
+- **Scalability**: Adding new capabilities only requires connecting additional managed agents without modifying the main logic.
+- **Workflow Automation**: Enables seamless multi-step workflows coordinated by the manager agent.
+
+---
+
+## Example Use Case
+
+### Scenario
+
+A user interacts with a **Fitness Assistant** agent which:
+
+1. Asks for their fitness goals and suggests a workout plan.
+2. Triggers a **Mail Generator** agent to email a corresponding diet plan.
+
+### JSON Snippet
+
+```json
+{
+  "name": "Trial",
+  "description": "Fitness assistant",
+  ...
+  "managed_agents": [
+    {
+      "id": "67f632f43e4bcae4a5cfd109",
+      "name": "Mail Generator",
+      "usage_description": "Generate a proper diet plan and mail it to the user, whenever the user starts to chat ask for their mail ID 1st"
+    }
+  ]
+}
+```
+
+---
+
+## Implementation Notes
+
+- Manager agents can dynamically call the `managed_agents` based on internal logic, conditions, or user inputs.
+- All agents must be registered within the Lyzr ecosystem with a valid agent `id`.
+- Ensure `usage_description` is descriptive enough to automate orchestration decisions correctly.
+- Agent calling sequence can be rule-based or LLM-driven depending on the parent agent's configuration.
+
+---
+
+## Best Practices
+
+- Keep agents single-responsibility for maintainability.
+- Reuse agents where possible to reduce redundancy.
+- Add proper validation when passing data between agents.
+- Define fallback mechanisms in the manager in case a managed agent fails.
+
+---
+
+## Summary
+
+The `managed_agents` feature of Lyzr empowers developers and builders to create **composable, intelligent agent ecosystems** where each agent can focus on its strength. With manager agents coordinating the workflow, complex tasks like fitness guidance followed by email distribution become seamless and modular.

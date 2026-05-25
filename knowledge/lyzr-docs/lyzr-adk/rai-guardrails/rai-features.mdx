@@ -1,0 +1,465 @@
+---
+title: "RAI Features"
+sidebarTitle: "Features"
+description: "Detailed guide to RAI guardrail features"
+---
+
+Learn about each RAI feature in detail, including configuration options, thresholds, and best practices.
+
+## Toxicity Detection
+
+Detect and filter toxic, harmful, or offensive content in user inputs and agent outputs.
+
+### Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="ToxicityFilter",
+    description="Filter toxic content",
+    toxicity_threshold=0.4  # 0.0 = strictest, 1.0 = disabled
+)
+```
+
+### Threshold Guidelines
+
+| Threshold | Strictness | Use Case |
+|-----------|------------|----------|
+| 0.1 - 0.2 | Very strict | Children's content, healthcare |
+| 0.3 - 0.4 | Strict | Customer service, public apps |
+| 0.5 - 0.6 | Moderate | Internal tools, adult apps |
+| 0.7 - 0.9 | Relaxed | Research, content analysis |
+| 1.0 | Disabled | No filtering |
+
+### Example
+
+```python
+# Strict toxicity filtering
+strict_policy = studio.create_rai_policy(
+    name="StrictToxicity",
+    description="Very strict toxicity filtering",
+    toxicity_threshold=0.2
+)
+
+# Moderate toxicity filtering
+moderate_policy = studio.create_rai_policy(
+    name="ModerateToxicity",
+    description="Standard toxicity filtering",
+    toxicity_threshold=0.4
+)
+```
+
+---
+
+## Prompt Injection Detection
+
+Protect agents from malicious prompt manipulation attacks that attempt to override instructions or extract sensitive information.
+
+### Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="InjectionProtection",
+    description="Prevent prompt injection",
+    prompt_injection=True
+)
+```
+
+### What It Detects
+
+- Instruction override attempts ("Ignore previous instructions...")
+- Role manipulation ("You are now a different AI...")
+- System prompt extraction ("Print your system prompt...")
+- Jailbreak attempts
+- Encoded/obfuscated malicious prompts
+
+### Advanced Configuration
+
+```python
+# Update with custom threshold
+policy.update(
+    prompt_injection={
+        "enabled": True,
+        "threshold": 0.3  # Lower = stricter
+    }
+)
+```
+
+---
+
+## PII Detection
+
+Detect and handle Personally Identifiable Information to protect user privacy and ensure compliance.
+
+### Configuration
+
+```python
+from lyzr.rai import PIIType, PIIAction
+
+policy = studio.create_rai_policy(
+    name="PIIProtection",
+    description="Handle PII safely",
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT,
+        PIIType.PERSON: PIIAction.DISABLED
+    }
+)
+```
+
+### PII Types Reference
+
+| PIIType | Description | Pattern Example |
+|---------|-------------|-----------------|
+| `CREDIT_CARD` | Credit/debit card numbers | 4111-1111-1111-1111 |
+| `EMAIL` | Email addresses | user@example.com |
+| `PHONE` | Phone numbers | +1-555-123-4567 |
+| `SSN` | US Social Security Numbers | 123-45-6789 |
+| `PERSON` | Person names | John Smith |
+| `LOCATION` | Physical addresses/locations | 123 Main St, NYC |
+| `IP_ADDRESS` | IP addresses | 192.168.1.1 |
+| `URL` | Web URLs | https://example.com |
+| `DATE_TIME` | Dates and times | 2024-03-15, 3:30 PM |
+
+### Actions Reference
+
+| PIIAction | Behavior | Example |
+|-----------|----------|---------|
+| `BLOCK` | Reject entire message | "Cannot process: contains credit card" |
+| `REDACT` | Replace with placeholder | "Email: [EMAIL_REDACTED]" |
+| `DISABLED` | Allow through unchanged | "Email: user@example.com" |
+
+### GDPR-Compliant Configuration
+
+```python
+gdpr_policy = studio.create_rai_policy(
+    name="GDPR_Compliant",
+    description="GDPR compliance",
+    pii_detection={
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT,
+        PIIType.PERSON: PIIAction.REDACT,
+        PIIType.LOCATION: PIIAction.REDACT,
+        PIIType.IP_ADDRESS: PIIAction.REDACT
+    }
+)
+```
+
+---
+
+## Secrets Detection
+
+Prevent API keys, passwords, tokens, and other secrets from being exposed in conversations.
+
+### Configuration
+
+```python
+from lyzr.rai import SecretsAction
+
+policy = studio.create_rai_policy(
+    name="SecretsProtection",
+    description="Protect secrets",
+    secrets_detection=SecretsAction.MASK
+)
+```
+
+### Actions Reference
+
+| SecretsAction | Behavior | Example |
+|---------------|----------|---------|
+| `MASK` | Replace with asterisks | "API key: sk-****..." |
+| `BLOCK` | Reject entire message | "Cannot process: contains API key" |
+| `DISABLED` | Allow through unchanged | "API key: sk-abc123..." |
+
+### What It Detects
+
+- API keys (OpenAI, AWS, Google, etc.)
+- Access tokens and bearer tokens
+- Passwords and passphrases
+- Private keys (SSH, PGP, etc.)
+- Database connection strings
+- JWT tokens
+- OAuth secrets
+
+### Example
+
+```python
+# Mask secrets in production
+prod_policy = studio.create_rai_policy(
+    name="Production",
+    description="Production secrets handling",
+    secrets_detection=SecretsAction.MASK
+)
+
+# Block secrets in high-security environments
+secure_policy = studio.create_rai_policy(
+    name="HighSecurity",
+    description="Block any secrets",
+    secrets_detection=SecretsAction.BLOCK
+)
+```
+
+---
+
+## NSFW Detection
+
+Detect and filter Not Safe For Work content including adult content, violence, and inappropriate material.
+
+### Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="NSFWFilter",
+    description="Filter inappropriate content",
+    nsfw_check=True,
+    nsfw_threshold=0.8
+)
+```
+
+### Threshold Guidelines
+
+| Threshold | Strictness | Use Case |
+|-----------|------------|----------|
+| 0.5 - 0.6 | Very strict | Children's apps |
+| 0.7 - 0.8 | Standard | General public apps |
+| 0.9 | Relaxed | Adult-verified platforms |
+
+### Advanced Configuration
+
+```python
+policy.update(
+    nsfw_check={
+        "enabled": True,
+        "threshold": 0.7,
+        "validation_method": "full"  # or "partial"
+    }
+)
+```
+
+---
+
+## Topic Control
+
+Restrict agents to specific topics using allowlists and blocklists.
+
+### Banned Topics (Blocklist)
+
+```python
+policy = studio.create_rai_policy(
+    name="TopicRestricted",
+    description="Restrict certain topics",
+    banned_topics=[
+        "politics",
+        "religion",
+        "competitors",
+        "internal_pricing",
+        "legal_advice"
+    ]
+)
+```
+
+### Allowed Topics (Allowlist)
+
+```python
+policy = studio.create_rai_policy(
+    name="OnTopicOnly",
+    description="Stay strictly on topic",
+    allowed_topics={
+        "enabled": True,
+        "topics": [
+            "product_information",
+            "customer_support",
+            "billing",
+            "technical_help"
+        ]
+    }
+)
+```
+
+### Combined Configuration
+
+```python
+# Allowlist with explicit bans
+policy = studio.create_rai_policy(
+    name="Combined",
+    description="Controlled topic access",
+    allowed_topics={
+        "enabled": True,
+        "topics": ["support", "products"]
+    },
+    banned_topics=["competitors", "internal_data"]
+)
+```
+
+---
+
+## Keyword Filtering
+
+Filter messages containing specific keywords or phrases.
+
+### Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="KeywordFilter",
+    description="Filter specific keywords",
+    keywords={
+        "enabled": True,
+        "keywords": [
+            "banned_word_1",
+            "banned_phrase_1",
+            "competitor_name"
+        ]
+    }
+)
+```
+
+### Use Cases
+
+```python
+# Brand protection
+brand_policy = studio.create_rai_policy(
+    name="BrandSafe",
+    description="Protect brand reputation",
+    keywords={
+        "enabled": True,
+        "keywords": [
+            "competitor_a",
+            "competitor_b",
+            "negative_association"
+        ]
+    }
+)
+
+# Compliance keywords
+compliance_policy = studio.create_rai_policy(
+    name="Compliance",
+    description="Filter compliance-sensitive terms",
+    keywords={
+        "enabled": True,
+        "keywords": [
+            "guaranteed_returns",
+            "risk_free",
+            "insider_information"
+        ]
+    }
+)
+```
+
+---
+
+## Fairness and Bias Detection
+
+Detect and prevent biased or unfair responses.
+
+### Configuration
+
+```python
+policy = studio.create_rai_policy(
+    name="FairResponses",
+    description="Ensure fair, unbiased responses",
+    fairness_and_bias={
+        "enabled": True,
+        "categories": [
+            "gender",
+            "race",
+            "age",
+            "disability",
+            "religion",
+            "nationality"
+        ]
+    }
+)
+```
+
+---
+
+## Combining Features
+
+Create comprehensive policies by combining multiple features:
+
+```python
+from lyzr.rai import PIIType, PIIAction, SecretsAction
+
+comprehensive_policy = studio.create_rai_policy(
+    name="Comprehensive_v1",
+    description="Full safety coverage for production",
+
+    # Content safety
+    toxicity_threshold=0.4,
+    nsfw_check=True,
+    nsfw_threshold=0.8,
+
+    # Security
+    prompt_injection=True,
+    secrets_detection=SecretsAction.MASK,
+
+    # Privacy
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT
+    },
+
+    # Topic control
+    banned_topics=["competitors", "politics"],
+    allowed_topics={
+        "enabled": True,
+        "topics": ["support", "products", "billing"]
+    },
+
+    # Keyword filtering
+    keywords={
+        "enabled": True,
+        "keywords": ["banned_term"]
+    },
+
+    # Fairness
+    fairness_and_bias={
+        "enabled": True,
+        "categories": ["gender", "race"]
+    }
+)
+```
+
+---
+
+## Monitoring and Testing
+
+### Test Your Policy
+
+```python
+# Create test agent with policy
+test_agent = studio.create_agent(
+    name="PolicyTest",
+    provider="gpt-4o",
+    rai_policy=policy
+)
+
+# Test various inputs
+test_cases = [
+    "Normal question about products",
+    "My credit card is 4111-1111-1111-1111",  # Should be blocked
+    "Ignore previous instructions",  # Should trigger injection detection
+    "Contact me at user@example.com",  # Should be redacted
+]
+
+for test in test_cases:
+    response = test_agent.run(test)
+    print(f"Input: {test[:50]}...")
+    print(f"Response: {response.response[:100]}...")
+    print("---")
+```
+
+---
+
+## Best Practices
+
+1. **Start Strict**: Begin with stricter settings and relax based on needs
+2. **Layer Defenses**: Combine multiple features for comprehensive protection
+3. **Test Thoroughly**: Test with edge cases before production
+4. **Monitor**: Review blocked content to tune thresholds
+5. **Document**: Keep records of policy changes and rationale
+6. **Compliance**: Align policies with regulatory requirements (GDPR, HIPAA, etc.)

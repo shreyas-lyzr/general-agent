@@ -1,0 +1,359 @@
+---
+title: "Creating Agents"
+sidebarTitle: "Creating Agents"
+description: "Create AI agents with the Lyzr ADK"
+---
+
+Create agents using `studio.create_agent()` with customizable LLM providers, roles, and features.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support agent",
+    goal="Help customers resolve their issues",
+    instructions="Be empathetic, clear, and solution-oriented"
+)
+```
+
+## Function Signature
+
+```python
+studio.create_agent(
+    name: str,
+    provider: str = None,
+    role: str = None,
+    goal: str = None,
+    instructions: str = None,
+    description: str = None,
+    temperature: float = 0.7,
+    top_p: float = 0.9,
+    response_model: BaseModel = None,
+    memory: int = None,
+    contexts: List[Context] = None,
+    rai_policy: RAIPolicy = None,
+    file_output: bool = False,
+    image_model: ImageModelConfig = None,
+    reflection: bool = False,
+    bias_check: bool = False,
+    llm_judge: bool = False,
+    groundedness_facts: List[str] = None,
+    llm_credential_id: str = None,
+    additional_model_params: Dict = None,
+) -> Agent
+```
+
+## Parameters
+
+### Required Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `name` | str | Agent name (1-200 characters) |
+
+### Core Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `provider` | str | None | LLM provider and model. Examples: `"gpt-4o"`, `"claude-sonnet-4.5"`, `"openai/gpt-4o"` |
+| `role` | str | None | Agent's role or persona (e.g., "Customer support agent") |
+| `goal` | str | None | Agent's primary objective (e.g., "Help users resolve issues") |
+| `instructions` | str | None | Detailed instructions for agent behavior |
+| `description` | str | None | Agent description (max 1000 characters) |
+
+### Model Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `temperature` | float | 0.7 | Creativity/randomness (0.0-2.0). Lower = more focused, higher = more creative |
+| `top_p` | float | 0.9 | Nucleus sampling (0.0-1.0). Controls diversity of responses |
+| `additional_model_params` | dict | None | Additional provider-specific model parameters |
+
+### Feature Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `response_model` | BaseModel | None | Pydantic model for structured outputs |
+| `memory` | int | None | Number of messages to remember (1-50) |
+| `contexts` | List[Context] | None | Background information contexts |
+| `rai_policy` | RAIPolicy | None | Responsible AI policy for guardrails |
+| `file_output` | bool | False | Enable file generation (PDF, DOCX, etc.) |
+| `image_model` | ImageModelConfig | None | Image generation model configuration |
+
+### Evaluation Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `reflection` | bool | False | Enable self-reflection to reduce hallucinations |
+| `bias_check` | bool | False | Enable bias detection in responses |
+| `llm_judge` | bool | False | Enable third-party LLM to evaluate responses |
+| `groundedness_facts` | List[str] | None | Facts for response validation |
+
+### Advanced Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `llm_credential_id` | str | Auto | Custom credential ID for LLM (from Studio UI) |
+
+---
+
+## Examples
+
+### Basic Agent
+
+```python
+agent = studio.create_agent(
+    name="Assistant",
+    provider="gpt-4o",
+    role="General assistant",
+    goal="Help users with questions",
+    instructions="Be helpful and concise"
+)
+```
+
+### Agent with Custom Temperature
+
+```python
+# More creative agent
+agent = studio.create_agent(
+    name="Creative Writer",
+    provider="gpt-4o",
+    role="Creative writer",
+    goal="Generate creative content",
+    instructions="Be imaginative and original",
+    temperature=1.2  # Higher creativity
+)
+
+# More focused agent
+agent = studio.create_agent(
+    name="Code Reviewer",
+    provider="gpt-4o",
+    role="Code reviewer",
+    goal="Review code for bugs",
+    instructions="Be precise and thorough",
+    temperature=0.2  # Lower, more deterministic
+)
+```
+
+### Agent with Structured Output
+
+```python
+from pydantic import BaseModel
+
+class SentimentAnalysis(BaseModel):
+    sentiment: str
+    confidence: float
+    keywords: list[str]
+
+agent = studio.create_agent(
+    name="Sentiment Analyzer",
+    provider="gpt-4o",
+    role="Sentiment analyst",
+    goal="Analyze text sentiment",
+    instructions="Analyze the sentiment of the provided text",
+    response_model=SentimentAnalysis
+)
+
+result: SentimentAnalysis = agent.run("I love this product!")
+print(result.sentiment)    # "positive"
+print(result.confidence)   # 0.95
+```
+
+### Agent with Memory
+
+```python
+agent = studio.create_agent(
+    name="Conversational Bot",
+    provider="gpt-4o",
+    role="Conversational assistant",
+    goal="Have natural conversations",
+    instructions="Remember context from previous messages",
+    memory=30  # Remember last 30 messages
+)
+
+# Conversation maintains context
+agent.run("My name is Alice")
+agent.run("What's my name?")  # Remembers "Alice"
+```
+
+### Agent with Contexts
+
+```python
+# Create contexts with background information
+company_ctx = studio.create_context(
+    name="company_info",
+    value="Acme Corp - Founded 2020, 50k customers, SaaS platform"
+)
+
+pricing_ctx = studio.create_context(
+    name="pricing",
+    value="Basic: $10/mo, Pro: $50/mo, Enterprise: Custom"
+)
+
+agent = studio.create_agent(
+    name="Sales Bot",
+    provider="gpt-4o",
+    role="Sales representative",
+    goal="Answer product questions",
+    instructions="Use company context to answer questions",
+    contexts=[company_ctx, pricing_ctx]
+)
+```
+
+### Agent with RAI Policy
+
+```python
+from lyzr import PIIType, PIIAction, SecretsAction
+
+# Create safety policy
+policy = studio.create_rai_policy(
+    name="SafePolicy",
+    description="Content safety guardrails",
+    toxicity_threshold=0.3,
+    secrets_detection=SecretsAction.MASK,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.SSN: PIIAction.BLOCK
+    }
+)
+
+agent = studio.create_agent(
+    name="Support Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    goal="Help customers safely",
+    instructions="Never expose sensitive data",
+    rai_policy=policy
+)
+```
+
+### Agent with File Output
+
+```python
+agent = studio.create_agent(
+    name="Report Generator",
+    provider="gpt-4o",
+    role="Report writer",
+    goal="Generate reports",
+    instructions="Create detailed PDF reports",
+    file_output=True
+)
+
+response = agent.run("Create a sales report for Q1")
+
+if response.has_files():
+    for artifact in response.files:
+        artifact.download(f"./{artifact.name}")
+```
+
+### Agent with Image Generation
+
+```python
+from lyzr.image_models import DallE
+
+agent = studio.create_agent(
+    name="Image Creator",
+    provider="gpt-4o",
+    role="Image generator",
+    goal="Create images from descriptions",
+    instructions="Generate high-quality images",
+    image_model=DallE.DALL_E_3
+)
+
+response = agent.run("Create an image of a sunset over mountains")
+```
+
+### Agent with Reflection
+
+```python
+agent = studio.create_agent(
+    name="Accurate Bot",
+    provider="gpt-4o",
+    role="Factual assistant",
+    goal="Provide accurate information",
+    instructions="Always verify your responses",
+    reflection=True,   # Self-reflection for accuracy
+    bias_check=True    # Check for bias
+)
+```
+
+### Agent with Groundedness
+
+```python
+agent = studio.create_agent(
+    name="Fact Checker",
+    provider="gpt-4o",
+    role="Fact checker",
+    goal="Validate claims against known facts",
+    instructions="Only state facts that can be verified",
+    groundedness_facts=[
+        "Company was founded in 2020",
+        "Headquarters is in San Francisco",
+        "CEO is John Smith"
+    ]
+)
+```
+
+### Agent with Custom Credentials
+
+```python
+# Use custom credentials configured in Studio UI
+agent = studio.create_agent(
+    name="Custom Agent",
+    provider="gpt-4o",
+    role="Assistant",
+    goal="Help users",
+    instructions="Be helpful",
+    llm_credential_id="my_custom_openai_credential"
+)
+```
+
+---
+
+## Provider Formats
+
+You can specify providers in two formats:
+
+### Short Format
+
+The ADK auto-resolves the provider:
+
+```python
+agent = studio.create_agent(provider="gpt-4o")        # → OpenAI
+agent = studio.create_agent(provider="claude-sonnet-4.5")  # → Anthropic
+agent = studio.create_agent(provider="gemini-2.5-pro")     # → Google
+```
+
+### Full Format
+
+Explicitly specify the provider:
+
+```python
+agent = studio.create_agent(provider="openai/gpt-4o")
+agent = studio.create_agent(provider="anthropic/claude-sonnet-4.5")
+agent = studio.create_agent(provider="google/gemini-2.5-pro")
+```
+
+---
+
+## Return Value
+
+Returns an `Agent` object with methods like:
+
+- `run()` - Execute the agent
+- `update()` - Update configuration
+- `delete()` - Delete the agent
+- `clone()` - Clone the agent
+- `add_tool()` - Add a local tool
+- `add_memory()` - Add memory
+- `add_context()` - Add context
+- `add_rai_policy()` - Add RAI policy
+
+See [Running Agents](/lyzr-adk/agents/running-agents) and [Agent Features](/lyzr-adk/agents/agent-features) for more details.

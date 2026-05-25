@@ -1,0 +1,252 @@
+---
+title: "Lyzr Cognis + Agno"
+sidebarTitle: "Cognis + Agno"
+description: "Add persistent memory to Agno agents using Lyzr Cognis"
+---
+
+## Overview
+
+[Agno](https://docs.agno.com/) is a lightweight framework for building AI agents with tools and structured outputs. By wrapping [Lyzr Cognis](https://docs.lyzr.ai) methods as Agno tools, you can build agents that autonomously decide when to store, retrieve, and manage their own memories.
+
+**What you'll build:** A personal assistant that uses Cognis-backed tools to remember user preferences, search past conversations, and manage its own memory — all driven by the agent's own reasoning.
+
+**Why Cognis + Agno?** Agno's `@tool` decorator makes it trivial to expose Cognis operations as agent capabilities. Unlike injection-based patterns, the agent itself decides when and what to remember — enabling more natural, autonomous memory management.
+
+## Prerequisites
+
+```bash
+pip install lyzr-adk agno openai
+```
+
+Set your environment variables:
+
+```bash
+export LYZR_API_KEY="your-lyzr-api-key"
+export OPENAI_API_KEY="your-openai-api-key"
+```
+
+## Quick Start
+
+```python
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.tools import tool
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis()
+
+@tool
+def search_memory(query: str) -> str:
+    """Search user's memories for relevant information."""
+    results = cog.search(query=query, owner_id="user_123", limit=5)
+    if not results:
+        return "No relevant memories found."
+    return "\n".join(f"- {r.content}" for r in results)
+
+@tool
+def add_memory(user_message: str, assistant_response: str) -> str:
+    """Store important information from the conversation."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=user_message),
+            CognisMessage(role="assistant", content=assistant_response),
+        ],
+        owner_id="user_123",
+    )
+    return "Memory stored successfully."
+
+agent = Agent(
+    model=OpenAIChat(id="gpt-4o"),
+    tools=[search_memory, add_memory],
+    instructions=["Store important user info with add_memory",
+                   "Search memories before answering personal questions"],
+)
+
+response = agent.run("My name is Sarah and I love hiking.")
+```
+
+## Complete Example: Personal Assistant
+
+### Step 1: Initialize Cognis and Define Tools
+
+```python
+import os
+from agno.agent import Agent
+from agno.models.openai import OpenAIChat
+from agno.tools import tool
+from lyzr import Cognis, CognisMessage
+
+cog = Cognis(api_key=os.getenv("LYZR_API_KEY"))
+OWNER_ID = "user_123"
+AGENT_ID = "assistant_agno"
+
+
+@tool
+def search_memory(query: str) -> str:
+    """Search the user's memories for relevant information.
+    Use this before answering personal questions or when the user
+    references something from a past conversation."""
+    results = cog.search(query=query, owner_id=OWNER_ID, limit=5)
+    if not results:
+        return "No relevant memories found."
+    formatted = "\n".join(f"- {r.content}" for r in results)
+    return f"Found {len(results)} relevant memories:\n{formatted}"
+
+
+@tool
+def add_memory(user_message: str, assistant_response: str) -> str:
+    """Store important information from the conversation into long-term memory.
+    Use this when the user shares personal preferences, important facts,
+    or information they'd want remembered."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=user_message),
+            CognisMessage(role="assistant", content=assistant_response),
+        ],
+        owner_id=OWNER_ID,
+        agent_id=AGENT_ID,
+    )
+    return "Memory stored successfully."
+
+
+@tool
+def get_all_memories() -> str:
+    """Retrieve all stored memories for the current user.
+    Use this when the user asks what you remember about them."""
+    memory_list = cog.get(owner_id=OWNER_ID, limit=20)
+    if not memory_list.memories:
+        return "No memories stored yet."
+    formatted = "\n".join(
+        f"- [{m.id[:8]}] {m.content}" for m in memory_list.memories
+    )
+    return f"All memories ({len(memory_list.memories)}):\n{formatted}"
+
+
+@tool
+def delete_memory(memory_id: str) -> str:
+    """Delete a specific memory by its ID.
+    Use this when the user asks to forget something."""
+    success = cog.delete(memory_id=memory_id, owner_id=OWNER_ID)
+    if success:
+        return f"Memory {memory_id} deleted successfully."
+    return f"Failed to delete memory {memory_id}."
+```
+
+### Step 2: Create the Agent
+
+```python
+agent = Agent(
+    model=OpenAIChat(id="gpt-4o"),
+    tools=[search_memory, add_memory, get_all_memories, delete_memory],
+    instructions=[
+        "You are a helpful personal assistant with persistent memory.",
+        "When the user shares important personal information (preferences, "
+        "facts about themselves, plans), use add_memory to store it.",
+        "Before answering personal questions or when the user references "
+        "past conversations, use search_memory to check for relevant memories.",
+        "If the user asks what you remember, use get_all_memories.",
+        "If the user asks to forget something, use delete_memory.",
+    ],
+    show_tool_calls=True,
+    markdown=True,
+)
+```
+
+### Step 3: Run Multi-Turn Conversations
+
+```python
+conversations = [
+    "Hi! My name is Sarah and I'm a software engineer. I love hiking and Italian food.",
+    "What's a good restaurant recommendation for me?",
+    "I'm planning a trip to Colorado next month for hiking.",
+    "What do you remember about me?",
+    "Actually, I prefer Thai food now instead of Italian.",
+]
+
+for user_msg in conversations:
+    print(f"User: {user_msg}")
+    response = agent.run(user_msg)
+    print(f"Assistant: {response.content}\n")
+```
+
+The agent will:
+1. **Turn 1:** Call `add_memory` to store Sarah's name, job, and preferences
+2. **Turn 2:** Call `search_memory` for food preferences, then recommend Italian restaurants
+3. **Turn 3:** Call `add_memory` to store the Colorado trip plan
+4. **Turn 4:** Call `get_all_memories` to show everything it remembers
+5. **Turn 5:** Call `add_memory` with the updated food preference
+
+## Cognis Methods Reference
+
+| Method | Description | When to Use |
+|--------|-------------|-------------|
+| `cog.add(messages, owner_id, session_id, agent_id)` | Store conversation messages | When the agent decides to remember |
+| `cog.search(query, owner_id, limit)` | Semantic search over memories | When the agent needs context |
+| `cog.get(owner_id, limit)` | List all memories for a user | When user asks "what do you know?" |
+| `cog.delete(memory_id, owner_id)` | Remove a specific memory | When user asks to forget |
+| `cog.update(memory_id, content)` | Update a memory's content | When correcting information |
+| `cog.context(current_messages, owner_id, session_id)` | Server-assembled context | Alternative to manual search |
+
+## Advanced Patterns
+
+### Context-Aware Tool with Session Tracking
+
+Pass session information through tool parameters for better memory organization:
+
+```python
+@tool
+def add_memory_with_session(
+    user_message: str,
+    assistant_response: str,
+    session_id: str = "default",
+) -> str:
+    """Store information with session tracking."""
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content=user_message),
+            CognisMessage(role="assistant", content=assistant_response),
+        ],
+        owner_id=OWNER_ID,
+        agent_id=AGENT_ID,
+        session_id=session_id,
+    )
+    return "Memory stored with session tracking."
+```
+
+### Cross-Session Search
+
+Search across all sessions for comprehensive recall:
+
+```python
+@tool
+def search_all_sessions(query: str) -> str:
+    """Search across all conversation sessions."""
+    results = cog.search(
+        query=query,
+        owner_id=OWNER_ID,
+        cross_session=True,
+        limit=10,
+    )
+    if not results:
+        return "No memories found across any session."
+    return "\n".join(f"- {r.content}" for r in results)
+```
+
+### Summary-Based Memory
+
+Use Cognis summaries for high-level recall:
+
+```python
+@tool
+def get_session_summary(session_id: str) -> str:
+    """Get a summary of a past conversation session."""
+    result = cog.get_current_summary(owner_id=OWNER_ID, session_id=session_id)
+    return result.get("content", "No summary available for this session.")
+```
+
+## Next Steps
+
+- [Cognis + LangChain](/cookbooks/cognis-langchain) — LCEL chain integration with memory
+- [Cognis + LangGraph](/cookbooks/cognis-langgraph) — Memory as graph nodes
+- [Cognis + CrewAI](/cookbooks/cognis-crewai) — Memory for multi-agent crews
+- [Lyzr ADK Memory Documentation](/lyzr-adk/memory/overview) — Full Cognis API reference

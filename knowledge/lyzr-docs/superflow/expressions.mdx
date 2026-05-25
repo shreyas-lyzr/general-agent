@@ -1,0 +1,91 @@
+---
+title: "Expressions & data flow"
+sidebarTitle: "Expressions"
+---
+
+Expressions are how one node uses data from another. Anywhere you see a text input in a node's config drawer — a URL, a body, a prompt, a query — you can replace a literal value with an expression that pulls live data from upstream.
+
+## How data flows
+
+Every node in a SuperFlow emits a **list of items** as its output. An item is a JSON object. The next node downstream receives that list as its input.
+
+You don't normally see the list machinery — most expressions implicitly target the first item, which is what you want 99% of the time. The list shape matters when you use loops (see [Loop](./node-reference#loop)) or aggregations.
+
+## Expression syntax
+
+Expressions go inside double curly braces. They can appear anywhere inside a string:
+
+```
+Hello {{ $('Trigger').json.name }}, your order #{{ $json.order_id }} is ready.
+```
+
+When a field's value is a single expression, the result preserves its original type (number, boolean, object) — it doesn't get coerced to a string.
+
+### Reference the current node's input
+
+```
+{{ $json }}                    → the entire current input item
+{{ $json.field }}              → one field
+{{ $json.user.email }}         → a nested field
+```
+
+### Reference another node's output
+
+The most common form — pull a field from a named upstream node:
+
+```
+{{ $('Trigger').json.question }}
+{{ $('AI Agent').json.output.category }}
+{{ $('HTTP Request').json.body.results }}
+```
+
+The name in quotes must match the upstream node's display name on the canvas exactly. Both single and double quotes work.
+
+### Expressions are JavaScript
+
+Inside the braces, anything that's a valid JavaScript expression works:
+
+```
+{{ $json.score > 0.8 ? 'high' : 'low' }}                  → ternary
+{{ $json.items.length }}                                  → property access
+{{ $('Search').json.results.slice(0, 5) }}                → array methods
+{{ $json.price * 1.18 }}                                  → arithmetic
+{{ ($json.first_name + ' ' + $json.last_name).trim() }}   → string ops
+```
+
+If a JavaScript expression fails (a syntax error, or a missing field reference), the literal `{{ expression }}` text is left in place so you can spot the problem in the node output.
+
+## Expressions vs literal values
+
+A field's value is used exactly as typed unless it contains `{{ ... }}`, in which case the expressions inside the braces are evaluated:
+
+- `Hello world` — used literally.
+- `{{ $('Trigger').json.name }}` — evaluated; resolved to the `name` field from the Trigger.
+- `Hello {{ $('Trigger').json.name }}` — also evaluated; resolves to `Hello <name>`.
+
+## The field reference picker
+
+Most fields that accept upstream data have a small plug icon next to them. Clicking it switches the field between two states:
+
+- **Free text** — type a literal value, or an expression with `{{ ... }}`.
+- **Reference** — a pair of dropdowns: pick an upstream node, then pick one of its fields. The picker builds the expression for you and inserts it into the field as `{{ $('NodeName').json.fieldName }}`.
+
+For example, picking *Trigger → question* in the reference dropdowns inserts `{{ $('Trigger').json.question }}` into the field. For nested paths, you drill into the tree the same way.
+
+The picker is the fastest way to build a correct expression — recommended over typing them by hand, especially for nested paths or unusual field names.
+
+## Debugging expressions
+
+The best way to debug is to **run the SuperFlow** and inspect node outputs in the execution panel.
+
+1. Click **Run** on the canvas toolbar.
+2. After the run finishes, expand the upstream node's card in the execution panel — you'll see its JSON output.
+3. Trace the path you used in your expression through that JSON. If the field doesn't exist (or sits at a different path), update your expression to match.
+
+Replaying past runs from the **History** drawer works the same way — every past run's per-node output is preserved.
+
+## Common gotchas
+
+- **Wrong node name.** Expressions like `$('AI Agent')` are matched by the node's display name on the canvas. If you rename a node, expressions that referenced it stop working. Either keep names stable, or use the field reference picker to repair the expression.
+- **Expecting a list, getting an item.** `{{ $json.field }}` resolves against the *first item* in the input. If your upstream emitted multiple items and you wanted to handle the rest, use a Loop node or `$input.all()` inside a Code node.
+- **Missing fields silently drop.** When a path doesn't exist, the expression resolves to `null` (or, if you used a JavaScript expression, throws and leaves the raw template behind). Always confirm field paths against an actual past run output before assuming the expression is right.

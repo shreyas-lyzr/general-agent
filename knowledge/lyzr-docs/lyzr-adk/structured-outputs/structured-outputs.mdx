@@ -1,0 +1,432 @@
+---
+title: "Structured Outputs"
+sidebarTitle: "Structured Outputs"
+description: "Get type-safe responses using Pydantic models"
+---
+
+Structured outputs let you define the exact shape of agent responses using Pydantic models. The agent returns validated, type-safe data instead of free-form text.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+from pydantic import BaseModel, Field
+
+studio = Studio(api_key="your-api-key")
+
+# Define your output structure
+class ProductInfo(BaseModel):
+    name: str = Field(description="Product name")
+    price: float = Field(description="Price in USD")
+    in_stock: bool = Field(description="Whether item is in stock")
+    features: list[str] = Field(description="List of key features")
+
+# Create agent
+agent = studio.create_agent(
+    name="Product Analyzer",
+    provider="gpt-4o",
+    role="Product information extractor",
+    goal="Extract structured product data"
+)
+
+# Run with structured output
+response = agent.run(
+    "The iPhone 15 Pro costs $999 and has a titanium design, A17 chip, and USB-C. Currently available.",
+    response_format=ProductInfo
+)
+
+# Access typed data
+product = response.structured_output
+print(f"Name: {product.name}")        # "iPhone 15 Pro"
+print(f"Price: ${product.price}")     # "$999.0"
+print(f"In Stock: {product.in_stock}")  # True
+print(f"Features: {product.features}")  # ["titanium design", "A17 chip", "USB-C"]
+```
+
+---
+
+## Defining Output Models
+
+### Basic Model
+
+```python
+from pydantic import BaseModel, Field
+
+class Person(BaseModel):
+    name: str = Field(description="Full name")
+    age: int = Field(description="Age in years")
+    email: str = Field(description="Email address")
+```
+
+### With Descriptions
+
+Use `Field(description=...)` to guide the model:
+
+```python
+class OrderSummary(BaseModel):
+    order_id: str = Field(description="Unique order identifier")
+    total: float = Field(description="Total amount in USD")
+    items: int = Field(description="Number of items ordered")
+    status: str = Field(description="Current order status: pending, shipped, or delivered")
+```
+
+### With Default Values
+
+```python
+class UserPreferences(BaseModel):
+    theme: str = Field(default="light", description="UI theme")
+    notifications: bool = Field(default=True, description="Enable notifications")
+    language: str = Field(default="en", description="Preferred language code")
+```
+
+### Nested Models
+
+```python
+class Address(BaseModel):
+    street: str = Field(description="Street address")
+    city: str = Field(description="City name")
+    country: str = Field(description="Country name")
+    postal_code: str = Field(description="Postal/ZIP code")
+
+class Company(BaseModel):
+    name: str = Field(description="Company name")
+    industry: str = Field(description="Industry sector")
+    headquarters: Address = Field(description="HQ address")
+    employee_count: int = Field(description="Number of employees")
+```
+
+### With Enums
+
+```python
+from enum import Enum
+
+class Priority(str, Enum):
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    URGENT = "urgent"
+
+class Ticket(BaseModel):
+    title: str = Field(description="Ticket title")
+    description: str = Field(description="Issue description")
+    priority: Priority = Field(description="Priority level")
+```
+
+### With Lists
+
+```python
+class Article(BaseModel):
+    title: str = Field(description="Article title")
+    author: str = Field(description="Author name")
+    tags: list[str] = Field(description="Article tags")
+    sections: list[str] = Field(description="Main section headings")
+```
+
+### Optional Fields
+
+```python
+from typing import Optional
+
+class Review(BaseModel):
+    product: str = Field(description="Product name")
+    rating: int = Field(description="Rating 1-5")
+    comment: Optional[str] = Field(default=None, description="Optional comment")
+    verified_purchase: Optional[bool] = Field(default=None, description="Verified purchase flag")
+```
+
+---
+
+## Using Structured Outputs
+
+### With agent.run()
+
+```python
+response = agent.run(
+    "Extract information from this text...",
+    response_format=MyModel
+)
+
+# Access the structured data
+data = response.structured_output  # Type: MyModel
+```
+
+### With Knowledge Bases
+
+```python
+class Answer(BaseModel):
+    answer: str = Field(description="The answer to the question")
+    confidence: float = Field(description="Confidence score 0-1")
+    sources: list[str] = Field(description="Source documents used")
+
+response = agent.run(
+    "What is our return policy?",
+    knowledge_bases=[kb],
+    response_format=Answer
+)
+
+answer = response.structured_output
+print(f"Answer: {answer.answer}")
+print(f"Confidence: {answer.confidence}")
+print(f"Sources: {answer.sources}")
+```
+
+### With Sessions (Memory)
+
+```python
+class ConversationSummary(BaseModel):
+    topic: str = Field(description="Main conversation topic")
+    key_points: list[str] = Field(description="Key points discussed")
+    action_items: list[str] = Field(description="Action items identified")
+    sentiment: str = Field(description="Overall sentiment: positive, neutral, negative")
+
+# Conversation with memory
+agent.run("Let's discuss the Q1 roadmap", session_id="planning_session")
+agent.run("We need to prioritize the mobile app", session_id="planning_session")
+agent.run("John will handle the backend", session_id="planning_session")
+
+# Get structured summary
+response = agent.run(
+    "Summarize our discussion",
+    session_id="planning_session",
+    response_format=ConversationSummary
+)
+
+summary = response.structured_output
+```
+
+---
+
+## Examples
+
+### Data Extraction
+
+```python
+class ContactInfo(BaseModel):
+    name: str = Field(description="Person's full name")
+    email: str = Field(description="Email address")
+    phone: str = Field(description="Phone number")
+    company: str = Field(description="Company name")
+    title: str = Field(description="Job title")
+
+agent = studio.create_agent(
+    name="Contact Extractor",
+    provider="gpt-4o",
+    role="Extract contact information from text"
+)
+
+text = """
+Hi, I'm Sarah Johnson, VP of Sales at TechCorp.
+You can reach me at sarah.j@techcorp.com or call 555-123-4567.
+"""
+
+response = agent.run(text, response_format=ContactInfo)
+contact = response.structured_output
+
+print(f"Name: {contact.name}")      # Sarah Johnson
+print(f"Email: {contact.email}")    # sarah.j@techcorp.com
+print(f"Company: {contact.company}")  # TechCorp
+```
+
+### Sentiment Analysis
+
+```python
+class SentimentAnalysis(BaseModel):
+    sentiment: str = Field(description="Overall sentiment: positive, negative, or neutral")
+    confidence: float = Field(description="Confidence score 0-1")
+    key_phrases: list[str] = Field(description="Phrases indicating sentiment")
+    summary: str = Field(description="Brief summary of the content")
+
+agent = studio.create_agent(
+    name="Sentiment Analyzer",
+    provider="gpt-4o",
+    role="Analyze sentiment in text"
+)
+
+review = "This product exceeded my expectations! Great quality and fast shipping."
+
+response = agent.run(review, response_format=SentimentAnalysis)
+analysis = response.structured_output
+
+print(f"Sentiment: {analysis.sentiment}")  # positive
+print(f"Confidence: {analysis.confidence}")  # 0.95
+```
+
+### Content Classification
+
+```python
+class ContentClassification(BaseModel):
+    category: str = Field(description="Primary category")
+    subcategories: list[str] = Field(description="Subcategories")
+    topics: list[str] = Field(description="Main topics covered")
+    audience: str = Field(description="Target audience")
+    content_type: str = Field(description="Type: article, tutorial, review, etc.")
+
+agent = studio.create_agent(
+    name="Content Classifier",
+    provider="gpt-4o",
+    role="Classify content into categories"
+)
+
+article = "10 Python Tips for Data Scientists: From pandas tricks to visualization..."
+
+response = agent.run(article, response_format=ContentClassification)
+classification = response.structured_output
+```
+
+### Entity Extraction
+
+```python
+class Entity(BaseModel):
+    name: str = Field(description="Entity name")
+    type: str = Field(description="Entity type: person, organization, location, date, etc.")
+    context: str = Field(description="Context in which entity appears")
+
+class EntityExtraction(BaseModel):
+    entities: list[Entity] = Field(description="All entities found in text")
+    summary: str = Field(description="Brief summary of the document")
+
+agent = studio.create_agent(
+    name="Entity Extractor",
+    provider="gpt-4o",
+    role="Extract named entities from text"
+)
+
+news = "Apple CEO Tim Cook announced new products at the Cupertino headquarters yesterday."
+
+response = agent.run(news, response_format=EntityExtraction)
+extraction = response.structured_output
+
+for entity in extraction.entities:
+    print(f"{entity.name} ({entity.type})")
+```
+
+### Task Breakdown
+
+```python
+class Task(BaseModel):
+    title: str = Field(description="Task title")
+    description: str = Field(description="Task description")
+    priority: str = Field(description="Priority: high, medium, low")
+    estimated_hours: float = Field(description="Estimated hours to complete")
+    dependencies: list[str] = Field(description="Task dependencies")
+
+class ProjectPlan(BaseModel):
+    project_name: str = Field(description="Project name")
+    tasks: list[Task] = Field(description="List of tasks")
+    total_hours: float = Field(description="Total estimated hours")
+    critical_path: list[str] = Field(description="Critical path task titles")
+
+agent = studio.create_agent(
+    name="Project Planner",
+    provider="gpt-4o",
+    role="Break down projects into tasks"
+)
+
+request = "Build a user authentication system with login, registration, and password reset"
+
+response = agent.run(request, response_format=ProjectPlan)
+plan = response.structured_output
+
+print(f"Project: {plan.project_name}")
+print(f"Total Hours: {plan.total_hours}")
+for task in plan.tasks:
+    print(f"  - {task.title} ({task.priority}): {task.estimated_hours}h")
+```
+
+---
+
+## Best Practices
+
+### Use Descriptive Field Names
+
+```python
+# Good
+class Order(BaseModel):
+    order_id: str
+    customer_name: str
+    total_amount: float
+
+# Avoid
+class Order(BaseModel):
+    id: str
+    name: str
+    amount: float
+```
+
+### Add Clear Descriptions
+
+```python
+# Good
+price: float = Field(description="Price in USD, excluding tax")
+
+# Avoid
+price: float = Field(description="Price")
+```
+
+### Use Appropriate Types
+
+```python
+# Good
+age: int  # Integer for whole numbers
+price: float  # Float for decimals
+is_active: bool  # Boolean for yes/no
+tags: list[str]  # List for multiple values
+
+# Avoid
+age: str  # Don't use string for numbers
+is_active: str  # Don't use "yes"/"no" strings
+```
+
+### Constrain Values Where Possible
+
+```python
+from pydantic import Field
+
+class Rating(BaseModel):
+    score: int = Field(ge=1, le=5, description="Rating from 1 to 5")
+    confidence: float = Field(ge=0, le=1, description="Confidence 0-1")
+```
+
+### Handle Optional Data
+
+```python
+from typing import Optional
+
+class Review(BaseModel):
+    rating: int  # Required
+    title: Optional[str] = None  # Optional
+    comment: Optional[str] = None  # Optional
+```
+
+---
+
+## Error Handling
+
+```python
+from pydantic import ValidationError
+
+try:
+    response = agent.run(text, response_format=MyModel)
+    data = response.structured_output
+except ValidationError as e:
+    print(f"Validation error: {e}")
+except Exception as e:
+    print(f"Error: {e}")
+```
+
+---
+
+## Supported Providers
+
+Structured outputs work best with:
+
+| Provider | Model | Support |
+|----------|-------|---------|
+| OpenAI | gpt-4o, gpt-4o-mini | Excellent |
+| OpenAI | gpt-4-turbo | Good |
+| Anthropic | claude-3.5-sonnet | Good |
+| Google | gemini-1.5-pro | Good |
+
+<Note>
+Some models handle structured outputs better than others. GPT-4o provides the most reliable structured output support.
+</Note>

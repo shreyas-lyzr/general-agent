@@ -1,0 +1,105 @@
+---
+title: Groq Models
+sidebarTitle: "Groq"
+description: "Groq-hosted LLMs available in Lyzr with ultra-fast performance, ideal for real-time agent interactions"
+---
+
+Groq is known for its **hardware-accelerated inferencing**, offering **blazing-fast response times** ideal for latency-sensitive applications. The models served through Groq in Lyzr come pre-integrated and require no additional setup.
+
+<AccordionGroup>
+  <Accordion title="LLaMA 3.3 70B Versatile" defaultOpen={false}>
+    A state-of-the-art LLaMA model served on Groq’s hardware, optimized for general-purpose use with high speed.
+
+    **Use Cases:**
+    - High-speed chat agents
+    - Real-time customer interaction bots
+    - Lightweight RAG-based knowledge assistants
+
+    **Highlights:**
+    - Ultra-fast response time (token streaming in milliseconds)
+    - Balanced accuracy and generation speed
+    - Great for user-facing experiences
+  </Accordion>
+
+  <Accordion title="LLaMA 3.1 8B Instant" defaultOpen={false}>
+    Smaller LLaMA model optimized for extremely lightweight and instant responses.
+
+    **Use Cases:**
+    - Instant query resolution
+    - Embedded LLM features in apps
+    - Low-cost multi-turn agents
+
+    **Highlights:**
+    - Minimal latency (ideal for mobile/web)
+    - Lightweight for cost-effective scaling
+    - Suitable for basic inferencing needs
+  </Accordion>
+
+  <Accordion title="LLaMA 4 Scout 17B (16E)" defaultOpen={false}>
+    Meta's natively multimodal model using a Mixture-of-Experts (MoE) architecture, offering exceptional performance for its size.
+
+    **Use Cases:**
+    - Multimodal assistants (Text + Image reasoning)
+    - High-speed coding and debugging tools
+    - Multilingual chat support (12+ languages)
+
+    **Highlights:**
+    - Native vision support (early fusion architecture)
+    - 128K context window for long-form analysis
+    - Optimized for "assistant-like" conversational flow
+  </Accordion>
+
+  <Accordion title="LLaMA 4 Maverick 17B (128E)" defaultOpen={false}>
+    The high-capacity variant of the LLaMA 4 series, featuring a massive 128-expert MoE architecture for deeper reasoning.
+
+    **Use Cases:**
+    - Complex decision-making and policy-based agents
+    - Enterprise-scale orchestration
+    - Knowledge-intensive research and reasoning
+
+    **Highlights:**
+    - Large-scale reasoning with 512K context support
+    - Superior coding and technical problem-solving
+    - Maintains sub-100ms latency on Groq hardware
+  </Accordion>
+
+  <Accordion title="GPT-oss-20B" defaultOpen={false}> 
+    An open-source GPT variant optimized for balanced performance and efficiency on Groq hardware. 
+    
+    **Use Cases:** - General-purpose conversational agents 
+    - Fast inference for customer support and FAQs 
+    - Lightweight reasoning at scale 
+    
+    **Highlights:** - Mid-sized open-source LLM 
+    - Optimized for Groq inferencing speed 
+    - Ideal for real-time interactive applications 
+  </Accordion> 
+
+  <Accordion title="GPT-oss-120B" defaultOpen={false}> 
+    A large-scale open-source model optimized for Groq, delivering deeper reasoning and broader coverage. 
+    
+    **Use Cases:** - Knowledge-heavy assistants 
+    - Multi-turn conversational flows 
+    - Enterprise orchestration agents 
+    
+    **Highlights:** - Large-scale reasoning capabilities 
+    - Supports complex queries with high accuracy 
+    - Extremely low latency for a 100B+ parameter model
+  </Accordion>
+
+  <Accordion title="Moonshot Kimi K2 Instruct" defaultOpen={false}>
+    A frontier Mixture-of-Experts (MoE) model designed for autonomous agentic intelligence.
+
+    **Use Cases:**
+    - Autonomous agents requiring tool-calling
+    - Complex multi-step reasoning tasks
+    - Interactive data visualization and frontend coding
+
+    **Highlights:**
+    - 256K context window for long-horizon tasks
+    - State-of-the-art "Agentic" reasoning and tool-use
+    - High-tier performance in math and technical logic
+  </Accordion>
+</AccordionGroup>
+
+> ⚡ With Groq, agents in Lyzr get **sub-100ms latency** inferencing, making it ideal for real-time apps where user experience and responsiveness are critical.

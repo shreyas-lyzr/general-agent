@@ -1,0 +1,27 @@
+---
+title: "Get Transcript"
+openapi: get /transcripts/{sessionId}
+---
+
+Retrieve the full, granular record of a single Voice Agent conversation.
+
+While the [List Transcripts](/api-reference/transcripts/list-transcripts) endpoint is great for dashboards and overviews, this endpoint is used when you need to drill down into the exact turn-by-turn dialogue of a specific user interaction.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header. You can only fetch transcripts that belong to your organization or authorized scope.
+</Info>
+
+### Required Parameters
+
+* **`sessionId` (Path Parameter):** The unique UUID of the session you want to retrieve. You typically receive this ID when a session is first initiated, or you can find it by querying the List Transcripts endpoint.
+
+### Understanding the Transcript Document
+
+When a session concludes, our engine compiles all the raw audio events, transcription data, and agent logic into a single JSON document. 
+
+A successful `200 OK` response will return a `transcript` object containing:
+
+* **`chatHistory`**: The exact sequence of messages exchanged between the human and the AI. This includes the parsed text of what the user said (via STT) and the text the LLM generated in response.
+* **`sessionReport`**: If your agent is configured to extract structured data (like a lead's name, intent, or a summary of the call), that JSON data will appear here.
+* **Core Analytics**: Dive into exactly how the call performed using `durationMs` (length of the call), `messageCount` (how back-and-forth it was), and the timestamps (`startedAt`, `endedAt`).
+* **`closeReason`**: Understand exactly *why* the call ended. Was it an intentional hang-up, a network timeout, or did the agent gracefully conclude the conversation?

@@ -1,0 +1,427 @@
+---
+title: "Exceptions"
+sidebarTitle: "Exceptions"
+description: "Error handling and exception types in the Lyzr ADK"
+---
+
+The Lyzr ADK provides a hierarchy of exceptions to help you handle errors gracefully. All exceptions inherit from `LyzrError`.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+from lyzr.exceptions import (
+    LyzrError,
+    AuthenticationError,
+    ValidationError,
+    NotFoundError,
+    RateLimitError,
+    APIError,
+    TimeoutError,
+    InvalidResponseError,
+    ToolNotFoundError
+)
+
+studio = Studio(api_key="your-api-key")
+
+try:
+    agent = studio.get_agent("invalid_id")
+except NotFoundError:
+    print("Agent not found")
+except LyzrError as e:
+    print(f"ADK error: {e.message}")
+```
+
+---
+
+## Exception Hierarchy
+
+```
+LyzrError (base)
+├── AuthenticationError    # Invalid/missing API key
+├── ValidationError        # Invalid input parameters
+├── NotFoundError          # Resource not found (404)
+├── RateLimitError         # Rate limit exceeded (429)
+├── APIError               # General API errors
+├── TimeoutError           # Request timeout
+├── InvalidResponseError   # Response parsing/validation failed
+└── ToolNotFoundError      # Local tool not found
+```
+
+---
+
+## LyzrError
+
+Base exception class for all ADK errors.
+
+```python
+class LyzrError(Exception):
+    message: str                    # Error message
+    status_code: int | None         # HTTP status code (if applicable)
+    response: dict | None           # Raw API response (if available)
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `message` | str | Human-readable error message |
+| `status_code` | int \| None | HTTP status code |
+| `response` | dict \| None | Raw API response |
+
+### Example
+
+```python
+try:
+    response = agent.run("Hello")
+except LyzrError as e:
+    print(f"Error: {e.message}")
+    if e.status_code:
+        print(f"Status: {e.status_code}")
+    if e.response:
+        print(f"Response: {e.response}")
+```
+
+---
+
+## AuthenticationError
+
+Raised when the API key is invalid, missing, or expired.
+
+```python
+from lyzr.exceptions import AuthenticationError
+
+try:
+    studio = Studio(api_key="invalid-key")
+    agent = studio.create_agent(...)
+except AuthenticationError:
+    print("Invalid API key. Please check your credentials.")
+```
+
+### Common Causes
+
+- API key is incorrect
+- API key is missing (not in env var or parameter)
+- API key has been revoked
+- API key doesn't have required permissions
+
+---
+
+## ValidationError
+
+Raised when input parameters fail validation.
+
+```python
+from lyzr.exceptions import ValidationError
+
+try:
+    agent = studio.create_agent(
+        name="",  # Empty name - invalid
+        provider="gpt-4o",
+        temperature=5.0  # Out of range - invalid
+    )
+except ValidationError as e:
+    print(f"Invalid input: {e.message}")
+```
+
+### Common Causes
+
+- Empty or invalid agent name
+- Temperature out of range (0.0-2.0)
+- Top_p out of range (0.0-1.0)
+- Invalid provider/model combination
+- Missing required parameters
+
+---
+
+## NotFoundError
+
+Raised when a requested resource doesn't exist (HTTP 404).
+
+```python
+from lyzr.exceptions import NotFoundError
+
+try:
+    agent = studio.get_agent("nonexistent_agent_id")
+except NotFoundError:
+    print("Agent not found. It may have been deleted.")
+```
+
+### Common Causes
+
+- Agent ID doesn't exist
+- Knowledge base ID doesn't exist
+- Context ID doesn't exist
+- RAI policy ID doesn't exist
+- Resource was deleted
+
+---
+
+## RateLimitError
+
+Raised when API rate limits are exceeded (HTTP 429).
+
+```python
+from lyzr.exceptions import RateLimitError
+import time
+
+def run_with_retry(agent, message, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return agent.run(message)
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                wait_time = 2 ** attempt  # Exponential backoff
+                print(f"Rate limited. Waiting {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                raise
+
+response = run_with_retry(agent, "Hello")
+```
+
+### Common Causes
+
+- Too many requests in a short period
+- Account quota exceeded
+- Concurrent request limit reached
+
+---
+
+## APIError
+
+Raised for general API errors not covered by other exceptions.
+
+```python
+from lyzr.exceptions import APIError
+
+try:
+    response = agent.run("Process this request")
+except APIError as e:
+    print(f"API error: {e.message}")
+    print(f"Status code: {e.status_code}")
+```
+
+### Common Causes
+
+- Server-side errors (5xx)
+- Network issues
+- Invalid request format
+- Service unavailable
+
+---
+
+## TimeoutError
+
+Raised when a request takes too long to complete.
+
+```python
+from lyzr.exceptions import TimeoutError
+
+try:
+    # Long-running operation
+    response = agent.run("Generate a very long document")
+except TimeoutError:
+    print("Request timed out. Try breaking into smaller requests.")
+```
+
+### Common Causes
+
+- Complex queries taking too long
+- Large document processing
+- Network latency
+- Server under heavy load
+
+---
+
+## InvalidResponseError
+
+Raised when the API response cannot be parsed or validated.
+
+```python
+from lyzr.exceptions import InvalidResponseError
+
+try:
+    result = agent.run("Generate structured data")
+except InvalidResponseError as e:
+    print(f"Failed to parse response: {e.message}")
+    if e.validation_error:
+        print(f"Validation error: {e.validation_error}")
+    if e.response:
+        print(f"Raw response: {e.response}")
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `message` | str | Error message |
+| `status_code` | int \| None | HTTP status code |
+| `response` | Any \| None | Raw response data |
+| `validation_error` | Any \| None | Pydantic validation error |
+
+### Common Causes
+
+- Structured output doesn't match Pydantic model
+- Malformed JSON in response
+- Unexpected response format
+- Model returned invalid data
+
+---
+
+## ToolNotFoundError
+
+Raised when a local tool is called but not registered.
+
+```python
+from lyzr.exceptions import ToolNotFoundError
+
+try:
+    # Agent tries to call a tool that wasn't added
+    response = agent.run("Use the missing_tool")
+except ToolNotFoundError as e:
+    print(f"Tool not found: {e.message}")
+```
+
+### Common Causes
+
+- Tool function not added with `agent.add_tool()`
+- Tool name mismatch
+- Tool was removed but still referenced
+
+---
+
+## Error Handling Patterns
+
+### Comprehensive Handler
+
+```python
+from lyzr.exceptions import (
+    LyzrError,
+    AuthenticationError,
+    ValidationError,
+    NotFoundError,
+    RateLimitError,
+    APIError,
+    TimeoutError,
+    InvalidResponseError,
+    ToolNotFoundError
+)
+
+def safe_agent_run(agent, message):
+    """Run agent with comprehensive error handling"""
+    try:
+        return agent.run(message)
+
+    except AuthenticationError:
+        print("Authentication failed. Check your API key.")
+        return None
+
+    except ValidationError as e:
+        print(f"Invalid input: {e.message}")
+        return None
+
+    except NotFoundError:
+        print("Agent not found.")
+        return None
+
+    except RateLimitError:
+        print("Rate limit exceeded. Please wait and retry.")
+        return None
+
+    except TimeoutError:
+        print("Request timed out.")
+        return None
+
+    except InvalidResponseError as e:
+        print(f"Invalid response: {e.message}")
+        return None
+
+    except ToolNotFoundError as e:
+        print(f"Tool error: {e.message}")
+        return None
+
+    except APIError as e:
+        print(f"API error ({e.status_code}): {e.message}")
+        return None
+
+    except LyzrError as e:
+        print(f"ADK error: {e.message}")
+        return None
+```
+
+### Retry with Backoff
+
+```python
+import time
+from lyzr.exceptions import RateLimitError, TimeoutError, APIError
+
+def run_with_retry(agent, message, max_retries=3):
+    """Run with exponential backoff retry"""
+    last_error = None
+
+    for attempt in range(max_retries):
+        try:
+            return agent.run(message)
+
+        except (RateLimitError, TimeoutError) as e:
+            last_error = e
+            wait_time = 2 ** attempt
+            print(f"Attempt {attempt + 1} failed. Retrying in {wait_time}s...")
+            time.sleep(wait_time)
+
+        except APIError as e:
+            if e.status_code and e.status_code >= 500:
+                # Server error - retry
+                last_error = e
+                wait_time = 2 ** attempt
+                print(f"Server error. Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+            else:
+                # Client error - don't retry
+                raise
+
+    raise last_error
+```
+
+### Logging Errors
+
+```python
+import logging
+from lyzr.exceptions import LyzrError
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def run_with_logging(agent, message):
+    """Run agent with error logging"""
+    try:
+        return agent.run(message)
+
+    except LyzrError as e:
+        logger.error(
+            "Agent error",
+            extra={
+                "error_type": type(e).__name__,
+                "message": e.message,
+                "status_code": e.status_code,
+            }
+        )
+        raise
+```
+
+### Fallback Strategy
+
+```python
+from lyzr.exceptions import APIError, TimeoutError
+
+def run_with_fallback(primary_agent, fallback_agent, message):
+    """Try primary agent, fall back to secondary on error"""
+    try:
+        return primary_agent.run(message)
+
+    except (APIError, TimeoutError) as e:
+        print(f"Primary agent failed: {e.message}")
+        print("Trying fallback agent...")
+        return fallback_agent.run(message)
+```

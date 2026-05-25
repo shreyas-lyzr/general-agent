@@ -1,0 +1,782 @@
+# Lyzr Tools & Credentials — UI Configuration Cookbook
+
+> **Goal:** Help you build a complete UI for configuring tools in Lyzr Agent Studio. This cookbook walks through every API call you need, common UI patterns, and ready-to-use code snippets.
+
+---
+
+## Prerequisites
+
+Before you start, every request to the Lyzr API requires these headers:
+
+```ts
+const BASE_URL = "https://agent-prod.studio.lyzr.ai/v3";
+
+const DEFAULT_HEADERS = {
+  "accept": "application/json",
+  "x-api-key": <LYZR_API_KEY>,
+  "Content-Type": "application/json",
+};
+```
+
+Create a shared `apiFetch` helper so you never forget them:
+
+```ts
+// lib/lyzrApi.ts
+export async function apiFetch<T>(
+  path: string,
+  options: RequestInit = {}
+): Promise<T> {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...options,
+    headers: {
+      ...DEFAULT_HEADERS,
+      ...options.headers,
+    },
+  });
+
+  if (!res.ok) {
+    const error = await res.text();
+    throw new Error(`Lyzr API error ${res.status}: ${error}`);
+  }
+
+  return res.json() as Promise<T>;
+}
+```
+
+---
+
+## Auth Type Reference
+
+Understanding `auth_type` is the key to rendering the right UI and calling the right endpoint.
+
+| `auth_type` | Endpoint | Credentials body needed? | Examples |
+|---|---|---|---|
+| `no_auth` | `POST /tools/credentials/static` | No — send `{}` | Arxiv, HackerNews |
+| `api_key` | `POST /tools/credentials/static` | Yes — send key/value pairs | Brave Search, Google Maps |
+| `oauth2` | `POST /tools/credentials/oauth` | No — redirect flow | Gmail, Slack, GitHub, Notion |
+
+---
+
+## Recipe 1 — List All Available Tools
+
+Use this to populate a **tool browser / marketplace** UI where users can discover and select tools.
+
+### API Call
+
+```ts
+// GET /providers/tools/all
+export async function listAllTools() {
+  return apiFetch<Tool[]>("/providers/tools/all");
+}
+```
+
+### Response Shape
+
+```ts
+interface Tool {
+  _id: string;               // provider_uuid — used when creating credentials
+  provider_id: string;       // e.g. "BRAVE_SEARCH", "github"
+  provider_source: "aci" | "composio";
+  auth_type: "api_key" | "oauth2" | "no_auth";
+  meta_data: {
+    categories: string[];
+    description: string;
+    logo?: string;
+    app_id?: string;         // ACI app_id — needed for enabling the app
+  };
+  form?: Record<string, unknown>; // Field definitions for api_key tools
+}
+```
+
+### UI Pattern — Tool Card Grid
+
+```tsx
+// components/ToolBrowser.tsx
+import { useEffect, useState } from "react";
+import { listAllTools } from "@/lib/lyzrApi";
+
+export function ToolBrowser({ onSelect }: { onSelect: (tool: Tool) => void }) {
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    listAllTools().then(setTools);
+  }, []);
+
+  const filtered = tools.filter((t) =>
+    t.provider_id.toLowerCase().includes(search.toLowerCase()) ||
+    t.meta_data.description?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div>
+      <input
+        placeholder="Search tools..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full border rounded px-3 py-2 mb-4"
+      />
+      <div className="grid grid-cols-3 gap-4">
+        {filtered.map((tool) => (
+          <div
+            key={tool._id}
+            onClick={() => onSelect(tool)}
+            className="border rounded-lg p-4 cursor-pointer hover:shadow-md"
+          >
+            {tool.meta_data.logo && (
+              <img src={tool.meta_data.logo} alt={tool.provider_id} className="h-8 mb-2" />
+            )}
+            <h3 className="font-semibold">{tool.provider_id}</h3>
+            <p className="text-sm text-gray-500">{tool.meta_data.description}</p>
+            <span className="text-xs mt-2 inline-block px-2 py-0.5 rounded bg-gray-100">
+              {tool.auth_type}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Recipe 2 — List Connected Accounts
+
+Show users which tools they've already configured. Drive a **"My Connections"** panel.
+
+### API Call
+
+```ts
+// GET /tools/credentials/connected_accounts?user_id={user_id}
+export async function getConnectedAccounts(userId: string) {
+  return apiFetch<ConnectedAccount[]>(
+    `/tools/credentials/connected_accounts?user_id=${encodeURIComponent(userId)}`
+  );
+}
+```
+
+### Response Shape
+
+```ts
+interface ConnectedAccount {
+  _id: string;
+  provider_id: string;
+  credential_name: string;
+  status: "success" | "pending" | "failed";
+  credentials?: Record<string, string>;
+  external_ref?: { connection_id: string };
+}
+```
+
+### UI Pattern — Connected Accounts List
+
+```tsx
+// components/ConnectedAccounts.tsx
+export function ConnectedAccounts({ userId }: { userId: string }) {
+  const [accounts, setAccounts] = useState<ConnectedAccount[]>([]);
+
+  useEffect(() => {
+    getConnectedAccounts(userId).then(setAccounts);
+  }, [userId]);
+
+  return (
+    <ul className="divide-y">
+      {accounts.map((acc) => (
+        <li key={acc._id} className="flex items-center justify-between py-3">
+          <div>
+            <p className="font-medium">{acc.credential_name}</p>
+            <p className="text-sm text-gray-400">{acc.provider_id}</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <StatusBadge status={acc.status} />
+            <DeleteButton credentialId={acc._id} onDeleted={() => {
+              setAccounts((prev) => prev.filter((a) => a._id !== acc._id));
+            }} />
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const colors = {
+    success: "bg-green-100 text-green-700",
+    pending: "bg-yellow-100 text-yellow-700",
+    failed: "bg-red-100 text-red-700",
+  };
+  return (
+    <span className={`text-xs px-2 py-0.5 rounded ${colors[status] ?? ""}`}>
+      {status}
+    </span>
+  );
+}
+```
+
+---
+
+## Recipe 3 — Enable an ACI App (Create Configuration)
+
+Before a user can connect an ACI-sourced tool (e.g. Google Sheets, Google Maps), the app must be **enabled** in the system. Call this once per app.
+
+### API Call
+
+```ts
+// POST /tools/aci/configurations
+export async function enableAciApp(appId: string, securityScheme: string) {
+  return apiFetch("/tools/aci/configurations", {
+    method: "POST",
+    body: JSON.stringify({
+      app_id: appId,
+      security_scheme: securityScheme,
+      security_scheme_overrides: {},
+    }),
+  });
+}
+```
+
+### When to Call It
+
+Check existing ACI configurations first (`GET /tools/aci/configurations`). Only call `enableAciApp` if the app isn't already present and enabled.
+
+```ts
+// GET /tools/aci/configurations
+export async function listAciConfigurations() {
+  return apiFetch<AciConfig[]>("/tools/aci/configurations");
+}
+
+interface AciConfig {
+  id: string;
+  app_name: string;
+  security_scheme: string;
+  enabled: boolean;
+  all_functions_enabled: boolean;
+}
+
+// Guard helper
+export async function ensureAciAppEnabled(appId: string, appName: string, securityScheme: string) {
+  const configs = await listAciConfigurations();
+  const existing = configs.find((c) => c.app_name === appName && c.enabled);
+  if (!existing) {
+    await enableAciApp(appId, securityScheme);
+  }
+}
+```
+
+---
+
+## Recipe 4 — Connect a Tool (Dynamic Form by auth_type)
+
+This is the **core UX flow**. When a user clicks "Connect" on a tool, render the right form based on `auth_type`.
+
+### Master Connect Flow
+
+```ts
+// lib/connectTool.ts
+export async function connectTool(params: ConnectParams) {
+  const { tool, userId, credentialName, apiKeyValues, redirectUrl } = params;
+
+  // Step 1: For ACI tools, ensure the app is enabled first
+  if (tool.provider_source === "aci" && tool.meta_data.app_id) {
+    await ensureAciAppEnabled(
+      tool.meta_data.app_id,
+      tool.provider_id,
+      tool.auth_type
+    );
+  }
+
+  // Step 2: Create the credential using the right endpoint
+  if (tool.auth_type === "oauth2") {
+    return createOAuthCredential({ tool, userId, credentialName, redirectUrl });
+  } else {
+    return createStaticCredential({ tool, userId, credentialName, apiKeyValues });
+  }
+}
+```
+
+---
+
+## Recipe 5 — Static Credential (API Key or No Auth)
+
+### API Call
+
+```ts
+// POST /tools/credentials/static
+export async function createStaticCredential({
+  tool,
+  userId,
+  credentialName,
+  apiKeyValues = {},
+}: {
+  tool: Tool;
+  userId: string;
+  credentialName: string;
+  apiKeyValues?: Record<string, string>;
+}) {
+  return apiFetch("/tools/credentials/static", {
+    method: "POST",
+    body: JSON.stringify({
+      credential_name: credentialName,
+      user_id: userId,
+      provider_uuid: tool._id,
+      credentials: apiKeyValues,  // {} for no_auth tools
+    }),
+  });
+}
+```
+
+### UI Pattern — API Key Form
+
+```tsx
+// components/ApiKeyForm.tsx
+export function ApiKeyForm({
+  tool,
+  userId,
+  onSuccess,
+}: {
+  tool: Tool;
+  userId: string;
+  onSuccess: () => void;
+}) {
+  const [credentialName, setCredentialName] = useState("");
+  const [keyValues, setKeyValues] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Derive field names from the tool's form definition
+  // For no_auth tools, fields will be empty
+  const fields = tool.auth_type === "api_key"
+    ? Object.keys(tool.form ?? { api_key: {} })
+    : [];
+
+  async function handleSubmit() {
+    setLoading(true);
+    setError(null);
+    try {
+      await createStaticCredential({
+        tool,
+        userId,
+        credentialName,
+        apiKeyValues: keyValues,
+      });
+      onSuccess();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-1">Connection Name</label>
+        <input
+          className="w-full border rounded px-3 py-2"
+          placeholder="e.g. My Brave Search"
+          value={credentialName}
+          onChange={(e) => setCredentialName(e.target.value)}
+        />
+      </div>
+
+      {fields.map((field) => (
+        <div key={field}>
+          <label className="block text-sm font-medium mb-1 capitalize">
+            {field.replace(/_/g, " ")}
+          </label>
+          <input
+            type="password"
+            className="w-full border rounded px-3 py-2 font-mono"
+            placeholder={`Enter ${field}`}
+            value={keyValues[field] ?? ""}
+            onChange={(e) =>
+              setKeyValues((prev) => ({ ...prev, [field]: e.target.value }))
+            }
+          />
+        </div>
+      ))}
+
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
+      <button
+        onClick={handleSubmit}
+        disabled={loading || !credentialName}
+        className="w-full bg-blue-600 text-white rounded px-4 py-2 disabled:opacity-50"
+      >
+        {loading ? "Connecting..." : tool.auth_type === "no_auth" ? "Enable Tool" : "Connect"}
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+## Recipe 6 — OAuth2 Connection
+
+### API Call
+
+```ts
+// POST /tools/credentials/oauth
+export async function createOAuthCredential({
+  tool,
+  userId,
+  credentialName,
+  redirectUrl,
+}: {
+  tool: Tool;
+  userId: string;
+  credentialName: string;
+  redirectUrl: string;
+}) {
+  return apiFetch<OAuthResponse>("/tools/credentials/oauth", {
+    method: "POST",
+    body: JSON.stringify({
+      credential_name: credentialName,
+      user_id: userId,
+      provider_uuid: tool._id,
+      redirect_url: redirectUrl,
+    }),
+  });
+}
+
+interface OAuthResponse {
+  credential_id: string;
+  status: "pending";
+  auth_url: string;             // Redirect user here
+  external_ref?: { connection_id: string };
+}
+```
+
+### UI Pattern — OAuth Connect Button
+
+```tsx
+// components/OAuthConnectButton.tsx
+export function OAuthConnectButton({
+  tool,
+  userId,
+  credentialName,
+  onConnected,
+}: {
+  tool: Tool;
+  userId: string;
+  credentialName: string;
+  onConnected: (credentialId: string) => void;
+}) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleOAuth() {
+    setLoading(true);
+    try {
+      const { auth_url, credential_id } = await createOAuthCredential({
+        tool,
+        userId,
+        credentialName,
+        redirectUrl: window.location.href, // Return to current page
+      });
+
+      // Store credential_id so you can poll/verify after redirect
+      sessionStorage.setItem("pending_credential_id", credential_id);
+
+      // Redirect user to OAuth provider
+      window.location.href = auth_url;
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <button
+      onClick={handleOAuth}
+      disabled={loading}
+      className="flex items-center gap-2 bg-white border rounded-lg px-4 py-2 shadow-sm hover:shadow"
+    >
+      {tool.meta_data.logo && (
+        <img src={tool.meta_data.logo} className="h-5 w-5" alt="" />
+      )}
+      {loading ? "Redirecting..." : `Connect with ${tool.provider_id}`}
+    </button>
+  );
+}
+```
+
+### Handling the OAuth Redirect Callback
+
+After the user authorizes, they land back on your `redirect_url`. Check `sessionStorage` and verify the connection:
+
+```tsx
+// hooks/useOAuthCallback.ts
+import { useEffect } from "react";
+import { getConnectedAccounts } from "@/lib/lyzrApi";
+
+export function useOAuthCallback(userId: string, onSuccess: () => void) {
+  useEffect(() => {
+    const pendingId = sessionStorage.getItem("pending_credential_id");
+    if (!pendingId) return;
+
+    // Poll for up to 10 seconds to confirm the credential is active
+    let attempts = 0;
+    const interval = setInterval(async () => {
+      attempts++;
+      const accounts = await getConnectedAccounts(userId);
+      const found = accounts.find(
+        (a) => a._id === pendingId && a.status === "success"
+      );
+      if (found || attempts > 10) {
+        clearInterval(interval);
+        sessionStorage.removeItem("pending_credential_id");
+        if (found) onSuccess();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [userId, onSuccess]);
+}
+```
+
+---
+
+## Recipe 7 — Delete a Credential
+
+### API Call
+
+```ts
+// DELETE /tools/credentials/{credential_id}
+export async function deleteCredential(credentialId: string) {
+  return apiFetch(`/tools/credentials/${credentialId}`, {
+    method: "DELETE",
+  });
+}
+```
+
+### UI Pattern — Delete Button with Confirmation
+
+```tsx
+// components/DeleteButton.tsx
+export function DeleteButton({
+  credentialId,
+  onDeleted,
+}: {
+  credentialId: string;
+  onDeleted: () => void;
+}) {
+  const [confirming, setConfirming] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  async function handleDelete() {
+    setLoading(true);
+    try {
+      await deleteCredential(credentialId);
+      onDeleted();
+    } finally {
+      setLoading(false);
+      setConfirming(false);
+    }
+  }
+
+  if (confirming) {
+    return (
+      <div className="flex gap-2">
+        <button
+          onClick={handleDelete}
+          disabled={loading}
+          className="text-sm text-red-600 border border-red-200 rounded px-2 py-1"
+        >
+          {loading ? "Deleting..." : "Confirm"}
+        </button>
+        <button
+          onClick={() => setConfirming(false)}
+          className="text-sm text-gray-500 border rounded px-2 py-1"
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      onClick={() => setConfirming(true)}
+      className="text-sm text-red-500 hover:underline"
+    >
+      Disconnect
+    </button>
+  );
+}
+```
+
+---
+
+## Recipe 8 — Full Connect Modal (Putting It All Together)
+
+A single `ConnectToolModal` component that handles all three auth types:
+
+```tsx
+// components/ConnectToolModal.tsx
+export function ConnectToolModal({
+  tool,
+  userId,
+  onClose,
+  onConnected,
+}: {
+  tool: Tool | null;
+  userId: string;
+  onClose: () => void;
+  onConnected: () => void;
+}) {
+  const [credentialName, setCredentialName] = useState("");
+
+  if (!tool) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+        {/* Header */}
+        <div className="flex items-center gap-3 mb-6">
+          {tool.meta_data.logo && (
+            <img src={tool.meta_data.logo} className="h-10 w-10" alt="" />
+          )}
+          <div>
+            <h2 className="text-lg font-semibold">Connect {tool.provider_id}</h2>
+            <p className="text-sm text-gray-400">{tool.meta_data.description}</p>
+          </div>
+        </div>
+
+        {/* Credential Name (shared across all auth types) */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-1">Connection Name</label>
+          <input
+            className="w-full border rounded px-3 py-2"
+            placeholder="Give this connection a name"
+            value={credentialName}
+            onChange={(e) => setCredentialName(e.target.value)}
+          />
+        </div>
+
+        {/* Auth-type specific form */}
+        {tool.auth_type === "oauth2" ? (
+          <OAuthConnectButton
+            tool={tool}
+            userId={userId}
+            credentialName={credentialName}
+            onConnected={() => { onConnected(); onClose(); }}
+          />
+        ) : (
+          <ApiKeyForm
+            tool={tool}
+            userId={userId}
+            onSuccess={() => { onConnected(); onClose(); }}
+          />
+        )}
+
+        <button
+          onClick={onClose}
+          className="mt-4 w-full text-sm text-gray-400 hover:text-gray-600"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## Recipe 9 — Complete Page Example
+
+Wire everything together in a single **Tools Settings** page:
+
+```tsx
+// pages/ToolsSettings.tsx
+export default function ToolsSettings() {
+  const userId = "user@example.com"; // from your auth context
+  const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Handle OAuth redirect callback
+  useOAuthCallback(userId, () => setRefreshKey((k) => k + 1));
+
+  return (
+    <div className="max-w-5xl mx-auto py-10 px-4 space-y-10">
+      <section>
+        <h1 className="text-2xl font-bold mb-1">Tool Connections</h1>
+        <p className="text-gray-500">Manage the tools available to your agents.</p>
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold mb-3">Connected Accounts</h2>
+        <ConnectedAccounts key={refreshKey} userId={userId} />
+      </section>
+
+      <section>
+        <h2 className="text-lg font-semibold mb-3">Available Tools</h2>
+        <ToolBrowser onSelect={setSelectedTool} />
+      </section>
+
+      <ConnectToolModal
+        tool={selectedTool}
+        userId={userId}
+        onClose={() => setSelectedTool(null)}
+        onConnected={() => {
+          setSelectedTool(null);
+          setRefreshKey((k) => k + 1);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+---
+
+## Error Handling Reference
+
+| HTTP Status | Meaning | Suggested UI |
+|---|---|---|
+| `400` | Bad request — missing or invalid fields | Highlight the offending field with an inline error |
+| `401` | Invalid `x-api-key` | Show a global "API key not configured" banner |
+| `404` | Credential or provider not found | Toast: "This connection no longer exists" |
+| `409` | Duplicate credential name | Prompt user to choose a different name |
+| `500` | Server error | Toast with retry button |
+
+```ts
+// lib/lyzrApi.ts — enhanced error handling
+export class LyzrApiError extends Error {
+  constructor(public status: number, message: string) {
+    super(message);
+    this.name = "LyzrApiError";
+  }
+}
+
+export async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    ...options,
+    headers: { ...DEFAULT_HEADERS, ...options.headers },
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new LyzrApiError(res.status, body);
+  }
+
+  return res.json();
+}
+```
+
+---
+
+## Quick Reference — All Endpoints
+
+| Action | Method | Path |
+|---|---|---|
+| List all tools | `GET` | `/providers/tools/all` |
+| List connected accounts | `GET` | `/tools/credentials/connected_accounts?user_id=` |
+| List ACI configurations | `GET` | `/tools/aci/configurations` |
+| Enable ACI app | `POST` | `/tools/aci/configurations` |
+| Create static credential | `POST` | `/tools/credentials/static` |
+| Initiate OAuth connection | `POST` | `/tools/credentials/oauth` |
+| Delete credential | `DELETE` | `/tools/credentials/{credential_id}` |

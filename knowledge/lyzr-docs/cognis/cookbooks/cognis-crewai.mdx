@@ -1,0 +1,341 @@
+---
+title: "Lyzr Cognis + CrewAI"
+sidebarTitle: "Cognis + CrewAI"
+description: "Add persistent memory to CrewAI agents using Lyzr Cognis"
+---
+
+## Overview
+
+[CrewAI](https://docs.crewai.com/) enables you to build multi-agent teams (crews) that collaborate on complex tasks. By integrating Cognis, you can give your crews persistent memory that spans across crew executions — agents remember user preferences, past results, and context from previous runs.
+
+**What you'll build:** A travel-planning crew with a researcher and planner agent, where Cognis injects user preferences into agent backstories and stores results for future reference.
+
+**Integration pattern:** Manual memory injection — Cognis runs _outside_ the crew to enrich agents before execution and store results after.
+
+## Prerequisites
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```bash
+    pip install lyzr-adk crewai crewai-tools
+    ```
+
+    ```bash
+    export LYZR_API_KEY="your-lyzr-api-key"
+    export OPENAI_API_KEY="your-openai-api-key"
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```bash
+    pip install lyzr-cognis crewai crewai-tools
+    ```
+
+    ```bash
+    export GEMINI_API_KEY="your-gemini-key"
+    export OPENAI_API_KEY="your-openai-api-key"
+    ```
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+    from crewai import Agent, Task, Crew
+
+    cog = Cognis()
+
+    # 1. Retrieve user preferences
+    memories = cog.search(query="travel preferences", owner_id="user_123", limit=5)
+    memory_context = "\n".join(f"- {m.content}" for m in memories)
+
+    # 2. Inject memories into agent backstory
+    agent = Agent(
+        role="Travel Researcher",
+        goal="Find the best travel options",
+        backstory=f"You know this about the user:\n{memory_context}",
+    )
+
+    # 3. Run the crew
+    task = Task(description="Research beach destinations", expected_output="Top 3 destinations", agent=agent)
+    crew = Crew(agents=[agent], tasks=[task])
+    result = crew.kickoff()
+
+    # 4. Store the result
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content="Plan a beach vacation"),
+            CognisMessage(role="assistant", content=str(result)),
+        ],
+        owner_id="user_123",
+        agent_id="travel_crew",
+    )
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+    from crewai import Agent, Task, Crew
+
+    m = Cognis(owner_id="user_123", agent_id="travel_crew")
+
+    # 1. Retrieve user preferences
+    resp = m.search("travel preferences", limit=5)
+    memory_context = "\n".join(f"- {r['content']}" for r in resp["results"])
+
+    # 2. Inject memories into agent backstory
+    agent = Agent(
+        role="Travel Researcher",
+        goal="Find the best travel options",
+        backstory=f"You know this about the user:\n{memory_context}",
+    )
+
+    # 3. Run the crew
+    task = Task(description="Research beach destinations", expected_output="Top 3 destinations", agent=agent)
+    crew = Crew(agents=[agent], tasks=[task])
+    result = crew.kickoff()
+
+    # 4. Store the result
+    m.add([
+        {"role": "user", "content": "Plan a beach vacation"},
+        {"role": "assistant", "content": str(result)},
+    ])
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+## Complete Example: Travel Planning Crew
+
+### Step 1: Initialize and Create Helpers
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    import os
+    from crewai import Agent, Task, Crew, Process
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis(api_key=os.getenv("LYZR_API_KEY"))
+    OWNER_ID = "traveler_007"
+    AGENT_ID = "travel_crew"
+
+
+    def get_memory_context(query: str, owner_id: str) -> str:
+        """Retrieve relevant memories and format for agent backstory."""
+        results = cog.search(query=query, owner_id=owner_id, limit=5)
+        if not results:
+            return "No prior preferences known."
+        return "\n".join(f"- {r.content}" for r in results)
+
+
+    def store_crew_result(user_request: str, crew_output: str, owner_id: str):
+        """Persist the planning request and result in Cognis."""
+        cog.add(
+            messages=[
+                CognisMessage(role="user", content=user_request),
+                CognisMessage(role="assistant", content=crew_output),
+            ],
+            owner_id=owner_id,
+            agent_id=AGENT_ID,
+        )
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from crewai import Agent, Task, Crew, Process
+    from cognis import Cognis
+
+    m = Cognis(owner_id="traveler_007", agent_id="travel_crew")
+
+
+    def get_memory_context(query: str) -> str:
+        """Retrieve relevant memories and format for agent backstory."""
+        resp = m.search(query, limit=5)
+        if not resp["results"]:
+            return "No prior preferences known."
+        return "\n".join(f"- {r['content']}" for r in resp["results"])
+
+
+    def store_crew_result(user_request: str, crew_output: str):
+        """Persist the planning request and result in Cognis."""
+        m.add([
+            {"role": "user", "content": user_request},
+            {"role": "assistant", "content": crew_output},
+        ])
+    ```
+  </Tab>
+</Tabs>
+
+### Step 2: Build the Crew with Memory-Enriched Agents
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    def plan_trip(destination: str, owner_id: str = OWNER_ID) -> str:
+        memory_context = get_memory_context(
+            query=f"travel preferences for {destination}",
+            owner_id=owner_id,
+        )
+
+        researcher = Agent(
+            role="Travel Researcher",
+            goal=f"Find the best travel options for {destination}",
+            backstory=f"You are an expert travel researcher. Consider the traveler's known preferences:\n{memory_context}",
+            verbose=True,
+        )
+        planner = Agent(
+            role="Trip Planner",
+            goal=f"Create a detailed itinerary for {destination}",
+            backstory=f"You create personalized itineraries. You know this about the traveler:\n{memory_context}",
+            verbose=True,
+        )
+
+        research_task = Task(
+            description=f"Research top attractions, restaurants, and activities in {destination}.",
+            expected_output="Recommended attractions, restaurants, and activities with descriptions.",
+            agent=researcher,
+        )
+        planning_task = Task(
+            description=f"Create a 3-day itinerary for {destination} with morning, afternoon, and evening activities.",
+            expected_output="A detailed 3-day itinerary with times, locations, and tips.",
+            agent=planner,
+        )
+
+        crew = Crew(agents=[researcher, planner], tasks=[research_task, planning_task], process=Process.sequential, verbose=True)
+        result = crew.kickoff()
+        crew_output = str(result)
+
+        store_crew_result(f"Plan a trip to {destination}", crew_output, owner_id)
+        return crew_output
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    def plan_trip(destination: str) -> str:
+        memory_context = get_memory_context(f"travel preferences for {destination}")
+
+        researcher = Agent(
+            role="Travel Researcher",
+            goal=f"Find the best travel options for {destination}",
+            backstory=f"You are an expert travel researcher. Consider the traveler's known preferences:\n{memory_context}",
+            verbose=True,
+        )
+        planner = Agent(
+            role="Trip Planner",
+            goal=f"Create a detailed itinerary for {destination}",
+            backstory=f"You create personalized itineraries. You know this about the traveler:\n{memory_context}",
+            verbose=True,
+        )
+
+        research_task = Task(
+            description=f"Research top attractions, restaurants, and activities in {destination}.",
+            expected_output="Recommended attractions, restaurants, and activities with descriptions.",
+            agent=researcher,
+        )
+        planning_task = Task(
+            description=f"Create a 3-day itinerary for {destination} with morning, afternoon, and evening activities.",
+            expected_output="A detailed 3-day itinerary with times, locations, and tips.",
+            agent=planner,
+        )
+
+        crew = Crew(agents=[researcher, planner], tasks=[research_task, planning_task], process=Process.sequential, verbose=True)
+        result = crew.kickoff()
+        crew_output = str(result)
+
+        store_crew_result(f"Plan a trip to {destination}", crew_output)
+        return crew_output
+    ```
+  </Tab>
+</Tabs>
+
+### Step 3: Demonstrate Memory Across Runs
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    # Seed user preferences
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content="I love beach destinations and seafood. I prefer boutique hotels."),
+            CognisMessage(role="assistant", content="Noted! You prefer beaches, seafood, and boutique hotels."),
+        ],
+        owner_id=OWNER_ID,
+        agent_id=AGENT_ID,
+    )
+
+    # First trip — agents receive preferences via backstory
+    result1 = plan_trip("Bali, Indonesia")
+
+    # Second trip — agents also see the Bali trip in their memory
+    result2 = plan_trip("Lisbon, Portugal")
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    # Seed user preferences
+    m.add([
+        {"role": "user", "content": "I love beach destinations and seafood. I prefer boutique hotels."},
+        {"role": "assistant", "content": "Noted! You prefer beaches, seafood, and boutique hotels."},
+    ])
+
+    # First trip — agents receive preferences via backstory
+    result1 = plan_trip("Bali, Indonesia")
+
+    # Second trip — agents also see the Bali trip in their memory
+    result2 = plan_trip("Lisbon, Portugal")
+
+    m.close()
+    ```
+  </Tab>
+</Tabs>
+
+## Advanced Patterns
+
+### Dynamic Tool with Cognis
+
+Create a CrewAI tool that agents can call mid-execution to search memories:
+
+```python
+from crewai.tools import tool
+
+@tool("Search User Memory")
+def search_user_memory(query: str) -> str:
+    """Search the user's memory for relevant information."""
+    # Works with either hosted or OSS — adjust the search call accordingly
+    results = cog.search(query=query, owner_id=OWNER_ID, limit=5)
+    if not results:
+        return "No relevant memories found."
+    return "\n".join(f"- {r.content}" for r in results)
+
+researcher = Agent(role="Travel Researcher", tools=[search_user_memory], ...)
+```
+
+### Cross-Session Memory
+
+<Note>
+Cross-session search (`cross_session=True`) is a hosted-only feature. Open-source Cognis searches the global `(owner_id, agent_id)` scope by default, which already spans sessions.
+</Note>
+
+```python
+results = cog.search(
+    query="travel history and preferences",
+    owner_id=OWNER_ID,
+    cross_session=True,
+    limit=10,
+)
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Cognis + LangChain" icon="link" href="/cognis/cookbooks/cognis-langchain">
+    LCEL chain integration with memory
+  </Card>
+  <Card title="Cognis + LangGraph" icon="diagram-project" href="/cognis/cookbooks/cognis-langgraph">
+    Memory as graph nodes
+  </Card>
+</CardGroup>

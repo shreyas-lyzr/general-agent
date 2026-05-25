@@ -1,0 +1,24 @@
+---
+title: "List Provider Voices"
+openapi: get /config/tts-voices
+---
+
+Fetch the complete, paginated catalog of voices available from a specific Text-to-Speech (TTS) provider.
+
+Whether your users want a "calm, British male" voice from ElevenLabs or an "energetic female" voice from Cartesia, this endpoint allows you to query, filter, and paginate through thousands of available voice models to find the perfect fit for your Voice Agent.
+
+<Info>
+  **Authentication Required:** You must include your API key in the `x-api-key` header to authenticate this request.
+</Info>
+
+### Required Parameters
+
+* **`providerId`**: This is the only strictly required parameter. You must specify which provider's library you are querying (e.g., `elevenlabs`, `cartesia`, `deepgram`). You can get the list of active providers using the [List TTS Voice Providers](/api-reference/config/list-tts-voice-providers) endpoint.
+
+### Searching & Filtering
+
+If the requested provider supports search and facets (which you can verify via the provider metadata endpoint), you can use the following query parameters to narrow down the results:
+
+* **`q`**: A free-text search string. Pass a name or a descriptive adjective like "warm" or "news anchor".
+* **`language`**: Pass a standard ISO code (like `en` or `es`) to only return voices natively trained for that language.
+* **`gender`**: Filter the catalog by `male`, `female`, or other provider-supported gender tags.

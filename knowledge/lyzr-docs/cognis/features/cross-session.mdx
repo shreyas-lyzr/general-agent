@@ -1,0 +1,65 @@
+---
+title: "Cross-Session Search"
+sidebarTitle: "Cross-Session"
+description: "Search and retrieve memories across all sessions for a user"
+---
+
+By default, Cognis scopes search to the current session's extracted memories. The `cross_session` parameter lets you search across all sessions for a user — useful for building comprehensive user profiles or recalling context from past conversations.
+
+## Usage
+
+### On Search
+
+```python
+from lyzr import Cognis
+
+cog = Cognis()
+
+# Search across ALL sessions for this user
+results = cog.search(
+    query="travel preferences",
+    owner_id="user_alice",
+    cross_session=True,
+    limit=10,
+)
+for r in results:
+    print(r.content, r.score)
+```
+
+### On Get
+
+```python
+# List memories from ALL sessions
+memories = cog.get(
+    owner_id="user_alice",
+    cross_session=True,
+    limit=50,
+)
+```
+
+### On Context
+
+```python
+from lyzr import CognisMessage
+
+# Assemble context pulling from all sessions
+context = cog.context(
+    current_messages=[CognisMessage(role="user", content="What have we discussed before?")],
+    owner_id="user_alice",
+    session_id="sess_current",
+    cross_session=True,
+)
+```
+
+## When to Use
+
+| Scenario | cross_session |
+|----------|--------------|
+| Same conversation, maintaining context | `False` (default) |
+| New session, need past context | `True` |
+| Building a user profile from all interactions | `True` |
+| Support agent picking up a previous ticket | `True` |
+
+<Note>
+Cross-session search is hosted-only. In the open-source `lyzr-cognis` package, extracted memories are already global to `(owner_id, agent_id)` — they automatically span sessions by design.
+</Note>

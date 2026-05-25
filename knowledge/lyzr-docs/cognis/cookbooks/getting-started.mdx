@@ -1,0 +1,180 @@
+---
+title: "Your First Memory"
+sidebarTitle: "Getting Started"
+description: "Add, search, and retrieve memories in 3 minutes — both hosted and open source"
+---
+
+This cookbook gets you from zero to working memory in 3 minutes. Choose your version and follow along.
+
+## Install
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```bash
+    pip install lyzr-adk
+    ```
+
+    ```bash
+    export LYZR_API_KEY="your-lyzr-api-key"
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```bash
+    pip install lyzr-cognis
+    ```
+
+    ```bash
+    export GEMINI_API_KEY="your-gemini-key"    # For embeddings
+    export OPENAI_API_KEY="your-openai-key"    # For fact extraction
+    ```
+  </Tab>
+</Tabs>
+
+## Step 1: Initialize and Add Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    from lyzr import Cognis, CognisMessage
+
+    cog = Cognis()
+
+    # Store a conversation
+    cog.add(
+        messages=[
+            CognisMessage(role="user", content="My name is Alice and I love hiking."),
+            CognisMessage(role="assistant", content="Nice to meet you, Alice!"),
+            CognisMessage(role="user", content="I work at Google as a data scientist."),
+            CognisMessage(role="assistant", content="That's a great role!"),
+        ],
+        owner_id="user_alice",
+    )
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    from cognis import Cognis
+
+    m = Cognis(owner_id="user_alice")
+
+    # Store a conversation
+    result = m.add([
+        {"role": "user", "content": "My name is Alice and I love hiking."},
+        {"role": "assistant", "content": "Nice to meet you, Alice!"},
+        {"role": "user", "content": "I work at Google as a data scientist."},
+        {"role": "assistant", "content": "That's a great role!"},
+    ])
+    print(result["message"])
+    # "Extracted 3 memories from 4 messages"
+    ```
+  </Tab>
+</Tabs>
+
+Cognis automatically extracts discrete facts from the conversation and stores them as searchable memory records.
+
+## Step 2: Search Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    results = cog.search(query="What does Alice do for work?", owner_id="user_alice", limit=5)
+    for r in results:
+        print(f"  {r.content}  (score: {r.score})")
+
+    # Output:
+    #   Alice works at Google as a data scientist  (score: 0.89)
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    resp = m.search("What does Alice do for work?", limit=5)
+    for r in resp["results"]:
+        print(f"  {r['content']}  (score: {r['score']})")
+
+    # Output:
+    #   Alice works at Google as a data scientist  (score: 0.8712)
+    ```
+  </Tab>
+</Tabs>
+
+## Step 3: Retrieve All Memories
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    memories = cog.get(owner_id="user_alice")
+    for mem in memories.memories:
+        print(f"  [{mem.id[:8]}] {mem.content}")
+
+    # Output:
+    #   [a1b2c3d4] Alice's name is Alice
+    #   [e5f6g7h8] Alice works at Google as a data scientist
+    #   [i9j0k1l2] Alice loves hiking
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    resp = m.get_all()
+    for mem in resp["memories"]:
+        cat = mem["metadata"]["category"]
+        print(f"  [{cat}] {mem['content']}")
+
+    # Output:
+    #   [identity] Alice's name is Alice
+    #   [work_career] Alice works at Google as a data scientist
+    #   [interests] Alice loves hiking
+    ```
+  </Tab>
+</Tabs>
+
+## Step 4: Use Context in Your LLM
+
+<Tabs>
+  <Tab title="Hosted (lyzr-adk)">
+    ```python
+    context = cog.context(
+        current_messages=[
+            CognisMessage(role="user", content="What should I do this weekend?"),
+        ],
+        owner_id="user_alice",
+    )
+    # Use context in your LLM system prompt
+    print(context)
+    ```
+  </Tab>
+  <Tab title="Open Source (lyzr-cognis)">
+    ```python
+    ctx = m.get_context(
+        messages=[{"role": "user", "content": "What should I do this weekend?"}]
+    )
+    # Use context_string in your LLM system prompt
+    print(ctx["context_string"])
+    # "Relevant memories:\n- Alice loves hiking\n- ..."
+
+    m.close()  # Don't forget to close!
+    ```
+  </Tab>
+</Tabs>
+
+## What's Different Between Hosted and Open Source?
+
+| Aspect | Hosted | Open Source |
+|--------|--------|-------------|
+| Data storage | Lyzr cloud | Local (`~/.cognis/`) |
+| Async support | Full (`aadd`, `asearch`, etc.) | Sync only |
+| Summaries | Available | Not available |
+| Return types | Objects (`.content`, `.score`) | Dicts (`["content"]`, `["score"]`) |
+| Cleanup | Optional | Required (`m.close()`) |
+
+For a full comparison, see [Hosted vs Open Source](/cognis/comparison).
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="CrewAI Integration" icon="users" href="/cognis/cookbooks/cognis-crewai">
+    Add memory to multi-agent crews
+  </Card>
+  <Card title="LangGraph Integration" icon="diagram-project" href="/cognis/cookbooks/cognis-langgraph">
+    Memory as graph nodes
+  </Card>
+</CardGroup>

@@ -1,0 +1,133 @@
+---
+title: Agents Events in Lyzr Studio
+sidebarTitle: Agent Events
+---
+
+This document explains how **Lyzr Agents** emit runtime events when invoked through the **Lyzr Platform**. These events provide real-time insights into agent execution, including reasoning steps, model responses, and lifecycle updates.
+
+---
+
+## 1. Invoking an Agent
+
+Agents can be invoked via inference endpoints:
+
+- **Chat Mode**
+    ```http
+    POST https://agent-prod.studio.lyzr.ai/v3/inference/chat
+    ```
+
+- **Streaming Mode**
+    ```http
+    POST https://agent-prod.studio.lyzr.ai/v3/inference/stream
+    ```
+
+When an agent is invoked, a unique **`session_id`** is generated and associated with the request.  
+This ID is critical for subscribing to **real-time agent events**.
+
+---
+
+## 2. Receiving Agent Events
+
+Agent runtime events are delivered through a **WebSocket connection**.
+
+- **WebSocket Endpoint**
+    ```http
+    wss://metrics.studio.lyzr.ai/session/{session_id}
+    ```
+
+Replace `{session_id}` with the **same ID** returned during agent invocation.
+
+⚠️ **Note:**  
+- Using an incorrect or expired `session_id` will result in no events being streamed.  
+- Ensure the WebSocket client stays open for the duration of the session.
+
+---
+
+## 3. Event Lifecycle
+
+During execution, multiple events are emitted to describe the agent’s state. These typically include:
+
+- **Thinking Events** – Intermediate reasoning steps of the agent. *(Manager agents only)*  
+- **Processing Events** – Structured progress updates from the LLM and orchestrator.  
+- **Completion Events** – Indicate successful completion of response generation.  
+- **Error Events** – Capture failures or issues during inference and integrations.  
+
+Events can be consumed in real-time to **monitor, log, or debug** agent behavior.
+
+---
+
+## 4. Event Payload Structure
+
+All events are delivered as JSON objects.  
+A sample event payload looks like this:
+
+```json
+{
+  "feature": "llm_generation",
+  "level": "DEBUG",
+  "status": "in_progress",
+  "message": "",
+  "timestamp": "2025-09-29T05:56:39.858406+00:00",
+  "event_type": "llm_generation",
+  "run_id": "0ecb09b6-77d7-4709-a7ce-a43d3f5d748c",
+  "trace_id": "7833aae5-13df-47e6-a1d4-35f3e74d1799",
+  "session_id": "68d0bbdef8c41f367a3f3a11-6fwxvvb1xxr",
+  "model": "gpt-4o-mini",
+  "provider": "openai",
+  "log_id": "311d863d-c680-476f-b563-94cdb00d487b"
+}
+````
+
+---
+
+## 5. Event Fields Explained
+
+| Field        | Type   | Description                                                      |
+| ------------ | ------ | ---------------------------------------------------------------- |
+| `feature`    | string | Feature/component generating the event (e.g., `llm_generation`). |
+| `level`      | string | Logging level (`DEBUG`, `INFO`, `ERROR`).                        |
+| `status`     | string | Process status (`in_progress`, `completed`, `failed`).           |
+| `message`    | string | Additional human-readable details.                               |
+| `timestamp`  | string | ISO 8601 timestamp of event.                                     |
+| `event_type` | string | Event type (e.g., `llm_generation`, `thinking`, `processing`).   |
+| `run_id`     | string | Unique identifier for this agent run.                            |
+| `trace_id`   | string | Trace identifier for distributed tracking.                       |
+| `session_id` | string | Identifier linking the event to the agent session.               |
+| `model`      | string | LLM model used (e.g., `gpt-4o-mini`).                            |
+| `provider`   | string | Model provider (e.g., `openai`).                                 |
+| `log_id`     | string | Unique ID for this log entry.                                    |
+
+---
+
+## 6. Example Event Sequence
+
+A typical sequence of events during invocation:
+
+1. **Start** – Agent invoked.
+2. **Thinking Event** – Intermediate reasoning steps. *(Manager agents only)*
+3. **Processing Event** – Status updates such as memory usage, KB retrieval, tool invocation.
+4. **LLM Generation Completed** – Final response generated (status: `completed`).
+5. **Final Response Delivered** – Output returned to the caller.
+
+---
+
+## 7. Best Practices
+
+* Always reuse the **same `session_id`** for invocation and WebSocket subscription.
+* Handle `ERROR` level events gracefully to avoid breaking downstream applications.
+* Use events for:
+
+  * ✅ Real-time monitoring
+  * ✅ Debugging agent behavior
+  * ✅ Providing user-facing progress updates
+* Maintain persistent connections for long-running agents.
+
+---
+
+## ✅ Summary
+
+The **Agent Events API** in Lyzr enables real-time observability into agent execution.
+By subscribing to the WebSocket channel with a valid `session_id`, developers can monitor agent reasoning, processing states, completions, and errors—allowing for better **debugging, logging, and user experience**.
+
+```
+```

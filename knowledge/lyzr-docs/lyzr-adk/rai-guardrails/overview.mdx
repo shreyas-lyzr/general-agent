@@ -1,0 +1,255 @@
+---
+title: "RAI Guardrails Overview"
+sidebarTitle: "Overview"
+description: "Responsible AI guardrails for safe agent behavior"
+---
+
+RAI (Responsible AI) guardrails protect your agents by filtering harmful content, detecting prompt injection, handling PII, and enforcing topic boundaries.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+from lyzr.rai import PIIType, PIIAction, SecretsAction
+
+studio = Studio(api_key="your-api-key")
+
+# Create a safety policy
+policy = studio.create_rai_policy(
+    name="SafePolicy",
+    description="Standard safety guardrails",
+    toxicity_threshold=0.4,
+    prompt_injection=True,
+    secrets_detection=SecretsAction.MASK,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.SSN: PIIAction.BLOCK
+    }
+)
+
+# Apply to agent
+agent = studio.create_agent(
+    name="Safe Bot",
+    provider="gpt-4o",
+    role="Customer support",
+    goal="Help users safely",
+    rai_policy=policy
+)
+
+# Agent now has guardrails active
+response = agent.run("Process my order with card 4111-1111-1111-1111")
+# Credit card is blocked, agent asks for alternative payment method
+```
+
+---
+
+## Key Features
+
+### Toxicity Detection
+
+Block or filter toxic, harmful, or offensive content:
+
+```python
+policy = studio.create_rai_policy(
+    name="NoToxicity",
+    description="Block toxic content",
+    toxicity_threshold=0.3  # Lower = stricter (0.0-1.0)
+)
+```
+
+### Prompt Injection Protection
+
+Prevent malicious prompt manipulation:
+
+```python
+policy = studio.create_rai_policy(
+    name="SecurePolicy",
+    description="Prevent prompt injection",
+    prompt_injection=True
+)
+```
+
+### PII Detection & Handling
+
+Detect and handle personally identifiable information:
+
+```python
+from lyzr.rai import PIIType, PIIAction
+
+policy = studio.create_rai_policy(
+    name="PIIPolicy",
+    description="Handle PII safely",
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT,
+        PIIType.PHONE: PIIAction.REDACT
+    }
+)
+```
+
+### Secrets Detection
+
+Prevent API keys, passwords, and other secrets from leaking:
+
+```python
+from lyzr.rai import SecretsAction
+
+policy = studio.create_rai_policy(
+    name="SecretsSafe",
+    description="Mask secrets",
+    secrets_detection=SecretsAction.MASK  # or BLOCK
+)
+```
+
+### Topic Control
+
+Restrict agent to specific topics:
+
+```python
+policy = studio.create_rai_policy(
+    name="TopicRestricted",
+    description="Stay on topic",
+    banned_topics=["politics", "religion", "competitors"],
+    allowed_topics={"enabled": True, "topics": ["products", "support", "billing"]}
+)
+```
+
+### NSFW Detection
+
+Filter inappropriate content:
+
+```python
+policy = studio.create_rai_policy(
+    name="FamilyFriendly",
+    description="Block NSFW content",
+    nsfw_check=True,
+    nsfw_threshold=0.8
+)
+```
+
+---
+
+## How RAI Works
+
+```
+User Input → RAI Pre-check → Agent Processing → RAI Post-check → Response
+
+1. Pre-check: Scan input for toxicity, injection, PII, etc.
+2. Processing: Agent generates response (if input passes)
+3. Post-check: Scan output for policy violations
+4. Response: Clean, safe response delivered to user
+```
+
+---
+
+## RAI Components
+
+| Component | Purpose | Actions |
+|-----------|---------|---------|
+| **Toxicity** | Detect harmful/offensive content | Block if threshold exceeded |
+| **Prompt Injection** | Prevent malicious prompts | Block suspicious inputs |
+| **PII Detection** | Find personal information | Block, Redact, or Allow |
+| **Secrets Detection** | Find API keys, passwords | Mask or Block |
+| **NSFW** | Detect inappropriate content | Block if threshold exceeded |
+| **Topic Control** | Enforce topic boundaries | Ban or allow specific topics |
+| **Keywords** | Filter specific words | Block messages with keywords |
+
+---
+
+## PII Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `CREDIT_CARD` | Credit card numbers | 4111-1111-1111-1111 |
+| `EMAIL` | Email addresses | user@example.com |
+| `PHONE` | Phone numbers | +1-555-123-4567 |
+| `SSN` | US Social Security Numbers | 123-45-6789 |
+| `PERSON` | Person names | John Smith |
+| `LOCATION` | Physical locations | 123 Main St, NYC |
+| `IP_ADDRESS` | IP addresses | 192.168.1.1 |
+| `URL` | Web URLs | https://example.com |
+| `DATE_TIME` | Dates and times | 2024-03-15 |
+
+---
+
+## Actions
+
+### PII Actions
+
+| Action | Behavior |
+|--------|----------|
+| `BLOCK` | Reject the entire message |
+| `REDACT` | Replace PII with [REDACTED] |
+| `DISABLED` | No action (allow through) |
+
+### Secrets Actions
+
+| Action | Behavior |
+|--------|----------|
+| `MASK` | Replace secrets with asterisks |
+| `BLOCK` | Reject messages containing secrets |
+| `DISABLED` | No action (allow through) |
+
+---
+
+## Use Cases
+
+### Customer Support
+
+```python
+support_policy = studio.create_rai_policy(
+    name="SupportSafe",
+    description="Safe customer support interactions",
+    toxicity_threshold=0.4,
+    prompt_injection=True,
+    pii_detection={
+        PIIType.CREDIT_CARD: PIIAction.BLOCK,
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.EMAIL: PIIAction.REDACT
+    },
+    banned_topics=["competitors", "internal_processes"]
+)
+```
+
+### Healthcare
+
+```python
+health_policy = studio.create_rai_policy(
+    name="HealthSafe",
+    description="HIPAA-compliant interactions",
+    toxicity_threshold=0.3,
+    pii_detection={
+        PIIType.SSN: PIIAction.BLOCK,
+        PIIType.PHONE: PIIAction.REDACT,
+        PIIType.PERSON: PIIAction.REDACT
+    },
+    secrets_detection=SecretsAction.BLOCK
+)
+```
+
+### Children's Content
+
+```python
+kids_policy = studio.create_rai_policy(
+    name="KidsSafe",
+    description="Safe for children",
+    toxicity_threshold=0.2,  # Very strict
+    nsfw_check=True,
+    nsfw_threshold=0.9,
+    banned_topics=["violence", "adult_content", "gambling"]
+)
+```
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Creating Policies" icon="shield" href="/lyzr-adk/rai-guardrails/creating-policies">
+    Learn how to create and configure RAI policies
+  </Card>
+  <Card title="RAI Features" icon="lock" href="/lyzr-adk/rai-guardrails/rai-features">
+    Detailed guide to each RAI feature
+  </Card>
+</CardGroup>

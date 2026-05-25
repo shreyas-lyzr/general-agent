@@ -1,0 +1,402 @@
+---
+title: "Streaming Responses"
+sidebarTitle: "Streaming"
+description: "Stream agent responses in real-time"
+---
+
+Stream agent responses chunk by chunk for real-time output. Ideal for chatbots, long responses, and interactive applications.
+
+## Quick Start
+
+```python
+from lyzr import Studio
+
+studio = Studio(api_key="your-api-key")
+
+agent = studio.create_agent(
+    name="Storyteller",
+    provider="gpt-4o",
+    role="Creative writer",
+    goal="Tell engaging stories"
+)
+
+# Stream response
+for chunk in agent.run("Tell me a short story about a dragon", stream=True):
+    print(chunk.content, end="", flush=True)
+
+    if chunk.done:
+        print("\n--- Stream complete ---")
+```
+
+---
+
+## Enabling Streaming
+
+Pass `stream=True` to `agent.run()`:
+
+```python
+# Non-streaming (default)
+response = agent.run("Hello")
+print(response.response)
+
+# Streaming
+for chunk in agent.run("Hello", stream=True):
+    print(chunk.content, end="")
+```
+
+---
+
+## AgentStream Object
+
+Each chunk is an `AgentStream` object:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `content` | str | Content of this chunk |
+| `delta` | str | Delta/difference from previous |
+| `done` | bool | True if this is the final chunk |
+| `session_id` | str | Session identifier |
+| `chunk_index` | int | Index of this chunk |
+| `metadata` | dict | Chunk-specific metadata |
+| `structured_data` | BaseModel | Parsed structured output (final chunk only) |
+| `artifact_files` | List[Artifact] | Generated files (final chunk only) |
+
+### Methods
+
+```python
+# Check for files
+chunk.has_files()  # bool
+
+# Get files
+chunk.files  # List[Artifact]
+
+# Convert to dict
+chunk.to_dict()  # dict
+```
+
+---
+
+## Basic Streaming
+
+### Print as Received
+
+```python
+for chunk in agent.run("Explain quantum computing", stream=True):
+    print(chunk.content, end="", flush=True)
+
+print()  # Final newline
+```
+
+### Collect Full Response
+
+```python
+full_response = ""
+for chunk in agent.run("Write a poem", stream=True):
+    full_response += chunk.content
+
+print(f"Complete response: {full_response}")
+```
+
+### Using list()
+
+```python
+chunks = list(agent.run("Tell me a joke", stream=True))
+final_chunk = chunks[-1]
+print(f"Done: {final_chunk.done}")  # True
+```
+
+---
+
+## Streaming with Sessions
+
+Maintain conversation context while streaming:
+
+```python
+session_id = "chat_session_123"
+
+# First message (streaming)
+print("User: Hello, my name is Alice")
+print("Agent: ", end="")
+for chunk in agent.run("Hello, my name is Alice", session_id=session_id, stream=True):
+    print(chunk.content, end="", flush=True)
+print()
+
+# Second message (streaming, same session)
+print("\nUser: What's my name?")
+print("Agent: ", end="")
+for chunk in agent.run("What's my name?", session_id=session_id, stream=True):
+    print(chunk.content, end="", flush=True)
+print()
+```
+
+---
+
+## Progress Tracking
+
+### Chunk Counter
+
+```python
+chunk_count = 0
+for chunk in agent.run("Explain machine learning", stream=True):
+    chunk_count += 1
+    if chunk.chunk_index is not None:
+        print(f"[{chunk.chunk_index}] ", end="")
+    print(chunk.content, end="", flush=True)
+
+print(f"\nTotal chunks: {chunk_count}")
+```
+
+### Character Counter
+
+```python
+total_chars = 0
+for chunk in agent.run("Write a summary", stream=True):
+    total_chars += len(chunk.content)
+    print(chunk.content, end="", flush=True)
+
+print(f"\nTotal characters: {total_chars}")
+```
+
+---
+
+## Streaming with File Output
+
+Access generated files in the final chunk:
+
+```python
+agent = studio.create_agent(
+    name="Report Generator",
+    provider="gpt-4o",
+    file_output=True
+)
+
+final_chunk = None
+for chunk in agent.run("Create a brief report as PDF", stream=True):
+    print(chunk.content, end="", flush=True)
+    if chunk.done:
+        final_chunk = chunk
+
+if final_chunk and final_chunk.has_files():
+    for file in final_chunk.files:
+        print(f"\nFile generated: {file.name}")
+        file.download(f"./output/{file.name}")
+```
+
+---
+
+## Streaming with Structured Output
+
+Get structured data in the final chunk:
+
+```python
+from pydantic import BaseModel, Field
+
+class Summary(BaseModel):
+    title: str = Field(description="Summary title")
+    points: list[str] = Field(description="Key points")
+
+final_chunk = None
+for chunk in agent.run(
+    "Summarize the benefits of exercise",
+    stream=True,
+    response_format=Summary
+):
+    print(chunk.content, end="", flush=True)
+    if chunk.done:
+        final_chunk = chunk
+
+if final_chunk and final_chunk.structured_data:
+    summary = final_chunk.structured_data
+    print(f"\n\nTitle: {summary.title}")
+    for point in summary.points:
+        print(f"- {point}")
+```
+
+---
+
+## UI Integration
+
+### Web Application
+
+```python
+from flask import Flask, Response
+
+app = Flask(__name__)
+
+@app.route("/chat")
+def chat():
+    def generate():
+        for chunk in agent.run("Hello!", stream=True):
+            yield f"data: {chunk.content}\n\n"
+        yield "data: [DONE]\n\n"
+
+    return Response(generate(), mimetype="text/event-stream")
+```
+
+### Console Chat Interface
+
+```python
+def chat_loop():
+    session_id = "interactive_session"
+
+    print("Chat with the agent (type 'quit' to exit)")
+
+    while True:
+        user_input = input("\nYou: ")
+        if user_input.lower() == "quit":
+            break
+
+        print("Agent: ", end="", flush=True)
+        for chunk in agent.run(user_input, session_id=session_id, stream=True):
+            print(chunk.content, end="", flush=True)
+        print()
+
+chat_loop()
+```
+
+### Async Streaming (Conceptual)
+
+```python
+# For async frameworks, collect chunks from the iterator
+async def stream_response(message: str):
+    chunks = []
+    for chunk in agent.run(message, stream=True):
+        chunks.append(chunk)
+        yield chunk.content
+    return chunks
+```
+
+---
+
+## Error Handling
+
+```python
+try:
+    for chunk in agent.run("Generate content", stream=True):
+        print(chunk.content, end="", flush=True)
+
+        if chunk.done:
+            print("\n--- Complete ---")
+
+except Exception as e:
+    print(f"\nStreaming error: {e}")
+```
+
+---
+
+## Examples
+
+### Real-time Typewriter Effect
+
+```python
+import time
+
+for chunk in agent.run("Write a haiku about coding", stream=True):
+    for char in chunk.content:
+        print(char, end="", flush=True)
+        time.sleep(0.02)  # Typewriter effect
+```
+
+### Progress Bar
+
+```python
+from tqdm import tqdm
+
+chunks = []
+for chunk in tqdm(agent.run("Explain blockchain", stream=True), desc="Streaming"):
+    chunks.append(chunk)
+
+full_text = "".join(c.content for c in chunks)
+print(f"\nResponse: {full_text}")
+```
+
+### Logging Streamed Output
+
+```python
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+for chunk in agent.run("Analyze this data", stream=True):
+    logger.debug(f"Chunk {chunk.chunk_index}: {len(chunk.content)} chars")
+    print(chunk.content, end="", flush=True)
+
+    if chunk.done:
+        logger.info("Streaming completed")
+```
+
+### Stream to File
+
+```python
+with open("output.txt", "w") as f:
+    for chunk in agent.run("Write a story", stream=True):
+        f.write(chunk.content)
+        f.flush()  # Write immediately
+        print(chunk.content, end="", flush=True)
+
+print("\nSaved to output.txt")
+```
+
+---
+
+## Best Practices
+
+### Always Handle done Flag
+
+```python
+for chunk in agent.run("Hello", stream=True):
+    if not chunk.done:
+        print(chunk.content, end="", flush=True)
+    else:
+        print()  # Final newline
+        # Handle completion
+```
+
+### Use flush=True
+
+```python
+# Good: Immediate output
+print(chunk.content, end="", flush=True)
+
+# Bad: Output may buffer
+print(chunk.content, end="")
+```
+
+### Handle Empty Chunks
+
+```python
+for chunk in agent.run("Query", stream=True):
+    if chunk.content:  # Skip empty chunks
+        print(chunk.content, end="", flush=True)
+```
+
+### Clean Session Management
+
+```python
+import uuid
+
+def create_session():
+    return f"session_{uuid.uuid4().hex[:8]}"
+
+session = create_session()
+
+for chunk in agent.run("Message 1", session_id=session, stream=True):
+    print(chunk.content, end="")
+
+for chunk in agent.run("Message 2", session_id=session, stream=True):
+    print(chunk.content, end="")
+```
+
+---
+
+## When to Use Streaming
+
+| Use Case | Streaming | Non-Streaming |
+|----------|-----------|---------------|
+| Chatbot UI | Yes | - |
+| Long responses | Yes | - |
+| Real-time feedback | Yes | - |
+| Background processing | - | Yes |
+| Quick responses | - | Yes |
+| File/Image only | - | Yes |

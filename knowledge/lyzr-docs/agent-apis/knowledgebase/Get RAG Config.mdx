@@ -1,0 +1,77 @@
+---
+title: Get RAG configuration
+openapi: get /rag/{config_id}/
+---
+
+### Description
+
+Retrieves the configuration of a specific RAG (Retrieval-Augmented Generation) instance using its unique ID.
+
+### Endpoint
+
+**GET** `/v3/rag/{config_id}/`
+
+### Base URL
+
+`https://rag-dev.test.studio.lyzr.ai`
+
+### Authentication
+
+- Requires API Key (`x-api-key`) in the request header.
+
+### Path Parameters
+
+| Parameter   | Type   | Required | Description                            |
+|-------------|--------|----------|----------------------------------------|
+| `config_id` | string | Yes      | Unique identifier of the RAG config.   |
+
+### Request Example (cURL)
+
+```bash
+curl -X GET "https://rag-dev.test.studio.lyzr.ai/v3/rag/8544/" \
+-H "accept: application/json" \
+-H "x-api-key: sk-default-Bk19s6ZUGIBoBkJNdkJ8YfcPLwULRXcH"
+```
+
+### Response
+
+#### 200 - Successful Response
+
+```json
+{
+  "id": "string",
+  "user_id": "string",
+  "llm_credential_id": "string",
+  "embedding_credential_id": "string",
+  "vector_db_credential_id": "string",
+  "description": "",
+  "collection_name": "string",
+  "llm_model": "string",
+  "embedding_model": "string",
+  "vector_store_provider": "string",
+  "semantic_data_model": false,
+  "meta_data": {}
+}
+```
+
+#### 403 - Invalid Permission
+
+```json
+{
+  "detail": "Invalid Permission"
+}
+```
+
+#### 422 - Validation Error
+
+```json
+{
+  "detail": [
+    {
+      "loc": ["string", 0],
+      "msg": "string",
+      "type": "string"
+    }
+  ]
+}
+```

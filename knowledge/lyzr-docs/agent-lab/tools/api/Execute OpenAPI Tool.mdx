@@ -1,0 +1,34 @@
+---
+title: "Execute OpenAPI Tool"
+openapi: post /tools/openapi/{tool_id}/execute
+
+---
+
+### Endpoint
+**POST** `/v3/tools/openapi/{tool_id}/execute`
+
+### Description
+Executes a specific OpenAPI tool using the provided parameters.
+
+### Authentication
+API Key (`x-api-key`) in the header.
+
+### Request Parameters
+| Parameter | Type   | Description |
+|-----------|--------|-------------|
+| `tool_id` | String | The ID of the tool to execute. |
+| `path`    | String | The API path to call. |
+| `method`  | String | The HTTP method to use (GET, POST, etc.). |
+
+### Curl Request
+```bash
+curl -X POST "https://agent-prod.studio.lyzr.ai/v3/tools/openapi/{tool_id}/execute?path={path}&method={method}" ^
+-H "accept: application/json" ^
+-H "content-type: application/json" ^
+-H "x-api-key: sk-default-REDACTED"
+```
+
+### Response
+Returns the result of the API tool execution.
+
+---
