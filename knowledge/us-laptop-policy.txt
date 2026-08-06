@@ -1,0 +1,77 @@
+# GENERATED FILE - do not edit by hand.
+# Source PDF: knowledge/US LAPTOP POLICY.pdf
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/US LAPTOP POLICY.pdf" 2000000 > knowledge/us-laptop-policy.txt
+
+                                        LAPTOP POLICY
+
+To support your work at Lyzr, the company will reimburse the cost of a standard company laptop
+for eligible U.S. employees, in accordance with the policy outlined below. Any applicable sales
+taxes on the approved laptop purchase will be borne by Lyzr Inc.
+
+1. Approved Models & Cost Limits
+
+Employees must purchase laptops only from the approved models listed below:
+
+
+ Employee          Approved      Screen       Unified    Storage     Budget Cap (USD)
+ Category          Spec          Size         Memory
+
+
+ Non-Tech          MacBook Air   13”          16 GB      256 GB      $1000
+ (Sales,Ops,       M4 (10-core
+ etc.)             CPU, 8-core
+                   GPU)
+
+
+ Tech              MacBook Air   13” or 15”   24 GB      512 GB      $1,400
+ (Engineering)     M4 (10-core
+                   CPU,
+                   10-core
+                   GPU)
+
+
+ Senior            MacBook Air   15”          16–24 GB   512 GB      $1,200
+ Leadership (VP,   M4 (10-core
+ Director, CXO)    CPU,
+                   10-core
+                   GPU)
+
+
+
+
+The total purchase price (excluding applicable taxes) must be within the approved cost limits.
+Any amount exceeding the approved cap will not be reimbursed.
+
+AppleCare Coverage: AppleCare may be purchased separately by employees for their
+company-issued MacBooks and will be reimbursed by the company upon submission of a valid
+invoice, for a maximum coverage period of three (3) years from the date of issue.
+2. Purchase & Reimbursement Process
+
+   ●​   Employees should purchase the laptop directly.
+   ●​   The invoice must be issued in the employee’s name.
+   ●​   The receipt must be submitted through the reimbursement process for payment.
+   ●​   Reimbursement will be processed after verification of the invoice and confirmation that
+        the purchase complies with the approved cost limits.
+
+3. Ownership & Return of Equipment
+
+Although the laptop is purchased by the employee, it remains the property of Lyzr Inc.​
+The laptop must be returned to the company at the time of exit, regardless of the reason for
+separation.​
+Failure to return the laptop may result in recovery of the asset value from final payments.
+
+All laptops purchased under this policy remain the property of Lyzr Inc and are governed by the
+Employee Handbook. The asset is depreciated over a 3‑year (36‑month) period. Upon
+resignation or exit, the employee may either return the laptop or choose to buy it at the
+depreciated value. For example, if the laptop has been used for 6 months, the buyback amount
+will be calculated as 6/36 of the original asset value. If the employee does not wish to purchase
+it, the laptop must be returned to the company in good working condition.
+
+4. Usage & Care
+
+The laptop is provided strictly for official business use and must be maintained in good working
+condition. Employees are responsible for the safe handling and care of the device.
+
+If you have any questions about the process or approved models, please reach out to the
+People Team.
+

@@ -156,6 +156,14 @@ Two handbooks, by legal entity:
 | `knowledge/employee-handbook-india.txt` | Lyzr AI India Private Limited | Gratuity, Maternity Benefit Act, Rupees |
 | `knowledge/employee-handbook-us-2026.txt` | Lyzr Inc (US), 2026 | At-will employment, FMLA, 401(k) |
 
+Some policies live in their own document rather than in a handbook:
+
+| File | Covers |
+|---|---|
+| `knowledge/us-laptop-policy.txt` | US laptop reimbursement — approved MacBook models and specs by role, budget caps, AppleCare, purchase/reimbursement process, ownership and return on exit |
+
+The US handbook contains **no** laptop or asset content, so US laptop questions are answered from `us-laptop-policy.txt`. India laptop and asset questions are covered by the India handbook's Asset Policy instead. When answering a laptop question, check which entity applies first — the two are entirely separate documents with different rules.
+
 They cover overlapping section names with **materially different answers** — leave entitlements, working hours, notice period, and termination all differ by entity. So:
 
 ```bash
