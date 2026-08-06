@@ -1,0 +1,2089 @@
+# GENERATED FILE - do not edit by hand.
+# Source PDF: knowledge/Lyzr Inc- US Employee Handbook-2026 (1).pdf
+# Regenerate:  bash knowledge/refresh_txt.sh
+
+US EMPLOYEE
+HANDBOOK
+OUR PEOPLE GUIDE
+
+
+
+
+Reading this document in entirety is strongly recommended
+
+Lyzr AI India Private Limited.
+Table of Contents
+Click and navigate through sections
+
+
+Welcome to Lyzr AI                                               5
+
+Our Story                                                        6
+
+Our Vision                                                       8
+
+Our Mission                                                      8
+
+Leadership                                                       9
+
+Our Core Values                                                 10
+
+Qualities & Values We Cherish in Our Employees                  11
+
+Our Expectation From You                                        12
+
+Definitions Used in The Playbook                                13
+
+Employment Policies                                             14
+
+Chapter One: At-Will Employment and General Conduct Standards   15
+
+At-Will Employment                                              16
+
+Anti-Harassment and Discrimination                              17
+
+Code of Business Ethics and Conduct                             20
+
+Additional Workplace Policies                                   24
+
+Endorsements and Solicitations                                  24
+
+Electronic Communications                                       25
+
+Use of Cell Phones                                              25
+Table of Contents
+Click and navigate through sections
+
+
+Information Security                                         25
+
+Confidential Information                                     26
+
+Employment and Income Verification Requests and References   26
+
+Lyzr Furnished Equipment or Materials                        27
+
+Chapter Two: General Employment Policies and Information     28
+
+Equal Employment Opportunity and Diversity                   28
+
+Immigration Reform and Control Act                           30
+
+Open Door Policy                                             31
+
+Background and Reference Checks                              32
+
+Employment Categories                                        33
+
+Access to Personnel Records                                  35
+
+Bring Your Own Device                                        36
+
+Use of Name and Likeness                                     37
+
+Ending Your Employment                                       38
+
+Chapter Three: Pay, Hours, and Leaves                        39
+
+Direct Deposit                                               39
+
+Payday and Paychecks                                         40
+
+Payroll Deductions                                           40
+Table of Contents
+Click and navigate through sections
+
+
+Hours and Timekeeping                                            41
+
+Meal and Rest Breaks                                             42
+
+Overtime and Overtime Pay                                        42
+
+Expense Policy                                                   43
+
+Attendance & Tardiness, Paid and Unpaid Time off                 43
+
+Chapter Four: Benefits Required By Law                           53
+
+State Disability Insurance                                       54
+
+Workers’ Compensation Insurance                                  54
+
+Unemployment Insurance                                           54
+
+Social Security                                                  54
+
+COBRA                                                            55
+
+Retirement Benefits                                              55
+
+Chapter Five: Employee Receipt and Acknowledgement of Handbook   56
+
+California Addendum                                              57
+Welcome to Lyzr AI
+We are excited to have you join us on
+this journey. As a new member of our
+team, your contributions are
+invaluable. This employee Playbook is
+your go-to guide for understanding
+our company culture, values, and
+expectations.
+
+
+Within these pages, you’ll find
+information on:
+    Company Overview: Learn about
+    our Mission, Vision, and Core
+    Values.
+   Company Culture: Learn about
+   our unique company culture and
+   how to embody our values.
+   Policies and Procedures: Familiarize yourself with our company policies, including
+   HR guidelines, time off, and expense reimbursement.
+   Performance Expectations: Understand our expectations for your role and how to
+   contribute to our success.
+
+
+All employees including Consultants, part timers and interns are required to abide by the
+Code of Conduct and Policies mentioned in this Employee Playbook.
+
+
+Remember, this playbook is a living document. We encourage you to refer to it often and
+to reach out to your manager or HR team for any questions.
+
+
+Lyzr AI INDIA PRIVATE LIMITED reserves unconditional right to amend, abrogate, modify
+and/or rescind any of the terms and conditions listed in this Employee Playbook.
+
+
+Let's work together to create a positive and rewarding workplace experience!
+
+
+
+
+                              Lyzr AI India Private Limited.                                5
+Our Story
+
+A Journey of Innovation and Collaboration
+
+Siva's Entrepreneurial Journey
+Siva, a seasoned entrepreneur, founded PowerUpCloud in 2015 and successfully sold it
+to Larsen & Toubro Infotech (LTI) in 2019. Upon completion of his engagement with LTI
+in 2022, he identified the transformative potential of AI in the field of data analysis.
+
+
+The Birth of Lyzr
+Inspired by ChatGPT, Siva envisioned a product where users could upload CSV or Excel
+files and ask questions, receiving insights and recommendations in return. As he
+discussed this idea with potential customers, Siva realized the paramount importance of
+data privacy. Additionally, he found the existing platform, LangChain, inadequate for his
+vision. This led to the birth of Lyzr in April 2023, derived from the word “analyzer.”
+Lyzr was initially focused on creating an AI product for data analysis but soon pivoted to
+developing an agent framework by October 2023.
+An agent framework, as Siva saw it, was a platform to build AI agents capable of
+autonomously performing tasks based on given inputs. The rise of chat-based agents
+during late 2023 solidified this direction.
+Lyzr began with chat agents and knowledge search agents, eventually expanding into
+workflow automation. Key innovations include the AI SDR (Sales Development
+Representative) for sales, Skott for marketing automation, and Diane, an HR-specific
+agent, each designed to optimize and streamline essential business functions.
+
+
+Building the Team
+Siva reunited with Anirudh, a long-time friend and colleague, who brought technical
+expertise and shared vision. Jimmy, another friend, joined as CTO with his strong
+technical background.
+
+Together, the team of 50+ operates across the US and India, creating innovative AI
+solutions. Lyzr's mission is to redefine what's possible through the power of AI agents.
+United by a common goal and diverse expertise, team Lyzr continues to push the
+boundaries of AI, creating innovative solutions that redefine what’s possible.
+
+
+
+                              Lyzr AI India Private Limited.                                 6
+Technological Advancements
+Lyzr's development has been closely tied to advancements in AI technology. The
+emergence of large language models like ChatGPT has played a pivotal role in enabling
+Lyzr to create powerful and versatile AI agents. By leveraging these models, Lyzr can
+provide natural language understanding, generate human-like text, and complete
+complex tasks.
+
+Product Evolution
+Lyzr's product has evolved from its initial focus on data analysis to a broader platform
+capable of automating various tasks. The company's agent framework allows for the
+creation of customized AI agents that can be tailored to specific needs and industries.
+This flexibility has enabled Lyzr to expand its offerings and target a wider range of
+customers.
+
+Impact on Industries
+Lyzr's technology has the potential to transform a wide range of industries. In the sales
+domain, Lyzr's AI SDR can automate lead generation and qualification tasks, freeing up
+sales teams to focus on high-value activities. In customer service, Lyzr's AI agents can
+provide 24/7 support and handle routine inquiries, improving customer satisfaction.
+Additionally, Lyzr's technology can be applied to areas such as marketing, finance, and
+operations to streamline processes and drive efficiency.
+
+
+Future Outlook
+As AI technology continues to advance, Lyzr is well-positioned to capitalize on emerging
+opportunities. The company's focus on innovation and adaptability will be crucial in
+ensuring its long-term success. Lyzr's future may include exploring new applications for
+its technology, expanding into international markets, and forming strategic partnerships
+with other companies.
+
+
+Lyzr's journey from a data analysis tool to a versatile AI platform is a testament to the
+power of innovation and the potential of AI to revolutionize industries. By leveraging
+cutting-edge technology and building a strong team, Lyzr is poised to become a leader in
+the AI space.
+
+
+
+
+                               Lyzr AI India Private Limited.                               7
+Our Vision
+Lyzr is dedicated to creating a future
+where enterprises flourish with
+Organizational General Intelligence
+(OGI), empowering them to serve
+their customers intelligently, liberate
+their workforce from mundane tasks,
+and unlock infinite possibilities for
+meaningful work and lives.
+
+
+
+
+                                                     Our Mission
+                                                     Lyzr equips organizations with a
+                                                     central brain-an intelligent, adaptive
+                                                     system that fosters awareness,
+                                                     agility, adaptability, and autonomy.
+                                                     By connecting and enhancing the
+                                                     intelligence of AI agents and
+                                                     workforces, we help businesses
+                                                     discover, dialogue with, and deliver
+                                                     to their customers in smarter, more
+                                                     impactful ways.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 8
+Leadership
+
+
+
+
+                          Siva Surendira
+                          Founder and CEO
+
+
+
+
+       Anirudh Narayan
+             Founding CGO
+
+
+
+
+                          Jithin George
+                          Founding CTO
+
+
+
+
+              Lyzr AI India Private Limited.   9
+                              Being Humble: Stay
+                         grounded, keep learning, and
+                         let your work speak for itself.
+
+
+
+
+Extreme Ownership:
+   Own your work                                                   Go for the Swing:
+   completely-no                                                    Take bold bets,
+    excuses, just                                                 embrace challenges,
+     solutions.                                                   and aim for big wins.
+
+
+
+
+     Intent and Integrity: Act                                  Hustle: Stay
+     with purpose and always                               relentless, move fast,
+      do the right thing, even                               and make things
+     when no one is watching.                                     happen.
+
+
+
+
+                          Lyzr AI India Private Limited.                            10
+Qualities & Values We
+Cherish in Our Employees
+
+
+
+
+             Lyzr AI India Private Limited.   11
+Our Expectation from You
+
+
+
+
+As we strive to become a global leader in AI agent framework, we expect you to:
+
+
+   Collaborate: Work effectively with your team and colleagues.
+   Innovate: Bring in new ideas and best practices.
+   Problem-Solve: Identify and address challenges efficiently.
+   Deliver Excellence: Create exceptional products that meet our market and customer
+   needs.
+   Move fast: We trust you to complete your tasks on time and to the highest quality
+   standards.
+   Your actions should aim to positively represent the company.
+   All Lyzr employees are required to treat everyone, including colleagues and
+   customers, with respect and professionalism.
+
+
+
+
+                             Lyzr AI India Private Limited.                            12
+Definitions Used in the Playbook
+ “Employee” and “Team Member” as used in this Playbook, refers to all full-time
+ employees, part time employees, consultants and interns employed by Lyzr.
+ “Company” or “Organization” or “Management” as used in this Playbook refers to
+ Lyzr AI INDIA PRIVATE. LTD.
+ “Manager” as used in this Playbook refers to your immediate supervisor or reporting
+ manager and/or management of Lyzr.
+
+
+
+
+                          Lyzr AI India Private Limited.                               13
+EMPLOYMENT
+  POLICIES
+Chapter One:
+At-Will Employment and General
+Conduct Standards
+
+We are committed to the highest standards of conduct at every level, and we depend
+upon the personal and professional integrity and dedication of all employees to help
+uphold these standards. Your character and helpful behavior are assets and a credit to
+Lyzr. To help maintain a positive work environment for you and your co-workers, we rely
+on you to behave according to the provisions set forth in this Employee Handbook and in
+other Lyzr policies and directives.
+Failure to comply with Lyzr guidelines may result in disciplinary action, up to and
+including termination of employment.
+
+
+This Employee Handbook is not intended to address every situation that might arise but
+is intended to highlight Lyzr’s expectations regarding your conduct in general. Nothing in
+this Employee Handbook alters our at-will employment policy, which is set forth below.
+This Employee Handbook is intended to provide employees and managers with general
+guidelines for conduct and behavior in the workplace. Lyzr reserves the right, with or
+without notice, in an individual case or generally, to change and/or modify its
+interpretation of or revise, modify, delete, or add to any and all policies, procedures, work
+rules, or benefits stated in this Employee Handbook or in any other document. Any
+written changes to this Employee Handbook will be distributed to all employees so that
+employees will be aware of the new policies or procedures.
+
+
+This Employee Handbook supersedes and replaces any and all prior employee
+handbooks and any prior inconsistent verbal or written policy statements. If any term of
+this Employee Handbook conflicts with applicable state or local law, state or local law
+shall control.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   15
+At-Will Employment
+
+
+
+
+You are employed on an at-will basis, except where a written agreement is signed by
+you and Lyzr’s CEO and expressly disclaims your at-will status. This at-will employment
+policy means that, in the absence of such an agreement, either you or the Company may
+terminate the employment relationship at any time, for any reason, with or without cause
+or notice. Nothing in this Employee Handbook shall limit the right to terminate
+employment at will. In addition, it means that, in the absence of a written agreement to
+the contrary, the terms and conditions of your employment, including, but not limited to,
+your compensation, benefits, duties, schedule, and location of work may also be
+changed at any time in Lyzr’s sole discretion, with or without cause, and with or without
+advance notice, and you may be transferred, promoted, or demoted, with or without
+cause, and with or without advance notice.
+
+
+
+
+                              Lyzr AI India Private Limited.                                16
+Anti-Harassment and Discrimination
+
+
+
+
+Harassment Free Workplace
+We are committed to creating an inclusive, respectful, courteous work environment free
+of discrimination and harassment of any kind, and we are committed to taking all
+reasonable steps to prevent and address discrimination and harassment if and when it
+occurs. We will not tolerate discrimination or harassment, including but not limited to
+those relating to any characteristic protected under applicable law by any employee,
+contractor, vendor, customer, or visitor. These policies apply any time employees are at
+work or attending work-related events. Employees are also reminded that even off-work
+conduct can affect the workplace; discriminatory or harassing behavior outside of work
+that affects the workplace may also be a basis for discipline up to and including
+termination.
+
+
+Individuals who believe that they have been subjected to harassment, discrimination, or
+sexual assault by any manager, supervisor, team member, vendor, or client of Lyzr, and
+any team members who have witnessed what they believe to be harassment or
+discrimination, must report the situation immediately to their manager or any other Lyzr
+manager. No team member, including managers, is exempt from this policy.
+
+
+
+
+                             Lyzr AI India Private Limited.                                17
+Lyzr does not tolerate any retaliation against any employee who makes a good faith
+report of harassment or discrimination. Furthermore, Lyzr will maintain the
+confidentiality of reporting employees to the greatest extent possible. However, in order
+to conduct a complete, thorough investigation, it may not be possible to maintain
+complete confidentiality.
+
+
+All harassment claims are investigated in a timely, objective, and thorough manner as
+confidentially as possible. Lyzr will conduct or direct that a fair, timely, and thorough
+investigation occurs as appropriate. Investigations will be impartial, documented, and
+conducted by qualified personnel. All employees are encouraged to document incidents
+of potential discrimination, harassment, or sexual assault and are expected to cooperate
+fully in any investigation. If it is determined that this policy has been violated, Lyzr will
+take appropriate disciplinary action or corrective measures, including, but not limited to,
+mandatory counseling, training, additional supervision, transfer, change of job duties,
+demotion, suspension, or termination of employment. This list of potential corrective
+actions is illustrative only. Lyzr will determine the type of corrective action necessary to
+remedy any situation created by a violation of our policy against harassment and
+discrimination.
+
+
+
+Protection Against Retaliation
+Lyzr will not tolerate any form of retaliation against any employee who, in good faith,
+opposes discrimination or prohibited harassment, makes a complaint, or participates in
+any manner in an internal investigation or an investigation, proceeding, or hearing
+conducted by a state or federal agency or court. Any employee who engages in
+retaliation will be subject to disciplinary action, up to and including termination of
+employment.
+
+
+
+Bullying Free Workplace
+Lyzr is proud of its professional and congenial work environment and does not tolerate
+bullying behaviors of any kind.
+
+
+Lyzr defines bullying as “repeated inappropriate behavior, either direct or indirect,
+whether verbal, physical or otherwise, conducted by one or more persons against
+another or others, at the place of work and/or in the course of employment.”
+
+
+
+
+                               Lyzr AI India Private Limited.                                   18
+If you witness or are subjected to any conduct you believe violates this policy, you must
+speak, write, or otherwise contact your manager or another Lyzr manager.
+
+
+Lyzr does not tolerate any retaliation against any employee who makes a good faith
+report of bullying. Furthermore, Lyzr will maintain the confidentiality of reporting
+employees to the greatest extent possible. However, in order to address the situation, it
+may not be possible to maintain complete confidentiality.
+
+
+Anyone found to be engaging in any type of bullying in violation of this policy may be
+subject to appropriate corrective and/or disciplinary action, up to and including
+termination.
+
+
+
+
+                              Lyzr AI India Private Limited.                                19
+Code of Business Ethics and Conduct
+
+
+
+
+Lyzr has a responsibility to conduct its business in strict compliance with all applicable
+laws and regulations. Lyzr requires employees to act in accordance with the highest
+standards of business ethics both on and off Lyzr premises, to avoid any appearance of
+impropriety, and to observe all applicable laws and regulations while conducting
+business on Lyzr’s behalf. You are expected to abide by the spirit as well as the letter of
+this Code. You are also expected to cooperate with any inquiries or investigations
+concerning a possible or suspected violation of this Code. Any employee’s failure to fulfill
+their responsibilities under this Code may result in disciplinary action, up to and including
+termination of employment.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   20
+Ethical Standards
+Lyzr is committed to conducting business in a fair and open manner within the spirit and
+letter of the law, with the highest regard for customers, the community, and employees.
+Lyzr’s success depends not only on the knowledge, skills, and abilities of employees, but
+also on sound judgment, self-discipline, common sense, and integrity. As such, all
+employees are required to maintain and uphold the following common ethical standards:
+
+
+   To pursue Lyzr objectives in a manner that does not conflict with the integrity of Lyzr
+   or the public interest;
+   To be truthful and accurate in all you say and do;
+   To protect confidential information;
+   To treat fellow employees with respect and dignity;
+   To observe all laws, regulations, ordinances, and rules applicable to the operation of
+   the business;
+   To maintain honest and fair relationships with all employees, contractors and
+   vendors;
+   To ensure quality and value in Lyzr’s products/services and relationships with
+   customers and vendors;
+   To avoid, during the course of your employment, any situations that may engender
+   any conflict between the personal interests of employees and the business interests
+   of Lyzr, except to the extent the law permits otherwise; and
+   To avoid creating a disruptive, unprofessional, or unproductive working
+   environment.
+
+
+Nothing in this Employee Handbook prohibits employees from discussing the terms or
+conditions of their employment with other employees or engaging in any concerted
+activities protected by the National Labor Relations Act or under applicable state law.
+
+
+
+
+Conflict of Interest
+Lyzr insists on the undivided loyalty of all employees, including management and non-
+management staff, except to the extent that doing so would be inconsistent with
+applicable law. Subject to that caveat, employees must not engage in any conduct, and
+must avoid situations that would create an actual or potential conflict of interest or
+create the appearance of such a conflict.
+
+
+                              Lyzr AI India Private Limited.                                 21
+Conflicts of interest arise when an employee’s personal activity or personal interest is
+contrary to the interests of Lyzr. These personal activities or interests may influence the
+employee's judgment, causing the employee to make decisions based upon the
+potential for personal gain, rather than in the best interests of Lyzr.
+
+
+    To prevent conflicts of interest, the following behavior is deemed unacceptable and
+    unethical, except to the extent the law provides otherwise:
+    Receiving or giving of merchandise, money, services, travel, accommodations, or
+    lavish entertainment that might appear to have been given to influence a business
+    decision. Gifts offered or received at any time that are of more than minimal or token
+    value shall not be accepted and shall be returned to the sender with an appropriate
+    explanatory note or letter.
+    Maintaining personal, business, or financial relationships with a customer or vendor
+    where the employee has control or influence over Lyzr’s relationship with that
+    customer or vendor. For example, employees should not borrow from or lend
+    personal funds to a customer or vendor of the employee's division.
+    Using information developed or learned on the job for personal or familial benefit.
+    This includes the use of Lyzr databases, financial information, and intellectual
+    property.
+    Maintaining outside directorship, employment, or political office that might appear to
+    or actually conflict or compete with an employee's responsibilities.
+    Conducting Lyzr business with or using position or authority to influence Lyzr to
+    conduct business with, family members.
+    Unauthorized sharing of confidential or proprietary Lyzr information with business
+    associates or representatives of other companies.
+    All employees must gain prior written approval (from the head of the People Team)
+    for any external employment, contract, consulting, vendor, etc. while employed with
+    Lyzr.
+
+
+The list above serves only to illustrate sources of possible conflicts of interest and does
+not constitute a complete list of all the situations that may result in a conflict of interest.
+Ultimately, it is the responsibility of each employee to avoid any situation that could affect
+their ability to judge situations independently and objectively, and any situation that
+could even appear to be a conflict of interest. It is important to note that under certain
+circumstances, conflicts of interest can amount to violations of criminal law. If you are
+unsure if an activity or situation may present a conflict of interest, you must bring the
+matter to your manager as soon as possible.
+
+
+
+
+                                Lyzr AI India Private Limited.                                    22
+Employment of Relatives and Significant Others
+A familial relationship among employees can create an actual or a potential conflict of
+interest. Relatives of an employee will be considered for employment on the basis of
+their qualifications. However, to the extent permitted by applicable law, Lyzr may refuse
+to hire or place a relative in a position when the potential for favoritism or conflict exists.
+
+
+Additionally, the same general considerations apply if two employees marry or become
+involved in a domestic-partner or personal relationship. If two employees marry or
+become involved in a domestic-partner or personal relationship, they must immediately
+disclose this changed circumstance to their manager or any other Lyzr manager.
+
+
+Recognizing & Reporting a Conflict
+It is essential that all employees pay close attention to possible violations of the Code of
+Business Ethics and Conduct, whether they occur because of an oversight or
+intentionally. Any employee who is aware of possible violations should notify their
+manager, another Lyzr manager, or the People Team. If you are not sure whether there
+is an ethical problem, you must ask your manager or the People Team.
+
+
+Violation of the Code
+Violations of this Code will be grounds for discharge or other disciplinary action, adapted
+to the circumstances of the particular violation. Disciplinary action will be taken against
+individuals who authorize or participate directly in a violation of the Code. Disciplinary
+action also may be taken against any of the violator's managerial superiors, to the extent
+that the circumstances of the violation reflect inadequate supervision and leadership by
+the superior.
+
+
+Complaints of Retaliation as a Result of Disclosure
+Lyzr has a zero-tolerance policy for retaliation. If an employee or applicant believes that
+they have been retaliated against for disclosing information regarding misconduct under
+the Code, they should report it to any Lyzr manager or any Lyzr officer.
+
+Lyzr encourages employees to come forward with any safety, ethical, or legal concerns.
+Retaliation against those who bring forward these types of related concerns or
+complaints, or those who assist in raising complaints, is strictly prohibited.
+
+
+
+
+                                Lyzr AI India Private Limited.                                    23
+Additional Workplace Policies
+
+
+
+
+Endorsements and Solicitations
+To avoid disruption of operations, employees may not solicit for any cause or purpose
+(including politics) during employee working time (which refers to time in which either
+the solicitor or solicitee is working, but does not include rest periods, meal periods or any
+other times when employees are properly not engaged in performing their work tasks).
+Lyzr also prohibits distribution of materials for any cause in working areas or while on
+work time. No employee should imply endorsement by Lyzr for a particular product or
+service without proper authorization.
+
+
+This policy is not intended to restrict communications or actions protected by local,
+state, or federal law. This policy also does not restrict solicitations expressly authorized
+by Lyzr.
+
+
+                               Lyzr AI India Private Limited.                                   24
+Electronic Communications
+Lyzr provides you with various communication tools and other business equipment.
+Examples include Slack, email, voicemail, computers, etc. You are to use such devices
+for business purposes. These electronic communication tools and company-related
+work records belong to Lyzr and not to the employee. Lyzr routinely monitors use of
+company-provided internet, equipment, technology, and e-mail for legitimate business
+purposes and at any time with or without prior notice. Accordingly, employees have no
+reasonable expectation of privacy when they use the company-provided internet,
+equipment, communication system and e-mail. Additionally, internal, and external
+emails and Slack conversations are considered business records and may be subject to
+discovery in the event of litigation. Be aware of this possibility when sending email within
+and outside the company.
+
+
+While incidental personal use of such equipment is allowed, it should not interfere with
+productivity or business demands. Unauthorized or illegal use or communications may
+be subject to disciplinary action up to and including termination of employment.
+
+
+
+Use of Cell Phones
+Lyzr requires the safe use of cell phones by employees who use them to conduct Lyzr
+business. Employees are required to obey all applicable state and local laws regarding
+cell phone use while driving.
+
+
+Under no circumstances should employees use a cellular telephone to send, receive or
+review text messages, email or information over the Internet while driving.
+
+
+
+Information Security
+Lyzr requires all employees and contractors to take an active role in Information
+Security. Everyone is required to stay up to date on all Security Policies, Procedures and
+Security Training to help Lyzr keep its security certifications. Employees are required to
+sign additional security policy acknowledgments, including but not limited to the User
+Security Policy and Acceptable Use Policy.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  25
+Confidential Information
+As an employee, you may learn information that is not known by the general public. You
+may have access to confidential or proprietary information regarding Lyzr, its vendors,
+its customers, or perhaps even fellow employees. Confidential or proprietary information
+includes, but is not limited to business plans, strategies, budgets, projections, forecasts,
+financial and operating information, business contracts, databases, employee
+information, customer and vendor information, compensation data, advertising and
+marketing plans, proposals, training materials and methods, and other information not
+available to the public. This includes content uploaded into our system by customers and
+partners.
+
+Regardless of whether this type of information is specifically identified as confidential, it
+is each employee's responsibility to keep this information in confidence. This is an
+ongoing obligation that does not end even if your employment with Lyzr ends. You must
+not use, reveal, or divulge any such information unless it is necessary for you to do so in
+the performance of your duties (or except as otherwise allowed, if at all, by applicable
+law). Generally, access to confidential information should be granted/provided/given on
+a “need-to-know” basis and must be authorized by your manager. Only designated
+personnel may make comments to any media requests.
+
+All employees, contractors and temporary employees will also need to sign a
+Proprietary Information and Inventions Agreement (PIIA) as a condition of employment. If
+you improperly use or disclose any of Lyzr’s confidential or proprietary information, you
+will be subject to disciplinary action, up to and including termination of employment,
+regardless of whether or not you receive any benefit from the use or disclosure.
+
+
+
+Employment and Income Verification Requests and References
+All inquiries for income or employment verification received by Lyzr from an outside
+party regarding a present or former employee should be directed to your manager.
+
+
+No other manager or employee is authorized to release references for current or former
+employees. Lyzr will disclose only the dates of employment and title of the last position
+held in response to reference or employment verification requests. If an employee
+authorizes disclosure in writing, Lyzr will also provide the amount of salary or wage last
+earned.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   26
+Lyzr Furnished Equipment or Materials
+You are responsible for taking good care of the equipment or materials furnished to you
+by Lyzr, which remain Lyzr’s property and should only be used for legitimate Lyzr
+business.
+
+
+Employees must return any Lyzr property in their possession upon separation of
+employment or immediately upon any request by Lyzr.
+
+
+
+
+                             Lyzr AI India Private Limited.                               27
+Chapter Two:
+General Employment Policies and Information
+
+Equal Employment Opportunity and Diversity
+
+
+
+
+Lyzr is committed to creating a fair and equitable, inclusive workplace that embraces
+difference and fosters inclusion. As a result, we take our equal-employment principles
+very seriously and work to ensure that all Lyzr employees are treated fairly and
+respectfully. We strive to find ways to attract, develop and retain the talent needed to
+meet business objectives, which starts with the effort to recruit and employ the most
+highly qualified, diverse group of individuals we can.
+Employment policies and decisions on employment and promotion are based on merit,
+qualifications, performance, potential, and business needs. The decisions and criteria
+governing the employment relationship with all employees are made without regard to
+age, race, color, national origin, gender (including pregnancy, childbirth, breastfeeding
+or medical condition related to pregnancy or childbirth), gender identity or expression,
+religion, physical or mental disability, medical condition, legally protected genetic
+information, marital status, veteran status, sexual orientation, or any other factor
+
+
+
+                              Lyzr AI India Private Limited.                                28
+determined to be an unlawful basis for such decisions by applicable federal, state, or
+local statutes (including medical marijuana cardholder status for Arizona applicants and
+employees).
+
+
+No legally protected characteristic will be a factor in decisions regarding any of the
+following:
+     Recruiting
+   Hiring
+   Compensation
+   Scheduling
+   Training
+   Assignments
+   Promotion/demotion
+   Discipline
+   Termination of employment, or
+   Any other terms or conditions or privileges of employment.
+
+
+Moreover, in accordance with applicable federal, state, and local laws, Lyzr will make
+reasonable accommodations for individuals with known disabilities, or for conditions
+related to pregnancy (including but not limited to childbirth or lactation), provided that
+such individuals are qualified to perform the essential functions and assignments of the
+job, with or without accommodation, and provided that any accommodations would not
+impose an undue hardship on Lyzr or creates a direct safety threat. Lyzr wishes to have
+timely, good faith discussions with applicants or employees who make their condition
+known to determine what accommodations may be appropriate. Any applicant or
+employee who requires accommodation during the application process or in order to
+perform the essential functions of the job should contact a Lyzr manager to request such
+an accommodation.
+
+
+Lyzr is also committed to providing equal employment opportunities to all individuals,
+regardless of their religious beliefs and practices or lack thereof. Consistent with this
+commitment, Lyzr may provide a reasonable accommodation of an applicant’s or
+employee’s sincerely held religious belief if the accommodation would resolve a conflict
+between the individual’s religious beliefs or practices and a work requirement, unless
+doing so would create an undue hardship for Lyzr.
+
+
+If you have any reason to believe that you (or someone else) haven’t been treated in
+accordance with this policy, you should immediately inform your manager, any other
+Lyzr manager or officer, or the People Team.
+
+
+                              Lyzr AI India Private Limited.                                 29
+Immigration Reform and Control Act
+
+
+
+
+In compliance with the federal Immigration Reform and Control Act of 1986 (IRCA), as
+amended, and any state law requirements, if applicable, Lyzr is committed to employing
+only individuals who are authorized to work in the United States. Lyzr participates in E-
+Verify, which is an internet-based system that allows businesses to determine the
+eligibility of their employees to work in the United States.
+
+Each new employee, as a condition of employment, must complete the Employment
+Eligibility Verification Form I-9 and present documentation establishing identity and
+employment eligibility within three days of the employee’s date of hire. The Employment
+Eligibility Verification Form I-9 and supporting documentation will be provided to E-Verify
+for confirmation of eligibility for employment. A failure to complete the Employment
+Eligibility Verification Form I-9 and present documentation establishing identity and
+employment eligibility within three days of the employee’s date of hire may result in
+termination of employment.
+
+
+If an employee is authorized to work in this country for a limited time period, the
+individual will be required to submit proof of renewed employment eligibility prior to
+expiration of that period to remain employed by the company.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 30
+Open Door Policy
+
+
+
+
+We have an open-door policy that seeks to encourage employees to participate in
+decisions affecting them and their daily professional responsibilities. We encourage you
+to make your concerns, questions, suggestions, and comments known to us. Whether
+you have a question about any of our policies or programs, or a concern about a decision
+affecting your job, you can make yourself heard so that your question or concern may be
+addressed, and appropriate steps can be taken toward a resolution. If you have
+concerns about potentially unlawful harassment, discrimination, or sexual assault, follow
+the reporting procedures described in the Anti-Harassment and Discrimination policy in
+Chapter One.
+
+
+
+
+                              Lyzr AI India Private Limited.                                31
+Background and Reference Checks
+
+
+
+
+To ensure that individuals who join Lyzr are well-qualified and to ensure that Lyzr
+maintains a safe and productive work environment, it is our policy to conduct pre-
+employment background checks on all applicants who accept an offer of employment.
+Background checks may include verification of any information on the applicant’s
+resume or application form.
+
+
+All offers of employment are conditioned on receipt of a background check report that is
+acceptable to Lyzr. All background checks are conducted in conformity with applicable
+law, including the Fair Credit Reporting Act and state and federal privacy and anti-
+discrimination laws. Reports are kept confidential and are only viewed by necessary
+individuals involved in the hiring process.
+
+
+If information obtained in a background check would lead Lyzr to deny employment, a
+copy of the report will be provided to the applicant, and the applicant will have the
+opportunity to dispute the report’s accuracy. Background checks may include a criminal
+record check, although a criminal conviction does not automatically bar an applicant
+from employment.
+
+
+Additional checks such as a driving record or credit report may be made on applicants
+for particular job categories if appropriate and job related.
+
+
+Lyzr also reserves the right to conduct a background check for current employees to
+determine eligibility for promotion or reassignment in the same manner as described
+above.
+
+
+                              Lyzr AI India Private Limited.                               32
+Employment Categories
+
+
+
+
+To address payroll, benefits, and other issues, employees are classified in various ways.
+None of the classifications alter the at-will employment policy, as nothing in this
+handbook (including this policy) alters the at-will employment policy.
+
+
+
+
+A. General Categories
+You will be assigned to one of the following categories at any given time. These
+employment categories, which relate to the regular extent of your commitment, are as
+follows:
+
+   Regular, Full-Time employees are regularly scheduled to work 40 hours or more
+   per week. Generally, these employees are eligible for certain benefits like Sick Pay,
+   and are eligible to elect benefits coverage under the Lyzr Benefits Programs, subject
+   to the terms, conditions and limitations of each benefits program.
+   Regular, Part-Time employees are regularly scheduled to work less than 40 hours
+   per week. Regular, Part-Time employees may be eligible for some benefits like Sick
+   Pay (on a prorated basis), and but are not eligible to apply for coverage under Lyzr
+   Benefits Programs, unless legally required, and subject to the terms, conditions, and
+   limitations of each benefits program. Please refer to the Benefits Guidebook for
+   additional information.
+
+
+
+
+                              Lyzr AI India Private Limited.                                33
+B. Exempt and Non-exempt Status
+In addition to being classified in accordance with the above categories, you will also be
+classified as exempt or non-exempt. Exempt/non-exempt status corresponds to your
+eligibility for overtime pay and certain other legal rights. This status is determined based
+on applicable law and such factors as the nature of your work, your duties and
+responsibilities, and your level and form of compensation.
+
+
+
+
+C. Non-Exempt Employees
+Are typically paid by the hour for each hour they work in a pay period and always receive
+overtime pay in accordance with the applicable overtime rules. For overtime rules
+applicable to you, please contact the People Team.
+
+
+
+
+D. Exempt Employees
+Are classified as such if they are not entitled to overtime under the federal (or, if
+applicable, state) wage and hour laws. Employees in positions classified as Exempt are
+generally paid a salary intended to compensate them fully for all hours worked each
+week. Exempt employees are not compensated based on the number of hours worked
+and do not receive overtime pay.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  34
+Access to Personnel Records
+
+
+
+
+Lyzr maintains records for all employees. Most employee information may be accessed
+only by appropriately authorized employer personnel. In addition, access to these
+records may be granted to government agencies in accordance with the law, and to
+other third parties by way of legal subpoena or court order.
+
+
+Requests by current and former worksite employees to access employment records
+should be made to the Lyzr’s senior management team. Lyzr will follow all state and
+federal laws in granting an employee access to view and/or to receive a copy of their
+personnel file.
+
+
+
+
+                             Lyzr AI India Private Limited.                             35
+Bring Your Own Device
+
+
+
+
+Lyzr permits some employees to use their own personal mobile devices, including but
+not limited to tablets, smartphones, and wearable technology (devices”), to perform
+work for Lyzr or on Lyzr’s behalf. However, to protect Lyzr and its employees, any use of
+a device for business purposes must conform to this policy as described below. In
+addition, each user is responsible for using their device in a sensible, productive, ethical,
+and lawful manner. Employees are prohibited from using personal computers for work-
+related functions unless approved by the IT department.
+
+
+All materials, data, communications and information, including but not limited to email
+(both outgoing and incoming), telephone conversations and voice mail recordings,
+instant messages, and internet and social media postings and activities (“content”)
+created on, transmitted to, received or printed from, or stored or recorded on the device
+for Lyzr’s business or on behalf of Lyzr is property of Lyzr, regardless of who owns the
+device(s) used.
+
+To access corporate email on a personal mobile device, we require the following:
+   Passcode enabled and set to erase/factory reset device after 15 incorrect attempts
+   Encryption enabled
+
+Lyzr reserves the right to monitor, intercept, review, without further notice, all content
+created on, transmitted to, received or printed from, or stored or recorded on the device
+for Lyzr’s business or on behalf of Lyzr. Lyzr also maintains the authority to wipe the
+device of any and all data upon termination. Therefore, employees should have no
+expectation of privacy whatsoever in any content created on, transmitted to, received, or
+printed from, or stored or recorded on the device for Lyzr’s business or on behalf of Lyzr.
+
+
+                               Lyzr AI India Private Limited.                                   36
+Use of Name and Likeness
+
+
+
+
+You hereby authorize the Company to use and reuse your name, photograph, likeness
+(including caricature), voice, and biographical information, and any reproduction or
+simulation thereof, in any form of media or technology now known or hereafter
+developed, both during and after your employment, for any purposes related to the
+Company’s business, such as marketing, advertising, credits, and presentations.
+
+
+
+
+                            Lyzr AI India Private Limited.                             37
+Ending Your Employment
+
+
+
+
+If you choose to leave Lyzr, we ask that you do so in writing and indicate your reason for
+leaving, the effective date of your resignation, and a forwarding address. Resigning
+employees are encouraged to provide at least two weeks’ notice, preferably in writing, to
+facilitate a smooth transition out of the organization. Upon separation, Lyzr will follow all
+applicable local, state, and federal guidelines for final payment.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   38
+Chapter Three:
+Pay, Hours, and Leaves
+
+
+
+
+Direct Deposit
+You may elect to automatically deposit your paycheck into an account with almost any
+bank, including the option of designating multiple accounts to which specified portions of
+your paycheck may be directly deposited.
+
+Funds are transferred electronically the same day as your regular payday.
+
+
+Please be aware that posting of deposits and availability of funds varies by banking
+institutions and is not under Lyzr’s control. If you have questions or encounter issues
+with such a delay, you should contact your banking institution.
+
+
+
+
+                              Lyzr AI India Private Limited.                                 39
+Payday and Paychecks
+Technology allows you to receive pay and payday information without delay. If you
+prefer not to direct deposit your paycheck, your check will be sent to your home
+address.
+Lyzr does not extend payroll advances, loans, or credit to employees.
+
+
+
+
+Payroll Deductions
+Lyzr categorizes payroll deductions as either voluntary or involuntary. Voluntary
+deductions are taken if you enroll or are enrolled by default in any of the following
+programs or services, assuming you are eligible.
+Your first paycheck after Lyzr receives and processes your benefits enrollment may
+reflect retroactive deductions for plans in which you enrolled that became effective on
+your benefits eligibility date.
+
+Involuntary deductions are those mandated by a government agency, or by any court
+orders, liens, or wage assignments that the law may require us to recognize. Examples
+of mandatory deductions that we take until the required amount is reached include, but
+are not limited to, the following:
+
+
+   Federal & State Income Tax Withholding
+   Social Security (FICA)
+   State Disability Insurance (SDI) (as applicable)
+   Medicare
+   State or local taxes (as applicable)
+   Child support (as applicable)
+   Garnishments (as applicable)
+
+Your pay statement provides you with the current pay period and year-to-date payroll
+deductions withheld from your paycheck. These deductions are reported each year on
+your annual Form W-2, Wage & Tax Statement.
+
+
+Employees will be reimbursed in full for any isolated, inadvertent, or improper
+deductions, as defined by law. Lyzr will not make deductions which are prohibited by the
+Fair Labor Standards Act or state laws from its exempt employees’ pay.
+
+
+
+                              Lyzr AI India Private Limited.                               40
+Hours and Timekeeping
+Your regularly scheduled hours (as applicable) will be determined by your manager.
+If you are a non-exempt employee, you must not work outside of your regularly
+scheduled hours unless you have been pre-approved to do so by your manager. Failure
+to obtain such pre-approval may result in disciplinary action, up to and including
+termination of employment.
+
+
+It is the responsibility of each non-exempt employee to accurately record their time on a
+daily basis. If you are a non-exempt employee and work outside of your regularly
+scheduled hours, regardless of whether or not you obtain your manager’s pre-approval
+for such work, you must record all of your work time in ADP.
+
+Non-Exempt employees are required to record the times when they actually start and
+stop work during each workday.
+
+
+Any other stops and starts must also be recorded, with the exception of those related to
+paid rest periods. The start and stop times associated with paid rest periods need not be
+recorded unless otherwise instructed in writing.
+
+
+If you are a non-exempt employee, your manager will inform you of the time-keeping
+system you are to use to record your time. You cannot record time for anyone but
+yourself.
+
+
+If there is an error in the recording of your time, you must contact your manager
+immediately so that it can be corrected. Managers (or their designees) are responsible
+for addressing any errors in time records and may not edit any time records without the
+express written consent of the employee whose records are to be edited.
+
+Any falsification of time records or misuse of a timekeeping system is strictly prohibited.
+Violations of this policy may result in corrective action, up to and including termination of
+employment.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   41
+Meal and Rest Breaks
+Requirements and details regarding breaks for meals or rest are legally controlled by
+state standards.
+
+
+
+Overtime and Overtime Pay
+Lyzr’s workweek, for payroll purposes, is defined as Sunday (12:01 am) through the
+following Sunday (12:00 am). Non-exempt employees are eligible to receive overtime
+pay for overtime work. What constitutes overtime work depends on where you work, as
+there is a federal standard (i.e.,hours in excess of 40 per week) but also some state
+standards that go beyond the federal standard (i.e., some states like California require
+daily overtime). Please ask your manager for information about what constitutes
+overtime for you.
+
+
+If you are a non-exempt employee, you must not work overtime unless you have been
+pre-approved to do so by your manager. Failure to obtain such pre-approval may result
+in
+disciplinary action, up to and including termination of employment. However, overtime
+worked and recorded as such will always be paid at the appropriate overtime rate.
+
+
+Holidays, sick leave, UVT (Flexible Vacation Time), jury and witness leave, and other
+leaves are not considered time actually worked when calculating hours worked for
+overtime purposes.
+
+
+Non-exempt employees will be paid at a rate of time and one-half of the employee’s
+regular hourly rate for hours worked in excess of 40 hours in a workweek, unless state
+law provides a greater benefit, in which case we will comply with state law.
+
+Non-exempt employees who work on a designated Lyzr holiday will receive two-times
+their normal hourly rate for the first 8 hours. All hours worked over 8 on a holiday will be
+paid at a rate of time and one-half of the employee’s regular hourly rate.
+
+
+Exempt employees are not eligible for overtime.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  42
+Expense Policy
+To make expense reimbursements smooth and timely, all employees are requested to
+submit reimbursable expense claims through the Company’s HRMS portal.
+For expenses to be included in the same month’s payroll, please ensure that your claims
+are raised and submitted on or before the 20th of each month. Once submitted, the claim
+will automatically be routed to your Reporting Manager for review and approval.
+Expenses that are submitted by the 20th and approved in the HRMS will be reimbursed
+along with that month’s payroll. Claims submitted after the 20th, or those awaiting
+approval, will be processed in the next payroll cycle, subject to approval.
+
+To help avoid any delays, employees are encouraged to ensure that:
+   Expense details are complete and accurate
+   Valid supporting receipts are uploaded in the HRMS
+   Expenses align with the Company’s expense guidelines
+
+Please note that reimbursements can be processed only after manager approval is
+completed in the HRMS. We appreciate your cooperation in following this process, as it
+helps us ensure timely and accurate reimbursements for everyone.
+
+
+
+
+Attendance & Tardiness, Paid and Unpaid
+Time off (Excluding Leaves of Absence)
+A. Attendance
+If you expect to be absent or tardy to work, you must notify your manager as far ahead of
+time as possible. If you fail to report for work for three consecutive scheduled workdays
+without notifying your manager, you may be considered to have abandoned your job and
+voluntarily resigned your employment without notice.
+
+
+
+
+                               Lyzr AI India Private Limited.                               43
+B. Holidays
+We observe major US holidays to allow our team to recharge and spend time with family:
+
+    New Year's Day (January 1)
+    Martin Luther King’s Birthday (3rd Monday in January)*
+    Washington’s Birthday (3rd Monday in February)*
+    Memorial Day (Last Monday in May)
+    Juneteenth National Independence Day (June 19)
+    Independence Day (July 4)
+    Columbus Day (2nd Monday in October)*
+    Veterans’ Day (November 11)*
+    Labor Day (First Monday in September)
+    Thanksgiving Day (Fourth Thursday in November)
+    Day after Thanksgiving (Friday after Thanksgiving)*
+    Christmas Day (December 25)
+
+*Optional days can be used for other personal days.
+-When a holiday falls on a weekend, it will be observed on the closest weekday.
+
+
+All veterans and reserve-duty service members may elect to take a paid holiday on both
+Memorial Day (if the employee’s job duties would otherwise require the employee to
+work on the
+company-wide holiday) and Veteran’s Day.
+
+
+
+C. Flexible Vacation Time Off (UVT)
+Lyzr offers paid Flexible Vacation to its employees because it trusts its employees to
+manage their work time in a way that maximizes their job satisfaction and their
+productivity. This policy gives employees the flexibility to take time away from work
+when they need to recharge and still manage the completion of their work. Employees
+are expected to complete all job duties and meet work-related deadlines and
+performance expectations. Unsatisfactory job performance or excessive use of Flexible
+Vacation may result in an employee no longer being eligible for Flexible Vacation. In
+addition, abuse of this policy may result in discipline, including termination.
+
+
+There is no payout, accrual, or rollover of Flexible Vacation time. Flexible Vacation time
+is not “earned.”
+
+
+
+                                Lyzr AI India Private Limited.                               44
+To request time off, submit your dates in Gusto (or any replacement system) with as
+much advance notice as possible, at a minimum, one week prior to the date(s)
+requested. For time off in excess of one week, submit your request at least one month in
+advance. The use of Flexible Vacation is approved on a first-come, first-serve basis, with
+managers approving requests according to business and position needs and the order
+in which the requests were submitted. Failure to request time off sufficiently in advance
+may result in denial of your request. Flexible Vacation can only be taken on days that an
+employee is scheduled to work. Managers may establish “blackout” dates due to
+business needs.
+
+
+If you need to be out of the office unexpectedly, notify your manager as soon as possible
+on the day you are out. Failure to provide timely notice to your manager will result in the
+absence being recorded as unexcused and may result in disciplinary action.
+
+
+Employees will typically take 3-4 weeks off per year, but this will vary by employee, by
+year and by business needs. In general, it’s up to the employee and their manager to
+ensure that the employee continues to meet work-related deadlines and other time
+commitments of the job.
+
+Some types of absences are protected by law and it is critical that Lyzr be able to track
+those types of absences to ensure that no disciplinary or performance management
+decision is made based on a protected absence. Flexible Vacation is not a protected
+absence. Lyzr will track your Flexible Vacation and employees must continue to
+separately request Sick Pay, Parental Leave, Jury Duty, Bereavement, Volunteer Time
+
+Off, and Military Leave as well. Time off due to leaves of absence for these reasons, as
+well as family medical leave under FMLA or state laws and leaves of absence related to
+a workers’ compensation claim or disability accommodation, are handled separately.
+Flexible Vacation may not be used for other types of absences unless specifically noted.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 45
+D. Paid Sick Leave
+Except as otherwise provided in an applicable state addendum below or as otherwise
+required by law, we offer up to forty (40) hours of paid sick leave to full-time and part-
+time employees, which can be used for purposes including your own illness or a family
+member’s illness that prevents you from reporting to work, and potentially other reasons
+depending on state and local laws. Consult your state addendum at the end of this
+handbook if included or contact the People Team for more information.
+
+
+Each employee receives 40 hours of paid sick leave upon hire, and there is no waiting
+period before you may utilize sick leave hours. Each January 1 after the year of hire,
+each employee’s sick leave bank will be replenished to 40 hours if applicable; unused
+sick leave may be carried forward from one year to the next up to a maximum of 80
+hours unless otherwise required by law.
+
+
+Lyzr will reinstate accrued, but unused Paid Sick Leave to employees who separate but
+are rehired within one year from their date of separation. Under no circumstances may
+sick leave of any employee be converted to cash, be paid out upon separation, or be
+used as PTO or holiday time, unless required by state or local law.
+Lyzr complies with all state and local law regarding Paid Sick Leave. To the extent any
+applicable paid sick time/leave ordinance provides any greater rights than set forth in
+this policy, such provisions are incorporated by reference. If you have further questions,
+please review the applicable state supplement at the end of this handbook and/or
+contact the People Team.
+
+
+
+
+E. Bereavement Leave
+Five (5) paid days off are available (per occurrence) if a death occurs in your immediate
+family. Please see your manager to arrange the appropriate time off. Immediate family
+includes spouse, child, parent, brother, sister, grandparent, mother-in-law, father-in-law,
+domestic partner, and domestic partner’s mother or father, unless otherwise provided
+by applicable law.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 46
+F. Voting Time
+We encourage all employees to take part in the electoral process. In most cases, you
+can vote before or after working hours. If scheduling difficulties makes this impractical,
+you may be able to take unpaid time off with prior approval from your manager.
+Applicable state legal requirements will be followed.
+
+
+G. Time Off for Jury and Witness Duty
+Lyzr encourages employees to fulfill their civic duties related to jury and witness service.
+If you’re legally obliged to serve jury duty or appear as a witness, inform your manager of
+your obligation as soon as you’re notified. Time off for jury or witness duty is paid for up to
+4 weeks per calendar year. If jury or witness duty lasts longer, the time away beyond 4
+weeks will be unpaid. Based on business necessity, you or your manager may choose to
+ask the court to have you excused. If you’re away from work because of jury or witness
+duty, you’ll need to present evidence of such duty to Lyzr when you return. Be sure to
+obtain documentation from the court. Applicable legal requirements will be followed.
+
+
+You must report to work during your regular hours if you are dismissed from the jury or if,
+for any reason, you are not required to remain at court.
+
+
+H. State-Specific Time Off
+Many states provide for additional paid and unpaid time off. See the applicable
+addendum at the end of this handbook or contact your manager and/or People Team for
+additional information.
+
+
+
+
+                                Lyzr AI India Private Limited.                                    47
+I. Leaves of Absence
+
+Generally
+Employees who need to be absent from work for reasons other than personal time or
+vacation, may request a Leave of Absence. Generally, and except as otherwise
+described in this handbook, state addendums, or as required by law, leaves of absence
+are granted without pay, but an employee may use sick leave, as appropriate, to provide
+compensation during an otherwise unpaid leave. Sick leave will be coordinated with any
+government paid leave benefits that an employee may be eligible for to ensure that the
+employee receives no more than 100% of the employee’s base pay. Leaves may be
+granted for a variety of reasons, including (without limitation): your medical disability, a
+serious health condition of you or a qualifying family member, pregnancy, bonding with a
+newborn or adopted child, military leave, or personal leaves Lyzr deems compelling, or
+as otherwise permitted by federal, state, or local law.
+
+To request a leave of absence, you need to contact your manager as soon as
+practicable who will help you submit the leave of absence request.
+
+Your health insurance benefits and arrangements for your portion, if any, of premium
+payments may be affected by your leave of absence.
+
+
+If your health benefits are terminated and you elect COBRA
+
+Should your regular health insurance benefits be terminated as a result of your leave,
+you will be eligible to continue these benefits pursuant to COBRA. A separate COBRA
+enrollment package will be sent to your home address following any such loss of
+coverage. Your health insurance benefits will be continued pursuant to COBRA should
+you properly elect, and continue to remain eligible for, COBRA continuation coverage.
+Nothing in this handbook is a guarantee of COBRA coverage, as you remain solely
+responsible for meeting certain eligibility requirements under COBRA in order to
+maintain COBRA coverage through Lyzr.
+
+
+With COBRA continuation coverage, unless you return to work on the first day of the
+month, your COBRA medical, dental and/or vision benefits will continue to the end of the
+month during which you return to work and your regular health insurance benefits will
+resume on the 1st of the month following the date you return to work. You will be
+responsible for paying for that month’s COBRA continuation coverage on or before the
+last day of the grace period provided pursuant to COBRA.
+
+
+
+                               Lyzr AI India Private Limited.                                  48
+If your health benefits are terminated and you do not elect COBRA
+
+
+If your regular health insurance benefits are terminated as a result of your leave of
+absence and you do not elect to continue them pursuant to COBRA, your benefits
+automatically will be reinstated the first of the month following your return-to-work
+date or upon rehire.
+
+
+
+Absent Extenuating Circumstances
+Failure to return to work within three (3) consecutive days after the expiration of an
+approved leave may be considered a voluntary resignation.
+
+
+
+
+J. Military Duty
+Lyzr is committed to protecting the job rights of employees absent on military leave. If
+you join a branch of the Armed Forces of the United States or you are a member of a
+reserve component of the U.S. Armed Forces or the National Guard, you may be entitled
+to take a leave to perform military duties. The Uniformed Services Employment and
+Reemployment Rights Act of 1994 (USERRA) provides enhanced leave rights and job
+protections for employees absent for military duty. USERRA prohibits discrimination in
+employment and retaliation against any person who was, is, or applies to be a member
+of a uniformed service, or who performs or has an obligation to perform service in a
+uniformed service. A number of state laws also provide leave rights for employees
+requiring time off for military duty.
+
+
+At Lyzr, you will be paid for up to 4 weeks per year for Military Leave. Additional unpaid
+leave will be provided as allowed by applicable federal and state laws. To be eligible for
+military leave, employees must provide advance notice of their service obligations,
+unless they are prevented from providing such notice due to military necessity or it is
+otherwise impossible or unreasonable to provide such notice. You must provide a copy
+of your orders and/or training notices, or any other reasonable form of notice of your
+military duty to qualify for paid leave.
+
+
+
+
+                                 Lyzr AI India Private Limited.                              49
+K. Pregnancy Related Leave
+Certain states provide specific leave rights for pregnancy, childbirth, and related medical
+conditions. Please contact your manager for more information.
+
+
+L. Parental Leave Policy
+Certain states provide specific leave rights for pregnancy, childbirth, and related medical
+conditions. Please contact your manager for more information.
+
+Purpose/Objective
+The purpose of paid parental leave is to provide qualified employees with compensation
+while they care for and bond with a newborn or a newly adopted or newly placed child.
+Except as otherwise described in an applicable state addendum or as required by
+applicable law, Lyzr will provide up to three (3) weeks of paid parental leave to
+employees following the birth of an employee’s child or the placement of a child with an
+employee in connection with adoption or foster care. Paid parental leave must be taken
+in a single block of time within one year of the birth, adoption, or foster care placement.
+
+Eligibility
+Eligible employees must meet the following criteria:
+
+   Have been employed with the company for at least 90 days
+   Be a full- or part-time, regular employee (temporary employees and interns are not
+   eligible for this benefit).
+   Part-Time employees' time would be prorated based on weekly hours worked.
+
+Amount, Time Frame and Duration of Paid Parental Leave
+    Eligible employees receive a maximum of three weeks of paid parental leave per
+   birth, adoption or placement of a child/children. The fact that a multiple birth,
+   adoption or placement occurs (e.g., the birth of twins or adoption of siblings) does not
+   increase the three-week total amount of paid parental leave granted for that event.
+   Each week of paid parental leave is compensated at 100 percent of the employee’s
+   regular, base weekly pay (weekly compensation will be based on an average in the
+   event the employee’s hours fluctuate). Paid parental leave is paid on regularly
+   scheduled pay dates.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 50
+   Approved paid parental leave may be taken at any time during the 12-month period
+   immediately following the birth, adoption or placement of a child with the employee
+   and in a single block of time. Paid parental leave may not be used or extended
+   beyond this 12-month time frame.
+   In the event of an employee who has given birth, the weeks of paid parental leave will
+   commence at the conclusion of any short-term disability leave or other paid benefit
+   provided to the employee for the employee’s own medical recovery following
+   childbirth.
+   In any other scenario, paid parental leave will be paid out after any other applicable
+   paid leave, unless intermittent leave has been elected.
+   Employees must take paid parental leave in one continuous period of leave and must
+   use paid parental leave during the 12-month time frame indicated above. Any
+   unused paid parental leave is forfeited at the end of the 12-month time frame.
+   Intermittent leave may be approved in certain circumstances.
+   Upon termination of the individual’s employment at the company, they will not be
+   paid for any unused paid parental leave for which they were eligible.
+
+
+Coordination with Other Policies
+   Paid parental leave taken under this policy runs concurrently with leave under the
+   FMLA or applicable state law and counts towards the employee’s FMLA or state
+   leave entitlement, if legally permissible. All other requirements and provisions under
+   the FMLA or applicable state law apply.
+   The company maintains all benefits for employees during the paid parental leave
+   period just as if they were taking any other paid leave such as Unlimited Vacation or
+   paid sick leave.
+
+
+Requests for Paid Parental Leave
+The employee must provide their supervisor and the People Team with notice of the
+request for leave at least 30 days prior to the proposed date of the leave (or if the leave
+was not foreseeable, as soon as possible). The employee must timely complete the
+necessary forms, and if possible, coordinate timing with their manager.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 51
+M. Other Family and Medical Leave
+If the absence you have from work is for a serious health condition-either yours or a
+qualifying family member-you may be eligible for leave under applicable law.
+
+
+
+N. Unprotected Personal Leaves
+Lyzr intends to recognize that reasonable requests for periods of time off beyond those
+provided by Lyzr’s other leave provisions or as required by law may be honored on a
+case-by-case basis in the company’s sole discretion. Employees should discuss their
+request with their manager and then request their personal leave of absence with their
+manager.
+
+
+Re-employment is not guaranteed. Following completion of the leave, if re-employment
+is not possible or unreasonable due to business conditions, the employee will be
+terminated as a voluntary termination. Returning to the same job following a personal
+leave cannot be guaranteed.
+
+
+During a personal leave, employees do not accrue sick leave and employees are not
+eligible for other employee benefits except as required by law. With regard to stock
+vesting, vesting will not continue during the non-statutory personal leave of absence. A
+number of employee benefits and programs are affected when an employee is on a
+personal leave of absence.
+
+
+
+
+                              Lyzr AI India Private Limited.                               52
+Chapter Four:
+Benefits Required By Law
+
+
+
+
+You are entitled to certain benefits under the law, regardless of your position, subject to
+meeting certain conditions. These mandated benefits include those described in this
+chapter (if applicable).
+
+
+
+
+                               Lyzr AI India Private Limited.                                 53
+State Disability Insurance
+Some states (such as California, Hawaii, New Jersey, New York and Rhode Island) and
+the Commonwealth of Puerto Rico provide a form of limited disability insurance. If you
+work in one of these areas, you may be eligible for limited disability insurance payments
+if you cannot work because of a sickness or injury not caused by your job (job-related
+conditions fall under workers’ compensation). The terms and amount of disability
+coverage are subject to state laws and vary from state to state. Some states, such as
+California, require Lyzr to make deductions from your paycheck to fund the disability
+insurance benefits program. To receive disability benefits, file a claim with the state
+disability insurance agency.
+
+
+
+Workers’ Compensation Insurance
+As of your date of hire, you are covered by workers’ compensation insurance. Please
+don’t forget to immediately report to your manager all injuries sustained while working.
+Please note that workers’ compensation covers only work-related injuries and illnesses.
+You will not be eligible to receive workers’ compensation benefits for injuries that might
+happen if you voluntarily participate in an off-duty recreational, social, or athletic activity
+that does not constitute a part of your work-related duties.
+
+
+
+Unemployment Insurance
+If you become unemployed, you may be eligible for unemployment insurance, a weekly
+benefit while you are out of work. For information on filing a claim, please contact your
+state’s unemployment department.
+
+
+
+Social Security
+You will see deductions on your paycheck for FICA, an acronym that stands for Federal
+Insurance Contributions Act, otherwise known as Social Security and Medicare. This
+deduction represents your contribution toward your Social Security benefit. In addition to
+supplemental retirement benefits, Social Security offers certain disability and/or
+Medicare coverage. Contact your nearest Social Security Administration office for
+further details.
+
+
+                                Lyzr AI India Private Limited.                                    54
+COBRA
+If you or your covered dependents lose eligibility for regular group medical, dental, vision
+benefits and/or Health Care FSA, you may be eligible to continue your coverage under
+COBRA. COBRA allows you to continue receiving these benefits on a temporary basis in
+certain situations where coverage under the Benefits Plan would otherwise end.
+
+
+
+
+Retirement Benefits
+ Lyzr currently does not offer a 401(k) or retirement plan benefit but plans to do so no
+later than January 1, 2026. However some states require that employers offer state-
+provided retirement plan options. For employees in those states we will provide the
+state-mandated retirement plan options.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  55
+Chapter Five:
+Employee Receipt and
+Acknowledgement of Handbook
+
+Please return signed acknowledgement to the People Team
+
+
+
+This employee handbook is intended to explain the terms and conditions of employment
+of all full-time and part-time employees. It summarizes the policies and practices in
+effect at the time of publication and does not create any contractual obligations for Lyzr.
+This handbook supersedes all previously issued handbooks and any policy or benefit
+statements or memoranda that are inconsistent with the policies described here. Your
+manager or a representative from the senior management team will be happy to answer
+any questions you may have.
+
+By signing below, I am acknowledging that I have received a copy of the Lyzr Employee
+Handbook and applicable State Supplements and understand that it contains important
+information and Lyzr’s policies and my privileges and obligations as an employee. I
+acknowledge that I am expected to read, understand and adhere to the policies in the
+Handbook. I agree to receive electronic pay statements. I understand that my
+employment is at will, meaning either Lyzr or I can terminate the employment
+relationship at any time, with or without cause, for any or no reason. I also
+understand that, except for the at-will policy, the policies of Lyzr can be changed at
+any time.
+
+Print Name:
+
+
+Signature:
+
+
+Date:
+
+
+
+
+                               Lyzr AI India Private Limited.                                 56
+CALIFORNIA
+ADDENDUM
+
+
+
+
+ Lyzr AI India Private Limited.   57
+Introduction
+The following are some of the Company’s policies unique to California, and only
+California, employees. To the extent that any policy contained in the Handbook is
+contrary to state or local law, the Company will follow applicable state or local laws. This
+includes a summary of the most common types of leave available under state law. If you
+have questions about whether your particular situation is covered, please contact your
+supervisor.
+
+
+A. California Family Rights Act
+The California Family Rights Act (“CFRA”) provides eligible employees the opportunity to
+take unpaid, job-protected leave for certain specified reasons. The maximum amount of
+leave employees may use under this policy is 12 weeks within a 12-month period. When
+applicable, CFRA leave runs concurrent with FMLA leave.
+
+
+To be eligible for CFRA leave, employees must:
+    Have worked at least 12 months for the Company in the preceding seven years
+    (limited exceptions apply to the seven-year requirement).
+    Have worked at least 1,250 hours for the Company over the 12 months preceding
+    the date the leave would commence.
+
+All periods of absence from work due to or necessitated by service in the uniformed
+services are counted as hours worked in determining eligibility.
+
+
+CFRA leave may be taken for any of the following reasons:
+   To care for or bond with a newborn child.
+    To care for or bond with a child placed with the employee and/or the employee’s
+    registered domestic partner for adoption or foster care.
+    To care for an immediate family member (employee’s spouse, parent, parent-in-law,
+    registered domestic partner, child or registered domestic partner’s child of any age,
+    sibling, grandparent, or grandchild) with a serious health condition.
+    Because of the employee’s serious health condition that makes the employee unable
+    to perform his or her job (with the exception of pregnancy, which is covered under
+    Pregnancy Disability Leave and does not run concurrently with CFRA).
+    A qualifying military exigency related to the covered active duty or call to covered
+    active duty of an employee’s spouse, domestic partner, child (of any age), or parent
+    in the United States Armed Forces.
+
+
+
+                               Lyzr AI India Private Limited.                                  58
+Such leave may be taken in a single block of time, intermittently (in separate blocks of
+time), or by reducing the normal work schedule. Employees who require intermittent or
+reduced-schedule leave must try to schedule their leave so that it will not unduly disrupt
+the Company's operations.
+Intermittent leave is permitted in intervals of at least one hour or at the same intervals as
+provided in other relevant policies, whichever increments are smaller.
+
+
+Depending on the purpose of the leave request, employees may choose to use accrued
+paid sick time concurrently with some or all of the CFRA leave. To use paid leave
+concurrently with CFRA leave, eligible employees must comply with the Company's
+normal procedures for the applicable paid-leave policy (e.g., call-in procedures,
+advance notice).
+
+Employee paid sick time accruals will continue while paid leave is used during periods of
+CFRA absence and in accordance with those individual policies.
+
+Employee paid-leave accruals will not continue during unpaid periods of CFRA absence
+or when only disability payments are being received.
+
+
+B. California Privacy Rights Act
+California employees are entitled to certain protections regarding their private
+information under the California Privacy Rights Act. See Lyzr’s separate privacy policy
+for California employees or communication with the People Team for more details.
+
+
+C. State Leave Laws
+California employees are eligible for leave as set forth below.*
+
+1. Paid Family Leave
+An employee who is off work to care for a child, spouse, parent, parent-in-law,
+grandparent, grandchild, sibling, spouse, registered domestic partner or child of a
+registered domestic partner with a serious health condition, or to bond with a new child
+entering the family by birth, adoption, or foster care placement, may be eligible to receive
+up to eight weeks of paid family leave benefits through the California Paid Family Leave
+(“PFL”) program, which is administered by the Employment Development Department
+(“EDD”).
+
+
+
+
+                               Lyzr AI India Private Limited.                                   59
+These benefits are financed solely through employee contributions to the PFL program.
+That program is solely responsible for determining if an employee is eligible for such
+benefits. There is generally a waiting period during which time no PFL benefits are
+available. The EDD can provide additional information about any applicable waiting
+period. If you need to take time off work to care for a child, spouse, parent, parent-in-law,
+grandparent, grandchild, sibling, spouse, registered domestic partner or child of a
+registered domestic partner with a serious health condition or to bond with a new child,
+please inform your supervisor, and you will be given information about the EDD’s PFL
+program and how to apply for benefits. Employees also may contact their local EDD
+office for further information.
+
+* This is a nonexclusive list and the Company will provide any leave required by federal or California law.
+
+
+When an employee applies for PFL benefits, the HR Department will determine if the
+employee has any accrued but unused paid time available. If the employee has accrued
+but unused paid time available, then the employee will be required to use up to two
+weeks of such time before becoming eligible for PFL benefits.
+PFL is a state-sponsored payment program and not a leave entitlement. Employees
+should request a leave of absence under the appropriate leave policy or policies that are
+applicable to them.
+
+
+
+2. Pregnancy Disability Leave
+California employees are eligible for up to four months of pregnancy disability leave
+(“PDL”) for periods of disability associated with an employee’s pregnancy, childbirth, and
+related medical conditions. Employees who are regularly scheduled to work less than 40
+hours per week receive a prorated amount of PDL determined by comparing their
+regular work schedule to a 40-hour work week. PDL can be taken on an intermittent or
+reduced leave schedule where medically necessary.
+
+
+All eligible employees must produce a written doctor’s certificate verifying the period of
+disability. Employees must give as much advance notice as possible of the need for
+leave. In the case of a normal pregnancy, that generally means at least 30 days’ notice
+but in the case of an emergency, as much notice as is practicable under the
+circumstances. PDL is unpaid. However, during PDL you must use any accrued sick
+leave, and you may use any accrued vacation. Accrued sick leave and vacation are used
+as part of the PDL, not in addition to such leave. During the period of disability, you may
+be eligible for disability pay benefits. Please refer to the applicable plan documents for
+details on eligibility, benefit amounts, and other particulars.
+
+
+                                     Lyzr AI India Private Limited.                                           60
+Upon completion of PDL, you shall be reinstated to your original position, or an equivalent
+one. To facilitate your return to work, we ask that you provide us with two weeks’
+advance notification of your intended return date.
+
+
+
+3. Crime Victims Leave
+Employees who are the victims of crimes or whose immediate family members are
+victims of crimes are entitled to take leave to attend judicial proceedings related to the
+crime. For purposes of this policy, “immediate family member” includes a spouse,
+registered domestic partner, children, children of a registered domestic partner,
+stepchildren, sisters, brothers, stepsisters, stepbrothers, half-siblings, parents, and
+stepparents.
+
+In addition, employees who are victims of crimes can take leave for the following
+purposes:
+    Obtain any relief, including a temporary restraining order or an injunction, to help
+    ensure their own or their children’s health, safety, or welfare;
+   Seek medical attention for related injuries;
+   Obtain services from a domestic violence shelter or program or from a rape crisis
+   center;
+   Undergo psychological counseling; or
+   Participate in safety planning or other activities, including temporary or permanent
+   relocation, to guard against future incidents.
+
+
+Employees should give as much advance notice as possible of the need for Crime
+Victims Leave. The Company may require appropriate documentation verifying the need
+for leave.
+
+
+
+4. Volunteer Firefighter, Reserve Peace Officer,
+   and Emergency Rescue Personnel
+Non-exempt employees will be granted time off without pay to perform emergency
+duties as a volunteer firefighter, reserve peace officer, or emergency rescue personnel.
+Employees who are volunteer firefighters also are eligible for leave of up to 14 days per
+calendar year for fire or law enforcement training. Exempt employees who work any
+portion of a work week in which they also perform such emergency duties or training will
+receive their full salary for that work week. Otherwise, exempt employees will be
+granted time off without pay.
+
+
+                               Lyzr AI India Private Limited.                                 61
+5. Children’s School-Related Activities
+Employees who are parents, guardians, or custodial grandparents for a child in a
+licensed day-care facility or a school (kindergarten through grade 12) are entitled to up
+to 40 hours of leave per year, but no more than eight hours per calendar month, to
+participate in school-related activities involving their children.
+
+
+The leave is subject to all of the following conditions:
+ 1. Time off under this policy can only be used by parents, guardians, grandparents,
+    stepparents, foster parents or a person who stands in loco parentis to one or more
+    children of the age to attend kindergarten through grade 12 or a licensed childcare
+    provider;
+ 2. The amount of time off for school or childcare activities described below cannot
+    exceed a total of 40 hours each year;
+ 3. Covered employees can use the time off to find, enroll or reenroll a child in a school
+    or with a licensed childcare provider or to participate in activities of the child’s school
+    or licensed childcare provider. The time off for these purposes cannot exceed eight
+    hours in any calendar month. Employees planning to take time off for these purposes
+    must provide reasonable advance notice to their supervisor.
+ 4. Covered employees can also use time off to address a childcare provider or school
+    emergency if the employee gives notice to the employer. A childcare provider or
+    school emergency means that the employee’s child cannot remain in a school or
+    with a childcare provider due to one of the following:
+         The school or childcare provider has requested that the child be picked up, or
+         has an attendance policy (excluding planned holidays) that prohibits the child
+         from attending or requires the child to be picked up from the school or childcare
+        provider;
+        Behavioral or discipline problems;
+        Closure or unexpected unavailability of the school or childcare provider,
+        excluding planned holidays; or
+        A natural disaster, including, but not limited to, fire, earthquake or flood.
+
+
+
+
+                                Lyzr AI India Private Limited.                                    62
+Employees must:
+
+   Provide their supervisor with documentation from the school or licensed childcare
+   provider verifying that they were engaged in these child-related activities on the day
+   and time of the absence.
+   If more than one parent is employed by the Company, the first employee to request
+   such leave will receive the time off. Another parent will receive the time off only if the
+   leave is approved by his or her supervisor.
+   Use their paid sick time in order to receive compensation for this time off.
+   Employees who do not have paid sick time available must take the time off without
+   pay.
+
+
+In the case of the child being suspended from school, there is no limit to the leave time
+the employee may take to deal with the formal suspension proceedings although such
+indefinite leave is not available to custodial grandparents. The Company may require
+written documentation concerning the activity from the school or licensed day-care
+facility.
+
+
+
+6. National Guard Leave
+The Company supports employees who serve in the armed forces, including in the
+National Guard. Eligible employees who must be absent from work for service in the
+National Guard are entitled to take a military leave of absence. Please reach out to your
+supervisor for more information regarding this and other available military leaves of
+absence.
+
+
+
+7. Organ/Bone Marrow Donation Leave
+An employee who has been employed for at least 90 days may request a leave of
+absence for up to 30 business days in any one calendar year period to undergo a
+medical procedure to donate an organ and up to five business days in any one calendar
+year period to donate bone marrow. Employees must provide a certification from their
+physician regarding the purpose and length of each leave requested. An employee must
+use up to five days of earned but unused paid sick time off for bone marrow donation and
+up to two weeks of unused paid sick time off for organ donation leave. If the employee
+does not have sufficient accrued paid sick time, the remaining leave time for such
+procedure shall be paid; however, the paid time off shall not exceed 30 days or five days
+for bone marrow donation. Subject to certain requirements, an employee is also entitled
+
+
+                               Lyzr AI India Private Limited.                                   63
+to an additional unpaid leave of absence, not exceeding 30 business days in a one-year
+period, to an employee who is an organ donor, for the purpose of donating the
+employee’s organ to another person. Organ and/or bone marrow donation leave will not
+be designated as FMLA or CFRA leave time. Employees will receive health benefits for
+the duration of their organ and/or bone marrow donation leave and upon returning from
+such leave will have a right to return to the same or equivalent positions they held before
+such leave.
+
+
+
+D. Additional Enforcement Information
+In addition to the Company’s general complaint procedure, employees should also be
+aware that the federal Equal Employment Opportunity Commission (EEOC) and the
+California Department of Fair Employment and Housing (DFEH) investigate and prosecute
+complaints of harassment and discrimination in employment. Employees have the right to
+report allegations of illegal discrimination to the appropriate agency, and retaliation for
+exercising this right is prohibited by the Company.
+
+
+
+E. State Disability Insurance
+All employees contribute towards State Disability Insurance. If you are disabled while on
+the job, you may be eligible for benefits. Contact your supervisor for more information. You
+may also check the website of the EDD for more information.
+
+
+
+F. Lactation in the Workplace
+The Company provides a reasonable amount of break time to accommodate an
+employee’s need to express breast milk for the employee’s infant child. The Company will
+make a reasonable effort to provide the employee with the use of a room or other location
+(other than a bathroom) in close proximity to the employee’s work area for the employee
+to express milk in private. Such space will meet the requirements of the California Labor
+Code, including a surface on which to place a breast pump and personal items, a place to
+sit, access to electricity, a sink with running water, and a refrigerator for storing breast
+milk.
+All employees have a right to request a lactation accommodation. The general process for
+requesting such an accommodation is as follows:
+   The employee should submit a written request to her supervisor.
+   Within five business days the Company will respond to any request for an
+   accommodation.
+
+
+                               Lyzr AI India Private Limited.                                 64
+   The Company will also engage in the interactive process to determine an appropriate
+   accommodation, including lactation break and/or lactation location.
+
+
+If in response to a lactation accommodation the Company does not provide a requested
+lactation break or lactation location, the Company will provide the employee with a written
+response identifying the basis upon which the request is being denied.
+The Company will not retaliate against any employee for enforcing her right to a lactation
+break, lactation location, or lactation accommodation.
+Employees have the right to file a complaint with the labor commissioner for any violation
+of rights provided under Chapter 3.8 of the California Labor Code regarding lactation
+accommodations.
+
+
+
+G. Overtime
+All non-exempt employees who work more than eight hours in one workday or more than
+40 hours in one work week will receive overtime pay computed as follows:
+
+   Overtime at the rate of 1.5 times the employee’s regular rate of pay for all hours
+   worked in excess of 40 in any one work week.
+   Overtime at the rate of one and 1.5 times the employee’s regular rate of pay for the
+   hours worked in excess of eight hours in any one workday up to 12 hours, and for the
+   first eight hours worked on the seventh day of work in any one work week.
+   Overtime at the rate of double the employee’s regular rate of pay for all hours worked
+   in excess of 12 hours in one workday, and for all hours worked in excess of eight on
+   the seventh day of work in any one work week.
+
+
+1. Reporting Time
+A non-exempt employee who reports to work at the Company’s request, whether for a
+regularly-scheduled shift or otherwise, but is furnished less than a full day’s work, will be
+paid for half of the usual or scheduled day’s work, but in no event less than two hours or
+more than four hours, at the employee’s regular rate, without regard for the number of
+hours actually worked, unless the reasons for lack of work are beyond the Company’s
+control. Reporting time pay will not be paid to an employee on paid standby status who is
+called to perform assigned work at a time other than the employee’s scheduled
+reporting time. Reporting time hours are not counted as hours worked for overtime
+purposes beyond the time in which the work is actually performed.
+
+
+
+
+                               Lyzr AI India Private Limited.                                   65
+2. Call-Back Pay
+A non-exempt employee who is called back for a second work period in a workday and
+is given less than two hours of work will be paid a minimum of two hours of pay at the
+employee’s regular rate of pay for the second work period, without regard to the number
+of hours actually worked, unless the reasons for any failure to furnish two hours of work
+are beyond the Company’s control. Call-back time is not counted as hours worked for
+overtime purposes beyond the time in which work is actually performed.
+
+
+
+H. Final Paycheck
+An employee who resigns with at least 72 hours of notice will receive their final paycheck
+at the end of their last day of work. If an employee’s employment is terminated
+involuntarily, their final paycheck will be available immediately upon termination.
+
+
+
+
+                              Lyzr AI India Private Limited.                                66
+

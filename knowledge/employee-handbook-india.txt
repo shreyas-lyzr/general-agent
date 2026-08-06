@@ -1,0 +1,3179 @@
+# GENERATED FILE - do not edit by hand.
+# Source PDF: knowledge/Lyzr - Employee Handbook (1) (2).pdf
+# Regenerate:  bash knowledge/refresh_txt.sh
+
+EMPLOYEE
+HANDBOOK
+OUR PEOPLE GUIDE
+
+
+
+
+Reading this document in entirety is strongly recommended
+
+Lyzr AI India Private Limited.
+Table of Contents
+Click and navigate through sections
+
+
+Welcome to Lyzr AI                                4
+
+Our Story                                         5
+
+Our Vision                                        7
+
+Our Mission                                       7
+
+Leadership                                        8
+
+Our Core Values                                   9
+
+Qualities & Values We Cherish in Our Employees   10
+
+Our Expectation From You                         11
+
+Definitions Used in The Playbook                 12
+
+Employment Policies                              13
+
+Personal Standards & Code of Conduct             14
+
+Working Hours                                    15
+
+Remote Working                                   17
+
+Night Shift & Weekend Policy                     19
+
+Dress Code                                       27
+
+Background Verification                          29
+
+Asset Policy                                     30
+
+Compensation & Deductions                        32
+
+Trainings                                        33
+Table of Contents
+Click and navigate through sections
+
+
+List of Holidays & Leaves                        34
+
+Probation & Termination                          44
+
+Travel                                           45
+
+Communication                                    48
+
+Software & Tools                                 52
+
+Internet Usage                                   55
+
+Confidentiality & Intellectual Property Rights   56
+
+Privacy & Confidentiality                        57
+
+Non-Compete & Non-Solicitation                   61
+
+Personal Consequences                            62
+
+Performance Review                               63
+
+Separation                                       65
+
+Employee Referral                                70
+
+Rewards & Recognition Program (R&R)              73
+
+Sexual Harassment Policy                         76
+
+Gender Neutral Policy                            88
+
+Equal Employment Opportunity                     93
+
+Jurisdiction                                     94
+Welcome to Lyzr AI
+We are excited to have you join us on
+this journey. As a new member of our
+team, your contributions are
+invaluable. This employee Playbook is
+your go-to guide for understanding
+our company culture, values, and
+expectations.
+
+
+Within these pages, you’ll find
+information on:
+    Company Overview: Learn about
+    our Mission, Vision, and Core
+    Values.
+   Company Culture: Learn about
+   our unique company culture and
+   how to embody our values.
+   Policies and Procedures: Familiarize yourself with our company policies, including
+   HR guidelines, time off, and expense reimbursement.
+   Performance Expectations: Understand our expectations for your role and how to
+   contribute to our success.
+
+
+All employees including Consultants, part timers and interns are required to abide by the
+Code of Conduct and Policies mentioned in this Employee Playbook.
+
+
+Remember, this playbook is a living document. We encourage you to refer to it often and
+to reach out to your manager or HR team for any questions.
+
+
+Lyzr AI INDIA PRIVATE LIMITED reserves unconditional right to amend, abrogate, modify
+and/or rescind any of the terms and conditions listed in this Employee Playbook.
+
+
+Let's work together to create a positive and rewarding workplace experience!
+
+
+
+
+                              Lyzr AI India Private Limited.                                4
+Our Story
+
+A Journey of Innovation and Collaboration
+
+Siva's Entrepreneurial Journey
+Siva, a seasoned entrepreneur, founded PowerUpCloud in 2015 and successfully sold it
+to Larsen & Toubro Infotech (LTI) in 2019. Upon completion of his engagement with LTI
+in 2022, he identified the transformative potential of AI in the field of data analysis.
+
+
+The Birth of Lyzr
+Inspired by ChatGPT, Siva envisioned a product where users could upload CSV or Excel
+files and ask questions, receiving insights and recommendations in return. As he
+discussed this idea with potential customers, Siva realized the paramount importance of
+data privacy. Additionally, he found the existing platform, LangChain, inadequate for his
+vision. This led to the birth of Lyzr in April 2023, derived from the word “analyzer.”
+Lyzr was initially focused on creating an AI product for data analysis but soon pivoted to
+developing an agent framework by October 2023.
+An agent framework, as Siva saw it, was a platform to build AI agents capable of
+autonomously performing tasks based on given inputs. The rise of chat-based agents
+during late 2023 solidified this direction.
+Lyzr began with chat agents and knowledge search agents, eventually expanding into
+workflow automation. Key innovations include the AI SDR (Sales Development
+Representative) for sales, Skott for marketing automation, and Diane, an HR-specific
+agent, each designed to optimize and streamline essential business functions.
+
+
+Building the Team
+Siva reunited with Anirudh, a long-time friend and colleague, who brought technical
+expertise and shared vision. Jimmy, another friend, joined as CTO with his strong
+technical background.
+
+Together, the team of 50+ operates across the US and India, creating innovative AI
+solutions. Lyzr's mission is to redefine what's possible through the power of AI agents.
+United by a common goal and diverse expertise, team Lyzr continues to push the
+boundaries of AI, creating innovative solutions that redefine what’s possible.
+
+
+
+                              Lyzr AI India Private Limited.                                 5
+Technological Advancements
+Lyzr's development has been closely tied to advancements in AI technology. The
+emergence of large language models like ChatGPT has played a pivotal role in enabling
+Lyzr to create powerful and versatile AI agents. By leveraging these models, Lyzr can
+provide natural language understanding, generate human-like text, and complete
+complex tasks.
+
+Product Evolution
+Lyzr's product has evolved from its initial focus on data analysis to a broader platform
+capable of automating various tasks. The company's agent framework allows for the
+creation of customized AI agents that can be tailored to specific needs and industries.
+This flexibility has enabled Lyzr to expand its offerings and target a wider range of
+customers.
+
+Impact on Industries
+Lyzr's technology has the potential to transform a wide range of industries. In the sales
+domain, Lyzr's AI SDR can automate lead generation and qualification tasks, freeing up
+sales teams to focus on high-value activities. In customer service, Lyzr's AI agents can
+provide 24/7 support and handle routine inquiries, improving customer satisfaction.
+Additionally, Lyzr's technology can be applied to areas such as marketing, finance, and
+operations to streamline processes and drive efficiency.
+
+
+Future Outlook
+As AI technology continues to advance, Lyzr is well-positioned to capitalize on emerging
+opportunities. The company's focus on innovation and adaptability will be crucial in
+ensuring its long-term success. Lyzr's future may include exploring new applications for
+its technology, expanding into international markets, and forming strategic partnerships
+with other companies.
+
+
+Lyzr's journey from a data analysis tool to a versatile AI platform is a testament to the
+power of innovation and the potential of AI to revolutionize industries. By leveraging
+cutting-edge technology and building a strong team, Lyzr is poised to become a leader in
+the AI space.
+
+
+
+
+                               Lyzr AI India Private Limited.                               6
+Our Vision
+Lyzr is dedicated to creating a future
+where enterprises flourish with
+Organizational General Intelligence
+(OGI), empowering them to serve
+their customers intelligently, liberate
+their workforce from mundane tasks,
+and unlock infinite possibilities for
+meaningful work and lives.
+
+
+
+
+                                                     Our Mission
+                                                     Lyzr equips organizations with a
+                                                     central brain-an intelligent, adaptive
+                                                     system that fosters awareness,
+                                                     agility, adaptability, and autonomy.
+                                                     By connecting and enhancing the
+                                                     intelligence of AI agents and
+                                                     workforces, we help businesses
+                                                     discover, dialogue with, and deliver
+                                                     to their customers in smarter, more
+                                                     impactful ways.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 7
+Leadership
+
+
+
+
+                          Siva Surendira
+                          Founder and CEO
+
+
+
+
+       Anirudh Narayan
+             Founding CGO
+
+
+
+
+                          Jithin George
+                          Founding CTO
+
+
+
+
+              Lyzr AI India Private Limited.   8
+                              Being Humble: Stay
+                         grounded, keep learning, and
+                         let your work speak for itself.
+
+
+
+
+Extreme Ownership:
+   Own your work                                                   Go for the Swing:
+   completely-no                                                    Take bold bets,
+    excuses, just                                                 embrace challenges,
+     solutions.                                                   and aim for big wins.
+
+
+
+
+     Intent and Integrity: Act                                  Hustle: Stay
+     with purpose and always                               relentless, move fast,
+      do the right thing, even                               and make things
+     when no one is watching.                                     happen.
+
+
+
+
+                          Lyzr AI India Private Limited.                            9
+Qualities & Values We
+Cherish in Our Employees
+
+
+
+
+             Lyzr AI India Private Limited.   10
+Our Expectation from You
+
+
+
+
+As we strive to become a global leader in AI agent framework, we expect you to:
+
+
+   Collaborate: Work effectively with your team and colleagues.
+   Innovate: Bring in new ideas and best practices.
+   Problem-Solve: Identify and address challenges efficiently.
+   Deliver Excellence: Create exceptional products that meet our market and customer
+   needs.
+   Move fast: We trust you to complete your tasks on time and to the highest quality
+   standards.
+   Your actions should aim to positively represent the company.
+   All Lyzr employees are required to treat everyone, including colleagues and
+   customers, with respect and professionalism.
+
+
+
+
+                             Lyzr AI India Private Limited.                            11
+Definitions Used in the Playbook
+ “Employee” and “Team Member” as used in this Playbook, refers to all full-time
+ employees, part time employees, consultants and interns employed by Lyzr.
+ “Company” or “Organization” or “Management” as used in this Playbook refers to
+ Lyzr AI INDIA PRIVATE. LTD.
+ “Manager” as used in this Playbook refers to your immediate supervisor or reporting
+ manager and/or management of Lyzr.
+
+
+
+
+                          Lyzr AI India Private Limited.                               12
+EMPLOYMENT
+  POLICIES
+1. Personal Standards & Code of Conduct
+
+
+
+
+At Lyzr, we believe in upholding a positive and professional workplace environment
+where everyone thrives. As part of the team, we encourage you to embody
+professionalism, integrity, and cooperation in your interactions with colleagues,
+customers, business contacts, and the wider community.
+We expect employees to approach their work with dedication, sincerity, and honesty.
+Additionally, safeguarding the company's assets, information, and intellectual property is
+vital. This includes adhering to confidentiality, non-compete, and non-solicitation
+policies. Employees transitioning out of Lyzr are kindly reminded not to engage in
+employee poaching.
+
+
+All tasks and responsibilities assigned by your Reporting Manager or the Management
+should be carried out diligently. In cases of any concerns or challenges, please feel free
+to communicate openly with your manager for support and guidance.
+While employed at Lyzr, employees are requested to focus their efforts on company
+activities. If you wish to pursue external ventures or side projects, prior written approval
+from management is required to ensure alignment with company policies.
+
+                               Lyzr AI India Private Limited.                                  14
+2. Working Hours
+
+All full-time employees are eligible for flexible work arrangements, unless specific job
+requirements necessitate fixed working hours.
+
+
+
+
+Guidelines:
+A. Core Hours
+Employees are expected to be available during core hours, typically from 2 PM to 7 PM
+IST, Monday to Friday for team collaboration and meetings. Outside of these hours,
+employees may adjust their start and end times based on personal needs, ensuring an
+8-hour workday (excluding breaks) is completed.
+
+B. Remote Work Flexibility
+Employees may choose to work remotely, as per team and role requirements. Managers
+should approve remote work arrangements to ensure team collaboration is maintained.
+
+
+
+
+                             Lyzr AI India Private Limited.                                15
+C. Availability
+Employees should keep calendars updated with working hours to facilitate collaboration
+and scheduling.
+
+
+D. Approval Process
+Any flexible work schedule that deviates significantly from standard hours should be
+discussed and approved by the reporting manager.
+
+E. Exceptions and Adjustments
+In cases of project deadlines or team needs, managers may request adherence to
+specific hours.
+
+F. Accountability and Performance
+Flexible work is built on trust. Employees are expected to meet performance and project
+deadlines regardless of chosen work hours.
+
+
+While timesheets are not mandatory for all employees, in cases of performance or
+availability concerns, employees may be required to submit timesheets for performance
+tracking.
+
+
+All employees will receive notification alerts for any changes in work timings, asset
+allocation, birthdays, work anniversary and upcoming holiday from the HRMS.
+
+Employees are encouraged to regularly go through the HRMS to keep themselves
+updated of the same.
+
+
+
+
+                              Lyzr AI India Private Limited.                              16
+3. Remote Working
+Working remotely at Lyzr requires maintaining productivity and communication
+standards consistent with office-based work.
+
+
+
+
+Key Expectations
+   Ensure a suitable home workspace with stable internet. Frequent connectivity
+   issues may be considered as unavailability.
+   Stay accessible via phone, email, and Slack during work hours.
+   Video calls on Google Meet or Zoom require the video to be ON for all meetings.
+   Respond to calls or messages from Leadership, HR, or your Reporting Manager
+   within 12 working hours or by the next working day after a weekend/holiday.
+
+
+
+
+                             Lyzr AI India Private Limited.                          17
+Communication and Responsibility
+   Regularly check and respond to official emails throughout the workday.
+   Use the Out of Office feature during approved absences.
+   Report any damage to company assets immediately to your manager.
+
+
+Hybrid Work Arrangement
+Lyzr offers a hybrid working model, combining office and remote work to suit team needs
+and individual preferences.
+   Specific schedules will be discussed with your manager based on role and business
+   requirements.
+   While working remotely, all employees must follow Lyzr's remote work policies.
+   At Lyzr, we aim to create a supportive and flexible work environment that balances
+   personal needs with company goals. Should you have any questions or require
+   clarification, feel free to reach out to your manager or HR.
+
+
+
+
+                             Lyzr AI India Private Limited.                               18
+4. Night shift & weekend policy
+
+
+
+
+Purpose & Scope
+This policy establishes the framework under which Lyzr AI India Private Limited ("Lyzr" /
+"the Company") engages eligible employees to perform work during night hours or on
+weekends when such work is required by genuine business or project needs.
+
+
+The objectives of this policy are to:
+
+    Recognize and fairly compensate employees for the personal and physical sacrifice
+    involved in working night hours or weekends;
+    Establish a structured, transparent, and consistent allowance framework that scales
+    with compensation level.
+    Ensure compliance with applicable labor laws
+    Set out specific safeguards for women employees in line with statutory
+    requirements; and
+    Define approval, tracking, and payout mechanisms applicable to all eligible
+    engagements.
+
+
+
+
+                                Lyzr AI India Private Limited.                              19
+Applicability
+This policy applies to the Following Eligible teams: Program Management, Applied AI,
+and India Customer Success Management.
+
+    Eligible roles: Individual contributors and people managers up to the level of Project
+    Manager / Solution Architect.
+    Work location: All employees in scope are to work remotely from their declared
+    residential address in India.
+
+
+Exclusions
+This policy does not apply to:
+
+    CXOs, Vice Presidents, and Directors;
+    Product and Platform engineering teams;
+    Internal initiatives, hackathons, or self-directed work performed outside business
+    hours without project sponsor approval.
+
+
+
+Definitions
+
+  Policy Name                Definition
+
+
+                             Any continuous block of work commencing at or after 11:00 pm IST
+  Night Shift                and extending into the early morning hours, 7:00 am of the following
+                             day.
+
+
+                             Work performed on a Saturday or Sunday, where Saturday/Sunday is
+  Weekend Work
+                             a designated weekly off for the employee.
+
+
+                             An employee in an eligible team and role (per Section 1.1) who has
+                             provided prior written consent and whose night shift/weekend work
+  Eligible Employee
+                             has been approved by both the Project Manager and the COO (or
+                             designate).
+
+
+                             The employee is designated as the project lead and approver for work
+  Project Manager
+                             performed under a specific client engagement or internal project.
+
+
+                             The Chief Delivery Officer or his designate, who provides final
+  Approving Authority
+                             approval before any allowance is paid.
+
+
+
+
+                                 Lyzr AI India Private Limited.                                     20
+  Policy Name                        Definition
+
+
+                                     Total fixed annual cost-to-company as recorded in the employee's
+  Annual CTC                         offer letter or most recent compensation revision letter, excluding
+                                     variable pay, bonuses, and ESOP value.
+
+
+                                     A non-salary cash payment processed through the monthly payroll
+                                     under the head "Night Shift Allowance" or "Weekend Work
+  Allowance
+                                     Allowance", as
+                                     applicable.
+
+
+
+
+Eligibility & Approval
+Pre-Conditions
+An employee is eligible for night shift or weekend allowance only if all of the following
+conditions are met:
+
+      The employee belongs to an eligible team and role per Section 1.1;
+      The employee has signed the Night Shift Consent Undertaking (Annexure A) and
+      submitted it to People Operations.
+      The work is driven by a documented business/project need (e.g., client SLAs across
+      time zones, production support, scheduled deployment windows, time-bound
+      deliverables);
+      Pre-approval has been obtained from the Project Manager.
+      Final approval has been obtained from the COO or designee prior to payroll
+      processing.
+
+
+  Step        Action                                             Owner                  Timeline
+
+
+              The Project Manager raises the need for                                   At least 24 hours in
+  1           night-shift or weekend coverage and                Project Manager        advance, where
+              identifies eligible team members.                                         possible
+
+
+              Employee logs the planned work (date, time
+                                                                                        Before starting the
+  2           window, project) in Cortex (or interim tracker)    Employee
+                                                                                        shift
+              before commencing.
+
+
+
+
+                                      Lyzr AI India Private Limited.                                           21
+  Step     Action                                            Owner                 Timeline
+
+
+           On completion, the employee marks the                                   Within 24 hours of
+  3                                                          Employee
+           actual hours worked in Cortex.                                          shift end
+
+
+
+           The Project Manager validates and approves                              Within 3 working
+  4                                                          Project Manager
+           the entry.                                                              days
+
+
+           People Ops consolidates approved entries                                3 working days
+  5        and shares the monthly list with the COO for      People Ops            before payroll
+           sign-off.                                                               cut-off
+
+
+                                                                                   Within 1 working
+  6        COO approves the consolidated list.               COO
+                                                                                   day of receipt
+
+
+           The People team processes payments with                                 With the monthly
+  7                                                          People Ops
+           the next monthly payroll cycle.                                         payroll run
+
+
+
+
+Allowance Structure
+Slab-Based Allowance
+Allowance is paid as a flat amount per qualifying shift, scaled to the employee's annual
+CTC. The slabs are:
+
+
+                                                                   Per Full Shift (4 hours or
+  Annual CTC                      Per Half-Shift (4 hours)
+                                                                   more)
+
+
+  Up to ₹10,00,000                ₹1,000                           ₹2,000
+
+
+  ₹10,00,001 – ₹20,00,000         ₹1,500                           ₹3,000
+
+
+  Above ₹20,00,000                ₹2,000                           ₹4,000
+
+
+Note: The same slab structure applies to both night shifts and weekend work. Half-shift
+and full-shift definitions apply equally to weekend days based on actual hours worked.
+
+
+
+
+                                  Lyzr AI India Private Limited.                                        22
+Shift Buckets
+To keep tracking and payout simple in Phase 1, only two buckets are recognized:
+
+
+  Bucket       Definition (Night Shift)        Definition (Weekend Work)      Payout
+
+
+
+               Worked at least 4 hours, with
+                                               Worked at least 4 hours on a   Half allowance
+  Half-shift   the work commencing at or
+                                               Saturday or Sunday             per slab
+               after 11:00 pm IST
+
+
+               Worked 8 hours or more, with
+                                               Worked 8 hours or more on a    Full allowance
+  Full-shift   the work commencing at or
+                                               Saturday or Sunday             per slab
+               after 11:00 pm IST
+
+
+
+
+Treatment as Allowance, Not Salary
+The Night Shift Allowance and Weekend Work Allowance are non-salary cash
+payments processed through payroll under separate allowance heads. They are:
+   Paid in addition to the employee's fixed monthly salary;
+   Not part of cost-to-company (CTC) and not factored into gratuity, leave encashment,
+   or bonus calculations;
+   Subject to applicable income tax in the hands of the employee. (See Section 4.6 - Tax
+   Treatment.)
+
+
+
+Tax Treatment
+The allowance will be paid through the monthly payroll under the head "Night Shift
+Allowance" / "Weekend Work Allowance". The exact tax treatment (taxable / partially
+exempt) will be confirmed by the Finance team prior to rollout, in consultation with
+payroll counsel. Until that confirmation is recorded:
+    Employees should treat the full allowance as taxable income.
+    TDS will be deducted as applicable based on the employee's tax declarations.
+    People Ops will issue an updated note once the final position is confirmed.
+
+
+
+
+                                   Lyzr AI India Private Limited.                              23
+Frequency Guidelines (Phase 1)
+To prevent overuse and protect employee well-being, the following soft caps apply:
+    No more than 8 night shifts per employee per calendar month, save in exceptional,
+    documented circumstances approved by the COO;
+    No more than 6 weekend days per employee per calendar quarter, save in
+    exceptional circumstances;
+    People Ops will flag any employee approaching these limits for a well-being check-
+    in.
+
+
+Specific Safeguards for Women Employees
+In compliance with applicable laws, , the following additional safeguards apply to women
+employees engaging in night shift work, including in the remote-work context:
+
+Consent - Mandatory and Written
+   No woman employee shall be deployed on a night shift without her prior, voluntary,
+   written consent;
+   Consent shall be obtained in the form set out in Annexure A and may be withdrawn at
+   any time on a prospective basis without consequence.
+   Consent is project-agnostic but must be reconfirmed annually.
+
+Maternity Protection
+   No woman employee shall be required or permitted to work night shifts during any
+   period in which she is entitled to maternity benefits under the Code on Social
+   Security, 2020.
+   Pregnant employees and employees within 6 months of return from maternity leave
+   are excluded from night shift eligibility unless they expressly request inclusion in
+   writing, supported by medical clearance.
+
+Remote-Work Specific Safeguards
+For Lyzr's fully remote workforce, the spirit of these requirements is preserved through
+the following adapted measures:
+   Emergency contacts: A dedicated 24x7 People Ops emergency contact number
+   and a designated POSH Internal Committee contact will be maintained and
+   circulated to all women employees engaging in night work.
+   Wellness check-ins: People Ops will conduct a quarterly 1:1 wellness check-in with
+   each woman employee on night shift rotation.
+   Buddy system: When two or more women employees are working the same night
+   shift on a project, the team is encouraged to maintain a virtual buddy/check-in
+   system.
+
+                              Lyzr AI India Private Limited.                               24
+   Routing of work: Project managers will, as far as practicable, avoid scheduling a
+   sole woman employee on isolated late-night shifts; rotation schedules will aim to
+   ensure parallel coverage.
+   POSH compliance: All provisions of the Sexual Harassment of Women at Workplace
+   (Prevention, Prohibition and Redressal) Act, 2013 apply fully, including for
+   virtual/remote interactions during night hours.
+   Privacy of personal data: Personal contact details, addresses, and home location
+   data of women employees shall not be disclosed to clients, vendors, or any
+   unauthorized parties.
+
+
+Rotation
+Night shift work for women employees shall be organized on a rotational basis where
+multiple eligible employees are available, in line with the rotation principle under the
+applicable laws.
+
+
+
+Tracking, Approval, and Payout
+Tracking Mechanism
+   Phase 1 (immediate): A People Ops-maintained shared tracker (Excel / Google
+   Sheets) where Project Managers log approved night/weekend shifts;
+   • Phase 2 (target Q2 rollout): Native logging within Cortex, including project tagging,
+   shift-type selection, and PM approval workflow.
+
+Required Tracking Fields
+   Employee Name and Employee ID
+   Date of shift
+   Shift type (Night / Weekend)
+   Start and end times (IST)
+   Total hours worked
+   Project/engagement name and task description
+   Project Manager approval (Yes / No / Date)
+   COO approval (Yes / No / Date)
+   Allowance bucket (Half / Full)
+   Slab applicable
+   Allowance amount
+
+
+
+
+                              Lyzr AI India Private Limited.                                 25
+Payroll Cycle
+   Allowance is paid in the calendar month following the month in which the shift was
+   worked.
+   People Ops requires the consolidated, COO-approved list at least 3 working days
+   before the payroll cut-off date.
+   Late submissions will be processed in the subsequent month's payroll.
+
+Audit and Records
+   All night shift and weekend work records will be retained for a minimum of 3 financial
+   years.
+   Records are subject to internal audit and may be requested by labor authorities upon
+   a valid request.
+   Consent forms will be retained for the duration of the employee's service plus 3
+   years post-separation.
+
+
+
+Misuse, Disputes & Enforcement
+Misuse
+Logging false or unapproved shifts, claiming allowance for non-business work, or any
+attempt to manipulate the tracking system will be treated as a breach of the Code of
+Conduct and may result in disciplinary action, up to and including termination.
+Disputes
+Any disputes regarding allowance eligibility, slab applicability, or payout calculation
+should be raised with People Ops within 30 days of the relevant payroll. Disputes
+unresolved at the People Ops level may be escalated to the COO.
+
+Policy Review
+This is a Phase 1 policy. People Ops will review the policy after the first full quarter of
+operation, taking into account:
+   Volume and pattern of usage;
+   Employee feedback;
+   Edge cases encountered;
+   Changes in applicable law;
+   Tax treatment confirmation.
+Material changes will be communicated in writing with at least 15 days' notice.
+
+
+
+  For more details and understanding the policy, please reach out to your manager.
+
+
+
+                               Lyzr AI India Private Limited.                                 26
+5. Dress Code
+Purpose
+To establish guidelines for appropriate attire in the workplace, promoting
+professionalism and a positive work environment. This policy applies to all meetings
+involving clients, customers, and team members.
+
+
+
+
+General Guidelines
+   Professional Appearance: employees are expected to maintain a professional
+   appearance that reflects the company's image.
+   Comfort and Modesty: Attire should be comfortable, clean, and modest.
+   Avoid Extremes: Avoid excessively revealing, casual, or provocative clothing.
+
+
+
+                             Lyzr AI India Private Limited.                            27
+Specific Guidelines
+a. Tops
+   Shirts, T-shirts, collared or polo shirts
+   Avoid tank tops
+
+b. Bottoms
+   Pants, jeans, skirts, or dresses
+   Avoid shorts or sweatpants
+
+c. Footwear
+   Closed-toe shoes or sneakers
+   Avoid flip-flops
+   Men to avoid sandals
+
+d. Accessories
+   Keep accessories minimal and professional.
+   Avoid excessive jewellery or piercings.
+
+
+Exceptions
+  Casual Fridays: The company may designate certain days as "Casual Fridays,"
+  allowing for more relaxed attire. However, the dress code should still be appropriate
+  for a professional environment.
+  Special Events: For special events or client meetings, a more formal dress code may
+  be required.
+
+
+Enforcement
+  Violations of the dress code will be addressed on a case-by-case basis.
+  Employees who consistently violate the dress code may be subject to disciplinary
+  action.
+
+
+
+
+                               Lyzr AI India Private Limited.                             28
+6. Background Verification
+
+
+
+
+All employees are subject to background verification at the time of joining.
+
+The verification will include authentication of any factual or historical information
+provided by the employee, related to past and present data such as reference details,
+previous employment details, educational credentials, and criminal records, etc.
+
+
+Employees will be required to provide written consent for background checks prior to
+their employment.
+
+
+The company will obtain consent in accordance with applicable laws and regulations. All
+employees are expected to cooperate with the HR department in submitting all the
+documents required for verification.
+
+
+The company may engage a background verification company to carry out such
+verification.
+
+
+The employee’s appointment shall be subject to the sole discretion of the Company. Any
+discrepancies or inconsistencies found during the background check process will be
+investigated and addressed.
+
+
+Employment of an employee could be liable to termination if the said particulars are
+unsatisfactory to the Company after employment has commenced.
+
+
+All background check records will be retained for a specified period in accordance with
+applicable laws and regulations.
+
+                               Lyzr AI India Private Limited.                             29
+7. Asset Policy
+At Lyzr, we trust you with essential tools to help you excel in your role.
+
+
+
+
+To ensure their safety and proper use, here are some straightforward guidelines:
+
+
+Safeguarding Company Assets
+During your employment, you’re responsible for taking care of company assets like
+laptops, phones, data, files, and other equipment provided to you.
+
+
+Avoid handing over these assets to anyone unauthorized. If needed, return them only to
+an authorized person designated by the company.
+
+
+
+
+                                Lyzr AI India Private Limited.                           30
+Returning Assets
+All company assets should be returned promptly when requested or at the time of your
+separation, ideally on or before your last working day.
+
+
+Using Company Assets
+   Use company assets solely for work-related purposes. Activities like downloading,
+   browsing, or sharing non-work-related content are prohibited.
+   Keep all documents and files secure, and don’t make copies or share them without
+   prior approval from management.
+
+
+Physical Security of Assets
+   Lock your laptop or other devices with a password when not in use.
+   Store them securely in a locked cabinet or desk, and never leave them unattended in
+   public spaces or vehicles.
+   When traveling, avoid packing devices in checked luggage and secure them in a
+   hotel safe or locked suitcase when not in use.
+
+
+Maintenance and Repairs
+   Report any damage or maintenance issues to the IT Manager immediately via official
+   email.
+   Only Lyzr is authorized to handle repairs or maintenance of company-provided
+   assets.
+
+
+Regular Audits
+The company may audit or recall assets periodically for maintenance or compliance
+checks.
+
+By adhering to these practices, you help us maintain a secure and efficient work
+environment. If you have any questions about these guidelines, feel free to reach out to
+IT or HR for assistance.
+
+
+
+
+                              Lyzr AI India Private Limited.                               31
+8. Compensation & Deductions
+Compensation paid to an employee is subject to statutory deductions, including applicable
+taxes and any other deductions specified below.
+
+
+
+
+The employee's compensation will be paid on a monthly basis and credited to their
+designated bank account within the first working day of the following month for which the
+salary is due. While the Company will make every effort to ensure timely payment, the
+employee will not be entitled to interest or penalties in the event of delayed payments.
+
+
+In the case of employment termination, the Company reserves the right to deduct any
+outstanding amounts due from the employee from their total compensation payable.
+These deductions may include, but are not limited to:
+
+   Any debt or advance the employee owes to the Company.
+   Deductions related to leave or holidays taken beyond the employee’s entitlement at
+   the time of termination.
+   Any deductions related to expenses incurred by the Company or for the cost of
+   repairing damage to the Company’s property or assets caused by the employee.
+   Any deductions related to the terms and conditions of employee training or
+   relocation.
+
+                              Lyzr AI India Private Limited.                            32
+9. Trainings
+At Lyzr, we believe in investing in your professional growth through comprehensive
+training programs that help you enhance your skills and contribute to both your success
+and the company’s.
+
+
+
+
+Your Role in Training
+Training programs are designed to benefit you and align with your career goals. We
+encourage full participation and commitment during these sessions.
+
+
+Travel for Training
+Some training programs may involve travel, either within India or abroad. Your
+willingness to participate in these opportunities helps us equip you with the best tools
+and knowledge.
+
+We strive to make every training opportunity valuable and enriching. If you have
+questions about the training process or agreements, feel free to connect with HR or your
+manager.
+
+                             Lyzr AI India Private Limited.                                33
+10. Holidays & Leaves
+
+
+
+
+Purpose
+To provide comprehensive guidelines to employees on holidays, and leaves, with the
+intent of facilitating better work-life balance, providing time for vacation & to attend to
+other critical personal emergencies and vital life events.
+
+
+Scope
+This policy is applicable to all regular on-roll employees.
+
+
+Policy Statement
+Lyzr follows a calendar year cycle for holidays, extended weekends and a leaves
+administration. Employees who are deployed for a specific customer will follow the
+customer’s leave calendar.
+
+
+
+
+                                Lyzr AI India Private Limited.                                34
+List of Holidays & Leaves
+
+ Company Holiday                          12 days
+
+ Casual Leave (CL)                        12 days
+
+ Earned Leave (EL)                        1 day for every 20 days worked
+
+ Sick Leave (SL)                          12 days
+
+ Menstrual Leave (Applicable only
+                                          1 day per month during menstrual cycle
+ to the employees of Karnataka)
+
+ Mental Well Being Leave                  4 days (1 in each Quarter)
+
+
+ Bereavement Leave                        5 days
+
+
+                                          26 continuous weeks of which not more
+ Maternity Leave
+                                          than 8 weeks would precede the delivery.
+
+ Paternity Leave                          5 days
+
+ Sabbatical Leave                         Up to 3 months
+
+ Wedding leave                            5 days
+
+
+
+Company Holidays
+  Lyzr observes 12 working days as holidays for national holidays and festivals.
+  Among these, 9 holidays are mandatory for all employees, while the remaining 3 can
+  be selected from a floating holiday list based on location or local festivals.
+  The holiday list may vary by location, aligning with local customs and holidays.
+  The holiday list is available for viewing on the HRMS.
+  In the case of the organization declaring any unplanned holidays due to unavoidable
+  circumstances then employees are required to work on a weekend to compensate
+  for the lost working day.
+
+
+
+                              Lyzr AI India Private Limited.                            35
+Casual Leave
+  Casual Leaves are planned leaves and are generally meant to be used to address
+  short-term, unexpected personal needs or emergencies or other personal needs.
+  In year 1 of service, CL entitlement would be prorated based on the Date of Joining.
+  In the month of joining, if the joining date is on or before the 15th of the month, then
+  the employee would be eligible for 1 day CL for that month and if the joining date is
+  post 15th of the month, then the employee will be eligible for 0.5 days of earned
+  casual leave credit for that particular month.
+  Increase in entitlement: Upon completion of 2 years of service, the entitlement would
+  increase to 14 days. The credit of this increased entitlement would be spread over
+  the subsequent quarters.
+  Credit & Usage: CL shall be credited at the beginning of every calendar month. If an
+  employee goes on “Leave Without Pay” (LWP), the LWP period is excluded while
+  calculating the accumulation of CL for the month.
+  Planning Leave: CL exceeding 2 days at a stretch must be planned ahead with the
+  reporting manager. Planning may require informing all concerned.
+  As a guideline, CL should be planned and applied as under:
+
+  3-4 days CL: 15 days in advance,
+  5-10 days CL: 30 days in advance,
+  More than 10 CL: 2 months in advance.
+  Accumulation of Leave: CL will lapse at the end of each calendar year and cannot be
+  carried forward to the next year
+
+
+Earned Leave (EL)
+  These leaves are planned earned leaves and are generally meant to be used for
+  rejuvenation, vacation, or reasons which need employees to stay away from work
+  for longer durations.
+  Entitlement: Employees are entitled to one leave for every 20 days that he has
+  worked in a calendar year.
+  In year 1 of service, EL entitlement would be prorated based on the Date of Joining of
+  the employee.
+  Credit & Usage: EL shall be credited at the beginning of every calendar month. If an
+  employee goes on “Leave Without Pay” (LWP), the LWP period is excluded while
+  calculating the accumulation of EL for the month.
+  Planning Leave: EL exceeding 2 days at a stretch must be planned ahead with the
+  reporting manager. Planning may require informing all concerned.
+
+
+
+                             Lyzr AI India Private Limited.                                  36
+  As a guideline, EL should be planned and applied as under:
+  3-4 days EL: 15 days in advance,
+  5-10 days EL: 30 days in advance,
+  More than 10 EL: 2 months in advance.
+
+  Accumulation of Leave: Earned leave that is not utilized within the calendar year can
+  be carried forward to the next year, subject to a maximum of 30 days
+  Leave Encashment: If an employee is discharged or dismissed from service during
+  the course of the year he shall be entitled to leave with wages at the applicable rates.
+  Encashment amount = (Monthly Gross salary/30) * (Number of days to be en-
+  cashed).
+
+
+
+Sick Leave (SL)
+  Sick leaves include planned or unplanned leaves to meet personal exigencies such
+  as sickness or any other reasonable cause related to medical needs.
+  Entitlement: An employee can avail SL for a maximum of 12 working days in a
+  financial calendar year. For new employees, SL eligibility would be prorated from the
+  date of joining.
+  Credit & Usage: SL is credited at the beginning of the year or on the date of joining,
+  whichever is earlier.
+  A maximum of 2 consecutive days can be availed as SL. However, for employees
+  having to take more than 2 days’ time off for sickness, it is mandatory to submit a
+  valid medical certificate/report issued by a registered medical practitioner to the
+  reporting manager/ HR immediately on the date of return from leave. Failing which,
+  the dates of leave shall be converted to LOP (Loss of Pay).
+  Clubbing with Other Leaves: Only the leaves taken for sickness may be clubbed with
+  EL, in the event an employee exhausts his/her Sick Leave. Where medical treatment
+  is planned, it is essential for the employee to inform the manager, seek approval and
+  intimate the HR team for recording such leave.
+  Planning Leave: In case of unplanned leave for sickness, an employee should
+  intimate the manager/HR before the business hours on the day of availing leave. If
+  the employee is not in a position to inform the manager, then the employee should
+  inform through a kith or kin.
+  Accumulation of Leave: Unutilized SL would lapse at the year-end and can’t be
+  carried forward.
+  Encashment: If an employee entitled to any SL is discharged or dismissed from
+  service when he is sick or suffering from the result of an accident, the employee is
+  entitled to encash the unavailed SL.
+
+
+                             Lyzr AI India Private Limited.                                  37
+Menstrual Leave (Applicable only to the employees
+of Karnataka):
+  Every permanent, contractual, or outsourced woman employee between the age of
+  18 to 52 years, shall be provided by the company with one (1) day of paid leave per
+  month during the menstrual cycle, amounting to a total of 12 paid menstrual leave
+  days in a year.
+  Such employees must use the menstrual leave for each month within the same
+  month and menstrual leave cannot be carried forward to the next month.
+  Such employees are not required to provide any medical certificate in order to avail
+  themselves of one day of menstrual leave each month.
+
+
+Mental-Wellbeing Leave (MWL)
+  Mental-Wellbeing leaves are unplanned leaves that help employees to rest and
+  recover from any type of psychological stress.
+  Entitlement: employees are entitled to 4 working days of Mental-Wellbeing Leave in
+  a calendar year. Which is divided into 1 working day in each quarter.
+  Credit & Usage: MWL is credited at the beginning of each quarter of the year.
+  Planning Leave: An employee should intimate the manager/HR at least at the start of
+  the business hours.
+  Clubbing with other leaves: It cannot be clubbed with EL or SL.
+  Leaves during Internship: All interns can take leave only during sickness or any other
+  emergency. Take an email approval from the manager/HR to apply to leave. Leave
+  beyond SL & MWL will be considered to be LOP.
+
+
+Sabbatical Leave
+  A sabbatical leave is a voluntary extended period of time off granted to employees to
+  pursue personal, professional, or academic interests, or to address personal or
+  family needs.
+  Eligibility: Regular full-time employees who have completed a minimum of 3 years of
+  continuous service with the company are eligible to apply for sabbatical leave.
+  Duration of Sabbatical Leave: Employees may apply for a sabbatical leave of up to 3
+  months. Sabbatical leave must be taken as a continuous period.
+
+
+
+
+                            Lyzr AI India Private Limited.                                 38
+  Application Process: employees interested in taking a sabbatical leave must submit
+  a written application to their immediate supervisor and HR department at least 2
+  months or 1 month before the project end date in advance of the requested start
+  date. The application should include the purpose of the sabbatical leave, the
+  proposed activities or plans during the leave, and any expected benefits to the
+  employee and the organization. The immediate supervisor will review the
+  application and make a recommendation to the HR department. The HR department
+  will assess the employee's eligibility, evaluate the impact on the team and
+  organization, and make a final decision. The employee will be notified of the decision
+  in writing within 2-3 weeks of submitting the application.
+  Approval and Conditions: Sabbatical leave is subject to approval based on business
+  needs, staffing requirements, and the employee's performance and eligibility. The
+  company reserves the right to deny or postpone sabbatical leave requests if they
+  would significantly disrupt operations or create an undue burden on the team or
+  organization. If approved, the employee and HR department will establish a written
+  agreement outlining the terms and conditions of the sabbatical leave, including
+  expectations for communication, reintegration, and return-to- work arrangements.
+  During the sabbatical leave, the employee will be considered on an unpaid leave of
+  absence, and benefits such as health insurance and retirement contributions may be
+  affected.
+  Reintegration and Return-to-Work: Return to work of the employee will be decided
+  by the line manager and HR department. This is to ensure whether the employee still
+  serves a purpose to the company/project or not. Prior to the end of the sabbatical
+  leave, the employee will be required to attend a reintegration meeting with their
+  supervisor and HR representative. The purpose of the reintegration meeting is to
+  discuss the employee's return-to-work plan, any updates or changes in the role or
+  responsibilities, and to facilitate a smooth transition back into the workplace.
+  Companies have complete authority to dismiss the employee’s return to work with
+  valid reason.
+
+
+Maternity Leave
+  Entitlement: The maximum period for which any woman employee shall be entitled
+  to maternity leave benefits, shall be twenty-six (26) continuous weeks, of which not
+  more than eight (8) weeks shall precede the date of her expected delivery. The
+  maximum period for which any woman employee, having two or more surviving
+  children, shall be entitled to maternity leave benefits, shall be twelve (12) continuous
+  weeks, of which not more than six (6) weeks shall precede the date of her expected
+  delivery.
+
+
+                             Lyzr AI India Private Limited.                                  39
+  Credit & Usage: Maternity Leave is provided only if the employee has worked in the
+  company for a period of not less than 80 days in the twelve months immediately
+  preceding the date of her expected delivery.
+  The Maternity Benefit Act, 1961 entitles employees who are ill on account of their
+  pregnancy or have delivered prematurely, to a maximum period of one month in
+  addition to maternity leave.
+  A woman employee who legally adopts a child below the age prescribed under
+  applicable law or becomes a commissioning mother through surrogacy shall be
+  entitled to twelve (12) weeks of leave, commencing from the date on which the child
+  is handed over to her.
+  A woman employee undergoing a tubectomy operation shall be entitled to two (2)
+  weeks of leave from the date of the operation.
+  A woman employee who suffers a miscarriage or undergoes medical termination of
+  pregnancy, including procedures permitted under applicable law, shall be entitled to
+  six (6) weeks of leave, immediately following the date of miscarriage or termination
+  of pregnancy, as the case may be.
+  Planning Leave: Maternity leave has to be applied a minimum one month in advance
+  of going on such leave. Maternity leave shall apply from the date of delivery even if
+  the employee has proceeded on any other kind of leave prior to the date of delivery.
+  Subject to the nature of the work, a woman employee may be permitted to work from
+  home after availing maternity benefits, for a mutually agreed period and on such
+  terms and conditions as may be decided between the Company and the employee.
+  Clubbing with other leaves: It can be clubbed with EL, if desired.
+
+
+Wedding Leave
+  Eligibility: Maximum 5 days may be availed by any employee on the occasion of their
+  wedding.
+  Planning Leave: The leave must be taken at a stretch and applied before 15 days of
+  the wedding.
+
+
+Paternity Leave
+  Eligibility: Maximum 5 days may be availed by male employees on occasion of
+  Childbirth. To be eligible the employee should have worked for more than 160 days
+  in the 12 months immediately prior to the date of delivery.
+  Credit & Usage: The leave must be taken at a stretch and within 1 month of the birth
+  of the child.
+  Casual leave can be suffixed or prefixed to a paternity leave. This has to be
+  communicated to the manager and be approved at least a month before availing it.
+
+
+                            Lyzr AI India Private Limited.                                40
+Bereavement Leave
+  Eligibility: In case of the unfortunate event of the demise of an immediate family
+  member, an employee would be eligible for 5 working days of paid leave. For the
+  purpose of this policy, immediate family is defined as parents, parents-in-law,
+  brother, sister, spouse and children.
+  Credit & Usage: This leave should be taken at a stretch and within 1 week of the
+  incident. A death certificate needs to be submitted for approval. Failure of
+  submission will be a LOP.
+
+
+
+Compensatory Off
+  Eligibility: Any employee required to work on a holiday (on Company’s request) for
+  normal office working hours can claim a compensatory off in lieu of the holiday
+  worked, on a suitable date agreed by both, the employee and the concerned
+  reporting manager.
+  Credit & Usage: The credit request for Compensatory off should be made within 7
+  days of the extra day of work. The compensatory off should be utilized within 30 days
+  of the leave credit date and would lapse thereafter.
+
+
+
+Loss Of Pay (LOP)
+  Eligibility: Employees may seek leave without pay in circumstances where there is
+  no leave balance in the employee’s leave account. Approval of such leaves is
+  subject to the facts and circumstances, presented along with authenticated proofs
+  for each case and is purely at the discretion of the Management. Such leaves shall
+  be granted for a maximum period of one week.
+  Extension of loss of pay will be validated at the end of the term granted and further
+  approval is purely at the discretion of the Management.
+  Credit & Usage: An employee shall not proceed on Leave without Pay, without the
+  leave being duly approved in the system. Otherwise, it shall be treated as an
+  unauthorized absence. During LOP, the Cash equivalent of the number of days
+  availed is deducted from the employee’s salary & any repayment terms for any
+  company loans or premium of Medical Insurance being availed by the employee will
+  continue as predetermined and the employee will remit the corresponding amount
+  respectively to the Company directly.
+
+
+
+
+                            Lyzr AI India Private Limited.                                41
+Leave while on Part-Time Employment/Internship
+   Eligibility of Casual Leave & Sick will be prorated for an employee on a part-time
+   work week and will be proportionate to the reduced hours of work.
+   Leaves for interns will be allotted only after they complete their internship and are
+   converted to full-time employees. Leaves taken before the end of the internship
+   period will be considered under LOP.
+
+
+
+
+Leave during Notice Period
+Leave during the notice period can be sanctioned only for medical exigencies or other
+emergency situations. In such cases of exigency or emergency, the manager may
+sanction EL or SL only, against Medical Certificate. The company reserves the right to
+increase the days of the Notice Period by the number of days an employee has availed
+leaves during Notice Period.
+
+
+
+
+Unauthorized Absence
+   Employees are requested to avoid taking unplanned Leave. If an employee is taking
+   an unplanned leave due to unavoidable circumstances, they are advised to call their
+   reporting manager/HR and inform them about the inability before the start of
+   business hours. Any absence on a working day, without prior approval of the
+   reporting manager shall be construed to be an unauthorized absence and would
+   result in loss of pay and/or disciplinary action.
+   Any continuous absence of 2 or more working days without prior approval of the
+   reporting manager shall be construed to be a long unauthorized absence. This also
+   includes cases of absence on medical grounds without intimation/approval.
+   A long unauthorized absence as defined above shall result in loss of lien on service.
+   The employee shall be given two successive opportunities to resume duty and
+   explain his/her position and if he/she fails to make use of said opportunities final
+   notice shall be issued intimating loss of lien on service resulting in termination.
+
+
+
+
+                             Lyzr AI India Private Limited.                                42
+Computing & Recording of Leaves
+  All leaves have to be marked in advance & can only be availed ONLY after approval
+  from the reporting manager in the HRMS, except in the case of an emergency like
+  Sick Leave, which should also be marked within 1 day of return to work.
+  Sanctioning of leave is at the discretion of the reporting manager. Leave approvals
+  should be based on operational requirements, merit, reasonability and past record.
+  Leave cannot be claimed as a matter of right. Any kind of leave can be granted or
+  refused depending upon the business demands. Leave of absence from work
+  without proper approval will call for disciplinary action.
+
+
+Administrative Information
+  The policy will be reviewed whenever necessary, and changes as considered
+  important will be incorporated in the policy.
+  Exceptions to the policy will be handled on a case-to-case basis, by the Human
+  Resources Department.
+
+
+
+
+                            Lyzr AI India Private Limited.                              43
+11. Probation & Termination
+
+
+
+
+At Lyzr, all employees will serve a probationary period of at least three months from their
+date of joining, which may be extended or shortened at the discretion of the
+management. During or at the end of the probation period, whether extended or
+curtailed, the Company reserves the right to terminate employment immediately without
+notice.
+
+
+If an employee wishes to resign during the probationary period, they are required to give
+one month’s notice to the Company. After confirmation of employment, the Company will
+require one month’s notice for termination, except in cases of breach of discipline,
+insubordination, non-performance, unauthorized leave, dishonesty, breach of trust,
+negligence, or misconduct. In such cases, employment can be terminated immediately,
+without notice, and the Company will not be liable for any further compensation.
+
+
+Upon termination, regardless of the reason, all benefits provided to the employee during
+the course of employment will cease to exist. This includes the cancellation of any
+business-related visas provided by the Company.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 44
+12. Travel
+Purpose
+This Travel Policy outlines the company’s guidelines for employee business travel within
+and between India and the United States. It aims to ensure that all travel is safe, cost-
+effective, and supports the business objectives of the organization while promoting a
+positive employee experience.
+
+
+
+
+Scope
+This policy applies to all employees of Lyzr located in India and the U.S. who are required
+to travel for business purposes. This includes employees in hybrid, remote, and office-
+based roles.
+
+
+
+                               Lyzr AI India Private Limited.                                 45
+Approval Process
+All business travel must be pre-approved by the employee's manager and the relevant
+department head.
+
+
+International travel between India and the U.S. also requires approval from the Chief
+Executive Officer (CEO).
+
+Travel requests must be submitted via the company’s designated travel management
+platform on HRMS, including details such as purpose, itinerary, estimated expenses, and
+any travel-related documents.
+
+
+Travel Categories and Guidelines
+a. Domestic Travel (Within India or the U.S.)
+   Transportation: Employees are encouraged to use cost-effective options like
+   economy class flights, trains, or approved ride-sharing services. Employees may
+   use personal vehicles when approved in advance and will be reimbursed based on
+   distance travelled as per company rates.
+   Accommodation: Standard accommodations will be provided. Employees should
+   book through company-approved vendors or platforms.
+   Meals: Daily meal allowances will be reimbursed based on location-specific rates.
+
+
+b. International Travel (Between India and the U.S.)
+   Transportation: Employees will travel in economy class, unless otherwise specified.
+   Accommodation: Similar to domestic travel, standard accommodations will be
+   covered. Upgrades require prior approval.
+   Per Diem Allowance: A daily allowance will be provided for meals and incidentals
+   based on current exchange rates and cost-of-living adjustments between the two
+   countries.
+   Visa and Immigration Support: The company will reimburse or cover visa application
+   fees and any necessary immunizations or health checks.
+
+
+Travel Categories and Guidelines
+Employees are responsible for maintaining receipts for all travel-related expenses.
+Digital copies must be submitted through the designated expense management system
+(HRMS) within 30 days of completing the trip.
+
+
+                              Lyzr AI India Private Limited.                              46
+The following expenses are reimbursable:
+   Airfare, train, and approved ground transportation.
+   Accommodation costs, within the approved budget.
+    Meal costs within the daily per diem limit.
+    Reasonable costs for business-related supplies or services during the trip.
+    Airport parking, tolls, and baggage fees (when approved).
+
+
+Expenses will be reimbursed only against the actual bills, invoices or other valid
+documents, subject to the maximum reimbursement allowed against the said nature of
+expense.
+
+
+Non-reimbursable expenses include, but are not limited to, in-room entertainment,
+personal phone calls, and alcohol purchases.
+
+
+
+Health, Safety, and Security
+Pre-Travel Health Measures: Employees are encouraged to check government health
+advisories and consult with healthcare professionals as needed.
+Emergency Support: The company offers 24/7 travel support through our third-party
+travel assistance provider for emergencies, including medical assistance, travel
+document replacement, and security evacuation if necessary.
+
+
+Remote Work While Traveling
+Employees on approved business trips may work remotely from their travel destination
+with prior approval, provided that they have adequate resources and internet
+connectivity.
+
+
+Sustainability
+In line with Lyzr’s sustainability efforts, employees are encouraged to consider remote
+alternatives to travel, such as video conferencing, wherever feasible.
+
+Violation of Policy
+Non-compliance with this policy may result in delayed reimbursement and could lead to
+disciplinary action. Intentional submission of false claims will be grounds for disciplinary
+measures, up to and including termination.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  47
+13. Communication
+Confidentiality
+To support employees, Lyzr ensures that during their tenure, they have access to the
+Company's confidential information in a secure manner and agree to adhere to Lyzr's
+Confidentiality and Intellectual Property Rights Agreement.
+
+
+
+
+Internal & External Communication
+The purpose of this policy is to establish clear guidelines for internal and external
+communication, ensuring that information is shared efficiently, securely, and
+respectfully. This policy supports collaboration, transparency, and professionalism
+within Lyzr’s work culture.
+
+
+This policy applies to all employees, interns, trainees, contractors, and consultants of
+Lyzr. It governs the use of email, chat platforms, video conferencing, social media, and
+any other company-approved communication channels.
+
+
+                              Lyzr AI India Private Limited.                               48
+Core Communication Principles
+   Transparency: Communicate openly and honestly to foster a culture of trust.
+   Responsiveness: Respond to messages within a reasonable timeframe, ideally
+   within 12 hours during business days, unless specified otherwise.
+   Respect: Engage with all colleagues and external parties professionally and
+   respectfully.
+   Confidentiality: Maintain confidentiality for sensitive or proprietary information in all
+   communications.
+
+Communication Channels & Their Usage
+a. Email
+   Purpose: Use for formal communications, important announcements, and
+   documentation.
+   Expectations: Keep emails concise and relevant, using clear subject lines. Avoid
+   using "Reply All" unless absolutely necessary.
+   Etiquette: Follow standard professional email etiquette, including polite greetings,
+   concise content, and a clear closing.
+   Signature: Use company approved standard email signature for all emails.
+
+b. Instant Messaging Platforms (e.g., Slack, Google Meets)
+   Purpose: Ideal for quick, informal communications and team collaboration.
+   Expectations: Use these platforms for questions, brainstorming, and real-time
+   updates. For high-urgency issues, use direct messages (DM) or mention the person
+   specifically.
+   Etiquette: Avoid excessive notifications by respecting work hours and using
+   channels rather than DMs for non-urgent matters. Messages should remain
+   respectful and relevant to work discussions.
+
+c. Video Conferencing (Google Meet, Zoom)
+   Purpose: For team meetings, client, customer calls, and discussions requiring visual
+   collaboration.
+   Expectations: Ensure meetings have a clear agenda and that only essential
+   participants are invited. Use video settings as preferred, but aim for professionalism
+   in background and attire.
+   Etiquette: Join meetings on time, remain engaged, and avoid distractions like
+   multitasking during calls. Provide a reason or explanation when declining a meeting
+   invitation.
+
+
+                              Lyzr AI India Private Limited.                                   49
+d. Project Management Tools
+   Purpose: To share project updates, progress tracking, and documentation.
+   Expectations: Update task statuses, deadlines, and any relevant documentation in a
+   timely manner.
+   Etiquette: Keep comments concise and clear, tagging only relevant team members.
+
+
+
+External Communication
+a. Client and Partner Communication
+   Professionalism: All external communication with clients, vendors, or partners
+   should be professional and align with company values. Avoid informal language
+   unless appropriate for the relationship.
+   Confidentiality: Do not disclose any proprietary or confidential information without
+   proper authorization.
+b. Media and Social Media Engagement
+   Spokesperson: Only designated employees or the marketing team may
+   communicate on behalf of the company to the media.
+   Social Media: Employees are not permitted to use social media sites for personal
+   purposes on company devices. Use on personal devices is allowed, but we expect
+   responsible usage to avoid impacting productivity.
+
+
+Guidelines for Social Media Conduct:
+   Employees are encouraged to share public company news but should avoid
+   discussing internal matters or confidential information.
+   Clearly indicate that personal opinions are not on behalf of Lyzr.
+   Do not imply company endorsement of personal content.
+   Avoid sharing company trademarks.
+   Refrain from defamatory or offensive remarks, especially regarding colleagues,
+   clients, or partners, as this may breach our anti-harassment policy.
+
+
+
+
+                              Lyzr AI India Private Limited.                              50
+Information Security & Confidentiality
+Data Protection: Use company-approved platforms for communication, particularly for
+sharing confidential information. Avoid discussing sensitive topics on unsecure
+platforms.
+Confidentiality Agreements: Employees must adhere to confidentiality agreements in all
+forms of communication.
+Cybersecurity: Be mindful of phishing attempts and report any suspicious
+communications to IT. Use strong passwords and enable two-factor authentication
+where available.
+
+
+Communication for Remote & Hybrid Teams
+Flexibility: Remote and hybrid team members should have flexibility in communication
+methods while adhering to core business hours unless otherwise agreed upon.
+Availability Status: Employees are encouraged to update their availability status (e.g., "In
+a Meeting," "Available") on messaging platforms to help manage expectations.
+
+
+Conflict Resolution & Feedback
+Conflict Resolution: Address conflicts privately and respectfully. Use direct
+communication to resolve issues before involving supervisors or HR.
+Feedback: Provide constructive feedback to colleagues and be open to receiving
+feedback. Use 1:1 meetings or feedback tools for sensitive topics.
+
+
+Non-Compliance
+Violations of this policy may result in corrective actions. Deliberate breaches of
+confidentiality or disrespectful communication will lead to disciplinary measures, up to
+termination if warranted.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  51
+14. Software & Tools
+
+
+
+
+Purpose
+This policy provides guidelines for the proper use of company-approved software and
+tools to enhance productivity, maintain security, and ensure compliance with company
+standards. The policy outlines the software usage, access, and security protocols
+required to protect company data and intellectual property.
+
+Scope
+This policy applies to all employees, contractors, interns, trainees and consultants at
+Lyzr. It includes any software or tools used on company-owned devices, personal
+devices (for remote or hybrid employees), or cloud environments accessible via the
+company network.
+
+Approved Software and Tools
+The following software and tools are approved for use based on job function. Employees
+should avoid using unapproved software or tools for company work without prior
+authorization.
+
+General Tools
+ 1. Google Chrome: Standard browser for all web-based activities. Users should ensure
+    they are logged into their company account and maintain secure browsing
+    practices.
+ 2. Company VPN Client: Required for secure access to company resources when
+   working remotely. All remote or off-site work must be conducted through the VPN to
+   ensure secure access to internal systems.
+
+
+
+                             Lyzr AI India Private Limited.                               52
+Technical roles (Engineering, Development)
+ 1. VS Code: Primary code editor for development work. Employees in technical roles
+    should maintain version control practices in alignment with company standards.
+ 2. PyCharm: Approved for Python development. Users are encouraged to integrate it
+    with Git for streamlined version control.
+ 3. Git: Required for all code version control and collaboration. Employees must push
+    code changes to approved company repositories and follow the company’s version
+    control procedures.
+ 4. Docker: Used for application containerization. Employees should follow best
+    practices to maintain secure, scalable development environments and avoid using
+   public images without security checks.
+
+
+Software Installation and Updates
+   Installation Process: All approved software installations should be conducted via the
+   company’s IT department or through the company’s software portal. Employees are
+   not permitted to download or install additional software without written approval.
+   Automatic Updates: Where applicable, enable automatic updates to ensure that the
+   software is running the latest, most secure versions. For tools like Docker and Git,
+   employees should check for updates regularly and notify the IT team of any issues
+   with version compatibility.
+   Configuration: Employees must configure their software per company guidelines,
+   including necessary security settings for Chrome, VS Code, and PyCharm.
+
+
+Access and Security Protocols
+Company VPN Client
+   Usage Requirement: Employees must connect to the VPN for any remote work,
+   especially when accessing sensitive or proprietary company data.
+   Access Restrictions: Only company devices or approved personal devices may
+   connect to the VPN. Use of VPN on shared or public devices is prohibited.
+   Security: Ensure VPN credentials are kept secure and report any suspicious activity
+   to IT immediately.
+
+
+
+
+                             Lyzr AI India Private Limited.                                53
+Version Control and Code Security
+   Git Usage: Employees should only use Git with authorized company repositories.
+   Use descriptive commit messages and regularly sync with the main branch as per
+   company guidelines.
+   Data Protection: Sensitive data (such as credentials, API keys, or confidential
+   business logic) must not be stored in code repositories without encryption or other
+   security measures.
+   Docker Security Practices
+   Image Usage: Use only approved Docker images or ones verified by the company for
+   security compliance. Avoid pulling images from untrusted sources.
+   Container Management: Delete unused containers and images to minimize security
+   risks, and follow company guidance for container security configurations.
+
+
+Acceptable Use and Prohibited Actions
+Acceptable Use
+All approved software and tools should be used strictly for work-related purposes.
+Personal use of company software is discouraged and must not compromise data
+security.
+
+Prohibited Actions
+   Installing or using unapproved software.
+   Disabling security features or VPN requirements.
+   Sharing company software licenses or credentials with unauthorized users.
+   Altering or tampering with company configurations on tools like Git or Docker.
+
+
+Data Backup and Recovery
+All project-related work in Git must be regularly committed and pushed to the company’s
+central repositories to ensure data backup.
+Important work-related files, particularly those involving collaborative projects, should
+be backed up according to company protocols.
+
+
+Monitoring and Compliance
+The IT department may monitor software usage to ensure compliance with this policy,
+protecting against security risks and unauthorized software installations.
+Employees found in violation of this policy may face corrective actions, including
+restricted access, required security training, or disciplinary action including termination
+of employment.
+
+                               Lyzr AI India Private Limited.                                 54
+15. Internet Usage
+The company has guidelines for internet use on company devices, including laptops,
+smartphones, and other devices. Unauthorized or inappropriate internet use is strictly
+prohibited. This policy applies to all employees, contractors, consultants, trainees and
+interns with network access.
+
+
+
+
+Employees’ responsibilities
+   Keep passwords confidential.
+   Use strong passwords for work accounts.
+   Access corporate accounts only from secure devices.
+
+Prohibited Activities
+   Downloading offensive, illegal, or copyrighted content.
+   Sending confidential information to unauthorized recipients.
+   Violating others' privacy.
+Non-compliance may result in disciplinary action, up to termination or legal measures for
+serious offenses.
+
+
+                                Lyzr AI India Private Limited.                              55
+16. Confidentiality & Intellectual
+    Property rights
+
+
+
+
+At Lyzr, we value the contributions and efforts of our team, and we believe in fostering a
+collaborative environment built on trust and respect. To ensure the continued success of
+our collective efforts, we have established a few guidelines regarding confidentiality and
+intellectual property.
+
+
+Confidential Information
+During your time at Lyzr, you may have access to important company information. This
+includes business strategies, product details, client or vendor data, training materials,
+and other resources designed to help you excel in your role. We request that you handle
+this information with care and use it only for work-related purposes.
+
+
+To protect this information avoid sharing or discussing
+
+
+
+
+                               Lyzr AI India Private Limited.                                56
+17. Privacy & Confidentiality
+
+
+
+
+At Lyzr, we believe that trust is built on transparency and respect. As part of our
+commitment to creating a secure and responsible workplace, we take the protection of
+your personal data and our company’s confidential information seriously. This section
+outlines how we collect, use, and safeguard employee information, what your
+responsibilities are, and how we work together to maintain privacy and confidentiality
+across the organization.
+
+
+Your Personal Information and How We Use It
+During the course of your employment at Lyzr, we collect and process certain personal
+data that is necessary for hiring, onboarding, performance management, payroll,
+benefits, compliance, and business operations. This may include:
+
+
+
+
+                             Lyzr AI India Private Limited.                              57
+   Your name and contact details
+   Resume, background verification records, and interview assessments
+   Educational and employment history
+   Time and attendance data
+   Performance evaluations, training records, and system usage logs
+   Emergency contact and medical information (if applicable)
+
+We only collect data that is relevant to your role and responsibilities. In some cases, we
+may also receive your information from third-party service providers such as
+background verification agencies.
+
+
+
+Why We Collect This Information
+We collect and process your personal data under legitimate business purposes,
+including:
+
+   Managing your employment contract
+   Ensuring compliance with legal and regulatory obligations
+   Processing payroll and benefits
+   Enabling IT and information security
+   Supporting training, development, and performance reviews
+   Responding to emergencies and safeguarding your well-being
+
+Where required, we also collect your consent-particularly for optional programs,
+voluntary benefits, and inclusion initiatives.
+
+
+Keeping Your Information Safe
+Lyzr has implemented robust technical and administrative measures to keep your data
+safe. This includes:
+
+   Role-based access control
+   Encryption of sensitive data
+   Secure storage of physical and digital records
+   Use of trusted, privacy-compliant service providers
+
+Only authorized team members have access to your data, and only for work-related
+reasons. We regularly audit our systems, and you will always be notified in case of a
+data breach that affects your information.
+
+
+
+
+                              Lyzr AI India Private Limited.                                 58
+Your Rights as a Team Member
+You have the right to:
+
+    Access your personal data held by Lyzr
+    Correct any outdated or incorrect information
+    Request deletion of data no longer required
+    Restrict processing of your data in certain cases
+
+We encourage you to keep your records up to date by notifying HR of any changes. You
+can also reach out to our Data Protection Officer at [dpo@lyzr.ai] for questions or
+concerns.
+
+
+Use of Monitoring Tools
+To maintain a secure and productive environment, we may use:
+
+    CCTV cameras in office premises
+    Access logs and IT monitoring tools for system security
+    Communication monitoring on company platforms for compliance purposes
+
+Monitoring is conducted fairly and transparently, and always in line with our privacy and
+ethical standards.
+
+
+Data Retention
+We retain your personal data only as long as necessary. For example:
+
+    Personnel and payroll records: 7 years post-employment
+    IT access logs: 2 years
+    Background verification reports: retained per legal or operational requirements
+
+Once the data is no longer needed, it is securely deleted or destroyed.
+
+
+Third-Party Access
+In some cases, your data may be shared with authorized third parties like HRMS
+vendors, payroll processors, or legal consultants. These providers are contractually
+bound to protect your data and act only under Lyzr’s instructions.
+
+
+If data is transferred internationally (e.g., to our global teams), we ensure appropriate
+safeguards like Standard Contractual Clauses (SCCs) are in place.
+
+
+                                Lyzr AI India Private Limited.                              59
+Your Role in Maintaining Confidentiality
+As an employee of Lyzr, you're expected to:
+
+   Keep company data and internal communications confidential
+   Avoid sharing personal data or passwords with others
+   Use only approved systems and communication tools
+   Lock your screen when away from your device
+   Report any security concerns or suspected data misuse immediately
+
+This applies not just during your time at Lyzr, but even after your separation from the
+company
+
+
+
+If Something Goes Wrong
+If a privacy or data incident occurs, Lyzr has an internal Incident Response Team that will
+act swiftly to contain the breach, notify relevant parties, and take corrective measures.
+If you suspect a breach, report it right away to security@lyzr.ai
+
+
+At Lyzr, privacy and confidentiality aren’t just policies-they’re part of our shared
+responsibility. By staying informed and respectful of each other’s data and the
+company’s sensitive information, we create a safe and trustworthy workplace for
+everyone.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 60
+18. Non-Compete & Non-Solicitation
+At Lyzr, we believe in fostering a positive and collaborative work environment, both during
+your time with us and beyond. We recognize and respect your career development and
+your professional growth, which is why we ask for your understanding and cooperation in
+the following aspects:
+
+
+
+
+   During your time with Lyzr, we encourage you to fully engage with the projects, clients,
+   and initiatives you work on. We also appreciate your loyalty and commitment to the
+   company’s mission and values. While working at Lyzr, you are expected to refrain
+   from engaging in any personal or professional activities that directly or indirectly
+   compete with the Company's business. This includes collaborating with Lyzr's clients
+   or participating in similar business ventures, whether within or outside India.
+   Additionally, we trust that you will honor the relationships you've built with our clients
+   and colleagues. After your employment with Lyzr, we ask that you avoid directly or
+   indirectly soliciting or attempting to take away clients, prospects, or fellow employees
+   for your own purposes or for any other business, for a period of two years.
+   These guidelines are designed to protect the integrity of Lyzr’s business and ensure
+   that you continue to thrive professionally without conflicting interests. Your efforts
+   during and after your time with us are greatly appreciated, and we trust that you will
+   uphold the strong relationships and values we've worked so hard to build together.
+                              Lyzr AI India Private Limited.                               61
+19. Personal Consequences
+
+
+
+
+At Lyzr, we are committed to maintaining a respectful and professional work
+environment for everyone. While we value your contributions, it’s important to maintain
+clear expectations for the protection of both the Company and its employees. Therefore,
+your employment with Lyzr may be subject to cessation or termination if the following
+situations arise, at the sole discretion of the Company:
+
+ 1. If it’s found that you are involved in any other gainful or commercial employment,
+    business, or activity—whether part-time or full-time—during your employment with
+    Lyzr, without prior approval from the Company.
+ 2. If you are declared medically unfit by a registered medical practitioner and are
+    unable to fulfill the duties of your role.
+ 3. If you are convicted of any civil or criminal offence, including financial impropriety,
+    moral turpitude, or misappropriating the Company’s assets or the property of any
+    third party.
+ 4. If you are found to be bound by any restrictive clauses such as non-compete or non-
+    solicitation agreements with previous employers, or if you breach any of the terms
+    outlined in your employment contract or this employee playbook.
+ 5. If you are found guilty of sexual harassment, whether it occurs while working with the
+   Company or at any time prior to your employment with us.
+
+These conditions are in place to ensure the integrity and well-being of the Company and
+its employees, and we trust that you will uphold the values that make Lyzr a great place
+to work.
+
+
+                              Lyzr AI India Private Limited.                                  62
+20. Performance Review
+
+
+
+
+At Lyzr, we believe in recognizing and rewarding your contributions while supporting
+your growth. Our Performance Review process is designed to assess your productivity,
+attitude, and overall alignment with the company's goals, based on the pre-set
+objectives and Key Result Areas (KRAs).
+
+We conduct Annual Appraisals every October, which are available to employees who
+have completed at least one year with the Company, subject to management's
+discretion. These appraisals assess your performance and provide valuable insights,
+which are also used as inputs for the Annual Compensation Review, held in November
+each year.
+
+
+Please note that a Performance Review does not automatically guarantee a
+compensation increase or revision. Reviews conducted after the completion of
+probation will focus on performance alignment and will not include compensation
+adjustments.
+
+
+                             Lyzr AI India Private Limited.                            63
+Compensation reviews and increments are exclusively conducted in November for all
+confirmed employees.
+
+In addition, we offer continuous feedback throughout the year via Quarterly Feedback
+sessions with your Reporting Manager, to ensure your performance aligns with your
+goals. These quarterly discussions also contribute to your Annual Performance
+Appraisal.
+
+
+You can access your KRAs and appraisal forms through the HRMS, ensuring you're
+always up-to-date on your progress and expectations.
+
+
+Performance Improvement Plan (PIP)
+At Lyzr, we are committed to supporting employees in their growth and success. If an
+employee faces challenges in meeting their duties, despite receiving the necessary
+support, training, and feedback, or if they engage in misconduct such as insubordination,
+unauthorized leave, dishonesty, or neglect of duties, a Performance Improvement Plan
+(PIP) will be implemented to help them improve.
+
+
+The Reporting Manager will outline the areas of improvement and communicate them to
+the HR team, who will then review the feedback and issue the PIP to the employee. The
+duration of the PIP will typically range from 15 days to 3 months, depending on the
+manager’s discretion.
+
+
+During the PIP, the employee is expected to actively engage with the recommendations
+and work towards improving performance and behavior. An employee can be placed on
+a PIP twice. If there is no improvement or if the issues reoccur, further disciplinary action,
+including termination of employment, may be considered.
+
+
+For behavioral issues, the PIP should be initiated within 30 days of the incident, with a
+duration not exceeding 3 months.
+
+
+Please note, employees on a PIP are not eligible for performance incentives, bonuses,
+rewards, recognition, or promotions during the PIP period.
+
+
+Once the employee shows significant improvement, the Reporting Manager will assess
+progress, and if warranted, close the PIP. The HR team must be informed when the PIP is
+officially closed.
+
+
+
+                                Lyzr AI India Private Limited.                                   64
+21. Separation
+
+
+
+
+Voluntary Separation
+To initiate the resignation process, an employee must submit a resignation notice to their
+Reporting Manager via the HRMS, adhering to the 30 day notice period requirement.
+
+
+The date of resignation on HRMS will be considered the 1st day of the notice period.
+However, if the resignation is sent beyond the business hours on a working day or on a
+weekly off or on a holiday, notice period would start from the next working day.
+
+
+The resignation has to be accepted by the Reporting Manager & HR for the employee to
+receive a relieving letter from the Company.
+
+
+An employee who does not serve the notice period but resigns without acceptance from
+HR will be considered as absconding from duties.
+
+
+
+
+                               Lyzr AI India Private Limited.                                65
+Absconding from Duty
+Once an employee is absconding from duty, the Reporting Manager is immediately
+required to inform the HR team. The HR department will send two reminders to the
+employee to immediately report to work.
+
+   First reminder: Emails (Official & personal email ID) along with text message on
+   mobile. If no response is received within 24 hours;
+   Second reminder: through Registered Post will be sent to the permanent residential
+   address of the Employee.
+
+If the employee does not report back to work within 7 days of sending the registered
+post, the employment will be terminated with immediate effect.
+
+Involuntary Separation may occur in the following cases:
+
+
+ 1. Death
+ 2. Disability
+ 3. Termination of employment
+
+
+Termination of Employment
+The employer has the prerogative to terminate the employment without any notice in the
+event of insubordination, indiscipline, unauthorized leave, non-performance, dishonesty,
+violation of any other terms and conditions of Letter of Appointment and/or terms
+contained herein, gross negligence of duty or refusal to carry out lawful instructions
+despite 3 (three) warnings. Further, in such cases employees will be paid only for the
+actual days worked. For other reasons for termination, up to 30 days of notice pay will be
+given by the Company subject to the sole discretion of the Management.
+
+
+Retirement from Services
+The employee will be retired from service on attaining age of 58 years or earlier, in case,
+the employee is found physically or mentally unfit to work any longer or for continued ill
+health as certified by the medical officer/ medical practitioner.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 66
+Notice Period
+An employee is required to serve a minimum 30 days’ notice period as prescribed in the
+Appointment Letter.
+
+
+When an employee resigns from Lyzr, their last month's salary will be withheld, and any
+outstanding amounts will be paid during the Full & Final settlement after their last working
+day.
+
+
+An employee who has resigned from Lyzr cannot avail any leaves during the notice period.
+
+
+Any leaves taken during the notice period will get deducted in the salary as adjustments or
+the notice period may get extended for the number of leaves taken, at the discretion of the
+management.
+
+Continued/prolonged, unapproved absence from work is unacceptable both during
+employment and while serving the notice period. This may lead to disciplinary action
+including termination of employment with immediate effect.
+
+
+A resigned employee is required to complete the handover and any other knowledge
+transfer as per the instructions of the Reporting Manager.
+A resigned employee may be stopped from attending Employee Development Programmes
+including training, at the discretion of the Management.
+
+
+It is also the employee's responsibility to ensure that all company-related files, documents,
+communications, and data are fully handed over to an authorized person and that no
+company-related data is stored on personal devices, hard drives, cloud services, or email
+accounts.
+
+In case an employee wants to seek notice period waiver, the request should be made by
+the employee to the Function Head, who would decide on the same on the basis of business
+exigencies. The waiver is completely at management's discretion and a request does not
+make the employee eligible for the same.
+
+
+In case of notice period waiver approval, accumulated Causal Leaves as of date would be
+adjusted in the shortfall of notice period. The remaining shortfall would be recovered as
+notice pay from the resigned employee during Full & Final Settlement. Please note, auto
+adjustment of Casual Leaves against notice period is not allowed.
+
+
+
+
+                              Lyzr AI India Private Limited.                              67
+Full & Final Settlement
+The Full and Final settlement includes, last month's withheld salary, earned leave
+encashment (if any) & any other dues settlement, as stated above.
+Full and final settlement will be paid by Cheque or credited into the salary account after 45
+days counting from the last working day of the month of exit.
+
+In case of termination the full and final settlement will be done in 10 days counting from the
+last working day of the month of exit.
+
+
+Full & final settlement statement will be sent to the ex-employee at the time of bank credit.
+
+
+Relieving letter would be issued along with Full & Final Settlement. Relieved employees are
+required to go through the final settlement and contact HR for any clarifications.
+
+
+
+Exit Clearance Process
+A mail from HRMS will be sent to the resigned employees with the separation checklist
+before the last working day.
+
+The employee shall obtain all necessary approvals as per the "Separation Checklist" and
+hand over the same to HR & Reporting Manager on the last working day, before the close
+of business hours.
+
+
+As part of exit clearance, employees would be required to:
+    Prepare transition documents and obtain Manager’s approval.
+   Fill up the Exit Interview Questionnaire Hand over all Company assets including
+   Laptop, Mobile Phone, data card etc.
+   Submit Tax proofs.
+   File unclaimed expenses with necessary documentation.
+   Settle outstanding loans/advances/recoveries.
+   Submit Gratuity Payment form (if eligible).
+
+
+
+
+                               Lyzr AI India Private Limited.                               68
+Gratuity
+   Gratuity shall be paid to the exiting employee if the employee has completed a
+   minimum 5 years of continuous employment as on the date of exit or in case of
+   separation on grounds of retirement or death.
+   Gratuity payment shall be calculated as per the rules of the Payment of Gratuity Act,
+   1972.
+   Employees shall submit the necessary forms at the time of exit to facilitate Gratuity
+   payout.
+
+
+Recoveries
+An employee leaving the company shall be liable to repay to Lyzr any amounts due, like
+the Relocation, joining bonus, training etc that are applicable to him/her.
+
+Any outstanding loan/advance of the employee who has resigned will be recovered over
+the remaining working days and in case of any excess recovery, an employee shall pay
+the same through Cheque or demand draft to complete the exit clearance process.
+
+
+Employees Obligations Upon Separation
+The employee’s obligations with respect to Confidential Information and security of the
+Confidential Information shall continue and survive even after the termination of
+employment with the Company.
+
+
+This includes the applicable clauses of Conflict of Interest, Intellectual Property Rights
+and Confidential and Non-Disclosure Agreement signed by the employee at any stage of
+the employment.
+
+
+Experience Certificate
+The Experience and relieving letter will be issued along with full and final settlement,
+subject to exit clearance and settlement of any recovery that has to be made from the
+employee.
+
+
+Resignation Withdrawal
+A resignation can be withdrawn by an employee by formally informing their Reporting
+Manager and HR, with a copy to the Function Head before the end of the last working
+day.
+
+                              Lyzr AI India Private Limited.                                 69
+22. Employee Referral
+All full-time employees of Lyzr are eligible to participate in the referral program, except
+for the Founding team, HR or those involved in the hiring process for the referred position.
+
+
+
+
+Referral Eligibility & Relationship Disclosure
+To preserve the integrity of the Employee Referral Program while keeping our hiring bar
+as the primary quality filter, the following framework applies to all referrals submitted
+under Section 22.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  70
+Ineligible Referrals
+The following referrals do not qualify for the referral bonus, even if the candidate is hired:
+    Social media–only connections: Candidates known to the referrer solely through
+    social or professional networking platforms (LinkedIn, Facebook, Instagram, X, etc.)
+    without prior professional collaboration, working relationship, or substantive
+    personal acquaintance.
+A "vouch" is the core of a referral. Where no such basis exists, the referral does not
+qualify, regardless of hiring outcome.
+
+
+Referrals Requiring Disclosure
+The following referrals are eligible for the referral bonus, but are subject to mandatory
+disclosure and review before payout:
+    Family and personal relationships: Including but not limited to spouses, domestic
+    partners, parents, siblings, children, in-laws, and extended family members.
+The referring employee must declare the relationship at the time of submitting the
+Referral Form. The referred candidate cannot fall within the referrer's direct or indirect
+reporting line (upward or downward) at the time of hire or at any point during the
+referrer's continued employment. The People team will review and confirm eligibility
+before bonus payout.
+If a reporting-line conflict arises post-hire (e.g., due to a reorganisation), the bonus
+already paid is not clawed back, but reporting structures will be adjusted to remove the
+conflict.
+
+
+Eligible Referrals
+    Professional network and acquaintances, including connections made through
+    industry events, community groups, alumni networks, or other non-family channels,
+    qualify for the standard referral bonus, provided the candidate clears Lyzr's hiring
+    process and completes the probation period.
+
+
+Non-Disclosure or Misrepresentation
+Failure to disclose a family or personal relationship at the time of referral submission will
+result in forfeiture of the referral bonus and may be treated as a breach of the Code of
+Conduct under Section 1.
+
+
+Final Authority
+The People team holds final authority on referral bonus eligibility under this clause. Any
+disputes may be escalated to the CBO.
+
+
+                                Lyzr AI India Private Limited.                                   71
+Incentive Structure
+ 1. Reward: If the referred employee successfully completes the probation period, the
+    referring employee will receive a reward equivalent to one month of their base
+    salary.
+ 2. Conditions:
+  The referring employee must still be employed with Lyzr AI India Private Limited at
+  the time the referred employee completes their probation period to claim the reward.
+  If the referring employee leaves the company before the completion of the referred
+  employee's probation period, they forfeit the reward.
+  This policy does not apply to founding team members, functional leaders and the HR
+  department. When leaders source candidates directly from their own professional
+  networks to build their own teams, such referrals will not be eligible for a referral
+  bonus, as this is considered part of their leadership responsibility.
+  However, cross-functional referrals by functional leaders, where employees refer
+  candidates for roles outside their own teams will remain eligible for referral bonus.
+  If multiple employees, recruiters, or external sources refer to the same candidate,
+  the individual who uploads the profile first in the system will be given credit.
+  Cooling period: If a candidate is not selected within a recruitment cycle, the same
+  candidate can be referred to the company again 1 year later.
+
+
+
+Legal and Ethical Considerations
+ 1. Equal Opportunity: The referral program will ensure that all referred candidates are
+    evaluated based on merit and fit for the role, promoting diversity and inclusion within
+    the company.
+ 2. Transparency: The referral process and criteria for rewards will be transparent to
+   avoid any perceptions of favouritism or unfair advantage.
+
+
+How to Participate
+ 1. Submit a Referral: Fill out the Referral Form on the HRMS
+ 2. Follow-up: HR will keep you updated on the status of your referral.
+ 3. Receive Your Reward: If your referral is hired and completes the probation period
+    while you are still with the company, you will receive a reward equivalent to one
+   month of your base salary.
+
+
+
+
+                                Lyzr AI India Private Limited.                                72
+23. Reward & Recognition Program (R&R)
+
+
+
+
+Lyzr is committed to fostering a high-performance culture. To recognize and reward
+outstanding employee performance and contributions, we have established the following
+Recognition and Reward program.
+
+
+All full time employees are eligible for the R&R program.
+
+
+
+
+                               Lyzr AI India Private Limited.                     73
+1. Monthly Awards
+An employee can be nominated as any one of the following:
+(Max 200 Points for each award)
+
+
+Award 1: Rising Star: Consistent good performer in the team.
+Award 2: Mountain Mover: The extraordinary accomplisher in the team.
+Award 3: Rock Star: The most consistent & top performer through the month.
+
+Performance Parameters for Monthly Awards
+
+ Excellence at work (20 Points)      Innovative & Creative Ideas (20 Points)
+
+ Exceptional display of integrity    Exceptional use of technology to benefit Lyzr
+ (20 Points)                         (30 Points)
+
+                                     Business ideas/revenue generation (50
+ DIY (Do IT Yourself) (10 Points)
+                                     Points)
+
+ Extraordinary display of            Going that extra mile for the team & Lyzr (20
+ ownership (30 Points)               Points)
+
+
+2. Yearly Awards
+The Lyzr Star Award (400 points) rewards exceptional performers through the year.
+
+
+3. Work Anniversary Awards
+At the completion of each year an Employee earns 100 Points.
+
+
+R&R Guidelines
+   Reporting Managers should consistently monitor and evaluate all team members.
+   A team member who meets all or any one of the performance parameters gets
+   nominated for the monthly award.
+   Reporting Manager to share the nominations with the HR team with evidence of
+   exceptional performance for Monthly awards and Work Anniversary Rewards.
+   Maximum nominations for each monthly award are one. Total 3 nominees per team.
+   Reporting Manager to share the nominations to HR for Yearly Awards: Lyzr STAR
+   Award (January each year).
+
+                             Lyzr AI India Private Limited.                          74
+   The decision of the HR team is final in approving the nominations.
+   An employee should not be issued PIP to be nominated in the R&R plan.
+   All monthly award nominations to be sent to HR by 25th of each month.
+   Announcement of Monthly Awards to be made within the 1st week of the following
+   month.
+   Employee can redeem the points the following month.
+   Only 1 nomination per team for Yearly Award: Lyzr Star Award.
+   All yearly award (Lyzr Star Award) nominations to be sent to the HR team by 20th of
+   December.
+   Employees can access the detailed statement of their R & R points on Empuls and
+   can redeem it.
+
+Points Redemption
+The points earned through this R&R program can be redeemed on the Empuls platform for a
+gift card of your choice. Each point is valued at ₹10.
+
+
+
+
+                            Lyzr AI India Private Limited.                               75
+24. Sexual Harassment Policy
+Lyzr AI India Private Limited (“Company/Lyzr”) has formulated this sexual harassment
+policy (“the Policy”) aims to protect women in the Company from unwanted sexual
+advances and give them guidelines to report incidents.
+
+
+
+
+Lyzr won’t tolerate sexual harassment in the Workplace (defined below) or any other work
+location in any shape or form. Our culture is based on mutual respect and collaboration.
+sexual harassment of any kind is a serious violation of these principles. Lyzr understands
+that sexual harassment of women at Workplace is a form of discrimination against women
+and recognizes that it violates the constitutional right to equality and the right to live with
+dignity, respect and decency at the Workplace.
+
+
+Objective of the Policy
+The objective of this Policy is to create and maintain a safe, secure and enabling working
+environment to every woman employee, irrespective of her age or employment status,
+where all employees treat each other with courtesy, dignity and respect without any
+discrimination on grounds of sexual orientation. The objective of the Policy is multifold:
+  1. Prevent Sexual Harassment at Workplace.
+ 2. Prohibit such misconduct by imposing certain obligations on the stakeholders.
+ 3. Provide redressal to the Complainant
+
+
+
+                               Lyzr AI India Private Limited.                                76
+In furtherance to the above, the Policy provides detail procedures to be followed when
+an employee believes that a violation of the Policy has occurred within the ambit of all
+applicable law regarding Sexual Harassment and provides for the constitution of
+appropriate committee to take action against sexual harassment at Workplace.
+
+
+Prevention of Sexual Harassment
+The present Policy is in accordance with the Sexual Harassment of Women at
+Workplace (Prevention, Prohibition & Redressal) Act, 2013 (“POSH Act”) and other
+applicable laws for the time being in force in India. Any matters not covered in this Policy
+shall be interpreted in accordance with the POSH Act.
+
+
+Commitment
+Lyzr and its affiliates, subsidiaries are committed to provide a work environment that
+ensures every employee is treated with dignity, respect and accorded an equitable
+treatment. The Company is committed to promote a work environment that is conducive
+to the professional growth of its employees and encourages equality of opportunity. The
+Company does not tolerate any form of Sexual Harassment and is committed to take all
+necessary steps, in accordance with the law, to ensure that
+  1. its women employees are not subjected to any form of Sexual Harassment; and
+  2. Its male employees are not victims of misuse of the Policy or the POSH Act by the
+     women employees.
+
+
+
+Scope
+  1. This Policy applies to all categories of employees of the Company, including
+     permanent management, temporaries, probationary or part-time or working as a
+    consultant or on a voluntary basis or ad-hoc basis, or engaged through a contractor
+    or agent, whether for a remuneration or not and includes apprentice, trainees,
+    interns and employees on contract at Company’s Workplace or at client sites. The
+    Company will not tolerate any kind of Sexual Harassment, if engaged in by any of its
+    employee, clients or by suppliers or any other business associates at Workplace.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  77
+2. The workplace shall mean to include (“Workplace”):
+    All offices of the Company, its affiliates and subsidiaries, or other premises where the
+    Company’s business is conducted including such premises, locations, branches
+   established, owned and/or controlled by the Company.
+   All Company-related activities performed at any other site away from the Company’s
+   premises; and
+   a dwelling place or home of any employee
+   any place wherein work-related event or activity whether conducted inside or
+   outside the office premises, during or after office hours
+   any place visited by the employee arising out of or during the course of employment,
+   and transportation provided by the Company for undertaking such journey; and
+   Any social, business or other functions where the conduct or comments may have
+   an adverse impact on the workplace or workplace relations.
+
+
+Sexual Harassment
+What is Sexual Harassment?
+ 1. Sexual Harassment would mean any or all unwelcome acts or behaviour (directly or
+    implied) which may occur within or outside the working hours whether in or outside
+    of the Workplace, including but not limited to includes such unwelcome sexually
+    determined behaviours, as physical contacts and advances, sexually coloured
+    remarks, showing pornography and sexual demands whether by words, gestures or
+    actions (“Sexual Harassment”). Such conduct can be humiliating and may constitute
+    a health and safety problem.
+ 2. Examples of Sexual Harassment shall include but is not limited to unwelcome sexual
+    advances involving verbal, non-verbal, or physical conduct such as sexually
+   coloured remarks, jokes, letters, phone calls, any form of messages, e- mail, lurid
+   stares, physical contact or molestation, stalking, sounds, display of pictures, signs,
+   verbal or non-verbal communication which offends the individual’s sensibilities and
+   affect her performance. Eve teasing, innuendos and taunts, physical confinement
+   against one’s will and likely to intrude upon one’s privacy.
+
+
+Quid Pro Quo
+Quid Pro Quo shall mean such form of Sexual Harassment, where a person or authority,
+usually the superior of the Complainant (defined below), demands sexual favours for
+getting or keeping a job benefit and threatens to fire or transfer etc. the employee if the
+demands conditions are not met.
+
+
+
+                               Lyzr AI India Private Limited.                                  78
+Creation of A Hostile Work Environment
+1. A hostile work environment arises when a co-worker or supervisor creates a work
+   environment through verbal or physical conduct that interferes with another co-
+   worker’s job performance or creates the Workplace atmosphere which is
+   intimidating, hostile, offensive or humiliating and experienced as an attack on
+   personal dignity. For example: an employee tells offensive jokes. Such acts may also
+   include the presence or circumstance of:
+
+
+      implied or explicit promise of preferential treatment in employment;
+      threat of detrimental treatment in employment;
+      threat about present or future employment;
+
+
+2. No person shall indulge or caused to be indulged under instructions from superior in
+   Sexual Harassment of co-workers. However, any woman employee who is sexually
+   harassed can complain about the same even if there is no adverse job consequence.
+
+3. It is discriminatory when the woman employee has reasonable grounds to believe
+  that her objection would disadvantage them in connection with employment,
+  including recruiting or promotion or when it creates a hostile working environment.
+
+
+Complainant and Respondent
+1. Complainant shall mean a woman, of any age whether employed or not, who alleges
+   to have been subjected to any act of Sexual Harassment by the Respondent
+   (“Complainant”). Respondent shall mean the person against whom the Complainant
+   has made a complaint (“Respondent”).
+
+2. Whether or not such conduct constitutes an offence under law and a breach of the
+   employment rules, the Company will ensure that any Complainant will not suffer
+  adverse job consequences as a result of any complaint being made against the
+  Respondent.
+
+
+
+
+                              Lyzr AI India Private Limited.                              79
+3. Internal Complaints Committee – “ICC”:
+  The Company shall form an Internal Complaints Committee for redressal of Sexual
+  Harassment complaints and for ensuring time bound treatment and resolution of such
+  complaints as per the POSH Act (“Internal Complaints Committee/ICC”). Initially, and
+  for a period of 3 years from the date of the appointment of the following members
+  (“Member”), the ICC will comprise of the following four Members:
+
+  Member 1: Siva Surendira, Founder and CEO, email: siva@Lyzr.ai
+
+
+  Member 2: Shalini Sunderraman, HR Director, email: shalini@Lyzr.ai (“Presiding
+  Officer”)
+
+  Member 3: Sejal Agarwal, Employee Experience Associate, email: sejal@lyzr.ai
+
+
+  Member 4: Vishaka Sivakumar - External Advisor/External Member, email:
+  vishaka@eshwars.com
+
+
+4. The Company shall have the right to reconstitute the ICC and shall notify the
+   employees of the same. The Members may be removed from their position, and the
+   ICC shall be reconstituted in any of the following cases:
+      If the Members contravenes the provisions of the Act; or
+      If the Member has been convicted for an offence or an inquiry into an offence
+      under law for the time being in force is pending against the Member; or
+      If the Member has been found guilty in any disciplinary proceedings or a
+      disciplinary proceeding is pending against the Member
+      If the Member has so abused his/her position as to render its continuance in office
+      prejudicial to the public interest
+
+
+5. The Internal Complaints Committee is responsible for:
+      Investigating every formal written complaint of Sexual Harassment
+      Taking appropriate remedial measures to respond to any substantiated
+      allegations of Sexual Harassment
+      Discouraging and preventing any Sexual Harassment at Workplace.
+
+
+
+
+                               Lyzr AI India Private Limited.                               80
+Procedures for Conciliation
+The Company is committed to provide a supportive environment to resolve concerns of
+Sexual Harassment as under:
+
+1. nformal Resolution Options/Conciliation:
+       When an incident of Sexual Harassment occurs, the woman employee of such
+       conduct can communicate her disapproval and objections immediately to the
+       harasser and request the harasser to desist from such conduct in the future.
+       If the Sexual Harassment does not stop or if the woman employee is not
+       comfortable with addressing the harasser directly, she can bring the concern to
+       the attention of the ICC for redressal of grievances. The ICC will thereafter provide
+       advice or extend support as requested and will do the needful to resolve the
+       matter between woman employee and the harasser through conciliation.
+       It is advisable that the woman employee keeps a record of incident i.e. date, place,
+       possible witness and file a complaint as soon as possible.
+      ICC shall ensure that no monetary settlement shall be the basis of conciliation.
+      ICC shall record the settlement terms so arrived and forward the same to the
+      Company.
+      Copy of settlement shall be given to the woman employee and the harasser.
+
+
+2. Procedure for complaints before the ICC:
+      Any of the Company’s woman employee with a Sexual Harassment concern, who
+      is not comfortable with the informal resolution option or has exhausted such
+      option, may make a formal complaint to the ICC in writing. The Complainant should
+      make a complaint within three months from the date of occurrence of the event or
+      in a case of series of incidents, within a period of three months from the date of the
+      last occurrence.
+      The complaint should be submitted in writing for it to be considered as formal and
+      for the ICC to probe and take the necessary actions. The Complainant may submit
+      the complaint in the form of a written letter, duly signed by the Complainant and
+      submit it to the ICC. Alternatively, the Complainant may also send an email to the
+      ICC. The Complainant should disclose her name, department, details of
+      Respondent, date of occurrence, place of occurrence in the complaint letter, along
+      with the evidences of harassment (if any) and/or witnesses in support of her
+      complaint. The Complainant can also take all reasonable assistance from any of
+      the ICC to make the complaint in writing and ICC shall render all reasonable
+      assistance to the Complainant for reducing the complaint in writing in case the
+      complaint cannot be made in writing by the Complainant.
+
+
+
+                               Lyzr AI India Private Limited.                                  81
+3. In case the Complainant is unable to make complaint on account of her physical or
+   mental incapacity, or death or otherwise, the following persons may make a
+   complaint on behalf of the Complainant:
+
+  i. In case of physical incapacity of Complainant:
+         her relative or friend; or
+         her co-worker
+         an officer of the National or State commission for Women
+         any person who has the knowledge of the incident, with written consent of the
+         Complainant
+
+  ii. In case of mental incapacity of Complainant:
+          her relative or friend; or
+          a special educator; or
+          a qualified psychiatrist or psychologist
+          the guardian or authority who is treating her or taking care of her
+          any person who has the knowledge of the incident jointly with any of the above
+          mentioned.
+
+
+4. If any complaints are received by any of the Member of the ICC, such Member is
+   obliged to bring it to the notice of the Presiding Officer immediately about the
+   information of receipt of the complaint.
+
+5. ICC shall on receipt of Complaint, shall proceed to make an inquiry on the complaint. A
+  quorum of at least 3 Members is required to be present for the proceedings to take
+  place. The quorum shall include the Presiding Officer and at least two members, one
+  of whom shall be a woman.
+
+6. Once the complaint is received by the ICC, the Respondent shall be served with a
+  copy of the complaint within 7 working days from receipt of complaint. It should also
+  be made clear that no act of retaliation or unethical action by the Respondent shall be
+  tolerated and that the Respondent should extend full support during the investigation
+  of the case. The Respondent shall file his reply to the complaint along with the
+  supporting documents, names and addresses of the witnesses within 10 working
+  days from the date of receipt of the documents from the ICC.
+
+7. The Complainant, Respondent, and the employees named as witnesses are bound to
+  appear before the ICC as and when called for during the hearings and shall always be
+  under oath. The complaint shall be decided ex-parte by the ICC if the Complainant or
+  the Respondent does not appear for 3 consecutive hearings.
+
+
+
+                              Lyzr AI India Private Limited.                                 82
+ 8. Both the Complainant and the Respondent will be questioned separately by the ICC
+    with a view to ascertain the authenticity of their contentions. Witnesses named if any,
+    shall also be questioned separately.
+
+ 9. The parties to the complaint are not allowed to bring any legal practitioner to
+   represent them in their case in any stage of the proceedings.
+
+10. ICC shall ensure that a fair and just investigation is undertaken immediately and shall
+   ensure that the inquiry into the complaint shall be completed within 90 days of the
+   date of complaint. ICC may take any action as may be necessary to grant any interim
+   relief to the Complainant.
+
+11. As an interim remedy, at the request of the Complainant, the ICC may recommend to
+   transfer the Complainant or the Respondent to any other Workplace; or grant leave up
+   to a period of 3 months; or restrain the Respondent from reporting on the work
+   performance of the Complainant.
+
+
+12. The Complainant and the Respondent shall be informed of the outcome of the
+    investigation. If the investigation reveals that the Complainant has been sexually
+    harassed as claimed, the Respondent will be disciplined accordingly. Disciplinary
+    action may result in any of the following:
+
+
+       formal written apology
+       suspension from services;
+       transfer;
+       withholding promotion;
+       termination; and/or
+       police complaint.
+
+
+13. In case the complaint is found to be false, the Complainant shall, if deemed fit, be liable
+    for appropriate disciplinary action by the ICC and the Company which may include all
+   of the actions mentioned hereinabove. The final decision shall be communicated to
+   the Complainant and the Respondent.
+
+
+
+
+                                 Lyzr AI India Private Limited.                                   83
+Points To Be Considered While Filing the Complaint:
+1. The ICC is not bound to accept oral complaints under this Policy and all the complaints
+  need to be in writing.
+
+2. The Complainant and the Respondent shall disclose the details of all witnesses
+  clearly and sufficient enough to enable the ICC to take action and call for the hearings.
+
+3. Any complaint filed without disclosing the name of the Complainant and the
+  Respondent cannot be taken into consideration.
+
+4. Company always promotes timely reporting of incidents. However, the ICC may
+  accept delayed complaints in case the Complainant has a valid and sufficient cause
+  for delay.
+
+
+5. Both the Complainant and the Respondent shall be given equal opportunity of being
+   heard during the course of inquiry and copy of the findings of the ICC shall be served
+   to both parties.
+
+
+
+Inquiry Process and Recommendations:
+1. The ICC shall have the powers of the civil court in deciding the complaint.
+
+2. Upon completion of the inquiry process, the ICC shall submit an inquiry report of its
+  findings to Company with a copy being served to Complainant and the Respondent.
+  The Company shall also send its recommendation on the action pursuant to its
+  inquiry.
+
+3. If the ICC arrives at the conclusion that the complaint against the Respondent is
+  proved, either through the course of the inquiry or through self-admission by the
+  Respondent, the ICC shall make recommendation to Company to take action against
+  the Respondent for misconduct, which action may be as under 9.2.11
+  Company shall then act upon the recommendation of the ICC within 60 days from the
+  receipt of such recommendation from ICC.
+
+4. Company shall fully cooperate with officials such as police, if necessary, in case of
+  complaint filed by the Complainant.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 84
+Appeal:
+Any person aggrieved under the inquiry process may prefer an appeal to the
+tribunal/appellate authority under the Industrial Employment (Standing Orders) Act,
+1946.
+
+
+Confidentiality:
+1. The Company understands that it is difficult for the Complainant to come forward with
+  a complaint of Sexual Harassment and recognizes the Complainant’s interest in
+  keeping the matter confidential. To protect the interests of the Complainant, the
+  Respondent and other witnesses, confidentiality will be maintained throughout any
+  investigatory process to the extent practicable and appropriate under the
+  circumstances.
+
+2. The following information are considered confidential (“Confidential Information”):
+      Contents of the complaint
+      Identity and addresses of the Complainant, Respondent and witnesses
+      Information relating to conciliation or inquiry proceedings
+      Recommendations of the ICC
+      Action taken by the Company
+
+
+3. Every individual in the Company including the Complainant, Respondent, witnesses
+   and the ICC, have an obligation to keep the Confidential Information as confidential
+  and shall not publish, communicate to the public, press or media in any manner.
+
+
+4. Any person who contravenes the confidentiality obligation shall be liable for penalty of
+   up to Rupees Five Thousand for such contravention.
+
+
+
+
+Access to Reports & Documents
+All records of complaints, including contents of meetings, results of investigations and
+other relevant material will be kept confidential by the Company except where
+disclosure is required under disciplinary or other judicial processes.
+
+
+
+
+                               Lyzr AI India Private Limited.                                 85
+Protection to concerned parties
+The Company is committed to ensuring that no Complainant who brings forward a
+Sexual Harassment complaint is subject to any form of reprisal. Any reprisal will be
+subject to disciplinary action. The Company will ensure that Complainants, Respondent
+or witnesses are not victimized or discriminated against while dealing with complaints of
+Sexual Harassment. However, anyone who abuses the procedure (for example, by
+maliciously putting an allegation knowing it to be untrue) will be subject to strict
+disciplinary action as further enumerated below.
+
+
+Complaints Made with A Malicious Intent
+1. This Policy has been evolved as a tool to ensure that in the interest of justice and fair
+   play, the Company’s employees have a forum to approach in the event of instances of
+   Sexual Harassment. However, if on investigation it is revealed that the complaint was
+   made with a malicious intent and with the motive of maligning the concerned
+   individual / tarnishing Respondent’s image in the Company and to settle
+   personal/professional scores, or that any employee has given false evidence in
+   support of the such cases, strict action will be taken against the Complainant.
+
+2. If the ICC arrives at the conclusion that the complaint was filed falsely or maliciously or
+  the evidence or document produced by the Complainant or the witnesses was forged
+  or misleading, the action against such employee may include, withholding of
+  promotion, pay rise or increments and go to the extent of terminating employment
+  with the Company.
+
+3. The malicious intent of the Complainant or the witnesses giving false evidence shall
+  be established after conducting an inquiry into the matter.
+
+
+Responsibility of Employees Regarding Sexual Harassment
+All employees of the Company have a personal responsibility to ensure that their
+behaviour is not contrary to this Policy. This Policy is deemed to be a part of the terms of
+employment of every employee. All employees are encouraged to reinforce the
+maintenance of a work environment free from Sexual Harassment.
+
+
+
+
+                                Lyzr AI India Private Limited.                                   86
+Policy Implementation & Review
+The Policy will be implemented and reviewed by the Human Resources Department of
+the Company. Any question or interpretation under this Policy will be handled by the
+Human Resources Department of the Company.
+
+
+
+Changes To Policy
+The Company reserves the right to amend, abrogate, modify, and rescind/reinstate the
+entire policy or any part of it at any given time. The changes to the Policy shall also be
+pursuant to any amendment in the provisions of the Act from time to time. The
+amended/modified policy shall be circulated to all the employees of the Company.
+
+
+
+Dissemination of The Policy
+A copy of this Policy shall be given to all employees and to all new recruits and they shall
+sign a statement acknowledging that they have received, read, understood and will
+abide by the Policy. The Company will take reasonable steps to ensure prevention of
+Sexual Harassment at Workplace which may include awareness training to employees,
+circulating applicable policies and other relevant information to all employees. The
+Company shall carry out orientation programs to all new employees/joiners as well to
+create awareness about the policy and its subject matter.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  87
+25. GENDER NEUTRAL POLICY
+
+
+
+
+OBJECTIVE
+Lyzr AI India Private Limited understands that sexual harassment of employees at the
+workplaceviolates the constitutional right to live with dignity, respect, and decency at the
+workplace. The objectiveof this policy is to create and maintain a safe, secure and
+enabling working environment for everyemployee, irrespective of gender (i.e.,
+woman/man/third gender/non-binary), age or employment status,where all employees
+treat each other with courtesy, dignity and respect without any discrimination
+ongrounds of sexual orientation.
+
+
+In furtherance of the above, the policy outlines the detailed procedures to be followed in
+the event anemployee faces sexual harassment in the workplace
+
+
+
+
+APPLICABILITY
+This policy will extend to all employees of the Company, whether permanent or
+temporary, probationary,part-time or working as a consultant or voluntarily or ad-hoc
+basis, or engaged through a contractor oragent, whether for remuneration or not and
+includes apprentice, trainee or intern, irrespective of thegender of the person
+(“Employee”).
+
+
+
+                               Lyzr AI India Private Limited.                                  88
+IMPORTANT DEFINITIONS
+
+a. “Aggrieved Person” means, in relation to a workplace, an Employee, of any age or
+   gender, whoalleges to have been subjected to any act of sexual harassment by the
+   Respondent”
+
+b. “Respondent” means the Employee against whom the Aggrieved Person has made
+     a complaint.
+
+c.   “Sexual Harassment” would mean any or all of the following unwelcome acts or
+     behaviour(directly or implied) which may occur within or outside the working hours,
+     whether in or outsideof the Workplace, including but not limited to
+
+     1. physical contact and advances
+     2. a demand or request for sexual favours;
+     3. making sexually coloured remarks;
+     4. showing pornography;
+     5. any other unwelcome physical, verbal, or non-verbal conduct of a sexual nature
+     6. any act or conduct by a person in authority which creates the environment at the
+        workplace,hostile or intimidating to an employee, such as the presence or
+        occurrence of circumstances of
+
+         implied or explicit promise of preferential treatment in employment;
+         threat of detrimental treatment in employment;
+         threat about present or future employment;
+         interference with work or an offensive work environment;
+
+     7. any other behaviour of a sexual nature that might reasonably be expected or be
+        perceivedto cause offence or humiliation or humiliating treatment likely to affect
+        the person’s healthor safety
+
+d.    “Workplace” shall mean any premises, location, office(s), branch(es) or unit(s)
+     established,owned and/or controlled by the Company, and shall also include a
+     dwelling place or home of any employee, any place wherein work-related event or
+     activity whether conducted inside or outsidethe office premises, during or after the
+     office hours and includes any place visited by theEmployee arising out of or during
+     the course of employment
+
+
+
+
+                               Lyzr AI India Private Limited.                                89
+REPORTING AND REDRESSAL PROCESS
+The Head of Human Resources (HR) shall address all cases or complaints of alleged
+sexualharassment submitted by any Aggrieved Person. An inquiry committee shall be
+constituted involvingthe HR Head and 3 other Employees (“Committee”) to inquire into
+and address such complaints. TheHead of HR shall head the Committee, and details of
+the composition of such Committee shall becommunicated to employees.
+
+The procedure to make complaints and the redressal process is as follows
+
+
+a. The Aggrieved Person may file a written complaint of sexual harassment with the
+   Committee eitherelectronically at shalini@lyzr.ai or by submitting a physical copy,
+   including their name and detailsof any witnesses, supporting documents and shall
+   contain sufficient information to enable theCommittee to initiate appropriate action
+
+b.    The complaint shall be filed within 3 months from the date of the incident. However,
+     the Committeemay accept a complaint filed beyond this period if the Aggrieved
+     Person demonstrates valid andsufficient cause for the delay
+
+c.    The Respondent shall file the reply to the complaint along with the supporting
+     documents, namesand addresses of the witnesses, if any, within 7 working days
+     from the date of receipt of thedocuments from the Committee
+
+d.    The Aggrieved Person, Respondent and the Employees named as witnesses are
+     bound to appearbefore the Committee as and when called for during the hearings.
+     The case shall be decided exparte by the Committee if the Aggrieved Person or the
+     Respondent do not appear for 3 consecutivehearings without sufficient cause.
+
+e.    The parties of the complaint are not allowed to bring any legal practitioner to
+     represent them intheir case at any stage of the proceedings
+
+f.    The Committee may, during the pendency of the inquiry, grant such interim relief to
+     the AggrievedPerson as it deems appropriate, based on the nature of the complaint
+     and the circumstances ofthe case
+
+g.    The inquiry into the complaint shall be completed within 90 days from the date of
+     receipt of thecomplaint. Upon completion of the inquiry, the Committee shall prepare
+     and submit its findings inthe form of an inquiry report. A copy of the inquiry report
+     shall be shared with the Aggrieved Person,the Respondent, and the HR Department.
+     The HR Department, in consultation with the Company,shall take appropriate action
+     based on the recommendations of the Committee within 10 days fromthe date of
+     receipt of the report
+
+
+
+                               Lyzr AI India Private Limited.                                90
+h. If the Committee arrives at a conclusion that the complaint against the Respondent is
+   proved,either through the course of the inquiry or through self-admission by the
+   Respondent, theCommittee shall make a recommendation to the Company to take
+   action against the Respondentfor misconduct, which action may also include the
+   following
+
+     1. To deduct such amounts from the salary of the Respondent as it may consider
+        appropriate andbe paid to the Aggrieved Person or to his/her legal heirs;
+     2. To withhold the promotion or pay rise, or increment to the Respondent;
+     3. Terminate the Respondent from the employment/services.
+     4. such other action that the Committee deems fit
+
+i.   The Parties may, at any stage of the inquiry and with the consent of the Aggrieved
+     Person, mutuallysettle the matter. Any such settlement shall be duly recorded in
+     writing, and a copy thereof shallbe submitted to the Committee for appropriate
+     closure of the complaint.
+
+
+
+ASSISTANCE FOR AGGRIEVED PERSON
+TO MAKE THE COMPLAINT
+The Committee shall render all reasonable assistance to the Aggrieved Person for
+reducing thecomplaint in writing in case the complaint cannot be made in writing by the
+Aggrieved Person. In theevent the Aggrieved Person is unable to make a complaint on
+account of physical or mental incapacity,death, or any other valid reason, a relative,
+friend, co-worker, or any person having knowledge of theincident may file a complaint
+on behalf of the Aggrieved Person.
+
+
+
+
+FALSE AND MALICIOUS COMPLAINTS OR FALSE EVIDENCE
+a. the Company shall take strict action against the complaints filed falsely or
+   maliciously by anyEmployee who either files the complaint or gives false evidence in
+     support of such cases.
+
+a. the Committee arrives at a conclusion that the complaint was filed falsely or
+   maliciously, or theevidence or document produced was forged or misleading, the
+     action against such Employeesmay include withholding of promotion, pay rise or
+     increments and go to the extent of terminatingthe employment with the Company.
+
+
+
+                               Lyzr AI India Private Limited.                              91
+c. the malicious intent of the Employee as indicated above shall be established after
+   conducting aninquiry into the matter.
+
+
+CONFIDENTIALITY
+All complaints, statements, and information related to cases of sexual harassment shall
+be treated asstrictly confidential. The identity of the Aggrieved Person, the Respondent,
+witnesses, and details ofthe proceedings shall not be disclosed to anyone not directly
+involved in the process, except as requiredby law or for the purpose of investigation and
+resolution of the complaint.
+
+
+POLICY IMPLEMENTATION & REVIEW
+The Policy will be implemented and reviewed by the Human Resources Department of
+the Company.The Company reserves the right to amend, abrogate, modify, and
+rescind/reinstate the entire policy orany part of it at any given time and provide notice of
+such changes to the employees. Any question orinterpretation under this Policy will be
+handled by the Human Resources Department of the Company.
+
+
+CHANGES TO POLICY
+Any changes to the policy pursuant to the amendment in the provisions of the Act shall
+be incorporatedin this policy from time to time. The amended/modified Policy shall be
+circulated to all the employeesof the Company.
+
+
+
+
+                               Lyzr AI India Private Limited.                                  92
+26. Equal Employment Opportunity
+
+
+
+
+Lyzr is an Equal Employment Opportunity Employer (EEO) and the policy of EEO and anti-
+discrimination applies to all aspects of the relationship between the Company and its
+Employees, including Recruitment, Employment, Promotion, Transfer, Training, Working
+Conditions, Wages and Salary administration, Employee benefits and application of
+policies.
+
+
+Managers are responsible for implementing equal employment practices within each
+department. The HR department is responsible for overall compliance and will maintain
+personnel records. Any discrimination is unwelcome that is based on race, colour,
+religion, sex, sexual orientation, gender identity or expression, pregnancy, age, national
+origin, disability status, genetic information, protected veteran status.
+
+
+Violations of this policy will not be tolerated. The Company will promptly, thoroughly and
+fairly investigate every issue that is brought to its attention in this area and will take
+disciplinary action, when appropriate, up to and including termination of employment.
+
+
+
+                              Lyzr AI India Private Limited.                                 93
+27. Jurisdiction
+Any disputes arising from this Employee Playbook, including the appointment letter, shall
+be subject to the jurisdiction of the courts located in the city of Lyzr’s Head Office,
+regardless of the employee’s state or country of residence.
+
+
+
+
+                              Lyzr AI India Private Limited.                                94
+Thank You!
+
+
+
+
+  Lyzr AI India Private Limited.   95
+
