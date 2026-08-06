@@ -1,6 +1,6 @@
 # GENERATED FILE - do not edit by hand.
 # Source PDF: knowledge/Lyzr - Agentic AI for Supply Chain.pdf
-# Regenerate:  bash knowledge/refresh_txt.sh
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/Lyzr - Agentic AI for Supply Chain.pdf" 2000000 > knowledge/agentic-ai-supply-chain.txt
 
                                                            S U P P LY C H A I N · P R O D U C T R E V I E W
 

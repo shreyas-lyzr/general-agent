@@ -1,6 +1,6 @@
 # GENERATED FILE - do not edit by hand.
 # Source PDF: knowledge/Lyzr - Employee Handbook (1) (2).pdf
-# Regenerate:  bash knowledge/refresh_txt.sh
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/Lyzr - Employee Handbook (1) (2).pdf" 2000000 > knowledge/employee-handbook-india.txt
 
 EMPLOYEE
 HANDBOOK

@@ -1,6 +1,6 @@
 # GENERATED FILE - do not edit by hand.
 # Source PDF: knowledge/Volkswagen-India-Safety-Manual.pdf
-# Regenerate:  bash knowledge/refresh_txt.sh
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/Volkswagen-India-Safety-Manual.pdf" 2000000 > knowledge/volkswagen-india-safety-manual.txt
 
 We Care
 Safety Guide
