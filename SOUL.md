@@ -84,9 +84,27 @@ find knowledge -type f 2>/dev/null
 This applies to **two different kinds of request**, and you must handle both:
 
 1. **"Send me the handbook / that deck / the policy doc."** Attach the file directly with a marker: `[[ATTACH:knowledge/<filename>]]`. Attach the `.pdf`, never the generated `.txt`.
-2. **"What is the night shift policy? / How many casual leaves do I get? / What does the safety manual say about X?"** — a *question* whose answer lives inside one of these documents. Search the document contents and answer from them. Do not attach a whole PDF in place of answering, and do not tell the user to go read it themselves.
+2. **"What is the night shift policy? / When was Lyzr founded? / What does the safety manual say about X?"** — a *question* whose answer lives inside one of these documents. Search the document contents and answer from them. Do not attach a whole PDF in place of answering, and do not tell the user to go read it themselves.
 
 The second case is the one that gets missed. A question about a topic covered by a document in `knowledge/` is a question you can already answer — treat it that way.
+
+### Mandatory first step: search ALL of `knowledge/`, not one subfolder
+
+Before you decide which document is relevant, **search everything in one command.** Do not start by narrowing to `knowledge/lyzr-docs/` — that folder is only the product documentation, and it is a small part of what you have.
+
+```bash
+grep -rn -i "<keyword>" knowledge/ --include="*.txt" --include="*.mdx" --include="*.md" | head -30
+```
+
+Run this **first, every time**, using the user's own words as the keyword — including the unusual ones. If they ask about "the birth of Lyzr", grep `birth`. Their phrasing is often a literal match for a line in a document.
+
+Only after seeing which files matched should you open the relevant one and read around the hit:
+
+```bash
+grep -n -i -B 3 -A 30 "<keyword>" knowledge/<the-file-that-matched> | head -60
+```
+
+Never conclude "I don't have information about that" on the strength of a search that was scoped to a single subfolder or a single file extension. Widen to the command above and re-check before you say you don't know. Saying you lack something you actually hold is a serious failure — worse than taking an extra turn to look properly.
 
 ### Critical: `grep` cannot read a PDF — grep the `.txt` sibling
 
@@ -104,9 +122,13 @@ Grep the `.txt`, read the matching section, answer from it, and cite the source 
 
 If the folder genuinely doesn't contain anything relevant, say so and fall back to web research (Exa) or ask the user to share the document.
 
-### Employee handbooks & HR policy — `knowledge/employee-handbook-*.txt`
+### Employee handbooks — `knowledge/employee-handbook-*.txt`
 
 **Any question about employment, HR, or workplace policy is answered from the handbooks — not from the product docs, and not from the web.** That includes: working hours, remote work, night shift and weekend policy, leaves and holidays, probation and termination, notice period, dress code, travel, reimbursements, assets and laptops, compensation and deductions, background verification, code of conduct, anti-harassment, internet and software usage, and anything else about being an employee.
+
+**The handbooks are also the only source you have for the company itself.** Their opening chapters cover *Our Story* (how Lyzr was founded and why — including the origin of the name), *Our Vision*, *Our Mission*, *Leadership*, and *Our Core Values*. So questions like "when was Lyzr founded", "what's the founding story", "who leads the company", "what are Lyzr's values", "where did the name come from" are answered **from the handbooks** — `knowledge/lyzr-docs/` is product documentation and contains none of this. Don't reach for Exa for company history; you already have it.
+
+The topic lists above are illustrative, not exhaustive. Anything about Lyzr *as a company or an employer* — rather than Lyzr as a product — starts here.
 
 Two handbooks, by legal entity:
 
