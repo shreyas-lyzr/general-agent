@@ -1,0 +1,1636 @@
+# GENERATED FILE - do not edit by hand.
+# Source PDF: knowledge/Volkswagen-India-Safety-Manual.pdf
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/Volkswagen-India-Safety-Manual.pdf" 2000000 > knowledge/volkswagen-india-safety-manual.txt
+
+We Care
+Safety Guide
+Steer in the right direction.
+Steer towards safety.
+Preface
+
+
+
+
+          Your safety is of utmost significance to us. It will not be a
+          tall claim to say that Volkswagen is synonymous with
+          safety. To make sure that you are safe when you are in
+          one of our cars, we subject all our cars to rigorous tests.
+
+
+          At Volkswagen, we believe in both prevention and
+          protection. Our thoughtful features of active and passive
+          safety along with features added especially for children
+
+
+          highlight this philosophy. The Taigun, for instance, comes
+          with 40+ world-class safety features. And has recently
+          been awarded a prestigious 5-star Global NCAP safety
+          rating. Making it India's Safest SUVW. A reflection of the
+          uncompromising standards that make a Volkswagen, safe
+          like a Volkswagen.
+
+
+          Build Quality, Safety & being Fun-to-drive are part of
+          Volkswagen’s core DNA. And is integral to everything we
+          do. It is safe to say that once inside a Volkswagen, you're
+          in safe hands. Browsing this safety guide will acquaint
+          you with the features designed to protect you.
+Contents
+
+Introduction                                                                                                                                                  1
+
+Active Safety                                                                                                                                                 4
+       Electronic Stabilisation Control – ESC
+       Anti-lock Braking System – ABS
+       Traction Control System – TCS
+       Electronic Brake Force Distribution – EBD
+       Parking Sensors
+
+Passive Safety                                                                                                                                               12
+       Seatbelt
+       Supplemental Restraint System - (SRS) Airbags
+       Child Seats
+       Child Door Lock
+       Chassis, Stiff Roof And Crumple Zones
+
+Customer Safety Precautions                                                                                                                                  28
+       Safety Through Service Maintenance
+       Safety by Using Genuine Parts
+       Explanation of Dashboard Symbols
+       Seasonal Safety Tips Maintaining safety on the Road
+
+EURO NCAP Safety Standards                                                                                                                                   40
+
+FAQs                                                                                                                                                         41
+
+Important Contact Details                                                                                                                                    42
+
+Terms & Conditions                                                                                                                                           43
+
+
+
+
+This manual is for guidance and reference purposes only. Features mentioned in this manual may not be available in all models /variants. Kindly refer your
+owner’s manual for further details.
+Introduction
+
+
+
+
+Why only Volkswagen can build a Volkswagen
+
+                                     Less of a car. More of an armour.
+                                     Carved out of galvanised steel, sourced from the finest steel makers in the world,
+                                     Volkswagen cars are sturdier and safer by far. They also come with a 6-year
+                                     anti-perforation warranty.
+
+
+                                     Sturdy as shell.
+                                     A roof laser welding process seamlessly welds the roof to the body of the car, creating a
+                                     dampness-proof flawless beauty.
+
+
+                                     Even our paints make the car stronger.
+                                     Every Volkswagen car undergoes a unique 11-stage preparation process of chemicals
+                                     and paints. This entire procedure ensures stone chip resistance, colour adhesion, UV
+                                     protection and anti-corrosion.
+
+
+                                     Destruction test room.
+                                     At Volkswagen we not only assemble a car, but also tear it apart. It is done in a special
+                                     chamber called the destruction test room. This is done with a car of every model, every
+                                     month; just to make sure that every part of the car complies with the most stringent
+                                     Volkswagen standards of quality and safety.
+
+
+                                     Advanced machines to help make advanced marvels.
+                                     It’s not just people that work to achieve the perfect body. At Volkswagen, inline
+                                     measurement robots, with camera lens attached, measure the body accuracy of every
+                                     car. Zero error body means a rigid and compact car that feels like new for years. Anything
+                                     other than perfect and immediate corrective action is carried out.
+
+
+
+
+                                                                                                                                  1
+Subject to respective Warranty Terms and Conditions
+Safety Features
+
+
+
+
+ Robust Body Structure                         Roll Over Protection
+
+ Anti-lock Braking System (ABS)                Up to 6 Airbags
+
+ Electronic Brake Force Distribution (EBD)     Tire Pressure Deflation Warning
+
+ Hydraulic Brake Boosting                      Auto-Dimming IRVM
+
+ Brake Assist (BA)                             3-point Seatbelts for All Occupants
+
+ Brake Disc Wiping                             Park Distance Control & Rear-View Camera
+
+ Multi Collision Brakes                        Child Seat Mount
+
+ Electronic Stability Control                  3 Rear Head Restraints
+
+ Hill Hold Control                             Emergency Door Locking/Unlocking
+
+ Traction Control System                       Rain/Light Sensor
+
+ Electronic Differential Lock (EDS with XDS)   Auto Coming/Leaving Home Lights
+
+ Advanced Differential Lock (EDS with XDS+)
+
+
+
+
+                                                                                          2
+Defining Safety
+Active Safety
+
+All systems which actively intervene to help defuse critical driving situations and prevent accidents from happening
+come under the heading of active safety.
+
+Driver assistance systems such as ESC, Brake Assist, Front Assist and Side Assist are of central importance in this
+respect. The active safety systems include the following systems, for example:
+   Electronic Stabilisation Control - ESC                                          EDS with XDS
+   Anti-lock Braking System - ABS                                                  EDS with XDS+
+   Traction Control System - TCS                                                   Roll over protection
+   Electronic Brake Force Distribution - EBD                                       Tire pressure deflation warning
+   Parking Sensors                                                                 Auto dimming IRVM
+   Hydraulic Brake Boosting                                                        Rain/light sensors
+   Brake Assist, Brake disc wiping                                                 Park distance control with rear view camera
+   Hill Hold
+
+
+
+
+Passive Safety
+Passive safety refers to all design engineering measures which serve to protect vehicle occupants from external
+impacts and to minimize the risk of injuries in the event of an accident.
+
+It refers particularly to what happens in the event of a collision and includes the protection of other road users (partner
+protection).
+
+Besides the seat belt system, the most important passive safety features in our cars include the airbags, the
+"deformation-resistant" occupant cell and the front and rear deformation zones. These provide a substantial amount of
+protection for passengers by dissipating the impact energy. Taken together with the active safety aspects.
+
+The most important passive safety features in modern vehicles include:
+   Seatbelts                                                                     Multi collision brakes
+   Supplemental Restraint System - (SRS) Airbags                                 3 point seatbelts for all
+   Child Seats                                                                   Adjustable head restraints for all
+   Chassis, Stiff Roof and Crumple Zones                                         ISOFIX child seat anchors
+
+
+
+
+The combination of active and passive safety features helps to ensure optimum protection for all occupants of the vehicle.
+
+
+
+Airbags are designed for Adult occupant protection only. Always use seat belts as primary safety measure.
+
+                                                                                                                                 3
+Active Safety
+
+
+
+
+                4
+Electronic Stabilisation Control (ESC)
+
+
+
+
+                                                                                                                     Have a safe drive,
+                                                                                                                     no matter what
+                                                                                                                     the surface.
+
+
+Functionality
+Our Electronic Stabilisation Control (ESC) detects critical situations at an early stage, and takes action to stop skidding
+and help bring your car safely back under control.
+
+
+
+Safety Tips
+    Apply brakes on turnings to avoid accidents.
+    Always use brakes before sharp turns, so that the car doesn’t lose control.
+    The systems ABS, BAS, TCS and EDL are integrated in the ESC. The ESC is always switched on. In certain situations
+    when the traction achieved is not sufficient, ESC can be switched off by pressing the button in the infotainment
+    system. Always ensure that ESC is switched back on again, once traction is sufficient.
+
+
+
+
+Impact - With ESC                                                                  Impact - Without ESC
+
+
+
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner’s manual for further details.
+
+                                                                                                                                          5
+Anti-lock Braking System (ABS)
+
+
+
+
+Brakes that aid maneuverability.
+
+
+Functionality
+The ABS prevents the wheels from locking when the brakes are applied up until the point where the vehicle is nearly
+stationary and assists the driver in steering the vehicle and keeping it under control. This means that the vehicle is less
+likely to spin, even when the brakes are fully applied.
+
+
+
+Safety Tips
+   The ABS is not functioning correctly if the ABS indicator lamp does not go out or comes on whilst the vehicle is in
+   motion. The vehicle can be stopped using the normal brakes only (without ABS). The protection provided by ABS is
+   no longer available. Go to a qualified workshop as soon as possible.
+
+   Depress and hold the brake pedal with force. Do not take your foot off the brake pedal or reduce the force on the
+   brake pedal.
+
+
+
+
+     Impact - With ABS
+
+
+
+
+                                                                                         Braking Point
+     Impact - Without ABS
+
+
+
+
+                                                                                                                              6
+Anti-lock Braking System (ABS)
+    Do not ‘pump’ the brake pedal or reduce the pressure on the brake pedal.
+
+    Steer the vehicle whilst the brake pedal is fully depressed.
+
+    The ABS will switch off when the brake pedal is released or if the pressure on the brake pedal is reduced.
+
+    If the ABS fails, the ESP, TCS and EDL will also cease to function.
+
+
+
+Important Notes:
+    On certain surfaces, such as gravel or firm ground covered by snow, the standards of ABS system may have the
+    effect of increasing the braking distance.
+
+    A sensor mounted in the brake pad that warns you when the pads have worn to the point where they need
+    replacing. When this happens the sensor is ground against the brake disc and a warning light comes on in the
+    instrument panel.
+
+    Driving with worn brake pads or with a faulty brake system can cause accidents and serious injuries.
+
+
+
+
+                                Braking distance               Braking distance with old/worn
+                                with a fully                   or inferior quality brakes
+                                functional brake.
+
+
+
+
+                                                                                               Oblique wear, tangential (mm) / Total wear (g)
+
+                                                                                               0     20    40    60    80    100   120    140
+
+
+                                                           The lower the wear, the
+                                                           longer the service life.
+                                                           The faster a brake pad
+                                                           degrades, the sooner it
+                                                           needs to be changed.
+
+
+
+
+                                                                                               0    0.2    0.4   0.6   0.8    1     1.2   1.4
+
+
+
+
+Observation: When the ABS is taking corrective actions, there is a pulsing movement in the brake pedal with some noise which is usual
+in ABS functioning.
+
+
+
+
+                                                                                                                                                7
+Traction Control System (TCS)
+
+Maintains traction
+for a safe driving
+experience.
+
+
+
+
+Functionality
+The TCS reduces the engine output if wheel spin occurs and adapts the output to suit road surface conditions.
+TCS helps the car to start moving, accelerate and climb gradients in unfavorable road conditions.
+
+
+
+Safety Tips
+    The TCS can be switched on and off manually.
+    When the engine is running, the TCS can be switched off by pressing the button OFF.
+    The TCS should only be switched off in situations when the traction achieved is not sufficient. For example:
+
+
+
+
+When driving in deep snow or on loose surfaces.                                    When ‘rocking’ the car backwards and forwards
+                                                                                   to free it from mud.
+
+
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner’s manual for further details.
+
+
+
+
+                                                                                                                                          8
+Electronic Brake Force Distribution (EBD)
+
+
+
+
+Balanced and efficient braking, always.
+
+
+Functionality
+Every car’s centre of gravity shifts forward when you brake. This creates a reduction in grip which can cause the rear
+wheels to lock. EBD ensures maximum braking performance on all wheels and prevents the rear end from swerving
+out because of over-braking at the rear wheels.
+
+
+
+
+   Impact - With EBD
+
+
+
+
+                                                                                                         Shorter stopping distance
+   Impact - Without EBD
+
+
+
+
+                                                                                        Longer stopping distance
+
+
+
+
+Important Note
+Electronic brake force distribution operates as part of the ABS function. The EBD operating range ends at the point
+where ABS control cuts in.
+
+
+
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner’s manual for further details.   9
+Parking Sensors
+
+
+
+
+Functionality
+City driving often finds drivers having to manoeuvre their cars into tight parking spots. This sometimes results in minor
+damages. Parking sensors make your job easier by warning you when you’re getting too close to something, thus
+preventing small knocks and scratches.
+
+
+Impact - With Parking Sensors                                                      Impact - Without Parking Sensors
+
+
+
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner's manual for further details.
+
+                                                                                                                                          10
+Parking Sensors
+Safety Tips
+    Never park the vehicle so that parts of the exhaust system can
+    come into contact with any inflammable material underneath the
+    vehicle, e.g. leaves, dry grass, spilt fuel.
+
+
+
+
+    Always apply the handbrake fully when the vehicle is parked.
+
+
+
+
+    When facing uphill, turn the wheels so that they face the centre of the road.
+
+    The convenient Hill Hold Control function prevents your car from rolling back
+    when pulling away on a slope or during a hill start.
+
+    The Hill Hold Control operates for approximately two seconds.
+
+
+
+    When facing downhill, turn the wheels so that they face the kerb.
+
+    The Hill Hold Control function in specific models allows you to drive down
+    slopes in a safe, controlled way in first gear, thanks to the engine's ability to
+    govern the engine speed and apply the brakes if necessary. Hill Hold Control
+    lets you negotiate extremely steep drops simply and safely. Your car's speed
+    is maintained at a constant crawling pace without you having to do anything.
+
+
+
+Important Notes
+Drive carefully over driveways, ramps, kerbstones and other objects. Low-lying vehicle components such as the
+bumper, parts of the running gear, engine or exhaust system could be damaged.
+
+
+
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner’s manual for further details.
+
+                                                                                                                                          11
+Passive Safety
+
+
+
+
+                 12
+                      2
+Seatbelts
+
+
+
+
+                                                                                  Buckle up your safety.
+
+
+Functionality
+Seatbelts, generally known as ‘safety belts’, serve to safeguard passengers in case of collision, accidents or sudden
+braking. It saves passengers from major injuries. Abiding by the Indian law and always wearing seatbelts while driving
+results in reduced risk of injuries.
+
+
+Safety Tips
+   Seat belts are the most effective means of reducing the risk of serious and fatal injuries in the case of an accident.
+   For the protection of the driver and of all vehicle occupants, the seat belts must always be fastened properly when
+   the vehicle is in motion.
+   Never travel with children or babies being carried on somebody's lap and fastened with the same belt.
+
+
+Impact - With Seatbelt                                           Impact - Without Seatbelt
+
+
+
+
+                                                                                                                            13
+Seatbelts
+Impact Without Seatbelts
+
+
+
+
+Driver not wearing a seat belt is thrown forward.         The unbelted rear passenger is thrown forward
+                                                          violently, hitting the driver wearing a seat belt.
+
+
+
+Correct Seating Position
+
+
+
+
+Correct adjustment of the seat belt and head restraint.   There must be a distance of at least 25 cm
+                                                          (10 inches) between the driver and the steering wheel.
+
+
+
+
+Correct seating position to have optimum safety.          Correct position of seat belts during pregnancy.
+
+
+                                                                                                                   14
+Seatbelts
+
+Important Notes
+Seat belts will offer an optimum level of protection during an accident only when they are positioned correctly.
+A correctly positioned seat belt reduces the risk of severe or fatal injuries. A correctly positioned seat belt also
+holds the vehicle occupants in position so that an inflating airbag can offer the maximum level of protection.
+Therefore you must always fasten seat belts and make sure that they are positioned correctly. An incorrect sitting
+position can cause severe or fatal injuries.
+
+
+
+
+                                                                                                                       15
+Supplemental Restraint System -
+(SRS) Airbags
+
+
+
+
+Your safety is our utmost concern.
+
+
+
+Functionality
+The airbags can protect vehicle occupants during frontal and side collisions by reducing the occupants’ movements in
+the direction of the collision. Each triggered airbag is filled by a gas generator. This causes the airbag covers to break
+and the airbags are inflated with high power in milliseconds. Once an occupant wearing a seat belt starts to sink into
+the inflated airbag, the gas inside the airbag starts to escape to cushion the occupant and slows downtheir movement.
+This reduces the risk of severe and fatal injuries.
+
+
+Specifics
+  A triggered airbag will not always prevent other injuries from occurring, such as swelling, bruising, burning and
+  grazing. Airbags provide no protection for arms or the lower part of the body.
+  The most important factors for triggering the airbag are the type of accident, the angle of impact, the vehicle speed
+  and the type of object with which the vehicle collides. This means that visible damage to the vehicle does not always
+  mean that the airbag should have been triggered.
+
+
+
+
+Location and deployment range of                                   Location and deployment range of
+driver airbag                                                      front passenger airbag
+
+Images are for representative purpose only.                                                                                  16
+Supplemental Restraint System -
+(SRS) Airbags
+Safety Tips
+  The airbag system is designed so that the airbags are triggered in a severe collision. In certain types of accident
+  the front, curtain and side airbags may be triggered together. The extent of visible vehicle damage does not
+  indicate whether the airbags should have been triggered.
+
+  Airbags only serve as a supplement to the three-point seat belt.
+
+  Airbags can only be triggered once and only in certain situations.
+
+  The seat belts are always there to provide protection in situations when the airbags are not triggered or have
+  already been triggered. For example, when the vehicle collides with a further vehicle following a first collision
+  or is hit by another vehicle.
+
+Up to a speed of approx. 56 kmh, a period of approx. 150 milliseconds pass betweenthe point of impact against
+a rigid obstacle and the vehicle being stationary. Within the blink of an eye, the seatbelt pre-tensioners, the airbags
+and the battery cut-off (if fitted) are activated. These actions are controlled by the airbag control unit.
+Upon completion of these protective functions, the airbags collapse, clearing the field of visibility in the front.
+
+
+
+
+         Front
+
+       passenger
+
+
+
+
+         Driver
+
+
+
+
+ Above illustration shows the principle sequence of driver and front passenger airbag and seat-belt pre-tensioner deployment. Differences may occur
+ depending on the vehicle model and actual driving conditions.
+
+
+
+
+Impact - With Airbags                                                              Impact - Without Airbags
+                                                                                                                                                      17
+Supplemental Restraint System -
+(SRS) Airbags
+The airbag system is part of the vehicle's overall passive safety concept. The airbag system can only work effectively
+when the occupants are wearing their seat belts correctly and have assumed a proper sitting position as explained
+in the Seatbelts section of this manual.
+
+Situations when the front and side airbags will not be triggered
+  If the ignition is switched off during a collision
+  If the level of deceleration measured by the control unit is too low during a collision at the front of the vehicle
+  During a minor side collision
+  During rear collisions
+  If the vehicle rolls over
+  If the speed on collision is lower than the reference value specified in the control unit
+
+
+
+
+      Airbags sometimes do not deploy even when a vehicle collides with a solid object and if the impact
+      threshold do not reach the Airbag.
+
+      (Airbag deployment speed depends on the vehicle model. Please refer to the owner’s manual of your car.)
+
+
+
+
+       Airbags in a stationary vehicle may not deploy, even      Airbags deploy more quickly and vehicles are damaged
+       when struck head on by another vehicle of roughly         more severely than described above, when the impact
+       equal weight travelling at 50-60 km/hr.                   is off centre or from an angle.
+
+
+
+
+                                                                                                                         18
+Supplemental Restraint System -
+(SRS) Airbags
+Why don’t airbags deploy in low speed accidents?
+
+
+
+
+If an airbag deploys in a low-speed                                              1
+impact, its effectiveness in a
+subsequent severe collision will be
+lost. An airbag can only deploy
+                                                                                          2
+once, it will not re-deploy in a
+second impact, as shown in the
+image below.
+
+
+
+
+Driver and passenger seat airbags (SRS) may not demonstrate their primary effectiveness
+if collided in instances such as those below:
+
+
+
+
+In rear-end collisions
+
+
+
+
+In rolls and turnovers
+
+
+
+
+                                                                                              19
+Supplemental Restraint System -
+(SRS) Airbags
+Types of front passenger front airbag systems
+
+
+                Volkswagen offers two different front airbag systems for front passengers:
+
+                             A                                                              B
+
+    Features of the front passenger front airbag that                                     Features of the front
+    can only be switched off by a qualified                                               passenger front airbag
+    workshop.                                                                             that can be switched off
+                                                                                          manually using the
+                                                                                          key-operated switch.
+
+
+
+    • Indicator lamp on the instrument cluster display.            • Indicator lamp on the instrument cluster display.
+    • Front passenger front airbag in the dash panel.              • Indicator lamp PASSENGER AIR BAG OFF in the
+                                                                   top area of the centre console.
+                                                                   • Key-operated switch in the stowage
+                                                                   compartment in the dash panel on the front
+                                                                   passenger side.
+                                                                   • Front passenger front airbag in the dash panel.
+
+
+
+                                                                   Name: airbag system with front passenger
+    Name: airbag system.
+                                                                   airbag deactivation.
+
+
+
+
+Important Notes
+
+ The vehicle is equipped with a front airbag for the driver and passenger. The front airbags can provide the front
+ seat occupants additional protection for the chest and head if the seat, the seat belts and the head restraints
+ and the steering wheel for the driver are adjusted and used correctly. Airbags are meant only for additional
+ protection. The airbag system is not a substitute for the seat belts.
+
+ Belts must always be worn, even when the front seats are equipped with airbags.
+ The front passenger airbag may deploy during an accident in spite of the fault.
+ If there is a fault in the airbag system, the airbag may not trigger correctly, may not trigger at all or may trigger
+ unexpectedly. This could cause severe or fatal injuries.
+    a. The airbag system should be checked by a qualified workshop as soon as possible.
+    b. Never fit a child seat to the front passenger seat or remove a child seat that is already fitted!
+
+
+
+
+                                                                                                                         20
+Child Seats
+
+
+
+
+  Child safety. Our priority.
+
+
+Functionality
+Your child's safety is a priority - for you, as well as for us. That's why we use ISOFIX child seat fittings in specific
+Volkswagen cars. ISOFIX is being adopted worldwide as a safer way to travel with your children. Child seats provide
+extra care and protection due to their solid built.
+
+
+Integrated
+ Functionality
+           child seats
+Depending on equipment, certain vehicle models may be fitted with integrated child seats for the two outer seats on
+the rear seat bench. These seats are suitable for children aged between 3 and 12 years. Thanks to their fixed
+installation in the vehicle seat, together with a correctly worn seat belt, integrated child seats offer children very good
+protection in the event of a crash.
+
+
+
+
+                                                                                                                                      Marking
+                                                                                                                                      for the
+                                                                                                                                      lower child seat
+                                                                                                                                      anchoring
+                                                                                                                                      points
+                                                                                                                                      in the vehicle
+                                                                                                                                      seat
+
+
+
+
+ISOFIX system
+If vehicles are equipped with the ISOFIX system, separate child seats with ISOFIX brackets can be used. In this system,
+special brackets on the child seat are attached into the ISOFIX anchorage points in the vehicle.
+This connection securely holds the child seat in place. The two outer rear seats and also the front passenger seat can
+be used for the ISOFIX system.
+
+Features mentioned in this section may not be available in all models / variants. Kindly refer your owner’s manual for further details.
+                                                                                                                                                         21
+Child Seats
+Safety Tips
+
+  If child seats are to be used on the front passenger seat, the instructions in owner’s manual must be
+  observed under all circumstances.
+  Particular attention must be paid to deactivating the front passenger airbag when using child seats which
+  face backwards.
+  Volkswagen recommends using child seats from Volkswagen's range of accessories. These child seats
+  were developed and approved for use in Volkswagen vehicles.
+  Children up to 12 years of age should always be transported in the rear seat.
+  Child seats for the various different securing systems are available from a Volkswagen dealer.
+
+Impact - With Child Seat                                         Impact - Without Child Seat
+
+
+
+
+Always put your child in a child seat in the rear seat.
+Don't let children move about in a moving vehicle. Never let a child
+stand on, or below, or sit without a seatbelt, in the front passenger seat
+of a vehicle equipped with a passenger-side airbag! It is extremely
+dangerous. In the sudden braking before a collision, the unrestrained
+child will be flung head first into the dashboard, then thrown backward
+by the rapid and forceful inflation of the airbag possibly causing
+life-threatening injuries.
+
+
+
+Never place a rear-facing baby seat or
+child seat in the front passenger seat.
+When a rear-facing baby seat or child seat is attached to the front
+passenger seat and the airbag deploys, the airbag will forcefully
+impact the back of the baby or child seat possibly causing
+life-threatening injuries.
+
+
+
+
+Holding a child in your lap while a vehicle is in
+motion is extremely dangerous. Don't do it.
+In a collision you cannot protect a child by holding her.
+During a 50 km/hr collision, the sudden impact will in effect increase
+the child's weight 30-fold. A 10 kg child will become 300 kg more
+weight than the arms can handle. Also, the child may be forcefully
+thrown from the vehicle.
+
+
+                                                                                                              22
+Child Door Lock and
+Central Locking System
+
+
+
+
+Double protection for your child.
+
+
+
+Functionality
+The child safety lock is on the side of each rear doorframe. When activated, the doors can only be opened from
+outside. The central locking system enables you to lock and unlock all the doors and the boot lid from one point:
+ • From outside the vehicle with the vehicle key
+ • From inside the vehicle with the central locking button
+
+Certain functions for the central locking system can be switched on or off by a qualified workshop. The doors and
+the boot lid can be locked or unlocked manually if the vehicle key or central locking system fails, locking the vehicle
+after the airbags have been deployed.
+
+The entire vehicle is unlocked if the airbags are activated during an accident. Depending on the level of damage, the
+vehicle can be unlocked after an accident as follows:
+
+
+                       Function                                                         Action
+
+                                                                     Switch the ignition off and then back on again.
+         Locking the vehicle from Inside
+                                                                     Press central locking button
+
+
+
+                                                                     Switch the ignition off and then back on again.
+                                                                     OR: Remove the vehicle key from the ignition lock.
+         Locking the vehicle from Outside
+                                                                     Open a vehicle door once.
+                                                                     Lock the vehicle using the vehicle key.
+
+
+
+                                                                                                                          23
+Child Door Lock and
+Central Locking System
+
+
+
+
+Safety Tips
+
+   When the childproof lock is activated, the door cannot be opened from the inside. Never leave children
+   or disabled people alone in the vehicle when the doors are locked. This may mean that these people lock
+   themselves in the vehicle. They could become trapped in the vehicle in an emergency and will not be able to get
+   themselves to safety.
+
+   Persons locked in the vehicle may be subjected to very high or very low temperatures. Depending on the time
+   of year, a locked vehicle can be subjected to very high or very low temperatures. This could cause serious injuries
+   and illnessor fatalities, especially for small children.
+
+
+
+
+Important Notes
+
+Improper use of the central locking system could cause serious injury. The central locking system locks all doors.
+Locking the vehicle from the inside may prevent the doors from being opened unintentionally and unauthorised
+persons from entering the vehicle. However, locked doors can delay assistance to passengers inside the vehicle in the
+event of an accident or emergency.
+
+
+
+
+                                                                                                                         24
+Child Door Lock and
+Central Locking System
+Child safety points to remember
+
+
+                                                          Do not leave a child unattended in a vehicle,
+                                                          even for a short time.
+                                                          In any season not just summer the interior temperature
+                                                          of vehicle parked in sunlight can become very high,
+                                                          and an unattended child can suffer heatstroke. Also, the child
+                                                          could be abducted or involved in an unexpected accident, so
+                                                          don't just turn on the air conditioner and leave a child alone.
+
+
+
+
+             Don't let a child play with the harness straps on the child seat.
+      A child who becomes entangled in the harness straps on the child seat
+  when playing may be choked or otherwise seriously injured if the fasteners
+ become so tight they cannot be loosened. Should this occur, cut the harness
+                                    straps with scissors or other sharp tool.
+
+
+
+
+                                             Don't let a child play with windows, doors, sunroofs, etc.
+                                             A child can be seriously injured when a window, door, or sunroof is closed
+                                             on a hand or other part of the body. Be sure the child's hands, head, and
+                                             all other parts of the body are clear of these areas before closing them.
+                                             Also, be sure to use the window lock switch.
+
+
+
+
+               Don't let children or other passengers stick their heads or
+                                       hands out of windows or sunroofs.
+
+  Serious injury could result if they were struck by something outside the
+                            vehicle or if the brakes were suddenly applied.
+
+
+
+
+                                                                                                                            25
+Chassis, Stiff Roof and
+Crumple Zones
+
+
+
+
+Functionality
+The chassis of your car comprise of functional elements, including the frame, suspension, steering components,
+power train, brakes and fuel system. The strength of our body chassis significantly improves control by providing
+a rigid platform for mounting suspension components.
+
+An indispensable part of the geometry and structure of our cars. They help to maintain the structural integrity of the
+roof as well as complete the car's safety cell.
+
+Crumple zones are designed to absorb impact energy during a collision so that most of the energy is dissipated across
+these zones, and not in your passenger compartment. The strong outer shell comes with front and rear crumple zones
+that help to absorb the impact of a crash, increasing the safety of occupants.
+
+
+
+Safety Tips
+
+  Galvanised Steel
+
+  Side Impact Crossbars
+
+
+
+
+                                                                                                                         26
+Chassis, Stiff Roof and
+Crumple Zones
+Additional safety by door mechanism and steering sense
+Volkswagen cars not only match the Indian standards of manufacturing automobiles, but also must pass stringent
+German standards. Every car surpasses these requirements.
+
+We take care of the smallest of things to ensure safety. Taigun and Virtus doors have a unique 3-stage opening and
+closing process. The door halts at three points before opening or closing. This ensures the doors do not become loose,
+experience no vibrations in the long run, maintain ease in moving in and out of the car in parallel parking positions and
+decrease the chances of getting injured while closing doors.
+
+Volkswagen cars come with an innovative speed sensing steering; it gets stiffer with an increase in the speed of the
+car. With speed sensing steering, there are lesser chances of losing control at high speeds, making it easier to drive
+and safer for the highway.
+
+
+
+
+                                                                                                                            27
+Customer Safety Precautions
+
+
+
+
+                              28
+Safety Through Service Maintenance
+
+
+
+
+                                                        Adapting to conditions to keep you safe.
+
+
+Functionality
+As a vehicle is used, all the separate components will wear down and/or deteriorate over time. Vehicles are built from the
+start with this in mind. As a result it is necessary to regularly check the various components, when adjustments or replace-
+ment of parts can be made as required.
+
+
+
+
+                                        Brake Fluid   Window Wiper Blades
+
+
+
+
+    Engine Oil
+
+
+
+       Coolant
+
+                                                                                                                  Brake Hoses
+                                                                                                           Tyre
+
+        V-belt
+                                                                                                           Brake Linings
+
+
+      Oil Filter
+
+
+
+
+                             Battery Fluid    Air Cleaner Element        Brake Pads
+
+
+
+
+                                                                                                                                29
+Volkswagen Service Benefits
+                      Wide Service Network
+                      120 workshops
+                      152 dealerships
+                      114 cities
+                      106 Das Welt Auto outlets
+                      As on 11th October 2022
+
+
+                      4EVER Care
+                      Every Volkswagen car promises a hassle-free ownership experience, from the day you buy it.
+                      Volkswagen 4EVER Care offers complete peace of mind in matters of unexpected repair work.
+                      Standard 4-year / 100,000 kms warranty
+                      4-year Road Side Assistance
+                      3 Free services
+
+
+                      3 Free Services
+                          SWAGAT @ 1000 kms / 1 month
+                          Value Inspection @ 7500 kms / 6 months
+                          Free Labour Service @ 15,000 kms / 1 year
+
+
+                      Volkswagen Standard Labour Charges
+                      Standardised and transparent service charges across the Volkswagen network.
+                      Know what you pay for and drive away with confidence.
+
+
+                      Unmatched Road Side Assistance (RSA):
+                      24x7 RSA available
+                      Free of cost during standard warranty period
+                      Extendable up to 10 years
+                      Toll-free numbers: 1800 102 1155 & 1800 419 1155
+
+
+                      Digital Services
+                          VW Mobile App                                       Service Cam
+                          Online service cost calculator                      Whatsapp updates
+                          Online service appointment
+
+
+                      Unmatched Parts and Accessories Warranty
+                      All Volkswagen parts purchased come with 2 years warranty.
+                      All Volkswagen accessories purchased come with 1 year warranty.
+
+
+                      Service Cam
+                      With Volkswagen Service Cam, we take you through the service before it even begins.
+                      You will now be able to view services that are required for your car.
+                      Once we have your consent on these services, these services will be undertaken on your Volkswagen.
+
+
+                      Unparalleled Anti-perforation Warranty:
+                      6 or 12 year warranty (depending on type and model year) against through-corrosion
+
+
+
+
+Terms and condition apply. Reach out to your nearest workshop to know more.                                                30
+Volkswagen Service Benefits
+                                       Volkswagen Mobile Service Unit & Volkswagen assistance
+                                       Now you can get the service experience of a workshop, without visiting it, with the fully equipped
+                                       Volkswagen Mobile Service Unit.
+
+                   Volkswagen Movile
+                                       Services include:
+                   Service Unit
+
+
+                                          Periodic maintenance                           Easy availability of genuine parts
+                                          Basic repair                                   Battery checks
+                                          Dry wash and 3M Treatments                     Air filter and Pollen filter inspections
+
+
+                                       Unmatched Extended Warranty
+       Volkswagen presents
+                                       Get continued protection years down the road with Volkswagen Extended Warranty.
+     Extennnnnded
+       Warranty
+                                          Choose from 4+1 year or 4+2 year Extended Warranty products.
+                                          Upgrade to our 1 year Add-on Warranty and enjoy extended peace of mind with car care for up
+                                          to 7 years.
+
+
+                                       Service Value Package
+                                       With our promise to deliver complete peace of mind for each of our customers, we have created
+                                       Service Value Packages which promise just that. These packages ensure your car is looked after by
+                                       experts year-after-year without you having to worry about increasing costs.
+                                       Service Value Packages include:
+                                          Essential SVP – 1 year, 2 years                             SVP Lite
+                                          Superior Hi5! – 4+1 year Service Value Package
+
+
+                                       Body and Paint Services
+                                       With our Body and Paint services, you get benefits including Volkswagen trained service
+                                       executives, genuine parts, and infallible repair procedures.
+                                       The body and paint repairs include Dent repair, Remove and Refit, and Painting.
+                                       Enjoy assured savings and care for your car with Volkswagen quality standards.
+                                       Choose any Body & Paint Value Package for your car:
+                                          Lite Body and Paint Value Package
+                                          Essential Body and Paint Value Package – 1 year, 2 years
+
+
+       15000
+        kms
+                                       Higher Service Intervals
+                                       15,000 kms / 1 Year whichever occurs first.
+
+
+                                       Unmatched New Vehicle Warranty:
+                                       Your Volkswagen is secured with a 4 year / 100,000 kms manufacturer’s warranty to ensure a
+                                       peaceful ownership experience.
+
+
+                                       Unmatched Paint Warranty:
+                                       3 years.
+
+
+                                       Do you know that your car talks?
+                                       The service indicator of your car is a special feature that indicates you of its service due.
+                                       So, you don't need reminders from us.
+
+
+
+Terms and condition apply. Reach out to your nearest workshop to know more.                                                                 31
+Safety by Using Genuine Parts
+At Volkswagen, we are all about providing the best service experience. Our Genuine parts promise reliability, quality and
+safety. Using Genuine parts not only ensures durability but also provides value for money. In order to ensure that you enjoy
+endless carefree drives, we recommend that you follow recommended service maintenance schedule as mentioned in your
+vehicle’s owner’s manual and always choose genuine & authentic Volkswagen Parts only.
+
+
+
+
+Brakes                                                                     Air Filter
+Improved braking performance, shorter braking distances.                   Reliable filtration.
+Highly durable, unbreakable brake discs.                                   Ensures precisely defined airflow for full
+Wear-resistant brake pads.                                                 engine performance.
+Uniform braking performance.                                               Large filtering surface.
+Quiet and smooth operation (no juddering or squeaking).                    Precisely tailored solutions for every engine type.
+                                                                           High reliability throughout their entire service life.
+
+
+
+
+Timing Belts
+High-strength material prevents stretching.
+Wear-resistant and highly durable.
+Extremely heat and moisture resistant.
+Extremely quiet and smooth operation.                                     Aero Wiper Blades
+Available in kits with tensioners & reverse-motion pulleys.               Perfect cleaning performance in any weather.
+                                                                          Consistent performance quality.
+                                                                          Smooth operation, without skipping on the
+                                                                          glass or squeaking.
+                                                                          Fully effective at all speeds.
+                                                                          Suitable for severe winter weather.
+
+
+
+Dust and Pollen Filters
+Stop contaminants from entering the vehicle.
+Help prevent fogged windows.
+Ease allergy symptoms.
+Protects air conditioning units.
+Reduce noxious odors.
+
+
+                                                                           Lights
+                                                                           A complete assortment for every vehicle model.
+                                                                           Adapted to all lighting system components.
+                                                                           Reliable light output and performance.
+                                                                           LongLife versions available.
+                                                                           Replacement lamp packs available.
+Spark Plugs
+Consistent performance.
+Stable sparking. Low wear.
+Enhanced driving comfort. High durability.                                                                                          32
+Explanation of Dashboard Symbols
+
+
+
+
+Your car is always thinking about your safety.
+
+
+Do you know that your car talks?
+We aren’t kidding. It surely does. The service indicator of your car is a special feature that indicates you of its services
+due. You wouldn’t need reminders from us at all. All you need to do is listen to your car and understand what your car
+wants to say.
+
+
+Symbols that are communications from your car:
+
+
+               Indicates a hazard in conjunction                                     Automatic gearbox faulty
+               with another warning lamp
+                                                                                     Automatic gearbox overheated
+               Front and rear seat belts not in use
+                                                                                     Warning of collision risk
+               12-volt vehicle battery is not charging
+                                                                                     Indicates a warning in conjunction
+               In conjunction with     – engine fault                                with another warning lamp
+
+                                                                                     The fuel level has reached the
+               Engine oil pressure too low                                           reserve range
+
+               Engine oil level too low                                              Washer fluid level too low
+
+               Coolant level too low                                                 Bulb faulty
+               Coolant temperature too high                                          Engine oil level too high or engine
+                                                                                     oil level sensor faulty
+               Brake fluid level too low
+               In conjunction with     – brake sys-                                  Particle filter blocked
+               tem and ABS faulty
+                                                                                     ABS faulty
+               Lights up– parking brake switched on
+                                                                                     Automatic gearbox overheated
+               Lights up– power steering faulty
+                                                                                     Automatic gearbox faulty
+               Flashes – steering column lock faulty
+
+
+                                                                                                                               33
+Explanation of Dashboard Symbols
+Symbols that are communications from your car:
+
+
+                                                                                                         Cruise control system is regulating
+                   Tyre Pressure Loss Indicator faulty                                                   the vehicle speed
+
+                   Tyre pressure change                                                                  Lights up – speed limiter is regulating
+                                                                                                         the vehicle speed
+
+                   Lights up – power steering faulty                                                     Flashes – the speed limiter's set limit
+                                                                                                         has been exceeded
+                   Flashes – steering column lock not                                                    Main beam or headlight flasher
+                   unlocked                                                                              switched on
+
+                   Flashes – steering column lock fauty                                                  Seat belt on the rear seat not in use
+
+                   Keyless Access – no key found                                                         Seat belt on the rear seat not in use
+
+                   Keyless Access – start problem                                                        Illuminated - unoccupied rear seat
+
+                   Petrol engine control faulty                                                          Flashes – rear seat belt not fastened
+
+                   Emission control system faulty                                                        Low outside temperature
+
+                   Front passenger airbag activated                                                      Service events
+
+                   Flashes in conjunction with    –                                                      Engine was shut down automatically
+                   key-operated switch for airbag                                                        by START-STOP
+                   deactivation faulty                                                                   Engine was not shut down automat-
+                                                                                                         ically by START-STOP
+                   Front passenger airbag deactivated
+                                                                                                         Speed limiter faulty
+                   Airbag system faulty
+
+                   Lights up for4 s and then flashes–                                                    Lights up – speed limiter activated
+                   airbag or belt tensioner with diag-
+                   nostic device switched off                                                            In conjunction with – speed limit-
+                                                                                                         er is regulating the vehicle speed
+                   ASR deactivated
+                                                                                                         Cruise control system faulty
+                   Lights up – ESC or ASR faulty
+                                                                                                         Cruise control system activated
+                   Flashes – ESC or ASR intervening
+                                                                                                         In conjunction with – cruise con-
+                   Front Assist deactivated                                                              trol system is regulating the vehicle
+                                                                                                         speed
+                   Front Assist not available
+                                                                                                         Front Assist deactivated
+                   Left turn signal                                                                      Front Assist not available
+
+                   Right turn signal                                                                     Front Assist starting up
+
+                   Front fog light switched on                                                           Safe distance not kept
+
+                   Gear lever is locked
+
+
+
+
+Symbols are features specific and would only appear if particular features available in the car model.                                             34
+ Seasonal Safety Tips
+
+
+
+
+Safe through the seasons.
+
+
+The climate in India is diverse, just like its culture. And keeping in mind India’s climate, we present to you some safety
+tips to assist you while driving on Indian roads.
+
+
+
+Monsoon Precautions
+
+
+                                            During the rainy season, driving can be extremely tricky. Even the familiar
+                                            roads are slippery and behave in unpredictable ways, and your car may be
+                                            affected by the rain too. Hence, to make your driving experience safer, we
+                                            bring you some essential monsoon tips you might find useful.
+
+
+
+
+Rain and Flood Precautions
+
+
+                                            Flooding is an unfortunate incident, and like most natural hazards it comes
+                                            without a warning. Often during a flood, people in cars are stranded for days,
+                                            and cars too get heavily damaged. The rain and flood tips would help you
+                                            understand your car’s behaviour on inundated roads and would help protect
+                                            yourself and your car from any possible damages.
+
+
+
+
+                                                                                                                             35
+Monsoon Precautions
+Vehicle Care
+
+  Do pre-monsoon vehicle check at your nearest qualified workshops.
+  Check the tyre conditions (the tread grooves should be of min 1.016 cm in all the tyres, look for side wall cuts in
+  tyres- if so, replace it immediately).
+  Check the brake liners and ensure proper functioning of the brake system.
+  Replace wiper blade every season.
+  Ensure both the wipers, signal lights and tail lamps are in working condition.
+
+
+
+Do’s & Don’ts
+
+
+Do’s
+
+  Before the start of every trip - regularly check whether the headlights, tail lights, brake lights and turn signals are
+  working properly.
+  First and foremost, slow down! The speed limit during the rains should be 20-25 kms/hr instead of 40 kms/hr
+  during normal conditions.
+  Keep safe distance from the vehicles ahead- the distance should be double during the monsoon season than
+  during other seasons, failing which you may not be able to get adequate braking distance in case the front vehicle
+  suddenly stops.
+  Turn on your lights - turn your headlights on, even in a light rain, or in gloomy, foggy or overcast conditions.
+  Drive in the tracks of the vehicle ahead of you.
+  Watch out for brake lights in front of you.
+  Handling a skid - You can prevent skids by driving slowly and carefully, especially on curves, brake before entering
+  the curves, steer and brake with a light touch.
+  Expressway driving - Leave lots of space between you and the vehicle in front because it takes longer to stop. •
+  Watch out for oily deposits - Watch for intersections because of the oil spots on the road.
+  Check your brakes - If you successfully pass through a deep-water hazard, test your brakes.
+  Lastly, drive safely, arrive safely.
+
+
+
+Don’ts
+
+  Do not brake suddenly while driving in the rain, instead control the speed with the accelerator, pump the brake
+  pedal and apply the brake slowly.
+  Do not suddenly swing the vehicle while driving in the rain.
+  Avoid driving in the rain during night-time (after sunset). Never drive beyond the limits of visibility.
+  Don’t drive in heavy rain - When visibility is so limited that the edges of the road or other vehicles cannot be seen
+  at a safe distance.
+  Never drive through moving water if you can't see the ground through it; your vehicle could be swept off the road.
+  Avoid off-road driving - It's hard to judge the actual depth of puddles and you can easily get stuck.
+
+
+
+
+                                                                                                                            36
+Monsoon Precautions
+Driving Safety Tips
+
+  Carry out a thorough pre-monsoon check of your vehicle, including batteries, tyres, electrical wiring, engine fluids
+  and wipers.
+  Keep a bottle full of windshield wiper fluid.
+  Pre-plan your journey- keep an umbrella, a raincoat, first aid kit, adequate quantity of drinking water, some dry
+  eating stuff and emergency contact numbers in your vehicle.
+  Keep a torch light, a hammer or a spanner inside the car to break the glass in case you are trapped in the car.
+  Gather information about adverse weather conditions, potential flooding spots and alternate routes well in
+  advance.
+  Be mentally prepared to deal with emergencies and have contingency plan in place.
+  While driving, reduce speed, moderate acceleration, and moderate braking action. Do not take quick turns to avoid
+  skidding.
+  Keep adequate safe driving distance from the vehicle ahead, the distance should ideally be double during the
+  monsoon season compared to the normal season.
+  Turn on your headlights during a heavy shower or in gloomy, foggy or overcast conditions. Not only does this help
+  you see the road, but also helps other drivers see you.
+  Drive in the tracks of a vehicle ahead of you. Watch out for brake lights in front of you.
+  Watch out for oily deposits on roads and move at a very low speed.
+  If the exhaust is underwater, rev the engine and slip the clutch to change gears and move. The fast moving
+  exhaust gases will prevent water from entering the tail pipe.
+  Avoid traversing in deep water.
+  Overcome front end skids, release the brake and let the front wheels roll freely to regain traction and steering
+  control.
+  For rear end skids, take foot off the accelerator and turn wheels in the direction that the rear of the vehicle is
+  skidding, and pump brakes lightly.
+  Remember, at any time, your life is more precious than your vehicle. If stranded in a vehicle, leave the vehicle and
+  move to an elevated place and ask for help. Do not walk through flowing water before you are sure about the
+  firmness of the ground.
+  Be mindful of slips, trips & fall hazards (slippery surfaces, open manholes). Use the right kind of footwear with
+  good anti-skid sole.
+
+
+
+
+                                                                                                                         37
+Rain and Flood Precautions
+Safety precautions
+
+  Driving on a flooded road may cause the engine to stall as well as cause serious vehicle malfunctions such as
+  shorts in electrical circuits and engine damage from water immersion.
+  Never try to restart an engine which has stalled due to flooding. This may lead to serious permanent damage to
+  the engine.
+  If your vehicle has stalled after passing through water, get it towed to the nearest qualified workshops for a
+  thorough inspection. (For towing precautions, please refer to Owner’s Manual of your vehicle.)
+  In the event that you drive on a flooded road, be sure to have your vehicle checked up thoroughly at a Volkswagen
+  Dealer.
+
+
+
+Do’s & Don’ts
+
+
+Do’s
+
+  When the water level is above the tyre level, stop driving.
+  When the water level is below the tyre level, and you must drive, follow these steps: shift to first gear; press
+  accelerator to increase engine RPM in order to avoid blockage of silencer by water; after crossing flooded area,
+  continue to accelerate the engine to clean silencer.
+  If the vehicle is submerged in flood water, an expert technician needs to inspect the damages, transmission,
+  electrical and electronic components.
+  If the vehicle has been submerged in water for a long time, you must replace all the lubricants and fluids and
+  check for proper operations of systems and mechanisms.
+
+
+
+Don’ts
+
+  When the water level is below the tyre height and you must drive - if you need to slow down, don’t reduce the
+  engine speed. Instead use the clutch.
+  If the vehicle is submerged in flood water, don’t start the car by any means (kick or push starter). Doing this can
+  cause severe damage to the engine.
+  Do not drive on a road that has flooded after heavy rain, etc. Doing so may cause severe damage to the vehicle.
+
+
+
+
+                                                                                                                        38
+Maintaining Safety on the Road
+       Be well acquainted
+       with the tyres
+       Always check your tyre pressure.
+       Make sure they’re in good shape
+       and keep a spare handy at all times.
+                                               Space is important
+                                               Be at a distance from the car ahead.
+                                               Do not tailgate, because it won’t
+                                               take you ahead but only increase the
+       Don’t use your phone                    risk of a collision.
+       while driving
+       Keep away from all distractions,
+       especially your mobile phone when
+       you are driving. Strictly avoid
+       attending to calls and texting when     Remember to buckle up
+       you are in the driver’s seat.           Always wear your seatbelts. Insist on
+                                               everyone else travelling in the car to
+                                               wear seatbelts.
+       Obey traffic rules
+       You’re in a hurry. But so is everyone
+       else. Violating traffic rules only
+       adds to the chaos which would
+       further delay your journey and may
+       land you in a serious accident.         Do not overload your car
+                                               Do not overload your car with more
+                                               people or goods than it is designed
+                                               to carry. This affects the perfor-
+       Watch your children                     mance of the car and may cause you
+       Children can often be a cause of        to lose control.
+       distraction while you’re driving.
+       Talk to them and make them
+       understand that it’s important for
+       your and their safety, that they        Share the responsibility
+       maintain a calm environment while       For long trips, don’t drive solo. Have
+       inside the car.                         someone with you who could drive
+                                               while you take some rest or a nap.
+                                               Drive again when you feel energized.
+       Take a break
+       Tiredness is one of the major
+       reasons behind road accidents. If
+       you feel sleepy while driving, take a
+       break. Rest for at least 15 minutes     Do not drink and drive
+       after every 3 hours of driving.         Drinking while driving or before it is
+                                               dangerous and potentially lethal.
+                                               This way you not only jeopardise
+                                               yourself and your passengers but
+                                               also pedestrians and other vehicles.
+
+       Keep calm and drive on
+       Always have a calm mind and avoid
+       road rage and frustration while
+       driving.
+                                               Do your part
+                                               Be responsible by informing traffic
+                                               authorities / the police in case you
+                                               encounter rash drivers and accidents
+                                               on the road.
+
+
+
+
+                                                                                        39
+FAQs
+1. What should I do when the engine does not start?
+Ans: It may be becausa vehicle battery is discharged. Try to Jump start or recharge vehicle battery.
+     It may be that an incorrect vehicle key is being used - Use a valid vehicle key to avoid this situation. It may be
+     that fuel level is too low. Refuel the tank with recommended fuel.
+
+
+2. What precautions should I take if the road ahead is not lit up properly?
+Ans: It might be due to the following reasons:-
+     Headlights are set for driving on the left or right, or headlights are set too high up. Bulbs are defective or the
+     dipped beam headlights are not switched on. In certain situations you can switch the headlights on for driving
+     on the left or right. Adjust the headlight range, change the bulbs. Switch on dipped headlights.
+
+
+3. Fuel consumption of my vehicle is higher than indicated. What is the cause of this irregularity?
+Ans: It might be due to the following:
+     a.   Short journeys and uneven acceleration - accelerate evenly in short journeys
+     b.   An electrical consumer is switched on – switch off all consumers that are not needed
+     c.   Fault in engine management system - have the fault rectified from the authorized service center
+     d.   Tyre pressure is too low - adjust the tyre pressure as recommended for the tyre size
+     e.   Driving at high engine speed - select a high gear for fuel economy
+     f.   Driving in hilly regions or driving with a heavy load - you tend to use more fuel in such situations
+
+
+4. What should I do in a vehicle breakdown situation to avoid further damage?
+Ans: To ensure your own safety and the safety of your passengers, observe the following points in the given order:
+     •    Stop the vehicle at a safe distance away from moving traffic and on a suitable surface
+     •    Switch on the hazard warning lights using the button
+     •    Apply the handbrake firmly
+     •    Select the neutral position or move the selector lever to ‘P’
+     •    Stop engine and remove the key from the ignition
+     •    Make sure all occupants exit the vehicle away from moving traffic and move to safety, for instance behind
+          the safety barrier.
+     •    Take all vehicle keys with you when you leave the vehicle.
+     •    Place the warning triangle in position to draw the attention of other road users to your vehicle
+          Allow the engine to cool down and, if necessary, use expert assistance.
+
+
+
+
+                                                                                                                          40
+Important Contact Nos.
+Your feedback is valuable to us:
+     If you wish to give us your feedback directly, you may contact Volkswagen 24X7 Toll Free No. 1800 209 0909.
+OR
+     If you wish to e-mail your feedback, write to us at customer.care@volkswagen.co.in
+
+Volkswagen Roadside Assistance - Assistance is never out of bounds.
+Volkswagen Roadside Assistance
+24 x 7. Anytime. Anywhere.
+Call: 1800 102 1155, 1800 419 1155
+
+
+
+
+                                                                                                                   41
+Terms & Conditions
+•   Every safety feature mentioned is model and variant specific.
+•   Please refer user manual to check the availability of specific safety feature in your vehicle.
+•   Please refer user manual for the detailed information on functionality of each safety feature and the optimum
+    applications of safety features.
+•   Images used are for representation purpose only.
+•   Vehicle tests are performed under control environment and results may vary if change in test conditions.
+    Kindly visit the nearest workshop to know exact details on service features of your car.
+
+
+
+
+                                                                                                                    42
+Volkswagen Group Sales India Private Limited
+CIN: U50401MH2007FTC168439
+Silver Utopia, 3rd and 4th floor, Cardinal Gracious Road,
+Chakala, Andheri (East), Mumbai - 400099
+Printed in India
+Subject to change without notice
+Issue: October 2022
+Internet: www.volkswagen.co.in
+

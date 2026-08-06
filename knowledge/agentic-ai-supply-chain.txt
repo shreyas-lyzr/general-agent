@@ -1,0 +1,861 @@
+# GENERATED FILE - do not edit by hand.
+# Source PDF: knowledge/Lyzr - Agentic AI for Supply Chain.pdf
+# Regenerate:  python3 skills/read-document/read_document.py "knowledge/Lyzr - Agentic AI for Supply Chain.pdf" 2000000 > knowledge/agentic-ai-supply-chain.txt
+
+                                                           S U P P LY C H A I N · P R O D U C T R E V I E W
+
+
+
+
+        LY Z R A G E N T I C O S
+
+
+
+
+Agentic AI for
+Supply Chain & Logistics
+Twelve agents · One platform · First deploy in six weeks
+
+
+
+LY Z R . A I · A P R I L 2 0 2 6
+THE PROBLEM                                                                                                                                                                                                        lyzr.ai
+
+
+
+
+Supply chains are losing billions
+to manual planning and siloed systems.
+Planners spend most of the week firefighting exceptions. Dashboards show what broke — rarely what to
+do. Legacy planning engines deploy in years, not weeks. The outcome: millions in lost revenue and eroded
+margins every quarter.
+
+
+
+
+60–70%
+Planner time spent on manual
+                                                                           $184B
+                                                                           Global trade-friction cost
+                                                                                                                                                 8–12%
+                                                                                                                                                 EBITDA exposed to volatility
+                                                                                                                                                                                12%
+                                                                                                                                                                                Enterprises with fully automated
+data work                                                                  annually                                                                                             planning
+
+
+
+McKinsey, The state of AI 2024 · World Bank, Trading Across Borders 2023 · Gartner, Supply Chain Planning Maturity Survey 2023 · Deloitte, Global CSCO Survey 2023
+WHY NOW                                                                                                                                                                                              lyzr.ai
+
+
+
+
+From dashboards to autonomous execution.
+Enterprises move through five autonomy tiers. Most are stuck at tiers 1–2. Agentic AI is what makes tiers
+3–5 economically viable for the first time.
+
+
+
+
+    01                                                       02                                   03                                 04                                 05
+    Observe                                                  Suggest                              Recommend                          Auto-execute                       Full auto
+    Dashboards show what is happening.                       System flags anomalies and trends.   Context-rich actions proposed to   Agent acts under human approval.   Closed-loop execution with
+                                                                                                  humans.                                                               guardrails.
+
+
+
+
+Source: Gartner, Hype Cycle for Supply Chain Planning 2023 · McKinsey, The state of AI 2024.
+THE PORTFOLIO                                                                                                                                              lyzr.ai
+
+
+
+
+Twelve agents across the value chain.
+Plan · Source · Make · Deliver & Protect — a unified portfolio that composes cross-module workflows
+through a shared event bus and decision ledger.
+
+
+
+   01                                       02                                 03                                     04
+
+   Plan                                     Source                             Make                                   Deliver & Protect
+   Forecast · balance · right-size stock.   Buy smarter · de-risk suppliers.   Produce reliably · quality built-in.   Promise · move · recover · comply.
+
+
+     Demand Sensing & Forecasting             Spend Intelligence & Savings       Production Scheduling (APS)            Order Promising & ATP
+
+     Supply–Demand S&OP                       Supplier Risk & Resilience         Predictive Maintenance & Quality       Logistics Route Optimization
+
+     Inventory Optimization                                                                                             Warehouse Task Orchestration
+
+                                                                                                                        Returns & Reverse Logistics
+
+                                                                                                                        Trade Compliance &
+                                                                                                                        Documentation
+
+
+
+
+   3 AGENTS                                 2 AGENTS                           2 AGENTS                               5 AGENTS
+O U T C O M E S AT S C A L E                                                                                                                                           lyzr.ai
+
+
+
+
+The enterprise outcome stack.
+Across the twelve-agent portfolio, industry research consistently supports the following outcome bands for AI-
+led supply-chain operating models.
+
+
+
+
+≤12%
+Forecast MAPE achievable
+                                                                     95%+
+                                                                     On-time, in-full (OTIF)
+                                                                                                                     15–25%
+                                                                                                                     Working capital freed
+                                                                                                                                                 4–8%
+                                                                                                                                                 Procurement savings
+
+
+
+
+  3–6 MO PAYBACK ON FIRST AGENT                     5–8× ROI IN YEAR ONE     8–12% EBITDA UPLIFT AT FULL PORTFOLIO   20–50% PLANNER TIME FREED
+
+
+
+
+Source: McKinsey · Gartner · Bain · The Hackett Group (2021–2023).
+PLAN · AGENT 01              OF 12                                                                                                                                                                          lyzr.ai
+
+
+
+
+01      DEMAND SENSING & FORECASTING
+
+
+
+
+Know demand before it happens.
+Ingests real-time POS, market, weather, and social signals to generate hyper-accurate short and mid-term demand forecasts —
+continuously learning and self-correcting.
+
+BUILT FOR       DEMAND PLANNERS               ·   SUPPLY CHAIN VPS             ·   S&OP LEADERS            ·   CIOS
+
+
+
+
+30–50%                                                                    60%                                                       20–35%                                85–95%
+Forecast accuracy uplift                                                  Manual planning time cut                                  Excess inventory reduced              SKU-level accuracy
+
+
+
+
+    01                                                      02                                                     03                                 04                            05
+    Data ingestion                                          Signal processing                                      ML forecasting                     Anomaly detection             Action & alerts
+    POS, ERP, weather, social and other
+                                                    → AI normalises and correlates multi- → ARIMA, Prophet, LSTM, Transformer → Flags demand spikes and trend                 → Auto-triggers replenishment and
+    signals.                                                source inputs.                                         ensembles.                         shifts.                       notifies planners.
+
+
+
+
+Source: McKinsey, Succeeding in the AI supply-chain revolution 2021 · Gartner Supply Chain Planning benchmarks 2023.
+PLAN · AGENT 02              OF 12                                                                                                                                                                                lyzr.ai
+
+
+
+
+02       S U P P LY– D E M A N D B A L A N C I N G & S & O P
+
+
+
+
+Align every function in real time.
+Continuously aligns supply, demand, finance, and operations on real-time data — compressing planning cycles from weeks to hours and
+enabling autonomous cross-functional decisions.
+
+BUILT FOR       S&OP LEADERS            ·   SUPPLY CHAIN VPS            ·    CFOS / FP&A        ·   COOS
+
+
+
+
+25–40%                                                                      70–80%                                            30–70%                                          90–95%
+Forecast bias reduction                                                     Planning cycle time cut                           Planning FTE cost reduction                     Demand-plan accuracy
+
+
+
+
+    01                                                     02                                              03                                    04                                     05
+    Signal ingestion                                       Cross-functional alignment                      Concurrent planning                   Exception management                   Decision execution
+    Aggregates demand, supply,
+                                                   → Sales, Ops, Finance & Supply on                  → Simultaneous scenarios across       → Flags imbalances and triggers risks → Approves plans, updates ERP, alerts
+    finance, market signals.                               one model.                                      constraints.                          in real time.                          stakeholders.
+
+
+
+
+Source: Gartner S&OP Maturity Report 2023 · Deloitte Global Supply Chain Leaders Survey 2023.
+PLAN · AGENT 03              OF 12                                                                                                                                                                              lyzr.ai
+
+
+
+
+03       I N V E N TO RY O P T I M I Z AT I O N
+
+
+
+
+Right stock. Right place. Right time.
+Autonomously monitors stock, supplier performance, and demand signals — triggering replenishment, reallocating inventory, and
+preventing disruptions before they occur.
+
+BUILT FOR       INVENTORY MANAGERS                ·     SC DIRECTORS         ·   DEMAND PLANNERS     ·   COOS
+
+
+
+
+20–30%                                                                    35–45%                                           15–25%                                         60%
+Carrying cost reduction                                                   Stockout events cut                              Working capital freed                          Manual replenishment work freed
+
+
+
+
+    01                                                     02                                            03                                    04                                   05
+    Inventory monitoring                                   Demand sensing                                Replenishment planning                Disruption response                  Autonomous execution
+    Real-time stock visibility across all
+                                                      → AI reads trends, seasonality and           → Optimal order quantity, timing and → Detects stockout risk and triggers → Places POs, reallocates stock,
+    nodes.                                                 external signals.                             supplier mix.                         corrections.                         updates ERP.
+
+
+
+
+Source: McKinsey Digital Supply Chain 2022 · Bain Working Capital Benchmarks 2023.
+MAKE · AGENT 04               OF 12                                                                                                                                                                       lyzr.ai
+
+
+
+
+04       PRODUCTION SCHEDULING (APS)
+
+
+
+
+Schedules that adapt instantly.
+Continuously optimises job sequences, machine assignments, and shift plans using real-time shop-floor data — adapting to disruptions
+and maximising throughput on every line.
+
+BUILT FOR       PRODUCTION PLANNERS                 ·   PLANT MANAGERS          ·   OPERATIONS DIRECTORS    ·   CIOS
+
+
+
+
+20–30%                                                                    15–25%                                             90–100%                                    20–40%
+OEE improvement                                                           Setup time reduction                               Schedule adherence                         Planner hours saved per week
+
+
+
+
+    01                                                      02                                        03                                      04                                  05
+    Shop-floor data sync                                    Constraint analysis                       Schedule optimization                   Disruption adaptation               Plan execution
+    IoT, MES, ERP and sensor streams in
+                                                    → Maps capacity, tools, skills,              → AI sequences jobs to minimise         → Re-sequences on breakdowns, rush → Pushes schedules to MES, ERP and
+    real time.                                              materials.                                setup, maximise OEE.                    orders, delays.                     the shop floor.
+
+
+
+
+Source: McKinsey Industry 4.0 2023 · Deloitte Smart Factory Study 2022.
+SOURCE · AGENT 05                OF 12                                                                                                                                                                      lyzr.ai
+
+
+
+
+05       S P E N D I N T E L L I G E N C E & S AV I N G S
+
+
+
+
+Find savings hiding in plain sight.
+Ingests, cleanses and classifies 100% of spend, identifies consolidation and savings opportunities, and generates ranked sourcing
+strategies — typically uncovering 8–15% addressable savings within 90 days.
+
+BUILT FOR       CPOS       ·   PROCUREMENT MANAGERS                  ·   CATEGORY MANAGERS                ·   CFOS
+
+
+
+
+8–15%                                                                    30–50%                                                  100%                                   60–80%
+Addressable savings uncovered                                            Maverick spend leakage cut                              Spend classified & taxonomised         Analysis time reduction
+
+
+
+
+    01                                                      02                                                 03                                   04                            05
+    Spend ingestion                                         Cleanse & classify                                 Opportunity ID                       Supplier analysis             Savings recommendation
+    Invoices, POs, card data from all
+                                                  → AI maps 100% of spend to UNSPSC → Finds consolidation, maverick and → Benchmarks pricing, share and                      → Ranked strategies with projected
+    P2P systems.                                            / custom taxonomy.                                 price variance.                      category trends.              ROI.
+
+
+
+
+Source: The Hackett Group Digital Procurement Study 2023 · Bain Procurement Excellence Benchmarks 2023.
+SOURCE · AGENT 06                OF 12                                                                                                                                                                   lyzr.ai
+
+
+
+
+06       SUPPLIER RISK & RESILIENCE
+
+
+
+
+See risk before it hits.
+Ingests real-time signals from news, financials, geopolitics and performance data to continuously score every supplier — detecting risks
+40–60% faster and auto-triggering mitigation before disruption.
+
+BUILT FOR       CPOS       ·    RISK MANAGERS            ·    SC DIRECTORS          ·   COOS
+
+
+
+
+40–60%                                                                       30–50%                                          3–5×                                     20–35%
+Faster risk detection                                                        Supply disruption reduction                     Supplier risk coverage                   Sourcing risk cost reduction
+
+
+
+
+    01                                                       02                                            03                                    04                             05
+    Risk signal ingestion                                    Supplier scoring                              Risk classification                   Alert & escalation             Mitigation planning
+    News, financials, weather, sanctions,
+                                                   → AI scores every supplier across 50+ → Categorises financial, geopolitical, → Context-rich alerts routed to right → Recommends backup suppliers
+    ESG feeds.                                               dimensions.                                   ESG, ops.                             stakeholders.                  and rebalance options.
+
+
+
+
+Source: McKinsey Supply Chain Risk Report 2022 · Deloitte CPO Survey 2023.
+DELIVER · AGENT 07              OF 12                                                                                                                                                                           lyzr.ai
+
+
+
+
+07       O R D E R P R O M I S I N G & AT P
+
+
+
+
+Promise what you can deliver.
+Dynamically checks inventory ATP and production capacity across all nodes in real time — achieving 95–99% promise accuracy and
+eliminating costly fulfilment failures.
+
+BUILT FOR       ORDER MANAGEMENT              ·   SUPPLY PLANNERS            ·   SALES OPS   ·   COOS
+
+
+
+
+95–99%                                                                 30–50%                                                  15–25%                                        20–30%
+Order promise accuracy                                                 Fulfilment failure reduction                            Revenue recovered from lost                   Expedite cost reduction
+                                                                                                                               orders
+
+
+
+
+    01                                                   02                                             03                                        04                                   05
+    Order intake                                         Inventory ATP check                            Capacity ATP check                        Dynamic promising                    Order confirmation
+    Orders captured from every
+                                                  → Real-time availability across DCs,           → Validates production, labour,            → AI calculates optimal delivery date → Commits delivery and triggers
+    channel real-time.                                   stores, transit.                               machine constraints.                      with confidence.                     fulfilment.
+
+
+Source: Gartner Order Management Research 2023 · McKinsey Fulfilment Benchmarks 2022.
+DELIVER · AGENT 08                OF 12                                                                                                                                                                   lyzr.ai
+
+
+
+
+08       LO G I S T I C S R O U T E O P T I M I Z AT I O N
+
+
+
+
+Every route. Optimized.
+Autonomously selects carriers, optimises routes in real time, monitors every shipment, and resolves exceptions — cutting freight cost 15–
+25% while achieving 95%+ on-time delivery.
+
+BUILT FOR       LOGISTICS MANAGERS              ·    TRANSPORTATION MANAGERS            ·   OPERATIONS VPS
+
+
+
+
+15–25%                                                                  30–40%                                            95%+                                        10–20%
+Freight cost reduction                                                  Transit time variability cut                      On-time delivery achieved                   Carbon footprint reduction
+
+
+
+
+    01                                                       02                                        03                                    04                                 05
+    Shipment intake                                          Carrier selection                         Route optimization                    Real-time tracking                 Exception management
+    Order & shipment data from all
+                                                    → AI scores carriers on cost, reliability → Multi-stop routing with live traffic   → End-to-end visibility with        → Auto-reroutes or alerts
+    channels.                                                and SLA.                                  and weather.                          predictive ETA.                    stakeholders on delays.
+
+
+
+
+Source: McKinsey Logistics 2030 2023 · IDC Worldwide Transportation Management 2023.
+DELIVER · AGENT 09              OF 12                                                                                                                                                                         lyzr.ai
+
+
+
+
+09       WA R E H O U S E TA S K O R C H E S T R AT I O N
+
+
+
+
+Orchestrate every movement.
+Dynamically prioritises orders, assigns tasks to workers and robots, and optimises pick paths in real time — lifting throughput 20–30%
+while cutting labour cost 15–25%.
+
+BUILT FOR      WAREHOUSE MANAGERS                ·   DC OPS LEADERS           ·    LOGISTICS DIRECTORS      ·   COOS
+
+
+
+
+20–30%                                                                 15–25%                                             25–40%                                          99%+
+Warehouse throughput gain                                              Labour cost reduction                              Pick-path efficiency gain                       Order accuracy achieved
+
+
+
+
+    01                                                   02                                              03                                   04                                     05
+    Order prioritization                                 Task assignment                                 Pick-path optimization               Exception handling                     Shipment execution
+    AI ranks orders by SLA, cut-off and
+                                                 → Dynamically assigns to workers,               → Calculates optimal routes; cuts      → Detects shorts, damage, mis-picks; → Consolidates orders, prints labels,
+    urgency.                                             AMRs, conveyors.                                congestion.                          reassigns.                             triggers dock.
+
+
+
+
+Source: Gartner WMS Market Guide 2023 · IHL Group Warehouse Robotics Study 2023.
+MAKE · AGENT 10              OF 12                                                                                                                                                                                lyzr.ai
+
+
+
+
+10     PREDICTIVE MAINTENANCE & QUALITY
+
+
+
+
+Fix it before it breaks.
+Continuously monitors IoT/SCADA signals, detects anomalies, predicts failures, and autonomously schedules maintenance — eliminating
+unplanned downtime and catching defects before they leave the line.
+
+BUILT FOR       MAINTENANCE MANAGERS                 ·   PLANT MANAGERS             ·    QUALITY DIRECTORS
+
+
+
+
+20–40%                                                                   25–35%                                                40–60%                                       15–30%
+Unplanned downtime reduction                                             OEE improvement                                       Quality defect reduction                     Maintenance cost reduction
+
+
+
+
+    01                                                    02                                              03                                      04                                  05
+    IoT data ingestion                                    Anomaly detection                               Failure prediction                      Maintenance scheduling              Quality inspection
+    SCADA, MES and sensor streams
+                                                   → AI identifies abnormal patterns                 → ML models predict failure timing      → Auto-schedules work orders       → Vision AI detects defects and
+    continuously.                                         across equipment.                               and root cause.                         optimally.                          triggers holds.
+
+
+
+
+Source: McKinsey The future of maintenance 2022 · Deloitte Predictive Maintenance Benchmarks 2023.
+DELIVER · AGENT 11               OF 12                                                                                                                                                                       lyzr.ai
+
+
+
+
+11     RETURNS & REVERSE LOGISTICS
+
+
+
+
+Turn returns into recovery.
+Automates return authorisation, AI-grades items, makes instant disposition decisions, and routes each item to its highest-value recovery
+channel — recovering 15–25% more value.
+
+BUILT FOR       REVERSE LOGISTICS MANAGERS                    ·   RETAIL SC LEADERS       ·   E-COMMERCE OPS
+
+
+
+
+30–50%                                                                     15–25%                                          40–60%                                         20–35%
+Returns processing time cut                                                Recovery value uplift                           Disposition decision time cut                  Refurbishment yield increase
+
+
+
+
+     01                                                     02                                          03                                     04                                   05
+     Return request                                         Inspection & grading                        Disposition decision                   Routing & fulfilment                 Credit processing
+     Auto-validates against policy rules.
+                                                    → AI vision grades A/B/C/D with                → Optimal channel: restock, refurbish, → Routes item to best recovery site. → Auto-issues credit and updates
+                                                            defect detail.                              donate, scrap.                                                              ERP financials.
+
+
+
+
+Source: NRF Retail Returns Study 2023 · IDC Reverse Logistics Market Forecast 2023.
+PROTECT · AGENT 12                OF 12                                                                                                                                                                             lyzr.ai
+
+
+
+
+12     T R A D E C O M P L I A N C E & D O C U M E N TAT I O N
+
+
+
+
+Compliance without the overhead.
+Autonomously classifies products, generates compliant trade docs, validates against current regulations, and submits to customs —
+reducing doc time 70–85% and compliance errors 90–95%.
+
+BUILT FOR       TRADE COMPLIANCE              ·    LOGISTICS DIRECTORS               ·   CUSTOMS TEAMS   ·      CFOS
+
+
+
+
+70–85%                                                                    90–95%                                                   40–60%                                       30–50%
+Documentation time cut                                                    Compliance error reduction                               Customs clearance time cut                   Customs penalty risk reduction
+
+
+
+
+    01                                                     02                                                03                                      04                                   05
+    Shipment intake                                        Regulatory classification                         Document generation                     Compliance validation                Customs submission
+    Order & product data captured
+                                                   → AI assigns HTS / HS codes and duty → Auto-creates COO, invoices,                           → Cross-validates against sanctions → Submits to ACE, CDS and partner
+    from ERP / OMS.                                        rates.                                            packing lists, SLI.                     and trade rules.                     portals electronically.
+
+
+
+
+Source: WEF Global Enabling Trade Report · World Bank Trading Across Borders 2023.
+PERSONAS                                                                                                                                                                                                                lyzr.ai
+
+
+
+
+Four personas. One shared operating picture.
+Each persona gets agent outputs in their tool of choice — no new UI to learn. Cross-persona workflows
+stitch through the unified event bus.
+
+
+     HERO PERSONA                                                        HERO PERSONA                              HERO PERSONA                                 HERO PERSONA
+
+
+
+     CSCO                                                                VP Demand                                 CPO                                          S&OP / Inventory
+     Weekly executive brief. Scenario portfolio.
+     OTIF, working-capital and resilience index.
+                                                                         Planning                                  Category P&L. Risk radar. Savings pipeline
+                                                                                                                   and sourcing tower.
+                                                                                                                                                                Head
+                                                                         Consensus forecast workbench. Exception                                                Daily cockpit. Inventory health. E&O heat-
+                                                                         queue. MAPE and bias tracking.                                                         map. Action queue.
+
+
+
+
+     USES                                                                                                          USES
+                                                                         USES                                                                                   USES
+     S & O P · I N V E N TO RY · LO G I S T I C S ·                                                                SPEND INTELLIGENCE · SUPPLIER RISK ·
+     SUPPLIER RISK                                                       DEMAND SENSING · S&OP · INVENTORY         TRADE COMPLIANCE                             S & O P · I N V E N T O R Y · AT P · LO G I S T I C S
+
+
+
+
+Source: Deloitte The CSCO Agenda 2024 · Gartner Chief Procurement Officer Effectiveness Survey 2023.
+T I M E T O VA L U E                                                                                                                                                                                          lyzr.ai
+
+
+
+
+Value starts in weeks, not years.
+A typical agentic deployment moves through four stages — each delivering measurable outcomes before
+the next one starts.
+
+
+Day 1                                                                 Week 2                                          Weeks 6–9                                   Quarter 1
+
+Shadow mode                                                           Recommendation quality                          First agent auto-execute                    Cross-module workflows
+Agent ingests live data and produces                                  Precision, recall and expected impact           Agent moves to tier-4 autonomy on narrow,   3–5 agents live. Demand → inventory → ATP
+recommendations alongside human planners                              validated against the current baseline.         reversible decisions. First ROI measured.   → logistics stitched via shared ledger.
+for calibration.
+
+
+
+
+Source: McKinsey Rewiring operations for resilience 2023 · Deloitte Supply Chain Digital Transformation Study 2023.
+ARCHITECTURE                                                                                                                                                                                                     lyzr.ai
+
+
+
+
+Built to act, not just analyse.
+          →                   →               →                       →
+Signals decision agents actions governance. Every agent plugs into a unified event bus and
+decision ledger — enterprise-grade from day one.
+
+
+  SIGNALS                                      D E C I S I O N L AY E R                     AGENT RUNTIME                               ACTIONS                                   GOVERNANCE
+
+
+
+  Signals in                                   Decision layer                               Agent runtime                               Actions out                               Governance
+  ERP, MES, WMS, TMS, IoT, market,             Event bus · 16 canonical event types         12 pre-built agents · 5-tier autonomy       Updates to SAP · Oracle · Coupa ·         SOC 2 Type II · role-based access ·
+  weather, social and other canonical   ›      · cross-module correlation_id.          ›    · per-decision guardrails & rollback.   ›   Blue Yonder · Kinaxis · Manhattan ·   ›   BYOK · private cloud.
+  signal types.                                                                                                                         MES.
+
+
+
+
+ ONE PLATFORM        TWELVE AGENTS          ONE DECISION LEDGER           EACH NEW AGENT INHERITS THE FULL INTEGRATION SURFACE
+MARKET LANDSCAPE                                                                                                                                                                                                            lyzr.ai
+
+
+
+
+Three approaches enterprises buy today.
+Each category delivers different trade-offs across depth, speed, integration surface and autonomy. The
+right choice depends on what the buyer is trying to un-stick.
+
+
+    LEGACY PLANNERS                                                                            GENAI POINT TOOLS                                                 AG E N T I C P L AT F O R M
+
+
+    Blue Yonder · Kinaxis · o9 · SAP IBP                                                       LLM wrappers · copilots · vertical demos                          Lyzr AgenticOS
+    Deep planning features. Multi-year deployments. Dashboards-first                           Fast to demo, narrow scope. Weak integration to ERP / MES /       Custom-built supply-chain agents on a unified platform. 6–9
+
+                                                                                       →                                                                     →
+    and workflow-centric. Heavy SI footprint and total cost of                                 WMS. No decision ledger, no cross-module workflow, no             week first-agent deploy, action-native, cross-module via shared
+    ownership. Customisation requires specialist consultants.                                  enterprise guardrails. Experimental budgets only.                 event bus and decision ledger. SOC 2 ready, rollback-safe.
+
+
+
+
+Source: Gartner Magic Quadrant for Supply Chain Planning Solutions 2023 · IDC Worldwide AI-Powered Supply Chain Forecast 2023.
+H E A D -TO - H E A D                                                                                                                                                                lyzr.ai
+
+
+
+
+Lyzr vs. the alternatives.
+Eight buying dimensions. Each dot = 1 point (5 = best-in-class). Scores reflect public vendor documentation and analyst coverage.
+
+  DIMENSION                                           LY Z R A G E N T I C O S                        B LU E YO N D E R      KINAXIS   O9 SOLUTIONS   PA L A N T I R F O U N D R Y
+
+
+
+  Pre-built SC agents
+
+
+  Autonomy model
+
+
+  Agent-native architecture
+
+
+  Time-to-first-agent
+
+
+  Multi-ERP integration
+
+
+  Decision audit trail
+
+
+  Human-in-the-loop & rollback
+
+
+  TCO shape
+
+
+Scoring synthesis: Gartner MQ SCP 2023 · Forrester Wave SCP 2023 · IDC MarketScape SCP 2023 · public vendor documentation.
+D E P LOY M E N T A R C                                                                                                                                                 lyzr.ai
+
+
+
+
+Start small. Scale fast.
+Speed to first value determines the full-portfolio arc. Agent infrastructure collapses the land phase to
+weeks — and each subsequent agent compounds.
+
+
+
+
+6 weeks
+First agent live in production
+                                                                            6–9 mo
+                                                                            Payback on the first agent
+                                                                                                                    5–8×
+                                                                                                                    ROI in year one
+                                                                                                                                      8–12%
+                                                                                                                                      EBITDA uplift at full portfolio
+
+
+
+
+Source: McKinsey 2021 · BCG Digital Acceleration in Supply Chain 2023 · Deloitte The Future of Supply Chain 2023.
+APPENDIX · PROOF FRAMEWORK                                                                                                                                                                                                      lyzr.ai
+
+
+
+
+How to read every number in this deck.
+Three independent layers back every KPI, ROI, and outcome band on the slides. Any one answers 80% of
+the objections on its own; together they remove the ambiguity.
+
+
+
+    Layer 01                                                                                  Layer 02                                                             Layer 03
+    Source authority                                                                          Bands, not points                                                    Pilot-validated
+    Every number is sourced from a named third-party study —                                  Outcomes are shown as ranges. Low end = what disciplined early       Research bands describe a class of outcomes. Your specific
+    McKinsey, Gartner, Deloitte, BCG, Bain, Hackett, IDC, IHL, Forrester,                     deployments achieve. High end = mature-state performance.            number comes from a 6-week pilot on your data, with a
+    World Bank, WEF, NRF. Lyzr is the curator, not the originator.
+                                                                                      →       Single percentages are quoted verbatim from a named study.
+                                                                                                                                                               →   CFO/CSCO-signed success gate written into the SOW.
+
+
+
+
+See methodology document (Lyzr_SC_Methodology.docx) for the full source map and aggregation logic.
+A P P E N D I X · B A N D S LO G I C                                                                                                                                                                                                      lyzr.ai
+
+
+
+
+Why ranges — and how they are constructed.
+We avoid single-point claims because supply chains differ. The band captures the distribution of
+observed outcomes across operating models, data maturity, and scope — exactly what a responsible
+buyer should expect to see.
+
+
+
+    Rule A                                                               Rule B                                                               Rule C                                             Rule D
+    Union range                                                          Single source                                                        No double-counting                                 Position within band
+    Where 2+ studies cover the same KPI, we                              Where only one credible source exists, we cite                       Portfolio-level numbers (e.g., 8–12% EBITDA        Baseline, data maturity, process readiness and
+    report the union — lowest low to highest high.
+    Narrower sub-bands cited on the slide for                    →       it by name on the slide. No interpolation; the
+                                                                         provenance is visible.                                       →       uplift) are drawn from studies that measured
+                                                                                                                                              portfolio outcomes directly — never summed     →   scope determine where you land. Narrow-
+                                                                                                                                                                                                 scope pilots land near the low end; cross-
+    clarity.                                                                                                                                  from per-agent figures.                            module at maturity reaches the high end.
+
+
+
+
+Source disagreement table (methodology doc) shows the four KPIs where McKinsey and Gartner ranges differ most — both are disclosed, not averaged.
+A P P E N D I X · P I L O T VA L I D AT I O N                                                                                                                                                                          lyzr.ai
+
+
+
+
+How the research band becomes your
+number.
+A 6-week pilot on your data, under a signed SOW. Baseline measured against your current state. Gate
+signed by your CFO and CSCO. We do not scale without hitting the gate.
+
+
+Week 1                                                               Week 1–2                                          Weeks 2–5                                        Week 6
+
+Baseline                                                             Signed gate                                       Shadow & measure                                 Gate decision
+Current-state KPIs on your actual data —                             Co-defined pass/fail. Numeric improvement         Agent runs in tier-1 autonomy alongside          Measured vs. baseline and gate. Hit the gate
+MAPE, OTIF, inventory days, planner hours.                           on a pre-selected KPI, measured at week 6,        planners. Every recommendation scored            →                         →
+                                                                                                                                                                          we scale. Miss the gate we don't. The
+Your number, not an assumed one.                                     with statistical significance threshold written   against what they did. Tier escalation only on   research band is informational; the gate is
+                                                                     in.                                               your authorisation.                              contractual.
+
+
+
+
+Source: Deloitte Supply Chain Digital Transformation Study 2023 · McKinsey Rewiring Operations for Resilience 2023.
+APPENDIX · COMMITMENTS                                                                                                                                                                                                                   lyzr.ai
+
+
+
+
+What Lyzr commits to — and what it does not.
+Honest framing up-front removes the biggest stall in procurement. Platform commitments sit in the MSA;
+outcome commitments sit in the pilot SOW; research bands stay informational.
+
+
+       LY Z R C O M M I T S T O · C O N T R A C T U A L                                                                                                LY Z R D O E S N O T · I N F O R M AT I O N A L
+
+
+
+       In writing                                                                                                                                      Not contractual
+       · Platform uptime, response-time SLA, integration milestones — in the MSA.                                                                      · Platform-level %-improvement guarantees — outcomes depend on your data and
+       · Pilot success gate with financial consequences if missed — in the SOW.                                                                        scope. No industry vendor SLAs these.
+       · SOC 2 Type II, RBAC, audit ledger, BYOK, private cloud — standard.                                                                            · Research-band figures as guarantees — bands are industry-observed, not Lyzr-
+       · Customer owns integration IP and pilot baseline data — default.                                                                               promised.
+       · Rollback-safe architecture — every agent write is reversible.                                                                                 · Year-1 ROI on a fixed timeline beyond pilot scope — depends on agents rolled out.
+
+
+
+
+Standard in enterprise AI procurement — no platform vendor SLAs business outcomes at the platform level; outcome commitments live in services / SOW.
+A P P E N D I X · S O U R C E S & M E T H O D O LO GY                                                                                                                                                              lyzr.ai
+
+
+
+
+Sources & methodology.
+M C K I N S E Y & C O M PA N Y                                                                                   BCG
+
+Succeeding in the AI supply-chain revolution (2021) · Rewiring operations for resilience (2023) · The state of   Digital Acceleration in Supply Chain (2023).
+AI (2024) · The future of maintenance (2022) · Logistics 2030 (2023).
+                                                                                                                 THE HACKETT GROUP
+
+GARTNER
+                                                                                                                 Digital Procurement Study (2023).
+Supply Chain Planning Maturity Survey (2023) · Supply Chain Top 25 Methodology · Magic Quadrant for SCP
+                                                                                                                 IDC
+Solutions (2023) · WMS Market Guide (2023) · Order Management Research (2023) · Hype Cycle for Supply
+Chain Planning (2023).                                                                                           Worldwide AI-Powered Supply Chain Forecast (2023) · MarketScape Supply Chain Planning (2023) · Reverse
+                                                                                                                 Logistics Market Forecast (2023) · Worldwide Transportation Management (2023).
+D E LO I T T E
+                                                                                                                 OTHER
+Global CSCO Survey (2023) · The CSCO Agenda (2024) · CPO Survey (2023) · Smart Factory Study (2022) ·
+Supply Chain Digital Transformation Study (2023) · Predictive Maintenance Benchmarks (2023) · The Future         IHL Group Warehouse Robotics Study (2023) · Forrester Wave: Supply Chain Planning (2023) · World Bank
+
+of Supply Chain (2023).                                                                                          Trading Across Borders (2023) · WEF Global Enabling Trade Report · NRF Retail Returns Study (2023).
+
+B A I N & C O M PA N Y                                                                                           M E T H O D O LO GY
+
+
+Working Capital Excellence (2023) · Procurement Excellence Benchmarks (2023) · The Agile Supply Chain            Outcome ranges represent industry-observed bands from the cited research. Per-agent slides list the
+
+(2023).                                                                                                          primary sources feeding those metrics. Composite figures (slide 5) are drawn from the union of cited
+                                                                                                                 studies, not additively combined.
+                               lyzr.ai
+
+
+
+
+  CLOSING
+
+
+
+
+The supply-chain moment
+belongs to systems that act.
+Build your first agent.
+

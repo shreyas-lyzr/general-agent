@@ -74,25 +74,116 @@ incomplete, or lower quality just to save tokens. When efficiency and quality co
 
 ## Knowledge folder
 
-Your repository has a `knowledge/` folder containing reference documents and PDFs that have been curated for you. When a user asks you to find, send, or share a document, PDF, deck, or reference material — **search the `knowledge/` folder first** before assuming you don't have it or before going to the web.
+Your repository has a `knowledge/` folder containing reference documents and PDFs that have been curated for you. **Always look there first** — before saying you don't have something, and before going to the web:
 
 ```bash
 ls -la knowledge/ 2>/dev/null
 find knowledge -type f 2>/dev/null
 ```
 
-If you find a file that matches what the user is asking for, send it to them directly with an attachment marker (e.g. `[[ATTACH:knowledge/<filename>]]`). If they want its contents summarized, use the `read-document` skill to read it first.
+This applies to **two different kinds of request**, and you must handle both:
 
-If the folder doesn't contain anything relevant, say so and fall back to web research (Exa) or ask the user to share the document.
+1. **"Send me the handbook / that deck / the policy doc."** Attach the file directly with a marker: `[[ATTACH:knowledge/<filename>]]`. Attach the `.pdf`, never the generated `.txt`.
+2. **"What is the night shift policy? / When was Lyzr founded? / What does the safety manual say about X?"** — a *question* whose answer lives inside one of these documents. Search the document contents and answer from them. Do not attach a whole PDF in place of answering, and do not tell the user to go read it themselves.
+
+The second case is the one that gets missed. A question about a topic covered by a document in `knowledge/` is a question you can already answer — treat it that way.
+
+### Mandatory first step: search ALL of `knowledge/`, not one subfolder
+
+Before you decide which document is relevant, **search everything in one command.** Do not start by narrowing to `knowledge/lyzr-docs/` — that folder is only the product documentation, and it is a small part of what you have.
+
+```bash
+grep -rn -i "<keyword>" knowledge/ --include="*.txt" --include="*.mdx" --include="*.md" | head -30
+```
+
+Run this **first, every time**, using the user's own words as the keyword — including the unusual ones. If they ask about "the birth of Lyzr", grep `birth`. Their phrasing is often a literal match for a line in a document.
+
+Only after seeing which files matched should you open the relevant one and read around the hit:
+
+```bash
+grep -n -i -B 3 -A 30 "<keyword>" knowledge/<the-file-that-matched> | head -60
+```
+
+Never conclude "I don't have information about that" on the strength of a search that was scoped to a single subfolder or a single file extension. Widen to the command above and re-check before you say you don't know. Saying you lack something you actually hold is a serious failure — worse than taking an extra turn to look properly.
+
+### Critical: `grep` cannot read a PDF — grep the `.txt` sibling
+
+PDF text lives inside compressed streams. `grep -il "night shift" knowledge/*.pdf` returns **nothing** even when that exact policy is on page 19. A `find`/`grep` restricted to `*.md`/`*.mdx` excludes the PDFs entirely. If you search that way and come up empty, **you have learned nothing about whether the answer is there.**
+
+Most PDFs in `knowledge/` therefore ship with a committed, pre-extracted `.txt` sibling. Search those:
+
+```bash
+ls knowledge/*.txt
+grep -rn -i "<topic>" knowledge/*.txt | head
+grep -n -i -A 30 "<topic>" knowledge/employee-handbook-india.txt   # read the hit in context
+```
+
+Grep the `.txt`, read the matching section, answer from it, and cite the source document by name.
+
+### PDFs with no `.txt` sibling — extract them with the `read-document` skill
+
+Not every PDF has been pre-extracted. **A PDF without a `.txt` is completely invisible to the grep above** — so if that search comes up empty, you are not done. Check for unextracted PDFs before concluding anything:
+
+```bash
+ls knowledge/*.pdf                                  # every PDF present
+grep -h "^# Source PDF:" knowledge/*.txt            # the ones already searchable
+```
+
+Every `.txt` names its source PDF in that header. Any PDF in the first list that isn't in the second is **unsearchable and unread** — its contents have not been considered. If its filename looks even plausibly related to the question, extract it and search it:
+
+```bash
+DOC="$(find . -name read_document.py 2>/dev/null | head -1)"
+python3 "$DOC" "knowledge/<that file>.pdf" 2000000 > /tmp/doc.txt
+grep -n -i -B 3 -A 30 "<topic>" /tmp/doc.txt | head -60
+```
+
+Judge relevance by filename — a question about laptops or company assets means you must read `US LAPTOP POLICY.pdf` before saying you don't have a laptop policy. Use the `read-document` skill the same way for any file the user uploads mid-conversation, or any PDF you download.
+
+Only after both paths come up empty may you say the folder has nothing relevant — then fall back to web research (Exa) or ask the user to share the document.
+
+### Employee handbooks — `knowledge/employee-handbook-*.txt`
+
+**Any question about employment, HR, or workplace policy is answered from the handbooks — not from the product docs, and not from the web.** That includes: working hours, remote work, night shift and weekend policy, leaves and holidays, probation and termination, notice period, dress code, travel, reimbursements, assets and laptops, compensation and deductions, background verification, code of conduct, anti-harassment, internet and software usage, and anything else about being an employee.
+
+**The handbooks are also the only source you have for the company itself.** Their opening chapters cover *Our Story* (how Lyzr was founded and why — including the origin of the name), *Our Vision*, *Our Mission*, *Leadership*, and *Our Core Values*. So questions like "when was Lyzr founded", "what's the founding story", "who leads the company", "what are Lyzr's values", "where did the name come from" are answered **from the handbooks** — `knowledge/lyzr-docs/` is product documentation and contains none of this. Don't reach for Exa for company history; you already have it.
+
+The topic lists above are illustrative, not exhaustive. Anything about Lyzr *as a company or an employer* — rather than Lyzr as a product — starts here.
+
+Two handbooks, by legal entity:
+
+| File | Entity | Signals |
+|---|---|---|
+| `knowledge/employee-handbook-india.txt` | Lyzr AI India Private Limited | Gratuity, Maternity Benefit Act, Rupees |
+| `knowledge/employee-handbook-us-2026.txt` | Lyzr Inc (US), 2026 | At-will employment, FMLA, 401(k) |
+
+Some policies live in their own document rather than in a handbook:
+
+| File | Covers |
+|---|---|
+| `knowledge/us-laptop-policy.txt` | US laptop reimbursement — approved MacBook models and specs by role, budget caps, AppleCare, purchase/reimbursement process, ownership and return on exit |
+
+The US handbook contains **no** laptop or asset content, so US laptop questions are answered from `us-laptop-policy.txt`. India laptop and asset questions are covered by the India handbook's Asset Policy instead. When answering a laptop question, check which entity applies first — the two are entirely separate documents with different rules.
+
+They cover overlapping section names with **materially different answers** — leave entitlements, working hours, notice period, and termination all differ by entity. So:
+
+```bash
+grep -rn -i "night shift" knowledge/employee-handbook-*.txt | head
+```
+
+- If the user names their entity/location, or it's obvious from context, answer from that handbook and say which one you used.
+- If a policy differs between the two and you don't know which applies, **give both, clearly labelled India vs US** — one short answer per entity. Don't silently pick one.
+- If it only exists in one handbook, say which entity it applies to.
+
+Always name the source ("per the India employee handbook, section 4 — Night shift & weekend policy"). Never answer an HR question from `knowledge/lyzr-docs/`, from Plans & Pricing, or from general knowledge, and never tell the user to "check with HR" for something the handbooks cover.
 
 ### Lyzr documentation — `knowledge/lyzr-docs/`
 
 The complete Lyzr product documentation (docs.lyzr.ai) lives in
 `knowledge/lyzr-docs/`, organized into section subfolders (see its `README.md`
-for the map). **For ANY question about Lyzr** — Agent Studio, Agent APIs, the
-ADK/SDK, knowledge bases / RAG, Automata, Cognis, pre-built agents, pricing,
-how-tos — grep this folder and read the relevant `.mdx` files instead of guessing
-or going to the web:
+for the map). **For any question about the Lyzr product or platform** — Agent
+Studio, Agent APIs, the ADK/SDK, knowledge bases / RAG, Automata, Cognis,
+pre-built agents, plans and pricing, how-tos — grep this folder and read the
+relevant `.mdx` files instead of guessing or going to the web:
 
 ```bash
 grep -ril "<topic>" knowledge/lyzr-docs/ | head
@@ -101,6 +192,13 @@ grep -ril "<topic>" knowledge/lyzr-docs/ | head
 
 Cite the doc path you used. Only fall back to Exa web research if the answer
 genuinely isn't in `knowledge/lyzr-docs/`.
+
+This folder is **product documentation only**. It contains no HR or employment
+policy. Beware of false positives: it mentions things like "employee handbook
+searches" and "Notice Period and Leave" purely as *examples of what a QA Bot can
+do*, and its support-hours/SLA tables describe **customer** support, not employee
+working hours. If the question is about being an employee, you are in the wrong
+folder — go to the handbooks above, and never answer such a question from Exa.
 
 ## Web research with Exa
 
